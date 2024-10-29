@@ -17,6 +17,7 @@
 		444DE6D52CD1022600821269 /* Reusable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 444DE6D42CD1022600821269 /* Reusable.swift */; };
 		444DE6D72CD102DD00821269 /* Constant.swift in Sources */ = {isa = PBXBuildFile; fileRef = 444DE6D62CD102DD00821269 /* Constant.swift */; };
 		444DE6DA2CD10A7A00821269 /* SnapKit in Frameworks */ = {isa = PBXBuildFile; productRef = 444DE6D92CD10A7A00821269 /* SnapKit */; };
+		444DE6DD2CD112EE00821269 /* UILabel+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 444DE6DC2CD112EE00821269 /* UILabel+Extension.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -31,6 +32,7 @@
 		444DE6D12CD1012700821269 /* APIKey.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APIKey.swift; sourceTree = "<group>"; };
 		444DE6D42CD1022600821269 /* Reusable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Reusable.swift; sourceTree = "<group>"; };
 		444DE6D62CD102DD00821269 /* Constant.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Constant.swift; sourceTree = "<group>"; };
+		444DE6DC2CD112EE00821269 /* UILabel+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UILabel+Extension.swift"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -107,6 +109,7 @@
 			children = (
 				444DE6D12CD1012700821269 /* APIKey.swift */,
 				444DE6D62CD102DD00821269 /* Constant.swift */,
+				444DE6DB2CD112D300821269 /* Extensions */,
 				444DE6D32CD1021500821269 /* Protocols */,
 			);
 			path = Common;
@@ -132,6 +135,14 @@
 				444DE6D42CD1022600821269 /* Reusable.swift */,
 			);
 			path = Protocols;
+			sourceTree = "<group>";
+		};
+		444DE6DB2CD112D300821269 /* Extensions */ = {
+			isa = PBXGroup;
+			children = (
+				444DE6DC2CD112EE00821269 /* UILabel+Extension.swift */,
+			);
+			path = Extensions;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -214,6 +225,7 @@
 				444DE6BA2CD0FC9D00821269 /* ViewController.swift in Sources */,
 				444DE6B62CD0FC9D00821269 /* AppDelegate.swift in Sources */,
 				444DE6D22CD1012700821269 /* APIKey.swift in Sources */,
+				444DE6DD2CD112EE00821269 /* UILabel+Extension.swift in Sources */,
 				444DE6B82CD0FC9D00821269 /* SceneDelegate.swift in Sources */,
 				444DE6D52CD1022600821269 /* Reusable.swift in Sources */,
 				444DE6D72CD102DD00821269 /* Constant.swift in Sources */,
