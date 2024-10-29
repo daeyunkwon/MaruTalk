@@ -13,6 +13,10 @@
 		444DE6BF2CD0FC9F00821269 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 444DE6BE2CD0FC9F00821269 /* Assets.xcassets */; };
 		444DE6C22CD0FC9F00821269 /* Base in Resources */ = {isa = PBXBuildFile; fileRef = 444DE6C12CD0FC9F00821269 /* Base */; };
 		444DE6CA2CD0FDD000821269 /* .gitignore in Resources */ = {isa = PBXBuildFile; fileRef = 444DE6C92CD0FDD000821269 /* .gitignore */; };
+		444DE6D22CD1012700821269 /* APIKey.swift in Sources */ = {isa = PBXBuildFile; fileRef = 444DE6D12CD1012700821269 /* APIKey.swift */; };
+		444DE6D52CD1022600821269 /* Reusable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 444DE6D42CD1022600821269 /* Reusable.swift */; };
+		444DE6D72CD102DD00821269 /* Constant.swift in Sources */ = {isa = PBXBuildFile; fileRef = 444DE6D62CD102DD00821269 /* Constant.swift */; };
+		444DE6DA2CD10A7A00821269 /* SnapKit in Frameworks */ = {isa = PBXBuildFile; productRef = 444DE6D92CD10A7A00821269 /* SnapKit */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -24,6 +28,9 @@
 		444DE6C12CD0FC9F00821269 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		444DE6C32CD0FC9F00821269 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		444DE6C92CD0FDD000821269 /* .gitignore */ = {isa = PBXFileReference; lastKnownFileType = text; path = .gitignore; sourceTree = "<group>"; };
+		444DE6D12CD1012700821269 /* APIKey.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APIKey.swift; sourceTree = "<group>"; };
+		444DE6D42CD1022600821269 /* Reusable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Reusable.swift; sourceTree = "<group>"; };
+		444DE6D62CD102DD00821269 /* Constant.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Constant.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -31,6 +38,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				444DE6DA2CD10A7A00821269 /* SnapKit in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -57,14 +65,73 @@
 		444DE6B42CD0FC9D00821269 /* MaruTalk */ = {
 			isa = PBXGroup;
 			children = (
+				444DE6CB2CD100A400821269 /* Application */,
+				444DE6CE2CD100FD00821269 /* Common */,
+				444DE6CF2CD1010400821269 /* Service */,
+				444DE6D02CD1011500821269 /* Model */,
+				444DE6CD2CD100B600821269 /* Presentation */,
+				444DE6CC2CD100AD00821269 /* Resource */,
+			);
+			path = MaruTalk;
+			sourceTree = "<group>";
+		};
+		444DE6CB2CD100A400821269 /* Application */ = {
+			isa = PBXGroup;
+			children = (
 				444DE6B52CD0FC9D00821269 /* AppDelegate.swift */,
 				444DE6B72CD0FC9D00821269 /* SceneDelegate.swift */,
-				444DE6B92CD0FC9D00821269 /* ViewController.swift */,
+			);
+			path = Application;
+			sourceTree = "<group>";
+		};
+		444DE6CC2CD100AD00821269 /* Resource */ = {
+			isa = PBXGroup;
+			children = (
 				444DE6BE2CD0FC9F00821269 /* Assets.xcassets */,
 				444DE6C02CD0FC9F00821269 /* LaunchScreen.storyboard */,
 				444DE6C32CD0FC9F00821269 /* Info.plist */,
 			);
-			path = MaruTalk;
+			path = Resource;
+			sourceTree = "<group>";
+		};
+		444DE6CD2CD100B600821269 /* Presentation */ = {
+			isa = PBXGroup;
+			children = (
+				444DE6B92CD0FC9D00821269 /* ViewController.swift */,
+			);
+			path = Presentation;
+			sourceTree = "<group>";
+		};
+		444DE6CE2CD100FD00821269 /* Common */ = {
+			isa = PBXGroup;
+			children = (
+				444DE6D12CD1012700821269 /* APIKey.swift */,
+				444DE6D62CD102DD00821269 /* Constant.swift */,
+				444DE6D32CD1021500821269 /* Protocols */,
+			);
+			path = Common;
+			sourceTree = "<group>";
+		};
+		444DE6CF2CD1010400821269 /* Service */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Service;
+			sourceTree = "<group>";
+		};
+		444DE6D02CD1011500821269 /* Model */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Model;
+			sourceTree = "<group>";
+		};
+		444DE6D32CD1021500821269 /* Protocols */ = {
+			isa = PBXGroup;
+			children = (
+				444DE6D42CD1022600821269 /* Reusable.swift */,
+			);
+			path = Protocols;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -83,6 +150,9 @@
 			dependencies = (
 			);
 			name = MaruTalk;
+			packageProductDependencies = (
+				444DE6D92CD10A7A00821269 /* SnapKit */,
+			);
 			productName = MaruTalk;
 			productReference = 444DE6B22CD0FC9D00821269 /* MaruTalk.app */;
 			productType = "com.apple.product-type.application";
@@ -111,6 +181,9 @@
 				Base,
 			);
 			mainGroup = 444DE6A92CD0FC9D00821269;
+			packageReferences = (
+				444DE6D82CD10A7A00821269 /* XCRemoteSwiftPackageReference "SnapKit" */,
+			);
 			productRefGroup = 444DE6B32CD0FC9D00821269 /* Products */;
 			projectDirPath = "";
 			projectRoot = "";
@@ -140,7 +213,10 @@
 			files = (
 				444DE6BA2CD0FC9D00821269 /* ViewController.swift in Sources */,
 				444DE6B62CD0FC9D00821269 /* AppDelegate.swift in Sources */,
+				444DE6D22CD1012700821269 /* APIKey.swift in Sources */,
 				444DE6B82CD0FC9D00821269 /* SceneDelegate.swift in Sources */,
+				444DE6D52CD1022600821269 /* Reusable.swift in Sources */,
+				444DE6D72CD102DD00821269 /* Constant.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -286,7 +362,7 @@
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = 9M37U587ZT;
 				GENERATE_INFOPLIST_FILE = YES;
-				INFOPLIST_FILE = MaruTalk/Info.plist;
+				INFOPLIST_FILE = MaruTalk/Resource/Info.plist;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations = UIInterfaceOrientationPortrait;
@@ -318,7 +394,7 @@
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = 9M37U587ZT;
 				GENERATE_INFOPLIST_FILE = YES;
-				INFOPLIST_FILE = MaruTalk/Info.plist;
+				INFOPLIST_FILE = MaruTalk/Resource/Info.plist;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations = UIInterfaceOrientationPortrait;
@@ -363,6 +439,25 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCRemoteSwiftPackageReference section */
+		444DE6D82CD10A7A00821269 /* XCRemoteSwiftPackageReference "SnapKit" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/SnapKit/SnapKit";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 5.7.1;
+			};
+		};
+/* End XCRemoteSwiftPackageReference section */
+
+/* Begin XCSwiftPackageProductDependency section */
+		444DE6D92CD10A7A00821269 /* SnapKit */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 444DE6D82CD10A7A00821269 /* XCRemoteSwiftPackageReference "SnapKit" */;
+			productName = SnapKit;
+		};
+/* End XCSwiftPackageProductDependency section */
 	};
 	rootObject = 444DE6AA2CD0FC9D00821269 /* Project object */;
 }
