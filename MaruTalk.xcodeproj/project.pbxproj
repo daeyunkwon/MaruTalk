@@ -18,6 +18,15 @@
 		444DE6D72CD102DD00821269 /* Constant.swift in Sources */ = {isa = PBXBuildFile; fileRef = 444DE6D62CD102DD00821269 /* Constant.swift */; };
 		444DE6DA2CD10A7A00821269 /* SnapKit in Frameworks */ = {isa = PBXBuildFile; productRef = 444DE6D92CD10A7A00821269 /* SnapKit */; };
 		444DE6DD2CD112EE00821269 /* UILabel+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 444DE6DC2CD112EE00821269 /* UILabel+Extension.swift */; };
+		444DE6E02CD11FC100821269 /* OnboardingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 444DE6DF2CD11FC100821269 /* OnboardingViewController.swift */; };
+		444DE6E22CD1207300821269 /* UIView+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 444DE6E12CD1207300821269 /* UIView+Extension.swift */; };
+		444DE6E52CD121AA00821269 /* BaseView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 444DE6E42CD121AA00821269 /* BaseView.swift */; };
+		444DE6E72CD24C1F00821269 /* BaseViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 444DE6E62CD24C1F00821269 /* BaseViewController.swift */; };
+		444DE6E92CD24E4100821269 /* BaseTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 444DE6E82CD24E4100821269 /* BaseTableViewCell.swift */; };
+		444DE6EB2CD24F1D00821269 /* BaseCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 444DE6EA2CD24F1D00821269 /* BaseCollectionViewCell.swift */; };
+		444DE6EF2CD2529D00821269 /* OnboardingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 444DE6EE2CD2529D00821269 /* OnboardingView.swift */; };
+		444DE6F22CD2777800821269 /* RectangleBrandColorButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 444DE6F12CD2777800821269 /* RectangleBrandColorButton.swift */; };
+		444DE6F42CD27B1600821269 /* UIButton+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 444DE6F32CD27B1600821269 /* UIButton+Extension.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -33,6 +42,15 @@
 		444DE6D42CD1022600821269 /* Reusable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Reusable.swift; sourceTree = "<group>"; };
 		444DE6D62CD102DD00821269 /* Constant.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Constant.swift; sourceTree = "<group>"; };
 		444DE6DC2CD112EE00821269 /* UILabel+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UILabel+Extension.swift"; sourceTree = "<group>"; };
+		444DE6DF2CD11FC100821269 /* OnboardingViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardingViewController.swift; sourceTree = "<group>"; };
+		444DE6E12CD1207300821269 /* UIView+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIView+Extension.swift"; sourceTree = "<group>"; };
+		444DE6E42CD121AA00821269 /* BaseView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseView.swift; sourceTree = "<group>"; };
+		444DE6E62CD24C1F00821269 /* BaseViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseViewController.swift; sourceTree = "<group>"; };
+		444DE6E82CD24E4100821269 /* BaseTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseTableViewCell.swift; sourceTree = "<group>"; };
+		444DE6EA2CD24F1D00821269 /* BaseCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseCollectionViewCell.swift; sourceTree = "<group>"; };
+		444DE6EE2CD2529D00821269 /* OnboardingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardingView.swift; sourceTree = "<group>"; };
+		444DE6F12CD2777800821269 /* RectangleBrandColorButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RectangleBrandColorButton.swift; sourceTree = "<group>"; };
+		444DE6F32CD27B1600821269 /* UIButton+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIButton+Extension.swift"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -99,6 +117,7 @@
 		444DE6CD2CD100B600821269 /* Presentation */ = {
 			isa = PBXGroup;
 			children = (
+				444DE6DE2CD11F9A00821269 /* Onboarding */,
 				444DE6B92CD0FC9D00821269 /* ViewController.swift */,
 			);
 			path = Presentation;
@@ -107,8 +126,9 @@
 		444DE6CE2CD100FD00821269 /* Common */ = {
 			isa = PBXGroup;
 			children = (
-				444DE6D12CD1012700821269 /* APIKey.swift */,
 				444DE6D62CD102DD00821269 /* Constant.swift */,
+				444DE6E32CD1219A00821269 /* Base */,
+				444DE6F02CD276FB00821269 /* CustomViews */,
 				444DE6DB2CD112D300821269 /* Extensions */,
 				444DE6D32CD1021500821269 /* Protocols */,
 			);
@@ -118,6 +138,8 @@
 		444DE6CF2CD1010400821269 /* Service */ = {
 			isa = PBXGroup;
 			children = (
+				444DE6ED2CD24FC800821269 /* Database */,
+				444DE6EC2CD24FC000821269 /* Network */,
 			);
 			path = Service;
 			sourceTree = "<group>";
@@ -140,9 +162,54 @@
 		444DE6DB2CD112D300821269 /* Extensions */ = {
 			isa = PBXGroup;
 			children = (
+				444DE6E12CD1207300821269 /* UIView+Extension.swift */,
 				444DE6DC2CD112EE00821269 /* UILabel+Extension.swift */,
+				444DE6F32CD27B1600821269 /* UIButton+Extension.swift */,
 			);
 			path = Extensions;
+			sourceTree = "<group>";
+		};
+		444DE6DE2CD11F9A00821269 /* Onboarding */ = {
+			isa = PBXGroup;
+			children = (
+				444DE6EE2CD2529D00821269 /* OnboardingView.swift */,
+				444DE6DF2CD11FC100821269 /* OnboardingViewController.swift */,
+			);
+			path = Onboarding;
+			sourceTree = "<group>";
+		};
+		444DE6E32CD1219A00821269 /* Base */ = {
+			isa = PBXGroup;
+			children = (
+				444DE6E42CD121AA00821269 /* BaseView.swift */,
+				444DE6E62CD24C1F00821269 /* BaseViewController.swift */,
+				444DE6E82CD24E4100821269 /* BaseTableViewCell.swift */,
+				444DE6EA2CD24F1D00821269 /* BaseCollectionViewCell.swift */,
+			);
+			path = Base;
+			sourceTree = "<group>";
+		};
+		444DE6EC2CD24FC000821269 /* Network */ = {
+			isa = PBXGroup;
+			children = (
+				444DE6D12CD1012700821269 /* APIKey.swift */,
+			);
+			path = Network;
+			sourceTree = "<group>";
+		};
+		444DE6ED2CD24FC800821269 /* Database */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Database;
+			sourceTree = "<group>";
+		};
+		444DE6F02CD276FB00821269 /* CustomViews */ = {
+			isa = PBXGroup;
+			children = (
+				444DE6F12CD2777800821269 /* RectangleBrandColorButton.swift */,
+			);
+			path = CustomViews;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -224,11 +291,20 @@
 			files = (
 				444DE6BA2CD0FC9D00821269 /* ViewController.swift in Sources */,
 				444DE6B62CD0FC9D00821269 /* AppDelegate.swift in Sources */,
+				444DE6E72CD24C1F00821269 /* BaseViewController.swift in Sources */,
 				444DE6D22CD1012700821269 /* APIKey.swift in Sources */,
+				444DE6E92CD24E4100821269 /* BaseTableViewCell.swift in Sources */,
+				444DE6F42CD27B1600821269 /* UIButton+Extension.swift in Sources */,
+				444DE6E22CD1207300821269 /* UIView+Extension.swift in Sources */,
+				444DE6E02CD11FC100821269 /* OnboardingViewController.swift in Sources */,
 				444DE6DD2CD112EE00821269 /* UILabel+Extension.swift in Sources */,
 				444DE6B82CD0FC9D00821269 /* SceneDelegate.swift in Sources */,
+				444DE6E52CD121AA00821269 /* BaseView.swift in Sources */,
 				444DE6D52CD1022600821269 /* Reusable.swift in Sources */,
+				444DE6EB2CD24F1D00821269 /* BaseCollectionViewCell.swift in Sources */,
 				444DE6D72CD102DD00821269 /* Constant.swift in Sources */,
+				444DE6EF2CD2529D00821269 /* OnboardingView.swift in Sources */,
+				444DE6F22CD2777800821269 /* RectangleBrandColorButton.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
