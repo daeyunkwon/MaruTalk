@@ -27,6 +27,11 @@
 		444DE6EF2CD2529D00821269 /* OnboardingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 444DE6EE2CD2529D00821269 /* OnboardingView.swift */; };
 		444DE6F22CD2777800821269 /* RectangleBrandColorButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 444DE6F12CD2777800821269 /* RectangleBrandColorButton.swift */; };
 		444DE6F42CD27B1600821269 /* UIButton+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 444DE6F32CD27B1600821269 /* UIButton+Extension.swift */; };
+		444DE6F72CD366DB00821269 /* AuthView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 444DE6F62CD366DB00821269 /* AuthView.swift */; };
+		444DE6F92CD366E600821269 /* AuthViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 444DE6F82CD366E600821269 /* AuthViewController.swift */; };
+		444DE6FC2CD36B4200821269 /* RxCocoa in Frameworks */ = {isa = PBXBuildFile; productRef = 444DE6FB2CD36B4200821269 /* RxCocoa */; };
+		444DE6FE2CD36B4200821269 /* RxRelay in Frameworks */ = {isa = PBXBuildFile; productRef = 444DE6FD2CD36B4200821269 /* RxRelay */; };
+		444DE7002CD36B4200821269 /* RxSwift in Frameworks */ = {isa = PBXBuildFile; productRef = 444DE6FF2CD36B4200821269 /* RxSwift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -51,6 +56,8 @@
 		444DE6EE2CD2529D00821269 /* OnboardingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardingView.swift; sourceTree = "<group>"; };
 		444DE6F12CD2777800821269 /* RectangleBrandColorButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RectangleBrandColorButton.swift; sourceTree = "<group>"; };
 		444DE6F32CD27B1600821269 /* UIButton+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIButton+Extension.swift"; sourceTree = "<group>"; };
+		444DE6F62CD366DB00821269 /* AuthView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthView.swift; sourceTree = "<group>"; };
+		444DE6F82CD366E600821269 /* AuthViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthViewController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -58,6 +65,9 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				444DE6FE2CD36B4200821269 /* RxRelay in Frameworks */,
+				444DE6FC2CD36B4200821269 /* RxCocoa in Frameworks */,
+				444DE7002CD36B4200821269 /* RxSwift in Frameworks */,
 				444DE6DA2CD10A7A00821269 /* SnapKit in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -174,6 +184,7 @@
 			children = (
 				444DE6EE2CD2529D00821269 /* OnboardingView.swift */,
 				444DE6DF2CD11FC100821269 /* OnboardingViewController.swift */,
+				444DE6F52CD366CD00821269 /* Auth */,
 			);
 			path = Onboarding;
 			sourceTree = "<group>";
@@ -212,6 +223,15 @@
 			path = CustomViews;
 			sourceTree = "<group>";
 		};
+		444DE6F52CD366CD00821269 /* Auth */ = {
+			isa = PBXGroup;
+			children = (
+				444DE6F62CD366DB00821269 /* AuthView.swift */,
+				444DE6F82CD366E600821269 /* AuthViewController.swift */,
+			);
+			path = Auth;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -230,6 +250,9 @@
 			name = MaruTalk;
 			packageProductDependencies = (
 				444DE6D92CD10A7A00821269 /* SnapKit */,
+				444DE6FB2CD36B4200821269 /* RxCocoa */,
+				444DE6FD2CD36B4200821269 /* RxRelay */,
+				444DE6FF2CD36B4200821269 /* RxSwift */,
 			);
 			productName = MaruTalk;
 			productReference = 444DE6B22CD0FC9D00821269 /* MaruTalk.app */;
@@ -261,6 +284,7 @@
 			mainGroup = 444DE6A92CD0FC9D00821269;
 			packageReferences = (
 				444DE6D82CD10A7A00821269 /* XCRemoteSwiftPackageReference "SnapKit" */,
+				444DE6FA2CD36B4200821269 /* XCRemoteSwiftPackageReference "RxSwift" */,
 			);
 			productRefGroup = 444DE6B32CD0FC9D00821269 /* Products */;
 			projectDirPath = "";
@@ -303,7 +327,9 @@
 				444DE6D52CD1022600821269 /* Reusable.swift in Sources */,
 				444DE6EB2CD24F1D00821269 /* BaseCollectionViewCell.swift in Sources */,
 				444DE6D72CD102DD00821269 /* Constant.swift in Sources */,
+				444DE6F72CD366DB00821269 /* AuthView.swift in Sources */,
 				444DE6EF2CD2529D00821269 /* OnboardingView.swift in Sources */,
+				444DE6F92CD366E600821269 /* AuthViewController.swift in Sources */,
 				444DE6F22CD2777800821269 /* RectangleBrandColorButton.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -537,6 +563,14 @@
 				minimumVersion = 5.7.1;
 			};
 		};
+		444DE6FA2CD36B4200821269 /* XCRemoteSwiftPackageReference "RxSwift" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/ReactiveX/RxSwift";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 6.8.0;
+			};
+		};
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
@@ -544,6 +578,21 @@
 			isa = XCSwiftPackageProductDependency;
 			package = 444DE6D82CD10A7A00821269 /* XCRemoteSwiftPackageReference "SnapKit" */;
 			productName = SnapKit;
+		};
+		444DE6FB2CD36B4200821269 /* RxCocoa */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 444DE6FA2CD36B4200821269 /* XCRemoteSwiftPackageReference "RxSwift" */;
+			productName = RxCocoa;
+		};
+		444DE6FD2CD36B4200821269 /* RxRelay */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 444DE6FA2CD36B4200821269 /* XCRemoteSwiftPackageReference "RxSwift" */;
+			productName = RxRelay;
+		};
+		444DE6FF2CD36B4200821269 /* RxSwift */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 444DE6FA2CD36B4200821269 /* XCRemoteSwiftPackageReference "RxSwift" */;
+			productName = RxSwift;
 		};
 /* End XCSwiftPackageProductDependency section */
 	};
