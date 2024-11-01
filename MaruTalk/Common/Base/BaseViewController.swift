@@ -28,18 +28,10 @@ class BaseViewController<View: UIView>: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         setupNavi()
-        configureHierarchy()
-        configureLayout()
-        configureUI()
+        bind()
     }
     
     func setupNavi() { }
-    
-    func configureHierarchy() { }
-    
-    func configureLayout() { }
-    
-    func configureUI() { }
     
     func bind() { }
 }

@@ -16,7 +16,7 @@ final class OnboardingView: BaseView {
     private let titleLabel: UILabel = {
         let label = UILabel()
         let text = "마루톡을 사용하면 어디서나\n 팀을 모을 수 있어요"
-        label.setTextFontWithLineHeight(text: text, font: Constant.Font.title1.0, lineHeight: Constant.Font.title1.1)
+        label.setTextFontWithLineHeight(text: text, font: Constant.Font.title1, lineHeight: Constant.Font.LineHeight.title1)
         label.textColor = Constant.Color.brandBlack
         label.numberOfLines = 0
         label.textAlignment = .center
@@ -31,7 +31,7 @@ final class OnboardingView: BaseView {
         return iv
     }()
     
-    private let startButton = RectangleBrandColorButton(title: "시작하기")
+    let startButton = RectangleBrandColorButton(title: "시작하기")
     
     //MARK: - Configurations
     

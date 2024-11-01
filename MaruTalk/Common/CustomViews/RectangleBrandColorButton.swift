@@ -22,7 +22,7 @@ final class RectangleBrandColorButton: UIButton {
     private func configure(title: String, backgroundColor: UIColor) {
         self.setTitle(title, for: .normal)
         self.setTitleColor(Constant.Color.brandWhite, for: .normal)
-        self.titleLabel?.font = Constant.Font.title2.0
+        self.titleLabel?.font = Constant.Font.title2
         self.setBackgroundColor(backgroundColor, for: .normal)
         self.setBackgroundColor(backgroundColor.withAlphaComponent(0.5), for: .highlighted)
         self.layer.cornerRadius = 8

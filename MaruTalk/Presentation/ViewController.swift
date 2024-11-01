@@ -27,7 +27,7 @@ class ViewController: UIViewController {
         label.layer.borderWidth = 1
         label.layer.borderColor = UIColor.red.cgColor
 //        label.font = UIFont.systemFont(ofSize: 12)
-        label.font = Constant.Font.title1.0
+        label.font = Constant.Font.title1
         
         
     }
