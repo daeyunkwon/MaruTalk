@@ -27,10 +27,18 @@ enum Constant {
     }
     
     enum Font {
-        static let title1: (UIFont, CGFloat) = (.systemFont(ofSize: 22, weight: .bold), 30)
-        static let title2: (UIFont, CGFloat) = (.systemFont(ofSize: 14, weight: .bold), 20)
-        static let bodyBold: (UIFont, CGFloat) = (.systemFont(ofSize: 13, weight: .bold), 18)
-        static let body: (UIFont, CGFloat) = (.systemFont(ofSize: 13, weight: .regular), 18)
-        static let caption: (UIFont, CGFloat) = (.systemFont(ofSize: 12, weight: .regular), 18)
+        static let title1: UIFont = .systemFont(ofSize: 22, weight: .bold)
+        static let title2: UIFont = .systemFont(ofSize: 14, weight: .bold)
+        static let bodyBold: UIFont = .systemFont(ofSize: 13, weight: .bold)
+        static let body: UIFont = .systemFont(ofSize: 13, weight: .regular)
+        static let caption: UIFont = .systemFont(ofSize: 12, weight: .regular)
+        
+        enum LineHeight {
+            static let title1: CGFloat = 30
+            static let title2: CGFloat = 20
+            static let bodyBold: CGFloat = 18
+            static let body: CGFloat = 18
+            static let caption: CGFloat = 18
+        }
     }
 }
