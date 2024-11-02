@@ -32,6 +32,10 @@
 		444DE6FC2CD36B4200821269 /* RxCocoa in Frameworks */ = {isa = PBXBuildFile; productRef = 444DE6FB2CD36B4200821269 /* RxCocoa */; };
 		444DE6FE2CD36B4200821269 /* RxRelay in Frameworks */ = {isa = PBXBuildFile; productRef = 444DE6FD2CD36B4200821269 /* RxRelay */; };
 		444DE7002CD36B4200821269 /* RxSwift in Frameworks */ = {isa = PBXBuildFile; productRef = 444DE6FF2CD36B4200821269 /* RxSwift */; };
+		444DE7022CD4D2A700821269 /* Coordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 444DE7012CD4D2A700821269 /* Coordinator.swift */; };
+		444DE7042CD6093000821269 /* AppCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 444DE7032CD6093000821269 /* AppCoordinator.swift */; };
+		444DE7062CD609FC00821269 /* OnboardingCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 444DE7052CD609FC00821269 /* OnboardingCoordinator.swift */; };
+		444DE7082CD60BDD00821269 /* AuthCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 444DE7072CD60BDD00821269 /* AuthCoordinator.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -58,6 +62,10 @@
 		444DE6F32CD27B1600821269 /* UIButton+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIButton+Extension.swift"; sourceTree = "<group>"; };
 		444DE6F62CD366DB00821269 /* AuthView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthView.swift; sourceTree = "<group>"; };
 		444DE6F82CD366E600821269 /* AuthViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthViewController.swift; sourceTree = "<group>"; };
+		444DE7012CD4D2A700821269 /* Coordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Coordinator.swift; sourceTree = "<group>"; };
+		444DE7032CD6093000821269 /* AppCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppCoordinator.swift; sourceTree = "<group>"; };
+		444DE7052CD609FC00821269 /* OnboardingCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardingCoordinator.swift; sourceTree = "<group>"; };
+		444DE7072CD60BDD00821269 /* AuthCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthCoordinator.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -110,6 +118,7 @@
 			children = (
 				444DE6B52CD0FC9D00821269 /* AppDelegate.swift */,
 				444DE6B72CD0FC9D00821269 /* SceneDelegate.swift */,
+				444DE7032CD6093000821269 /* AppCoordinator.swift */,
 			);
 			path = Application;
 			sourceTree = "<group>";
@@ -165,6 +174,7 @@
 			isa = PBXGroup;
 			children = (
 				444DE6D42CD1022600821269 /* Reusable.swift */,
+				444DE7012CD4D2A700821269 /* Coordinator.swift */,
 			);
 			path = Protocols;
 			sourceTree = "<group>";
@@ -182,6 +192,7 @@
 		444DE6DE2CD11F9A00821269 /* Onboarding */ = {
 			isa = PBXGroup;
 			children = (
+				444DE7052CD609FC00821269 /* OnboardingCoordinator.swift */,
 				444DE6EE2CD2529D00821269 /* OnboardingView.swift */,
 				444DE6DF2CD11FC100821269 /* OnboardingViewController.swift */,
 				444DE6F52CD366CD00821269 /* Auth */,
@@ -226,6 +237,7 @@
 		444DE6F52CD366CD00821269 /* Auth */ = {
 			isa = PBXGroup;
 			children = (
+				444DE7072CD60BDD00821269 /* AuthCoordinator.swift */,
 				444DE6F62CD366DB00821269 /* AuthView.swift */,
 				444DE6F82CD366E600821269 /* AuthViewController.swift */,
 			);
@@ -319,11 +331,15 @@
 				444DE6D22CD1012700821269 /* APIKey.swift in Sources */,
 				444DE6E92CD24E4100821269 /* BaseTableViewCell.swift in Sources */,
 				444DE6F42CD27B1600821269 /* UIButton+Extension.swift in Sources */,
+				444DE7082CD60BDD00821269 /* AuthCoordinator.swift in Sources */,
+				444DE7022CD4D2A700821269 /* Coordinator.swift in Sources */,
 				444DE6E22CD1207300821269 /* UIView+Extension.swift in Sources */,
 				444DE6E02CD11FC100821269 /* OnboardingViewController.swift in Sources */,
 				444DE6DD2CD112EE00821269 /* UILabel+Extension.swift in Sources */,
+				444DE7062CD609FC00821269 /* OnboardingCoordinator.swift in Sources */,
 				444DE6B82CD0FC9D00821269 /* SceneDelegate.swift in Sources */,
 				444DE6E52CD121AA00821269 /* BaseView.swift in Sources */,
+				444DE7042CD6093000821269 /* AppCoordinator.swift in Sources */,
 				444DE6D52CD1022600821269 /* Reusable.swift in Sources */,
 				444DE6EB2CD24F1D00821269 /* BaseCollectionViewCell.swift in Sources */,
 				444DE6D72CD102DD00821269 /* Constant.swift in Sources */,

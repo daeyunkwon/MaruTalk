@@ -11,7 +11,7 @@ final class AuthViewController: BaseViewController<AuthView> {
     
     //MARK: - Properties
     
-    var willDisappear: () -> Void = { }
+    weak var coordinator: AuthCoordinator?
     
     //MARK: - Life Cycle
     
@@ -21,10 +21,11 @@ final class AuthViewController: BaseViewController<AuthView> {
     
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
-        willDisappear()
+        coordinator?.didFinish()
     }
     
     //MARK: - Methods
     
 
 }
+
