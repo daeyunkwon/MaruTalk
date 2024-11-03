@@ -13,7 +13,6 @@ final class OnboardingCoordinator: Coordinator {
     weak var parentCoordinator: (any Coordinator)?
     
     init(navigationController: UINavigationController) {
-        navigationController.navigationBar.isHidden = true
         self.navigationController = navigationController
     }
     

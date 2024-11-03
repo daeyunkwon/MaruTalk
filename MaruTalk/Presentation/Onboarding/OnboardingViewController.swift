@@ -21,6 +21,13 @@ final class OnboardingViewController: BaseViewController<OnboardingView> {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+    }
+    
+    //MARK: - Configurations
+    
+    override func setupNavi() {
+        navigationController?.navigationBar.isHidden = true
     }
     
     //MARK: - Bind
