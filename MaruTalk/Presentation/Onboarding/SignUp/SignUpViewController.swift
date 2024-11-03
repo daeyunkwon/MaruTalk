@@ -7,22 +7,23 @@
 
 import UIKit
 
-import RxSwift
+import ReactorKit
 import RxCocoa
+import RxSwift
 
-final class SignUpViewController: BaseViewController<SignUpView> {
+final class SignUpViewController: BaseViewController<SignUpView>, View {
     
     //MARK: - Properties
     
     weak var coordinator: SignUpCoordinator?
-    private let disposeBag = DisposeBag()
-    
+    var disposeBag = DisposeBag()
     
     //MARK: - Life Cycle
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        self.reactor = SignUpReactor()
     }
     
     override func viewDidDisappear(_ animated: Bool) {
@@ -40,21 +41,91 @@ final class SignUpViewController: BaseViewController<SignUpView> {
         titleItem.leftBarButtonItem = closeButton
         // 네비게이션 아이템 추가
         rootView.customNaviBar.items = [titleItem]
-        
-//        rootView.customNaviBar.items?[0].leftBarButtonItem?.rx.tap
-//            .bind(with: self, onNext: { owner, _ in
-//                print(1111111)
-//            })
-//            .disposed(by: disposeBag)
     }
     
     //MARK: - Methods
     
-    @objc func closeButtonTapped() {
-        
+    func bind(reactor: SignUpReactor) {
+        bindAction(reactor: reactor)
+        bindState(reactor: reactor)
     }
     
-    //MARK: - Bind
-    
+    @objc func closeButtonTapped() { }
+}
 
+//MARK: - Bind Action
+
+extension SignUpViewController {
+    private func bindAction(reactor: Reactor) {
+        rootView.customNaviBar.items?[0].leftBarButtonItem?.rx.tap
+            .map { Reactor.Action.closeButtonTapped }
+            .bind(to: reactor.action)
+            .disposed(by: disposeBag)
+        
+        rootView.emailFieldView.inputTextField.rx.text.orEmpty
+            .map { Reactor.Action.inputEmail($0) }
+            .bind(to: reactor.action)
+            .disposed(by: disposeBag)
+        
+        rootView.nicknameFieldView.inputTextField.rx.text.orEmpty
+            .map { Reactor.Action.inputNickname($0) }
+            .bind(to: reactor.action)
+            .disposed(by: disposeBag)
+        
+        rootView.phoneNumberFieldView.inputTextField.rx.text.orEmpty
+            .map { Reactor.Action.inputPhoneNumber($0) }
+            .bind(to: reactor.action)
+            .disposed(by: disposeBag)
+        
+        rootView.passwordFieldView.inputTextField.rx.text.orEmpty
+            .map { Reactor.Action.inputPassword($0) }
+            .bind(to: reactor.action)
+            .disposed(by: disposeBag)
+        
+        rootView.passwordCheckFieldView.inputTextField.rx.text.orEmpty
+            .map { Reactor.Action.inputPasswordCheck($0) }
+            .bind(to: reactor.action)
+            .disposed(by: disposeBag)
+    }
+}
+
+//MARK: - Bind State
+
+extension SignUpViewController {
+    private func bindState(reactor: SignUpReactor) {
+        reactor.state.map { $0.shouldClose }
+            .distinctUntilChanged()
+            .bind(with: self) { owner, value in
+                if value {
+                    owner.coordinator?.didFinish()
+                }
+            }
+            .disposed(by: disposeBag)
+        
+        reactor.state.map { $0.emailDuplicateCheckButtonEnabled }
+            .distinctUntilChanged()
+            .bind(with: self, onNext: { owner, value in
+                if value {
+                    owner.rootView.emailCheckButton.setBackgroundColor(Constant.Color.brandGreen, for: .normal)
+                    owner.rootView.emailCheckButton.isUserInteractionEnabled = true
+                } else {
+                    owner.rootView.emailCheckButton.setBackgroundColor(Constant.Color.brandInactive, for: .normal)
+                    owner.rootView.emailCheckButton.isUserInteractionEnabled = false
+                }
+            })
+            .disposed(by: disposeBag)
+        
+        reactor.state.map { $0.signUpButtonEnabled }
+            .distinctUntilChanged()
+            .bind(with: self) { owner, value in
+                if value {
+                    owner.rootView.signUpButton.setBackgroundColor(Constant.Color.brandGreen, for: .normal)
+                    owner.rootView.signUpButton.isUserInteractionEnabled = true
+                } else {
+                    owner.rootView.signUpButton.setBackgroundColor(Constant.Color.brandInactive, for: .normal)
+                    owner.rootView.signUpButton.isUserInteractionEnabled = false
+                }
+            }
+            .disposed(by: disposeBag)
+    }
 }

@@ -28,5 +28,6 @@ final class SignUpCoordinator: Coordinator {
     
     func didFinish() {
         parentCoordinator?.removeCoordinator(child: self)
+        navigationController.popViewController(animated: true)
     }
 }

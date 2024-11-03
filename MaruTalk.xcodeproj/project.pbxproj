@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		444910DA2CD77315005AB2F7 /* SignUpReactor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 444910D92CD77315005AB2F7 /* SignUpReactor.swift */; };
 		444DE6B62CD0FC9D00821269 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 444DE6B52CD0FC9D00821269 /* AppDelegate.swift */; };
 		444DE6B82CD0FC9D00821269 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 444DE6B72CD0FC9D00821269 /* SceneDelegate.swift */; };
 		444DE6BA2CD0FC9D00821269 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 444DE6B92CD0FC9D00821269 /* ViewController.swift */; };
@@ -45,6 +46,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		444910D92CD77315005AB2F7 /* SignUpReactor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignUpReactor.swift; sourceTree = "<group>"; };
 		444DE6B22CD0FC9D00821269 /* MaruTalk.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = MaruTalk.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		444DE6B52CD0FC9D00821269 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		444DE6B72CD0FC9D00821269 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -263,6 +265,7 @@
 			isa = PBXGroup;
 			children = (
 				444DE7102CD6221A00821269 /* SignUpCoordinator.swift */,
+				444910D92CD77315005AB2F7 /* SignUpReactor.swift */,
 				444DE7122CD6222400821269 /* SignUpView.swift */,
 				444DE7142CD6222D00821269 /* SignUpViewController.swift */,
 			);
@@ -360,6 +363,7 @@
 				444DE7152CD6222D00821269 /* SignUpViewController.swift in Sources */,
 				444DE7132CD6222400821269 /* SignUpView.swift in Sources */,
 				444DE6D22CD1012700821269 /* APIKey.swift in Sources */,
+				444910DA2CD77315005AB2F7 /* SignUpReactor.swift in Sources */,
 				444DE6E92CD24E4100821269 /* BaseTableViewCell.swift in Sources */,
 				444DE6F42CD27B1600821269 /* UIButton+Extension.swift in Sources */,
 				444DE7082CD60BDD00821269 /* AuthCoordinator.swift in Sources */,
