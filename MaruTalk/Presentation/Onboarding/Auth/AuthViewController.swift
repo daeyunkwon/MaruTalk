@@ -7,11 +7,15 @@
 
 import UIKit
 
+import RxSwift
+import RxCocoa
+
 final class AuthViewController: BaseViewController<AuthView> {
     
     //MARK: - Properties
     
     weak var coordinator: AuthCoordinator?
+    private let disposeBag = DisposeBag()
     
     //MARK: - Life Cycle
     
@@ -24,8 +28,14 @@ final class AuthViewController: BaseViewController<AuthView> {
         coordinator?.didFinish()
     }
     
-    //MARK: - Methods
+    //MARK: - Bind
     
-
+    override func bind() {
+        rootView.signUpButton.rx.tap
+            .bind(with: self) { owner, _ in
+                owner.coordinator?.showSignUp()
+            }
+            .disposed(by: disposeBag)
+    }
 }
 

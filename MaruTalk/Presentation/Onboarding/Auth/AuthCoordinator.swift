@@ -40,6 +40,7 @@ final class AuthCoordinator: Coordinator {
     }
     
     func didFinish() {
+        navigationController.dismiss(animated: true)
         parentCoordinator?.removeCoordinator(child: self)
         
         //어두운 배경 제거
@@ -55,5 +56,20 @@ final class AuthCoordinator: Coordinator {
                 }
             }
         })
+    }
+    
+    deinit {
+        print("Auth deinit")
+    }
+}
+
+extension AuthCoordinator {
+    func showSignUp() {
+        didFinish()
+        
+        let child = SignUpCoordinator(navigationController: navigationController)
+        parentCoordinator?.childCoordinators.append(child)
+        child.parentCoordinator = self.parentCoordinator
+        child.start()
     }
 }

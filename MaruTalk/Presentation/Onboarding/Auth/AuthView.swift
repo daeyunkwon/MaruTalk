@@ -55,7 +55,7 @@ final class AuthView: BaseView {
         return btn
     }()
     
-    private let signUpButton: UIButton = {
+    let signUpButton: UIButton = {
         let btn = UIButton(type: .system)
         let attributedString = NSMutableAttributedString(string: "또는 ", attributes: [.foregroundColor: Constant.Color.brandBlack, .font: Constant.Font.title2])
         attributedString.append(NSAttributedString(string: "새롭게 회원가입 하기", attributes: [.foregroundColor: Constant.Color.brandGreen, .font: Constant.Font.title2]))
