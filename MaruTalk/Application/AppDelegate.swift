@@ -15,7 +15,28 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
         // Override point for customization after application launch.
         sleep(2)
+        
+        appearance()
+        
         return true
+    }
+    
+    func appearance() {
+        UINavigationBar.appearance().tintColor = Constant.Color.brandBlack
+        let appearance = UINavigationBarAppearance()
+        //배경색
+        appearance.configureWithOpaqueBackground() // 불투명한 배경 설정
+        appearance.backgroundColor = Constant.Color.backgroundSecondary
+        //타이틀
+        appearance.titleTextAttributes = [
+            .font: UIFont.systemFont(ofSize: 17, weight: .semibold),
+            .foregroundColor: Constant.Color.brandBlack
+        ]
+        //적용
+        UINavigationBar.appearance().standardAppearance = appearance
+        UINavigationBar.appearance().scrollEdgeAppearance = appearance
+        UINavigationBar.appearance().compactAppearance = appearance
+        UINavigationBar.appearance().isTranslucent = false
     }
 
     // MARK: UISceneSession Lifecycle
