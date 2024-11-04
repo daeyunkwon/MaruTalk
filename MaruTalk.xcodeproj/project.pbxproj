@@ -8,6 +8,8 @@
 
 /* Begin PBXBuildFile section */
 		444910DA2CD77315005AB2F7 /* SignUpReactor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 444910D92CD77315005AB2F7 /* SignUpReactor.swift */; };
+		444910DC2CD8AC5C005AB2F7 /* Router.swift in Sources */ = {isa = PBXBuildFile; fileRef = 444910DB2CD8AC5C005AB2F7 /* Router.swift */; };
+		444910DF2CD8AC9F005AB2F7 /* Alamofire in Frameworks */ = {isa = PBXBuildFile; productRef = 444910DE2CD8AC9F005AB2F7 /* Alamofire */; };
 		444DE6B62CD0FC9D00821269 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 444DE6B52CD0FC9D00821269 /* AppDelegate.swift */; };
 		444DE6B82CD0FC9D00821269 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 444DE6B72CD0FC9D00821269 /* SceneDelegate.swift */; };
 		444DE6BA2CD0FC9D00821269 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 444DE6B92CD0FC9D00821269 /* ViewController.swift */; };
@@ -47,6 +49,7 @@
 
 /* Begin PBXFileReference section */
 		444910D92CD77315005AB2F7 /* SignUpReactor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignUpReactor.swift; sourceTree = "<group>"; };
+		444910DB2CD8AC5C005AB2F7 /* Router.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Router.swift; sourceTree = "<group>"; };
 		444DE6B22CD0FC9D00821269 /* MaruTalk.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = MaruTalk.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		444DE6B52CD0FC9D00821269 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		444DE6B72CD0FC9D00821269 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -89,6 +92,7 @@
 				444DE6FE2CD36B4200821269 /* RxRelay in Frameworks */,
 				444DE6FC2CD36B4200821269 /* RxCocoa in Frameworks */,
 				444DE7002CD36B4200821269 /* RxSwift in Frameworks */,
+				444910DF2CD8AC9F005AB2F7 /* Alamofire in Frameworks */,
 				444DE71C2CD7720600821269 /* ReactorKit in Frameworks */,
 				444DE6DA2CD10A7A00821269 /* SnapKit in Frameworks */,
 			);
@@ -230,6 +234,7 @@
 			isa = PBXGroup;
 			children = (
 				444DE6D12CD1012700821269 /* APIKey.swift */,
+				444910DB2CD8AC5C005AB2F7 /* Router.swift */,
 			);
 			path = Network;
 			sourceTree = "<group>";
@@ -294,6 +299,7 @@
 				444DE6FD2CD36B4200821269 /* RxRelay */,
 				444DE6FF2CD36B4200821269 /* RxSwift */,
 				444DE71B2CD7720600821269 /* ReactorKit */,
+				444910DE2CD8AC9F005AB2F7 /* Alamofire */,
 			);
 			productName = MaruTalk;
 			productReference = 444DE6B22CD0FC9D00821269 /* MaruTalk.app */;
@@ -327,6 +333,7 @@
 				444DE6D82CD10A7A00821269 /* XCRemoteSwiftPackageReference "SnapKit" */,
 				444DE6FA2CD36B4200821269 /* XCRemoteSwiftPackageReference "RxSwift" */,
 				444DE71A2CD7720600821269 /* XCRemoteSwiftPackageReference "ReactorKit" */,
+				444910DD2CD8AC9F005AB2F7 /* XCRemoteSwiftPackageReference "Alamofire" */,
 			);
 			productRefGroup = 444DE6B32CD0FC9D00821269 /* Products */;
 			projectDirPath = "";
@@ -376,6 +383,7 @@
 				444DE6B82CD0FC9D00821269 /* SceneDelegate.swift in Sources */,
 				444DE6E52CD121AA00821269 /* BaseView.swift in Sources */,
 				444DE7042CD6093000821269 /* AppCoordinator.swift in Sources */,
+				444910DC2CD8AC5C005AB2F7 /* Router.swift in Sources */,
 				444DE6D52CD1022600821269 /* Reusable.swift in Sources */,
 				444DE6EB2CD24F1D00821269 /* BaseCollectionViewCell.swift in Sources */,
 				444DE6D72CD102DD00821269 /* Constant.swift in Sources */,
@@ -607,6 +615,14 @@
 /* End XCConfigurationList section */
 
 /* Begin XCRemoteSwiftPackageReference section */
+		444910DD2CD8AC9F005AB2F7 /* XCRemoteSwiftPackageReference "Alamofire" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/Alamofire/Alamofire";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 5.10.1;
+			};
+		};
 		444DE6D82CD10A7A00821269 /* XCRemoteSwiftPackageReference "SnapKit" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/SnapKit/SnapKit";
@@ -634,6 +650,11 @@
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
+		444910DE2CD8AC9F005AB2F7 /* Alamofire */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 444910DD2CD8AC9F005AB2F7 /* XCRemoteSwiftPackageReference "Alamofire" */;
+			productName = Alamofire;
+		};
 		444DE6D92CD10A7A00821269 /* SnapKit */ = {
 			isa = XCSwiftPackageProductDependency;
 			package = 444DE6D82CD10A7A00821269 /* XCRemoteSwiftPackageReference "SnapKit" */;
