@@ -12,6 +12,9 @@
 		444910DF2CD8AC9F005AB2F7 /* Alamofire in Frameworks */ = {isa = PBXBuildFile; productRef = 444910DE2CD8AC9F005AB2F7 /* Alamofire */; };
 		444910E12CD8B072005AB2F7 /* BodyKey.swift in Sources */ = {isa = PBXBuildFile; fileRef = 444910E02CD8B072005AB2F7 /* BodyKey.swift */; };
 		444910E32CD8B258005AB2F7 /* NetworkManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 444910E22CD8B258005AB2F7 /* NetworkManager.swift */; };
+		444910E52CD8E0B1005AB2F7 /* NetworkError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 444910E42CD8E0B1005AB2F7 /* NetworkError.swift */; };
+		444910E72CD8E734005AB2F7 /* UIViewController+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 444910E62CD8E734005AB2F7 /* UIViewController+Extension.swift */; };
+		444910E92CD8F04B005AB2F7 /* SLPErrorResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 444910E82CD8F04B005AB2F7 /* SLPErrorResponse.swift */; };
 		444DE6B62CD0FC9D00821269 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 444DE6B52CD0FC9D00821269 /* AppDelegate.swift */; };
 		444DE6B82CD0FC9D00821269 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 444DE6B72CD0FC9D00821269 /* SceneDelegate.swift */; };
 		444DE6BA2CD0FC9D00821269 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 444DE6B92CD0FC9D00821269 /* ViewController.swift */; };
@@ -54,6 +57,9 @@
 		444910DB2CD8AC5C005AB2F7 /* Router.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Router.swift; sourceTree = "<group>"; };
 		444910E02CD8B072005AB2F7 /* BodyKey.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BodyKey.swift; sourceTree = "<group>"; };
 		444910E22CD8B258005AB2F7 /* NetworkManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkManager.swift; sourceTree = "<group>"; };
+		444910E42CD8E0B1005AB2F7 /* NetworkError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkError.swift; sourceTree = "<group>"; };
+		444910E62CD8E734005AB2F7 /* UIViewController+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIViewController+Extension.swift"; sourceTree = "<group>"; };
+		444910E82CD8F04B005AB2F7 /* SLPErrorResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SLPErrorResponse.swift; sourceTree = "<group>"; };
 		444DE6B22CD0FC9D00821269 /* MaruTalk.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = MaruTalk.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		444DE6B52CD0FC9D00821269 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		444DE6B72CD0FC9D00821269 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -207,6 +213,7 @@
 				444DE6E12CD1207300821269 /* UIView+Extension.swift */,
 				444DE6DC2CD112EE00821269 /* UILabel+Extension.swift */,
 				444DE6F32CD27B1600821269 /* UIButton+Extension.swift */,
+				444910E62CD8E734005AB2F7 /* UIViewController+Extension.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -240,6 +247,8 @@
 				444DE6D12CD1012700821269 /* APIKey.swift */,
 				444910E02CD8B072005AB2F7 /* BodyKey.swift */,
 				444910DB2CD8AC5C005AB2F7 /* Router.swift */,
+				444910E42CD8E0B1005AB2F7 /* NetworkError.swift */,
+				444910E82CD8F04B005AB2F7 /* SLPErrorResponse.swift */,
 				444910E22CD8B258005AB2F7 /* NetworkManager.swift */,
 			);
 			path = Network;
@@ -369,16 +378,19 @@
 			buildActionMask = 2147483647;
 			files = (
 				444DE7192CD74D7E00821269 /* CustomHandleNavigationBar.swift in Sources */,
+				444910E52CD8E0B1005AB2F7 /* NetworkError.swift in Sources */,
 				444DE6BA2CD0FC9D00821269 /* ViewController.swift in Sources */,
 				444DE7112CD6221A00821269 /* SignUpCoordinator.swift in Sources */,
 				444DE6B62CD0FC9D00821269 /* AppDelegate.swift in Sources */,
 				444DE6E72CD24C1F00821269 /* BaseViewController.swift in Sources */,
 				444DE7152CD6222D00821269 /* SignUpViewController.swift in Sources */,
+				444910E92CD8F04B005AB2F7 /* SLPErrorResponse.swift in Sources */,
 				444DE7132CD6222400821269 /* SignUpView.swift in Sources */,
 				444DE6D22CD1012700821269 /* APIKey.swift in Sources */,
 				444910DA2CD77315005AB2F7 /* SignUpReactor.swift in Sources */,
 				444DE6E92CD24E4100821269 /* BaseTableViewCell.swift in Sources */,
 				444DE6F42CD27B1600821269 /* UIButton+Extension.swift in Sources */,
+				444910E72CD8E734005AB2F7 /* UIViewController+Extension.swift in Sources */,
 				444DE7082CD60BDD00821269 /* AuthCoordinator.swift in Sources */,
 				444DE7022CD4D2A700821269 /* Coordinator.swift in Sources */,
 				444DE7172CD6251100821269 /* TitleWithInputFieldView.swift in Sources */,
