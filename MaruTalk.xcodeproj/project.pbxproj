@@ -10,6 +10,8 @@
 		444910DA2CD77315005AB2F7 /* SignUpReactor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 444910D92CD77315005AB2F7 /* SignUpReactor.swift */; };
 		444910DC2CD8AC5C005AB2F7 /* Router.swift in Sources */ = {isa = PBXBuildFile; fileRef = 444910DB2CD8AC5C005AB2F7 /* Router.swift */; };
 		444910DF2CD8AC9F005AB2F7 /* Alamofire in Frameworks */ = {isa = PBXBuildFile; productRef = 444910DE2CD8AC9F005AB2F7 /* Alamofire */; };
+		444910E12CD8B072005AB2F7 /* BodyKey.swift in Sources */ = {isa = PBXBuildFile; fileRef = 444910E02CD8B072005AB2F7 /* BodyKey.swift */; };
+		444910E32CD8B258005AB2F7 /* NetworkManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 444910E22CD8B258005AB2F7 /* NetworkManager.swift */; };
 		444DE6B62CD0FC9D00821269 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 444DE6B52CD0FC9D00821269 /* AppDelegate.swift */; };
 		444DE6B82CD0FC9D00821269 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 444DE6B72CD0FC9D00821269 /* SceneDelegate.swift */; };
 		444DE6BA2CD0FC9D00821269 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 444DE6B92CD0FC9D00821269 /* ViewController.swift */; };
@@ -50,6 +52,8 @@
 /* Begin PBXFileReference section */
 		444910D92CD77315005AB2F7 /* SignUpReactor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignUpReactor.swift; sourceTree = "<group>"; };
 		444910DB2CD8AC5C005AB2F7 /* Router.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Router.swift; sourceTree = "<group>"; };
+		444910E02CD8B072005AB2F7 /* BodyKey.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BodyKey.swift; sourceTree = "<group>"; };
+		444910E22CD8B258005AB2F7 /* NetworkManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkManager.swift; sourceTree = "<group>"; };
 		444DE6B22CD0FC9D00821269 /* MaruTalk.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = MaruTalk.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		444DE6B52CD0FC9D00821269 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		444DE6B72CD0FC9D00821269 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -234,7 +238,9 @@
 			isa = PBXGroup;
 			children = (
 				444DE6D12CD1012700821269 /* APIKey.swift */,
+				444910E02CD8B072005AB2F7 /* BodyKey.swift */,
 				444910DB2CD8AC5C005AB2F7 /* Router.swift */,
+				444910E22CD8B258005AB2F7 /* NetworkManager.swift */,
 			);
 			path = Network;
 			sourceTree = "<group>";
@@ -377,8 +383,10 @@
 				444DE7022CD4D2A700821269 /* Coordinator.swift in Sources */,
 				444DE7172CD6251100821269 /* TitleWithInputFieldView.swift in Sources */,
 				444DE6E22CD1207300821269 /* UIView+Extension.swift in Sources */,
+				444910E12CD8B072005AB2F7 /* BodyKey.swift in Sources */,
 				444DE6E02CD11FC100821269 /* OnboardingViewController.swift in Sources */,
 				444DE6DD2CD112EE00821269 /* UILabel+Extension.swift in Sources */,
+				444910E32CD8B258005AB2F7 /* NetworkManager.swift in Sources */,
 				444DE7062CD609FC00821269 /* OnboardingCoordinator.swift in Sources */,
 				444DE6B82CD0FC9D00821269 /* SceneDelegate.swift in Sources */,
 				444DE6E52CD121AA00821269 /* BaseView.swift in Sources */,
