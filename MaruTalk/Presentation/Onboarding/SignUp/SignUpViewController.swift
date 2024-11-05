@@ -56,7 +56,7 @@ final class SignUpViewController: BaseViewController<SignUpView>, View {
 //MARK: - Bind Action
 
 extension SignUpViewController {
-    private func bindAction(reactor: Reactor) {
+    private func bindAction(reactor: SignUpReactor) {
         rootView.customNaviBar.items?[0].leftBarButtonItem?.rx.tap
             .map { Reactor.Action.closeButtonTapped }
             .bind(to: reactor.action)
@@ -84,6 +84,11 @@ extension SignUpViewController {
         
         rootView.passwordCheckFieldView.inputTextField.rx.text.orEmpty
             .map { Reactor.Action.inputPasswordCheck($0) }
+            .bind(to: reactor.action)
+            .disposed(by: disposeBag)
+        
+        rootView.emailCheckButton.rx.tap
+            .map { Reactor.Action.emailCheckButtonTapped }
             .bind(to: reactor.action)
             .disposed(by: disposeBag)
     }
@@ -125,6 +130,20 @@ extension SignUpViewController {
                     owner.rootView.signUpButton.setBackgroundColor(Constant.Color.brandInactive, for: .normal)
                     owner.rootView.signUpButton.isUserInteractionEnabled = false
                 }
+            }
+            .disposed(by: disposeBag)
+        
+        reactor.state.map { $0.toastMessage }
+            .filter { !$0.isEmpty }
+            .bind(with: self) { owner, value in
+                owner.showToastMessage(message: value)
+            }
+            .disposed(by: disposeBag)
+        
+        reactor.state.map { $0.networkError }
+            .filter { $0.0 != .empty }
+            .bind(with: self) { owner, value in
+                owner.showToastForNetworkError(api: value.0, errorCode: value.1)
             }
             .disposed(by: disposeBag)
     }

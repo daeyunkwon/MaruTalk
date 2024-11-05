@@ -11,6 +11,9 @@ import ReactorKit
 import RxSwift
 
 final class SignUpReactor: Reactor {
+    
+    private let disposeBag = DisposeBag()
+    
     //사용자가 UI에서 수행할 수 있는 작업
     enum Action {
         case closeButtonTapped
@@ -30,9 +33,13 @@ final class SignUpReactor: Reactor {
         case passwordCheckValue(String)
         case setEmailDuplicateCheckButtonEnabled(Bool)
         case setSignUpButtonEnabled(Bool)
+        case setEmailDuplicateStatus(Bool)
+        case setEmailValid(Bool)
+        case toastMessageValue(String)
+        case setNetworkError((Router.APIType, String?))
         case close
     }
-    //UI에 표시할 데이터
+    //상태 데이터
     struct State {
         var email = ""
         var nickname = ""
@@ -42,13 +49,18 @@ final class SignUpReactor: Reactor {
         var emailDuplicateCheckButtonEnabled = false
         var signUpButtonEnabled = false
         var shouldClose = false
+        var isEmailDuplicateCheckPassed = false //true일 경우 중복 검사 통과로 인식
+        var isEmailValid = false
+        
+        var toastMessage: (String) = ""
+        var networkError: (Router.APIType, String?) = (Router.APIType.empty, nil)
     }
     
     let initialState: State = State()
     
-//    init(initialState: State) {
-//        self.initialState = initialState
-//    }
+    //    init(initialState: State) {
+    //        self.initialState = initialState
+    //    }
 }
 
 //MARK: - Mutate
@@ -62,17 +74,36 @@ extension SignUpReactor {
         case .inputEmail(let value):
             let isEmailCheckButtonEnabled = isEmailDuplicateCheckButtonEnabled(email: value)
             let isEnabled = isSignUpButtonEnabled(email: value, nickname: currentState.nickname, phoneNumber: currentState.phoneNumber, password: currentState.password, passwordCheck: currentState.passwordCheck)
+            let isValid = isValidEmail(email: value)
             
             return Observable.concat([
-                Observable.just(Mutation.emailValue(value)),
-                Observable.just(Mutation.setEmailDuplicateCheckButtonEnabled(isEmailCheckButtonEnabled)),
-                .just(Mutation.setSignUpButtonEnabled(isEnabled))
+                .just(Mutation.emailValue(value)),
+                .just(.setEmailDuplicateCheckButtonEnabled(isEmailCheckButtonEnabled)),
+                .just(.setSignUpButtonEnabled(isEnabled)),
+                .just(.setEmailDuplicateStatus(false)),
+                .just(.setEmailValid(isValid))
             ])
             
         case .emailCheckButtonTapped:
-            return .just(Mutation.close) //임시
+            //앞서 이메일 형식이 유효 여부 고려
+            if currentState.isEmailValid {
+                //중복 체크 이미 통과한 경우 고려
+                if !currentState.isEmailDuplicateCheckPassed {
+                    return checkEmailDuplication(email: currentState.email)
+                } else {
+                    return .concat([
+                        .just(.toastMessageValue("사용 가능한 이메일입니다.")),
+                        .just(.toastMessageValue(""))
+                    ])
+                }
+            } else {
+                return .concat([
+                    .just(.toastMessageValue("이메일 형식이 올바르지 않습니다.")),
+                    .just(.toastMessageValue(""))
+                ])
+            }
             
-        case .inputNickname(let value): 
+        case .inputNickname(let value):
             let isEnabled = isSignUpButtonEnabled(email: currentState.email, nickname: value, phoneNumber: currentState.phoneNumber, password: currentState.password, passwordCheck: currentState.passwordCheck)
             return .merge(.just(Mutation.nicknameValue(value)), .just(Mutation.setSignUpButtonEnabled(isEnabled)))
             
@@ -99,7 +130,7 @@ extension SignUpReactor {
         switch mutation {
         case .emailValue(let value):
             newState.email = value
-        
+            
         case .setEmailDuplicateCheckButtonEnabled(let value):
             newState.emailDuplicateCheckButtonEnabled = value
             
@@ -120,6 +151,18 @@ extension SignUpReactor {
             
         case .setSignUpButtonEnabled(let value):
             newState.signUpButtonEnabled = value
+            
+        case .setEmailDuplicateStatus(let value):
+            newState.isEmailDuplicateCheckPassed = value
+            
+        case .setEmailValid(let value):
+            newState.isEmailValid = value
+            
+        case .toastMessageValue(let value):
+            newState.toastMessage = value
+            
+        case .setNetworkError(let value):
+            newState.networkError = value
         }
         return newState
     }
@@ -138,5 +181,37 @@ extension SignUpReactor {
     
     private func isSignUpButtonEnabled(email: String, nickname: String, phoneNumber: String, password: String, passwordCheck: String) -> Bool {
         return !email.trimmingCharacters(in: .whitespaces).isEmpty && !nickname.trimmingCharacters(in: .whitespaces).isEmpty && !phoneNumber.trimmingCharacters(in: .whitespaces).isEmpty && !password.trimmingCharacters(in: .whitespaces).isEmpty && !passwordCheck.trimmingCharacters(in: .whitespaces).isEmpty
+    }
+    
+    //이메일 형식 유효성 검사
+    private func isValidEmail(email: String) -> Bool {
+        let emailRegEx = "[A-Z0-9a-z._%+-]+@[A-Za-z0-9.-]+\\.[A-Za-z]{2,}"
+        let emailTest = NSPredicate(format: "SELF MATCHES %@", emailRegEx)
+        return emailTest.evaluate(with: email)
+    }
+    
+    //이메일 중복 체크
+    private func checkEmailDuplication(email: String) -> Observable<Mutation> {
+        return NetworkManager.shared.checkEmailDuplication(email: email)
+            .asObservable()
+            .flatMap { result -> Observable<Mutation> in
+                switch result {
+                case .success:
+                    return .concat([
+                        .just(.setEmailDuplicateStatus(true)),
+                        .just(.toastMessageValue("사용 가능한 이메일입니다.")),
+                        .just(.toastMessageValue(""))
+                    ])
+                    
+                case .failure(let error):
+                    let errorValue = (Router.APIType.emailValidation, error.errorCode)
+                    
+                    return .concat([
+                        .just(.setEmailDuplicateStatus(false)),
+                        .just(.setNetworkError(errorValue)),
+                        .just(.setNetworkError((Router.APIType.empty, nil)))
+                    ])
+                }
+            }
     }
 }

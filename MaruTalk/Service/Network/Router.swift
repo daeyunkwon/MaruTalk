@@ -11,6 +11,12 @@ import Alamofire
 
 enum Router {
     case emailValidation(String)
+    
+    
+    enum APIType {
+        case empty //초기화용 빈 값
+        case emailValidation
+    }
 }
 
 extension Router: URLRequestConvertible {

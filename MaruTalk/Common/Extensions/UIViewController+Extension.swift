@@ -7,34 +7,52 @@
 
 import UIKit
 
+import Toast
+
 extension UIViewController {
-    func showAlertForNetworkError(api: Router, errorCode: String?) {
+    //Alert
+    func showToastForNetworkError(api: Router.APIType, errorCode: String?) {
+        var style = ToastStyle()
+        style.backgroundColor = Constant.Color.brandRed
+        style.maxHeightPercentage = 36.0
+        style.messageAlignment = .center
+        style.titleAlignment = .center
+        style.cornerRadius = 8
+        let x = (view.bounds.width / 2)
+        let y: Double = 711
         
-        var message: String = "알 수 없는 오류가 발생했습니다. 잠시 후 다시 시도해주세요."
+        var message: String = "에러가 발생했어요. 잠시 후 다시 시도해주세요."
         
         guard let errorCode = errorCode else {
-            let alert = UIAlertController(title: "시스템 오류 알림", message: message, preferredStyle: .alert)
-            alert.addAction(UIAlertAction(title: "확인", style: .cancel))
-            present(alert, animated: true)
+            view.makeToast(message, point: CGPoint(x: x, y: y), title: nil, image: nil, style: style, completion: nil)
             return
         }
         
-        
         switch api {
-        case .emailValidation(_):
+        case .emailValidation:
             switch errorCode {
             case "E11": message = "이메일 형식이 올바르지 않습니다."
             case "E12": message = "이미 사용중인 이메일 주소입니다."
             default: break
             }
+            
+        default: break
         }
         
+        view.makeToast(message, point: CGPoint(x: x, y: y), title: nil, image: nil, style: style, completion: nil)
+    }
+    
+    //Toast
+    func showToastMessage(message: String) {
+        var style = ToastStyle()
+        style.backgroundColor = Constant.Color.brandGreen
+        style.maxHeightPercentage = 36.0
+        style.messageAlignment = .center
+        style.titleAlignment = .center
+        style.cornerRadius = 8
         
-        
-        
-        
-        let alert = UIAlertController(title: "시스템 오류 알림", message: message, preferredStyle: .alert)
-        alert.addAction(UIAlertAction(title: "확인", style: .cancel))
-        present(alert, animated: true)
+        let x = (view.bounds.width / 2)
+        let y: Double = 711
+        view.makeToast(message, point: CGPoint(x: x, y: y), title: nil, image: nil, style: style, completion: nil)
     }
 }
