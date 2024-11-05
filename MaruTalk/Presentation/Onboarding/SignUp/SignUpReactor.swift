@@ -31,10 +31,14 @@ final class SignUpReactor: Reactor {
         case phoneNumberValue(String)
         case passwordValue(String)
         case passwordCheckValue(String)
+        
         case setEmailDuplicateCheckButtonEnabled(Bool)
         case setSignUpButtonEnabled(Bool)
         case setEmailDuplicateStatus(Bool)
+        
         case setEmailValid(Bool)
+        case setNicknameValid(Bool)
+        
         case toastMessageValue(String)
         case setNetworkError((Router.APIType, String?))
         case close
@@ -46,11 +50,14 @@ final class SignUpReactor: Reactor {
         var phoneNumber = ""
         var password = ""
         var passwordCheck = ""
+        
         var emailDuplicateCheckButtonEnabled = false
         var signUpButtonEnabled = false
         var shouldClose = false
         var isEmailDuplicateCheckPassed = false //true일 경우 중복 검사 통과로 인식
+        
         var isEmailValid = false
+        var isNicknameValid = false
         
         var toastMessage: (String) = ""
         var networkError: (Router.APIType, String?) = (Router.APIType.empty, nil)
@@ -105,19 +112,33 @@ extension SignUpReactor {
             
         case .inputNickname(let value):
             let isEnabled = isSignUpButtonEnabled(email: currentState.email, nickname: value, phoneNumber: currentState.phoneNumber, password: currentState.password, passwordCheck: currentState.passwordCheck)
-            return .merge(.just(Mutation.nicknameValue(value)), .just(Mutation.setSignUpButtonEnabled(isEnabled)))
+            let isValid = isValidNickname(nickname: value)
+            return .merge(
+                .just(Mutation.nicknameValue(value)),
+                .just(Mutation.setSignUpButtonEnabled(isEnabled)),
+                .just(.setNicknameValid(isValid))
+            )
             
         case .inputPhoneNumber(let value):
             let isEnabled = isSignUpButtonEnabled(email: currentState.email, nickname: currentState.nickname, phoneNumber: value, password: currentState.password, passwordCheck: currentState.passwordCheck)
-            return .merge(.just(Mutation.phoneNumberValue(value)), .just(Mutation.setSignUpButtonEnabled(isEnabled)))
+            return .merge(
+                .just(Mutation.phoneNumberValue(value)),
+                .just(Mutation.setSignUpButtonEnabled(isEnabled))
+            )
             
         case .inputPassword(let value):
             let isEnabled = isSignUpButtonEnabled(email: currentState.email, nickname: currentState.nickname, phoneNumber: currentState.phoneNumber, password: value, passwordCheck: currentState.passwordCheck)
-            return .merge(.just(Mutation.passwordValue(value)), .just(Mutation.setSignUpButtonEnabled(isEnabled)))
+            return .merge(
+                .just(Mutation.passwordValue(value)),
+                .just(Mutation.setSignUpButtonEnabled(isEnabled))
+            )
             
         case .inputPasswordCheck(let value):
             let isEnabled = isSignUpButtonEnabled(email: currentState.email, nickname: currentState.nickname, phoneNumber: currentState.phoneNumber, password: currentState.password, passwordCheck: value)
-            return .concat(.just(Mutation.passwordCheckValue(value)), .just(Mutation.setSignUpButtonEnabled(isEnabled)))
+            return .concat(
+                .just(Mutation.passwordCheckValue(value)),
+                .just(Mutation.setSignUpButtonEnabled(isEnabled))
+            )
         }
     }
 }
@@ -163,6 +184,9 @@ extension SignUpReactor {
             
         case .setNetworkError(let value):
             newState.networkError = value
+        
+        case .setNicknameValid(let value):
+            newState.isNicknameValid = value
         }
         return newState
     }
@@ -213,5 +237,17 @@ extension SignUpReactor {
                     ])
                 }
             }
+    }
+    
+    //닉네임 유효성 검사(닉네임 조건 최소 1글자 최대 30글자)
+    private func isValidNickname(nickname: String) -> Bool {
+        guard !nickname.trimmingCharacters(in: .whitespaces).isEmpty else {
+            return false
+        }
+        
+        if nickname.count >= 1 && nickname.count <= 30 {
+            return true
+        }
+        return false
     }
 }
