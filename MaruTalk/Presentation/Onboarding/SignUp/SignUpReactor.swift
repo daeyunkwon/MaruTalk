@@ -113,6 +113,7 @@ extension SignUpReactor {
         case .inputNickname(let value):
             let isEnabled = isSignUpButtonEnabled(email: currentState.email, nickname: value, phoneNumber: currentState.phoneNumber, password: currentState.password, passwordCheck: currentState.passwordCheck)
             let isValid = isValidNickname(nickname: value)
+            
             return .merge(
                 .just(Mutation.nicknameValue(value)),
                 .just(Mutation.setSignUpButtonEnabled(isEnabled)),
@@ -121,6 +122,8 @@ extension SignUpReactor {
             
         case .inputPhoneNumber(let value):
             let isEnabled = isSignUpButtonEnabled(email: currentState.email, nickname: currentState.nickname, phoneNumber: value, password: currentState.password, passwordCheck: currentState.passwordCheck)
+            let isValid = isValidPhoneNumber(phoneNumber: value)
+            
             return .merge(
                 .just(Mutation.phoneNumberValue(value)),
                 .just(Mutation.setSignUpButtonEnabled(isEnabled))
@@ -249,5 +252,12 @@ extension SignUpReactor {
             return true
         }
         return false
+    }
+    
+    //전화번호 유효성 검사
+    private func isValidPhoneNumber(phoneNumber: String) -> Bool {
+        let numberRegEx = "[0]+[1]+[0-9]{8,9}"
+        let numberTest = NSPredicate(format: "SELF MATCHES %@", numberRegEx)
+        return numberTest.evaluate(with: phoneNumber)
     }
 }
