@@ -38,6 +38,7 @@ final class SignUpReactor: Reactor {
         
         case setEmailValid(Bool)
         case setNicknameValid(Bool)
+        case setPhoneNumberValid(Bool)
         
         case toastMessageValue(String)
         case setNetworkError((Router.APIType, String?))
@@ -58,6 +59,7 @@ final class SignUpReactor: Reactor {
         
         var isEmailValid = false
         var isNicknameValid = false
+        var isPhoneNumberValid = false
         
         var toastMessage: (String) = ""
         var networkError: (Router.APIType, String?) = (Router.APIType.empty, nil)
@@ -123,10 +125,12 @@ extension SignUpReactor {
         case .inputPhoneNumber(let value):
             let isEnabled = isSignUpButtonEnabled(email: currentState.email, nickname: currentState.nickname, phoneNumber: value, password: currentState.password, passwordCheck: currentState.passwordCheck)
             let isValid = isValidPhoneNumber(phoneNumber: value)
+            let formatValue = formatPhoneNumber(phoneNumber: value)
             
             return .merge(
-                .just(Mutation.phoneNumberValue(value)),
-                .just(Mutation.setSignUpButtonEnabled(isEnabled))
+                .just(Mutation.phoneNumberValue(formatValue)),
+                .just(Mutation.setSignUpButtonEnabled(isEnabled)),
+                .just(.setPhoneNumberValid(isValid))
             )
             
         case .inputPassword(let value):
@@ -181,15 +185,18 @@ extension SignUpReactor {
             
         case .setEmailValid(let value):
             newState.isEmailValid = value
+        
+        case .setNicknameValid(let value):
+            newState.isNicknameValid = value
+            
+        case .setPhoneNumberValid(let value):
+            newState.isPhoneNumberValid = value
             
         case .toastMessageValue(let value):
             newState.toastMessage = value
             
         case .setNetworkError(let value):
             newState.networkError = value
-        
-        case .setNicknameValid(let value):
-            newState.isNicknameValid = value
         }
         return newState
     }
@@ -256,8 +263,34 @@ extension SignUpReactor {
     
     //전화번호 유효성 검사
     private func isValidPhoneNumber(phoneNumber: String) -> Bool {
+        let digits = phoneNumber.components(separatedBy: CharacterSet.decimalDigits.inverted).joined()
+        
         let numberRegEx = "[0]+[1]+[0-9]{8,9}"
         let numberTest = NSPredicate(format: "SELF MATCHES %@", numberRegEx)
-        return numberTest.evaluate(with: phoneNumber)
+        return numberTest.evaluate(with: digits)
+    }
+    
+    //전화번호 표시 형식 변환
+    private func formatPhoneNumber(phoneNumber: String) -> String {
+        var digits = phoneNumber.components(separatedBy: CharacterSet.decimalDigits.inverted).joined()
+        let digitsCount = digits.count //하이픈 없이 숫자만 있는 개수
+        
+        if digitsCount > 3 {
+            let startIndex = digits.startIndex
+            digits.insert("-", at: digits.index(startIndex, offsetBy: 3))
+            
+            if digitsCount > 6 {
+                digits.insert("-", at: digits.index(startIndex, offsetBy: 6 + 1))
+            }
+            
+            if digitsCount > 10 {
+                digits.remove(at: digits.index(startIndex, offsetBy: 6 + 1))
+                digits.insert("-", at: digits.index(startIndex, offsetBy: 7 + 1))
+            }
+            
+            return digits
+        }
+        
+        return phoneNumber //아무 작업없이 그대로 반환
     }
 }

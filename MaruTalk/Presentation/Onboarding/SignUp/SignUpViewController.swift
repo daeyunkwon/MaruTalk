@@ -120,6 +120,11 @@ extension SignUpViewController {
             })
             .disposed(by: disposeBag)
         
+        reactor.state.map { $0.phoneNumber }
+            .distinctUntilChanged()
+            .bind(to: rootView.phoneNumberFieldView.inputTextField.rx.text)
+            .disposed(by: disposeBag)
+        
         reactor.state.map { $0.signUpButtonEnabled }
             .distinctUntilChanged()
             .bind(with: self) { owner, value in
