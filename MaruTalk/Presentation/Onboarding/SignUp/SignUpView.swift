@@ -147,8 +147,10 @@ final class SignUpView: BaseView {
     
     override func configureUI() {
         backgroundColor = Constant.Color.brandBlack
-        passwordFieldView.inputTextField.delegate = self
-        passwordCheckFieldView.inputTextField.delegate = self
+        
+        [emailFieldView, nicknameFieldView, phoneNumberFieldView, passwordFieldView, passwordCheckFieldView].forEach {
+            $0.inputTextField.delegate = self
+        }
     }
     
     //MARK: - Methods
@@ -164,12 +166,10 @@ extension SignUpView: UITextFieldDelegate {
     
     func textFieldDidBeginEditing(_ textField: UITextField) {
         //화면 스크롤 조작
-        if textField == passwordFieldView.inputTextField {
+        if textField == passwordFieldView.inputTextField || textField == passwordCheckFieldView.inputTextField {
             scrollToOffset(x: 0, y: 200, animated: true)
-        }
-        
-        if textField == passwordCheckFieldView.inputTextField {
-            scrollToOffset(x: 0, y: 200, animated: true)
+        } else {
+            scrollToOffset(x: 0, y: 0, animated: true)
         }
     }
 }

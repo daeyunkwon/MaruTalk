@@ -91,6 +91,11 @@ extension SignUpViewController {
             .map { Reactor.Action.emailCheckButtonTapped }
             .bind(to: reactor.action)
             .disposed(by: disposeBag)
+        
+        rootView.signUpButton.rx.tap
+            .map { Reactor.Action.signUpButtonTapped }
+            .bind(to: reactor.action)
+            .disposed(by: disposeBag)
     }
 }
 
@@ -149,6 +154,46 @@ extension SignUpViewController {
             .filter { $0.0 != .empty }
             .bind(with: self) { owner, value in
                 owner.showToastForNetworkError(api: value.0, errorCode: value.1)
+            }
+            .disposed(by: disposeBag)
+        
+        reactor.state.map { ($0.isSignUpInProgress, $0.validationStates) }
+            .filter { $0.0 == true }
+            .map { $0.1 }
+            .bind(with: self) { owner, validationStates in
+                var didShowToastMessage = false
+                
+                let fieldViews = [
+                    owner.rootView.emailFieldView,
+                    owner.rootView.nicknameFieldView,
+                    owner.rootView.phoneNumberFieldView,
+                    owner.rootView.passwordFieldView,
+                    owner.rootView.passwordCheckFieldView
+                ]
+                
+                for (index, isValid) in validationStates.enumerated() {
+                    let fieldView = fieldViews[index]
+                    
+                    fieldView.titleLabel.textColor = isValid ? Constant.Color.brandBlack : Constant.Color.brandRed
+                    
+                    if !isValid && !didShowToastMessage {
+                        
+                        var message: String
+                        
+                        switch index {
+                        case 0: message = "이메일 중복 확인을 진행해주세요."
+                        case 1: message = "닉네임은 1글자 이상 30글자 이내로 부탁드려요."
+                        case 2: message = "잘못된 전화번호 형식입니다."
+                        case 3: message = "비밀번호는 최소 8자 이상, 하나 이상의 대소문자/숫자/특수 문자를 설정해주세요."
+                        case 4: message = "작성하신 비밀번호가 일치하지 않습니다."
+                        default: message = "이메일 중복 확인을 진행해주세요."
+                        }
+                        
+                        owner.showToastMessage(message: message, backgroundColor: Constant.Color.brandRed)
+                        fieldView.inputTextField.becomeFirstResponder()
+                        didShowToastMessage = true
+                    }
+                }
             }
             .disposed(by: disposeBag)
     }

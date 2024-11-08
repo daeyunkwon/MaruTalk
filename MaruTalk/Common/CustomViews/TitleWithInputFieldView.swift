@@ -13,7 +13,7 @@ final class TitleWithInputFieldView: UIView {
     
     //MARK: - UI Components
     
-    private let titleLabel: UILabel = {
+    let titleLabel: UILabel = {
         let label = UILabel()
         label.textColor = Constant.Color.brandBlack
         label.font = Constant.Font.title2

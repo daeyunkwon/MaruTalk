@@ -23,6 +23,7 @@ final class SignUpReactor: Reactor {
         case inputPhoneNumber(String)
         case inputPassword(String)
         case inputPasswordCheck(String)
+        case signUpButtonTapped
     }
     //Action을 처리할 때 발생하는 상태 변화를 정의
     enum Mutation {
@@ -42,6 +43,8 @@ final class SignUpReactor: Reactor {
         case setPasswordValid(Bool)
         case setPasswordCheckValid(Bool)
         
+        case setSignUpInProgress(Bool)
+        case setValidationStates([Bool])
         case toastMessageValue(String)
         case setNetworkError((Router.APIType, String?))
         case close
@@ -67,6 +70,9 @@ final class SignUpReactor: Reactor {
         
         var toastMessage: (String) = ""
         var networkError: (Router.APIType, String?) = (Router.APIType.empty, nil)
+        
+        var validationStates: [Bool] = []
+        var isSignUpInProgress = false
     }
     
     let initialState: State = State()
@@ -88,12 +94,17 @@ extension SignUpReactor {
             let isEmailCheckButtonEnabled = isEmailDuplicateCheckButtonEnabled(email: value)
             let isEnabled = isSignUpButtonEnabled(email: value, nickname: currentState.nickname, phoneNumber: currentState.phoneNumber, password: currentState.password, passwordCheck: currentState.passwordCheck)
             let isValid = isValidEmail(email: value)
+            var isPassed = false
+            
+            if currentState.isEmailDuplicateCheckPassed && value == currentState.email {
+                isPassed = true
+            }
             
             return Observable.concat([
                 .just(Mutation.emailValue(value)),
                 .just(.setEmailDuplicateCheckButtonEnabled(isEmailCheckButtonEnabled)),
                 .just(.setSignUpButtonEnabled(isEnabled)),
-                .just(.setEmailDuplicateStatus(false)),
+                .just(.setEmailDuplicateStatus(isPassed)),
                 .just(.setEmailValid(isValid))
             ])
             
@@ -156,6 +167,13 @@ extension SignUpReactor {
                 .just(.setSignUpButtonEnabled(isEnabled)),
                 .just(.setPasswordCheckValid(isValid))
             )
+            
+        case .signUpButtonTapped:
+            return .concat(
+                .just(.setValidationStates([currentState.isEmailDuplicateCheckPassed, currentState.isNicknameValid, currentState.isPhoneNumberValid, currentState.isPasswordValid, currentState.isPasswordCheckValid])),
+                .just(.setSignUpInProgress(true)),
+                .just(.setSignUpInProgress(false))
+            )
         }
     }
 }
@@ -195,7 +213,7 @@ extension SignUpReactor {
             
         case .setEmailValid(let value):
             newState.isEmailValid = value
-        
+            
         case .setNicknameValid(let value):
             newState.isNicknameValid = value
             
@@ -207,6 +225,12 @@ extension SignUpReactor {
             
         case .setPasswordCheckValid(let value):
             newState.isPasswordCheckValid = value
+            
+        case .setValidationStates(let value):
+            newState.validationStates = value
+            
+        case .setSignUpInProgress(let value):
+            newState.isSignUpInProgress = value
             
         case .toastMessageValue(let value):
             newState.toastMessage = value

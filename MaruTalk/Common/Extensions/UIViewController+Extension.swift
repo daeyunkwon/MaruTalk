@@ -43,9 +43,9 @@ extension UIViewController {
     }
     
     //Toast
-    func showToastMessage(message: String) {
+    func showToastMessage(message: String, backgroundColor: UIColor = Constant.Color.brandGreen) {
         var style = ToastStyle()
-        style.backgroundColor = Constant.Color.brandGreen
+        style.backgroundColor = backgroundColor
         style.maxHeightPercentage = 36.0
         style.messageAlignment = .center
         style.titleAlignment = .center
