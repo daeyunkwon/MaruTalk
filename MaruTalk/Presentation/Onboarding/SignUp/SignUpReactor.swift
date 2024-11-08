@@ -39,6 +39,8 @@ final class SignUpReactor: Reactor {
         case setEmailValid(Bool)
         case setNicknameValid(Bool)
         case setPhoneNumberValid(Bool)
+        case setPasswordValid(Bool)
+        case setPasswordCheckValid(Bool)
         
         case toastMessageValue(String)
         case setNetworkError((Router.APIType, String?))
@@ -60,6 +62,8 @@ final class SignUpReactor: Reactor {
         var isEmailValid = false
         var isNicknameValid = false
         var isPhoneNumberValid = false
+        var isPasswordValid = false
+        var isPasswordCheckValid = false
         
         var toastMessage: (String) = ""
         var networkError: (Router.APIType, String?) = (Router.APIType.empty, nil)
@@ -78,7 +82,7 @@ extension SignUpReactor {
     func mutate(action: Action) -> Observable<Mutation> {
         switch action {
         case .closeButtonTapped:
-            return .just(Mutation.close)
+            return .just(.close)
             
         case .inputEmail(let value):
             let isEmailCheckButtonEnabled = isEmailDuplicateCheckButtonEnabled(email: value)
@@ -117,8 +121,8 @@ extension SignUpReactor {
             let isValid = isValidNickname(nickname: value)
             
             return .merge(
-                .just(Mutation.nicknameValue(value)),
-                .just(Mutation.setSignUpButtonEnabled(isEnabled)),
+                .just(.nicknameValue(value)),
+                .just(.setSignUpButtonEnabled(isEnabled)),
                 .just(.setNicknameValid(isValid))
             )
             
@@ -128,23 +132,29 @@ extension SignUpReactor {
             let formatValue = formatPhoneNumber(phoneNumber: value)
             
             return .merge(
-                .just(Mutation.phoneNumberValue(formatValue)),
-                .just(Mutation.setSignUpButtonEnabled(isEnabled)),
+                .just(.phoneNumberValue(formatValue)),
+                .just(.setSignUpButtonEnabled(isEnabled)),
                 .just(.setPhoneNumberValid(isValid))
             )
             
         case .inputPassword(let value):
             let isEnabled = isSignUpButtonEnabled(email: currentState.email, nickname: currentState.nickname, phoneNumber: currentState.phoneNumber, password: value, passwordCheck: currentState.passwordCheck)
+            let isValid = isValidPassword(password: value)
+            
             return .merge(
-                .just(Mutation.passwordValue(value)),
-                .just(Mutation.setSignUpButtonEnabled(isEnabled))
+                .just(.passwordValue(value)),
+                .just(.setSignUpButtonEnabled(isEnabled)),
+                .just(.setPasswordValid(isValid))
             )
             
         case .inputPasswordCheck(let value):
             let isEnabled = isSignUpButtonEnabled(email: currentState.email, nickname: currentState.nickname, phoneNumber: currentState.phoneNumber, password: currentState.password, passwordCheck: value)
+            let isValid = isValidPasswordCheck(password: currentState.password, passwordCheck: value)
+            
             return .concat(
-                .just(Mutation.passwordCheckValue(value)),
-                .just(Mutation.setSignUpButtonEnabled(isEnabled))
+                .just(.passwordCheckValue(value)),
+                .just(.setSignUpButtonEnabled(isEnabled)),
+                .just(.setPasswordCheckValid(isValid))
             )
         }
     }
@@ -191,6 +201,12 @@ extension SignUpReactor {
             
         case .setPhoneNumberValid(let value):
             newState.isPhoneNumberValid = value
+            
+        case .setPasswordValid(let value):
+            newState.isPasswordValid = value
+            
+        case .setPasswordCheckValid(let value):
+            newState.isPasswordCheckValid = value
             
         case .toastMessageValue(let value):
             newState.toastMessage = value
@@ -292,5 +308,20 @@ extension SignUpReactor {
         }
         
         return phoneNumber //아무 작업없이 그대로 반환
+    }
+    
+    //비밀번호 유효성 검사
+    private func isValidPassword(password: String) -> Bool {
+        let passwordRegEx = "(?=.*[A-Z])(?=.*[a-z])(?=.*[0-9])(?=.*[!_@$%^&+=-])[A-Z0-9a-z.!_@$%^&+=-]{8,}"
+        let passwordTest = NSPredicate(format: "SELF MATCHES %@", passwordRegEx)
+        return passwordTest.evaluate(with: password)
+    }
+    
+    //비밀번호 확인 유효성 검사
+    private func isValidPasswordCheck(password: String, passwordCheck: String) -> Bool {
+        guard !passwordCheck.trimmingCharacters(in: .whitespaces).isEmpty else {
+            return false
+        }
+        return password == passwordCheck ? true : false
     }
 }
