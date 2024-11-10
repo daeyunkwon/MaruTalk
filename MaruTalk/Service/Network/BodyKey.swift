@@ -9,4 +9,8 @@ import Foundation
 
 enum BodyKey {
     static let email = "email"
+    static let password = "password"
+    static let nickname = "nickname"
+    static let phone = "phone"
+    static let deviceToken = "deviceToken"
 }

@@ -11,11 +11,13 @@ import Alamofire
 
 enum Router {
     case emailValidation(String)
+    case join(email: String, password: String, nickname: String, phone: String, deviceToken: String)
     
     
     enum APIType {
         case empty //초기화용 빈 값
         case emailValidation
+        case join
     }
 }
 
@@ -27,21 +29,21 @@ extension Router: URLRequestConvertible {
     
     var path: String {
         switch self {
-        case .emailValidation(_):
-            return APIURL.validEmail
+        case .emailValidation(_): return APIURL.validEmail
+        case .join: return APIURL.join
         }
     }
     
     var method: HTTPMethod {
         switch self {
-        case .emailValidation(_):
+        case .emailValidation(_), .join:
             return .post
         }
     }
     
     var header: [String: String] {
         switch self {
-        case .emailValidation(_):
+        case .emailValidation(_), .join:
             return [
                 "Content-Type": "application/json",
                 "SesacKey": APIKey.apiKey
@@ -57,6 +59,15 @@ extension Router: URLRequestConvertible {
         case .emailValidation(let email):
             return try? JSONEncoder().encode([
                 BodyKey.email: email
+            ])
+            
+        case .join(let email, let password, let nickname, let phone, let deviceToken):
+            return try? JSONEncoder().encode([
+                BodyKey.email: email,
+                BodyKey.password: password,
+                BodyKey.nickname: nickname,
+                BodyKey.phone: phone,
+                BodyKey.deviceToken: deviceToken
             ])
             
         default:

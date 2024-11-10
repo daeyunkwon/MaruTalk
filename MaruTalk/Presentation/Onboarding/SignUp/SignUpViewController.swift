@@ -170,7 +170,7 @@ extension SignUpViewController {
                     owner.rootView.passwordFieldView,
                     owner.rootView.passwordCheckFieldView
                 ]
-                
+                //타이틀 컬러 변경 및 토스트 메시지 팝업
                 for (index, isValid) in validationStates.enumerated() {
                     let fieldView = fieldViews[index]
                     
