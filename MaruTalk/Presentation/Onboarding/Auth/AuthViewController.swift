@@ -14,7 +14,7 @@ final class AuthViewController: BaseViewController<AuthView> {
     
     //MARK: - Properties
     
-    weak var coordinator: AuthCoordinator?
+    weak var coordinator: OnboardingCoordinator?
     private let disposeBag = DisposeBag()
     
     //MARK: - Life Cycle
@@ -23,16 +23,12 @@ final class AuthViewController: BaseViewController<AuthView> {
         super.viewDidLoad()
     }
     
-    override func viewWillDisappear(_ animated: Bool) {
-        super.viewWillDisappear(animated)
-        coordinator?.didFinish()
-    }
-    
     //MARK: - Bind
     
     override func bind() {
         rootView.signUpButton.rx.tap
             .bind(with: self) { owner, _ in
+                owner.coordinator?.didFinishAuth()
                 owner.coordinator?.showSignUp()
             }
             .disposed(by: disposeBag)

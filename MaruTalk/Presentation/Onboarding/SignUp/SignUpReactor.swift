@@ -8,7 +8,6 @@
 import Foundation
 
 import ReactorKit
-import RxSwift
 
 final class SignUpReactor: Reactor {
     
@@ -45,6 +44,7 @@ final class SignUpReactor: Reactor {
         
         case setSignUpInProgress(Bool)
         case setValidationStates([Bool])
+        case setSignUpSuccess(Bool)
         case toastMessageValue(String)
         case setNetworkError((Router.APIType, String?))
         case close
@@ -73,6 +73,11 @@ final class SignUpReactor: Reactor {
         
         var validationStates: [Bool] = []
         var isSignUpInProgress = false
+        var isSignUpSuccesss = false
+        
+        var isFormValid: Bool {
+            return isEmailDuplicateCheckPassed && isEmailValid && isNicknameValid && isPhoneNumberValid && isPasswordValid && isPasswordCheckValid
+        }
     }
     
     let initialState: State = State()
@@ -169,9 +174,12 @@ extension SignUpReactor {
             )
             
         case .signUpButtonTapped:
+            let stateList = [currentState.isEmailDuplicateCheckPassed, currentState.isNicknameValid, currentState.isPhoneNumberValid, currentState.isPasswordValid, currentState.isPasswordCheckValid]
+            
             return .concat(
-                .just(.setValidationStates([currentState.isEmailDuplicateCheckPassed, currentState.isNicknameValid, currentState.isPhoneNumberValid, currentState.isPasswordValid, currentState.isPasswordCheckValid])),
+                .just(.setValidationStates(stateList)),
                 .just(.setSignUpInProgress(true)),
+                currentState.isFormValid ? performSignUp(email: currentState.email, password: currentState.password, nickname: currentState.nickname, phone: currentState.phoneNumber, deviceToken: "") : .empty(),
                 .just(.setSignUpInProgress(false))
             )
         }
@@ -231,6 +239,9 @@ extension SignUpReactor {
             
         case .setSignUpInProgress(let value):
             newState.isSignUpInProgress = value
+            
+        case .setSignUpSuccess(let value):
+            newState.isSignUpSuccesss = value
             
         case .toastMessageValue(let value):
             newState.toastMessage = value
@@ -347,5 +358,40 @@ extension SignUpReactor {
             return false
         }
         return password == passwordCheck ? true : false
+    }
+    
+    //회원가입
+    private func performSignUp(email: String, password: String, nickname: String, phone: String, deviceToken: String) -> Observable<Mutation> {
+        return NetworkManager.shared.performRequest(
+            api: .join(
+                email: email,
+                password: password,
+                nickname: nickname,
+                phone: phone,
+                deviceToken: deviceToken
+            ),
+            model: User.self
+        ).asObservable()
+            .flatMap { result -> Observable<Mutation> in
+                switch result {
+                case .success(let value):
+                    print("DEBUG: 회원가입 성공 응답값:\n\(value)")
+                    
+                    let isAccessTokenSaved = KeychainManager.shared.saveToken(token: value.token.accessToken, forKey: .accessToken)
+                    let isRefreshTokenSaved = KeychainManager.shared.saveToken(token: value.token.refreshToken, forKey: .refreshToken)
+                    
+                    //토큰 저장 실패 시 로그인 유도
+                    return isAccessTokenSaved && isRefreshTokenSaved ? .just(.setSignUpSuccess(true)).delay(.seconds(1), scheduler: MainScheduler.instance) : .just(.toastMessageValue("가입성공! 로그인을 진행해주세요!"))
+                    
+                case .failure(let error):
+                    let errorValue = (Router.APIType.join, error.errorCode)
+                    
+                    return .concat([
+                        .just(.setSignUpSuccess(false)),
+                        .just(.setNetworkError(errorValue)),
+                        .just(.setNetworkError((Router.APIType.empty, nil)))
+                    ])
+                }
+            }
     }
 }

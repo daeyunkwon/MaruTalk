@@ -15,7 +15,7 @@ final class SignUpViewController: BaseViewController<SignUpView>, View {
     
     //MARK: - Properties
     
-    weak var coordinator: SignUpCoordinator?
+    weak var coordinator: OnboardingCoordinator?
     var disposeBag = DisposeBag()
     
     //MARK: - Life Cycle
@@ -26,18 +26,13 @@ final class SignUpViewController: BaseViewController<SignUpView>, View {
         self.reactor = SignUpReactor()
     }
     
-    override func viewDidDisappear(_ animated: Bool) {
-        super.viewDidDisappear(animated)
-        coordinator?.didFinish()
-    }
-    
     //MARK: - Configurations
     
     override func setupNavi() {
         navigationController?.navigationBar.isHidden = true
         
         let titleItem = UINavigationItem(title: "회원가입")
-        let closeButton = UIBarButtonItem(image: UIImage(systemName: "xmark")?.applyingSymbolConfiguration(.init(pointSize: 14)), style: .plain, target: self, action: #selector(closeButtonTapped))
+        let closeButton = UIBarButtonItem(image: UIImage(systemName: "xmark")?.applyingSymbolConfiguration(.init(pointSize: 14)), style: .plain, target: self, action: nil)
         titleItem.leftBarButtonItem = closeButton
         // 네비게이션 아이템 추가
         rootView.customNaviBar.items = [titleItem]
@@ -49,8 +44,6 @@ final class SignUpViewController: BaseViewController<SignUpView>, View {
         bindAction(reactor: reactor)
         bindState(reactor: reactor)
     }
-    
-    @objc func closeButtonTapped() { }
 }
 
 //MARK: - Bind Action
@@ -107,7 +100,8 @@ extension SignUpViewController {
             .distinctUntilChanged()
             .bind(with: self) { owner, value in
                 if value {
-                    owner.coordinator?.didFinish()
+//                    owner.coordinator?.didFinish()
+                    owner.coordinator?.didFinishSignUp()
                 }
             }
             .disposed(by: disposeBag)
@@ -157,6 +151,17 @@ extension SignUpViewController {
             }
             .disposed(by: disposeBag)
         
+        reactor.state.map { $0.isSignUpInProgress }
+            .distinctUntilChanged()
+            .bind(with: self) { owner, value in
+                if value {
+                    owner.view.makeToastActivity(.center)
+                } else {
+                    owner.view.hideToastActivity()
+                }
+            }
+            .disposed(by: disposeBag)
+        
         reactor.state.map { ($0.isSignUpInProgress, $0.validationStates) }
             .filter { $0.0 == true }
             .map { $0.1 }
@@ -194,6 +199,19 @@ extension SignUpViewController {
                         didShowToastMessage = true
                     }
                 }
+            }
+            .disposed(by: disposeBag)
+        
+        reactor.state.map { $0.isSignUpSuccesss }
+            .filter { $0 == true }
+            .distinctUntilChanged()
+            .bind(with: self) { owner, _ in
+                //회원가입 성공 처리
+                
+                print("회원가입 성공!!!!")
+                
+                print(KeychainManager.shared.getToken(forKey: .accessToken))
+                print(KeychainManager.shared.getToken(forKey: .refreshToken))
             }
             .disposed(by: disposeBag)
     }

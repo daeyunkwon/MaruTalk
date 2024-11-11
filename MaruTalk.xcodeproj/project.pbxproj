@@ -8,6 +8,9 @@
 
 /* Begin PBXBuildFile section */
 		441114C72CE08B03000D1B2B /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = 441114C62CE08B03000D1B2B /* User.swift */; };
+		441114C92CE1BDA5000D1B2B /* KeychainManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 441114C82CE1BDA5000D1B2B /* KeychainManager.swift */; };
+		441114CC2CE1DDD8000D1B2B /* WorkspaceInitialView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 441114CB2CE1DDD8000D1B2B /* WorkspaceInitialView.swift */; };
+		441114CE2CE1DDF3000D1B2B /* WorkspaceInitialViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 441114CD2CE1DDF3000D1B2B /* WorkspaceInitialViewController.swift */; };
 		444910DA2CD77315005AB2F7 /* SignUpReactor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 444910D92CD77315005AB2F7 /* SignUpReactor.swift */; };
 		444910DC2CD8AC5C005AB2F7 /* Router.swift in Sources */ = {isa = PBXBuildFile; fileRef = 444910DB2CD8AC5C005AB2F7 /* Router.swift */; };
 		444910DF2CD8AC9F005AB2F7 /* Alamofire in Frameworks */ = {isa = PBXBuildFile; productRef = 444910DE2CD8AC9F005AB2F7 /* Alamofire */; };
@@ -45,8 +48,6 @@
 		444DE7022CD4D2A700821269 /* Coordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 444DE7012CD4D2A700821269 /* Coordinator.swift */; };
 		444DE7042CD6093000821269 /* AppCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 444DE7032CD6093000821269 /* AppCoordinator.swift */; };
 		444DE7062CD609FC00821269 /* OnboardingCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 444DE7052CD609FC00821269 /* OnboardingCoordinator.swift */; };
-		444DE7082CD60BDD00821269 /* AuthCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 444DE7072CD60BDD00821269 /* AuthCoordinator.swift */; };
-		444DE7112CD6221A00821269 /* SignUpCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 444DE7102CD6221A00821269 /* SignUpCoordinator.swift */; };
 		444DE7132CD6222400821269 /* SignUpView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 444DE7122CD6222400821269 /* SignUpView.swift */; };
 		444DE7152CD6222D00821269 /* SignUpViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 444DE7142CD6222D00821269 /* SignUpViewController.swift */; };
 		444DE7172CD6251100821269 /* TitleWithInputFieldView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 444DE7162CD6251100821269 /* TitleWithInputFieldView.swift */; };
@@ -56,6 +57,9 @@
 
 /* Begin PBXFileReference section */
 		441114C62CE08B03000D1B2B /* User.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = User.swift; sourceTree = "<group>"; };
+		441114C82CE1BDA5000D1B2B /* KeychainManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KeychainManager.swift; sourceTree = "<group>"; };
+		441114CB2CE1DDD8000D1B2B /* WorkspaceInitialView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WorkspaceInitialView.swift; sourceTree = "<group>"; };
+		441114CD2CE1DDF3000D1B2B /* WorkspaceInitialViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WorkspaceInitialViewController.swift; sourceTree = "<group>"; };
 		444910D92CD77315005AB2F7 /* SignUpReactor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignUpReactor.swift; sourceTree = "<group>"; };
 		444910DB2CD8AC5C005AB2F7 /* Router.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Router.swift; sourceTree = "<group>"; };
 		444910E02CD8B072005AB2F7 /* BodyKey.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BodyKey.swift; sourceTree = "<group>"; };
@@ -89,8 +93,6 @@
 		444DE7012CD4D2A700821269 /* Coordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Coordinator.swift; sourceTree = "<group>"; };
 		444DE7032CD6093000821269 /* AppCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppCoordinator.swift; sourceTree = "<group>"; };
 		444DE7052CD609FC00821269 /* OnboardingCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardingCoordinator.swift; sourceTree = "<group>"; };
-		444DE7072CD60BDD00821269 /* AuthCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthCoordinator.swift; sourceTree = "<group>"; };
-		444DE7102CD6221A00821269 /* SignUpCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignUpCoordinator.swift; sourceTree = "<group>"; };
 		444DE7122CD6222400821269 /* SignUpView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignUpView.swift; sourceTree = "<group>"; };
 		444DE7142CD6222D00821269 /* SignUpViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignUpViewController.swift; sourceTree = "<group>"; };
 		444DE7162CD6251100821269 /* TitleWithInputFieldView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TitleWithInputFieldView.swift; sourceTree = "<group>"; };
@@ -115,6 +117,15 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		441114CA2CE1DDA5000D1B2B /* WorkspaceInital */ = {
+			isa = PBXGroup;
+			children = (
+				441114CB2CE1DDD8000D1B2B /* WorkspaceInitialView.swift */,
+				441114CD2CE1DDF3000D1B2B /* WorkspaceInitialViewController.swift */,
+			);
+			path = WorkspaceInital;
+			sourceTree = "<group>";
+		};
 		444DE6A92CD0FC9D00821269 = {
 			isa = PBXGroup;
 			children = (
@@ -231,6 +242,7 @@
 				444DE6DF2CD11FC100821269 /* OnboardingViewController.swift */,
 				444DE6F52CD366CD00821269 /* Auth */,
 				444DE70F2CD621D200821269 /* SignUp */,
+				441114CA2CE1DDA5000D1B2B /* WorkspaceInital */,
 			);
 			path = Onboarding;
 			sourceTree = "<group>";
@@ -262,6 +274,7 @@
 		444DE6ED2CD24FC800821269 /* Database */ = {
 			isa = PBXGroup;
 			children = (
+				441114C82CE1BDA5000D1B2B /* KeychainManager.swift */,
 			);
 			path = Database;
 			sourceTree = "<group>";
@@ -279,7 +292,6 @@
 		444DE6F52CD366CD00821269 /* Auth */ = {
 			isa = PBXGroup;
 			children = (
-				444DE7072CD60BDD00821269 /* AuthCoordinator.swift */,
 				444DE6F62CD366DB00821269 /* AuthView.swift */,
 				444DE6F82CD366E600821269 /* AuthViewController.swift */,
 			);
@@ -289,7 +301,6 @@
 		444DE70F2CD621D200821269 /* SignUp */ = {
 			isa = PBXGroup;
 			children = (
-				444DE7102CD6221A00821269 /* SignUpCoordinator.swift */,
 				444910D92CD77315005AB2F7 /* SignUpReactor.swift */,
 				444DE7122CD6222400821269 /* SignUpView.swift */,
 				444DE7142CD6222D00821269 /* SignUpViewController.swift */,
@@ -385,11 +396,12 @@
 			buildActionMask = 2147483647;
 			files = (
 				444DE7192CD74D7E00821269 /* CustomHandleNavigationBar.swift in Sources */,
+				441114CC2CE1DDD8000D1B2B /* WorkspaceInitialView.swift in Sources */,
 				444910E52CD8E0B1005AB2F7 /* NetworkError.swift in Sources */,
 				444DE6BA2CD0FC9D00821269 /* ViewController.swift in Sources */,
-				444DE7112CD6221A00821269 /* SignUpCoordinator.swift in Sources */,
 				444DE6B62CD0FC9D00821269 /* AppDelegate.swift in Sources */,
 				444DE6E72CD24C1F00821269 /* BaseViewController.swift in Sources */,
+				441114CE2CE1DDF3000D1B2B /* WorkspaceInitialViewController.swift in Sources */,
 				444DE7152CD6222D00821269 /* SignUpViewController.swift in Sources */,
 				444910E92CD8F04B005AB2F7 /* SLPErrorResponse.swift in Sources */,
 				444DE7132CD6222400821269 /* SignUpView.swift in Sources */,
@@ -399,7 +411,6 @@
 				444DE6F42CD27B1600821269 /* UIButton+Extension.swift in Sources */,
 				441114C72CE08B03000D1B2B /* User.swift in Sources */,
 				444910E72CD8E734005AB2F7 /* UIViewController+Extension.swift in Sources */,
-				444DE7082CD60BDD00821269 /* AuthCoordinator.swift in Sources */,
 				444DE7022CD4D2A700821269 /* Coordinator.swift in Sources */,
 				444DE7172CD6251100821269 /* TitleWithInputFieldView.swift in Sources */,
 				444DE6E22CD1207300821269 /* UIView+Extension.swift in Sources */,
@@ -415,6 +426,7 @@
 				444DE6D52CD1022600821269 /* Reusable.swift in Sources */,
 				444DE6EB2CD24F1D00821269 /* BaseCollectionViewCell.swift in Sources */,
 				444DE6D72CD102DD00821269 /* Constant.swift in Sources */,
+				441114C92CE1BDA5000D1B2B /* KeychainManager.swift in Sources */,
 				444DE6F72CD366DB00821269 /* AuthView.swift in Sources */,
 				444DE6EF2CD2529D00821269 /* OnboardingView.swift in Sources */,
 				444DE6F92CD366E600821269 /* AuthViewController.swift in Sources */,
