@@ -12,6 +12,10 @@
 		441114CC2CE1DDD8000D1B2B /* WorkspaceInitialView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 441114CB2CE1DDD8000D1B2B /* WorkspaceInitialView.swift */; };
 		441114CE2CE1DDF3000D1B2B /* WorkspaceInitialViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 441114CD2CE1DDF3000D1B2B /* WorkspaceInitialViewController.swift */; };
 		441114D02CE1F942000D1B2B /* WorkspaceInitialReactor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 441114CF2CE1F942000D1B2B /* WorkspaceInitialReactor.swift */; };
+		441114D42CE34EBD000D1B2B /* WorkspaceAddView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 441114D32CE34EBD000D1B2B /* WorkspaceAddView.swift */; };
+		441114D62CE34ECA000D1B2B /* WorkspaceAddViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 441114D52CE34ECA000D1B2B /* WorkspaceAddViewController.swift */; };
+		441114D82CE3515D000D1B2B /* WorkspaceAddReactor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 441114D72CE3515D000D1B2B /* WorkspaceAddReactor.swift */; };
+		441114DA2CE363B3000D1B2B /* UIImage+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 441114D92CE363B3000D1B2B /* UIImage+Extension.swift */; };
 		444910DA2CD77315005AB2F7 /* SignUpReactor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 444910D92CD77315005AB2F7 /* SignUpReactor.swift */; };
 		444910DC2CD8AC5C005AB2F7 /* Router.swift in Sources */ = {isa = PBXBuildFile; fileRef = 444910DB2CD8AC5C005AB2F7 /* Router.swift */; };
 		444910DF2CD8AC9F005AB2F7 /* Alamofire in Frameworks */ = {isa = PBXBuildFile; productRef = 444910DE2CD8AC9F005AB2F7 /* Alamofire */; };
@@ -62,6 +66,10 @@
 		441114CB2CE1DDD8000D1B2B /* WorkspaceInitialView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WorkspaceInitialView.swift; sourceTree = "<group>"; };
 		441114CD2CE1DDF3000D1B2B /* WorkspaceInitialViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WorkspaceInitialViewController.swift; sourceTree = "<group>"; };
 		441114CF2CE1F942000D1B2B /* WorkspaceInitialReactor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WorkspaceInitialReactor.swift; sourceTree = "<group>"; };
+		441114D32CE34EBD000D1B2B /* WorkspaceAddView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WorkspaceAddView.swift; sourceTree = "<group>"; };
+		441114D52CE34ECA000D1B2B /* WorkspaceAddViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WorkspaceAddViewController.swift; sourceTree = "<group>"; };
+		441114D72CE3515D000D1B2B /* WorkspaceAddReactor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WorkspaceAddReactor.swift; sourceTree = "<group>"; };
+		441114D92CE363B3000D1B2B /* UIImage+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIImage+Extension.swift"; sourceTree = "<group>"; };
 		444910D92CD77315005AB2F7 /* SignUpReactor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignUpReactor.swift; sourceTree = "<group>"; };
 		444910DB2CD8AC5C005AB2F7 /* Router.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Router.swift; sourceTree = "<group>"; };
 		444910E02CD8B072005AB2F7 /* BodyKey.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BodyKey.swift; sourceTree = "<group>"; };
@@ -134,6 +142,16 @@
 			children = (
 			);
 			path = Home;
+			sourceTree = "<group>";
+		};
+		441114D22CE34E9F000D1B2B /* WorkspaceAdd */ = {
+			isa = PBXGroup;
+			children = (
+				441114D72CE3515D000D1B2B /* WorkspaceAddReactor.swift */,
+				441114D32CE34EBD000D1B2B /* WorkspaceAddView.swift */,
+				441114D52CE34ECA000D1B2B /* WorkspaceAddViewController.swift */,
+			);
+			path = WorkspaceAdd;
 			sourceTree = "<group>";
 		};
 		444DE6A92CD0FC9D00821269 = {
@@ -241,6 +259,7 @@
 				444DE6DC2CD112EE00821269 /* UILabel+Extension.swift */,
 				444DE6F32CD27B1600821269 /* UIButton+Extension.swift */,
 				444910E62CD8E734005AB2F7 /* UIViewController+Extension.swift */,
+				441114D92CE363B3000D1B2B /* UIImage+Extension.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -254,6 +273,7 @@
 				444DE6F52CD366CD00821269 /* Auth */,
 				444DE70F2CD621D200821269 /* SignUp */,
 				441114CA2CE1DDA5000D1B2B /* WorkspaceInitial */,
+				441114D22CE34E9F000D1B2B /* WorkspaceAdd */,
 			);
 			path = Onboarding;
 			sourceTree = "<group>";
@@ -416,10 +436,12 @@
 				444DE7152CD6222D00821269 /* SignUpViewController.swift in Sources */,
 				444910E92CD8F04B005AB2F7 /* SLPErrorResponse.swift in Sources */,
 				444DE7132CD6222400821269 /* SignUpView.swift in Sources */,
+				441114D62CE34ECA000D1B2B /* WorkspaceAddViewController.swift in Sources */,
 				444DE6D22CD1012700821269 /* APIKey.swift in Sources */,
 				444910DA2CD77315005AB2F7 /* SignUpReactor.swift in Sources */,
 				444DE6E92CD24E4100821269 /* BaseTableViewCell.swift in Sources */,
 				444DE6F42CD27B1600821269 /* UIButton+Extension.swift in Sources */,
+				441114D42CE34EBD000D1B2B /* WorkspaceAddView.swift in Sources */,
 				441114C72CE08B03000D1B2B /* User.swift in Sources */,
 				444910E72CD8E734005AB2F7 /* UIViewController+Extension.swift in Sources */,
 				444DE7022CD4D2A700821269 /* Coordinator.swift in Sources */,
@@ -432,6 +454,8 @@
 				444910E32CD8B258005AB2F7 /* NetworkManager.swift in Sources */,
 				444DE7062CD609FC00821269 /* OnboardingCoordinator.swift in Sources */,
 				444DE6B82CD0FC9D00821269 /* SceneDelegate.swift in Sources */,
+				441114D82CE3515D000D1B2B /* WorkspaceAddReactor.swift in Sources */,
+				441114DA2CE363B3000D1B2B /* UIImage+Extension.swift in Sources */,
 				444DE6E52CD121AA00821269 /* BaseView.swift in Sources */,
 				444DE7042CD6093000821269 /* AppCoordinator.swift in Sources */,
 				444910DC2CD8AC5C005AB2F7 /* Router.swift in Sources */,

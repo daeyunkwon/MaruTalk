@@ -25,7 +25,14 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         
         window = UIWindow(windowScene: windowScene)
         window?.rootViewController = navigationConroller
-//        window?.rootViewController = UINavigationController(rootViewController: WorkspaceInitialViewController())
+        
+        //UI 확인용 임시
+//        window?.rootViewController = UINavigationController(
+//            rootViewController: WorkspaceAddViewController(
+//                reactor: WorkspaceAddReactor()
+//            )
+//        )
+        
         window?.makeKeyAndVisible()
     }
 
