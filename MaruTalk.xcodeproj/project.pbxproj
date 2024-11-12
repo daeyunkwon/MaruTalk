@@ -11,6 +11,7 @@
 		441114C92CE1BDA5000D1B2B /* KeychainManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 441114C82CE1BDA5000D1B2B /* KeychainManager.swift */; };
 		441114CC2CE1DDD8000D1B2B /* WorkspaceInitialView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 441114CB2CE1DDD8000D1B2B /* WorkspaceInitialView.swift */; };
 		441114CE2CE1DDF3000D1B2B /* WorkspaceInitialViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 441114CD2CE1DDF3000D1B2B /* WorkspaceInitialViewController.swift */; };
+		441114D02CE1F942000D1B2B /* WorkspaceInitialReactor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 441114CF2CE1F942000D1B2B /* WorkspaceInitialReactor.swift */; };
 		444910DA2CD77315005AB2F7 /* SignUpReactor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 444910D92CD77315005AB2F7 /* SignUpReactor.swift */; };
 		444910DC2CD8AC5C005AB2F7 /* Router.swift in Sources */ = {isa = PBXBuildFile; fileRef = 444910DB2CD8AC5C005AB2F7 /* Router.swift */; };
 		444910DF2CD8AC9F005AB2F7 /* Alamofire in Frameworks */ = {isa = PBXBuildFile; productRef = 444910DE2CD8AC9F005AB2F7 /* Alamofire */; };
@@ -60,6 +61,7 @@
 		441114C82CE1BDA5000D1B2B /* KeychainManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KeychainManager.swift; sourceTree = "<group>"; };
 		441114CB2CE1DDD8000D1B2B /* WorkspaceInitialView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WorkspaceInitialView.swift; sourceTree = "<group>"; };
 		441114CD2CE1DDF3000D1B2B /* WorkspaceInitialViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WorkspaceInitialViewController.swift; sourceTree = "<group>"; };
+		441114CF2CE1F942000D1B2B /* WorkspaceInitialReactor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WorkspaceInitialReactor.swift; sourceTree = "<group>"; };
 		444910D92CD77315005AB2F7 /* SignUpReactor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignUpReactor.swift; sourceTree = "<group>"; };
 		444910DB2CD8AC5C005AB2F7 /* Router.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Router.swift; sourceTree = "<group>"; };
 		444910E02CD8B072005AB2F7 /* BodyKey.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BodyKey.swift; sourceTree = "<group>"; };
@@ -117,13 +119,21 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
-		441114CA2CE1DDA5000D1B2B /* WorkspaceInital */ = {
+		441114CA2CE1DDA5000D1B2B /* WorkspaceInitial */ = {
 			isa = PBXGroup;
 			children = (
+				441114CF2CE1F942000D1B2B /* WorkspaceInitialReactor.swift */,
 				441114CB2CE1DDD8000D1B2B /* WorkspaceInitialView.swift */,
 				441114CD2CE1DDF3000D1B2B /* WorkspaceInitialViewController.swift */,
 			);
-			path = WorkspaceInital;
+			path = WorkspaceInitial;
+			sourceTree = "<group>";
+		};
+		441114D12CE33504000D1B2B /* Home */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Home;
 			sourceTree = "<group>";
 		};
 		444DE6A92CD0FC9D00821269 = {
@@ -181,6 +191,7 @@
 			children = (
 				444DE6B92CD0FC9D00821269 /* ViewController.swift */,
 				444DE6DE2CD11F9A00821269 /* Onboarding */,
+				441114D12CE33504000D1B2B /* Home */,
 			);
 			path = Presentation;
 			sourceTree = "<group>";
@@ -242,7 +253,7 @@
 				444DE6DF2CD11FC100821269 /* OnboardingViewController.swift */,
 				444DE6F52CD366CD00821269 /* Auth */,
 				444DE70F2CD621D200821269 /* SignUp */,
-				441114CA2CE1DDA5000D1B2B /* WorkspaceInital */,
+				441114CA2CE1DDA5000D1B2B /* WorkspaceInitial */,
 			);
 			path = Onboarding;
 			sourceTree = "<group>";
@@ -417,6 +428,7 @@
 				444910E12CD8B072005AB2F7 /* BodyKey.swift in Sources */,
 				444DE6E02CD11FC100821269 /* OnboardingViewController.swift in Sources */,
 				444DE6DD2CD112EE00821269 /* UILabel+Extension.swift in Sources */,
+				441114D02CE1F942000D1B2B /* WorkspaceInitialReactor.swift in Sources */,
 				444910E32CD8B258005AB2F7 /* NetworkManager.swift in Sources */,
 				444DE7062CD609FC00821269 /* OnboardingCoordinator.swift in Sources */,
 				444DE6B82CD0FC9D00821269 /* SceneDelegate.swift in Sources */,

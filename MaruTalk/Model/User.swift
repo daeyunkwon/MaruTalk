@@ -14,7 +14,7 @@ struct User: Decodable {
     let profileImage: String?
     let phone: String?
     let provider: String?
-    let createdAt: Date
+    let createdAt: String
     let token: Token
     
     enum CodingKeys: String, CodingKey {

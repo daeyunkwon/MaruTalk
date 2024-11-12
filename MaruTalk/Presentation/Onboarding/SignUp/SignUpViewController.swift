@@ -18,12 +18,18 @@ final class SignUpViewController: BaseViewController<SignUpView>, View {
     weak var coordinator: OnboardingCoordinator?
     var disposeBag = DisposeBag()
     
+    private var reactor: SignUpReactor
+    
+    init(reactor: SignUpReactor) {
+        self.reactor = reactor
+        super.init()
+    }
+    
     //MARK: - Life Cycle
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
-        self.reactor = SignUpReactor()
+        bind(reactor: self.reactor)
     }
     
     //MARK: - Configurations
@@ -100,7 +106,6 @@ extension SignUpViewController {
             .distinctUntilChanged()
             .bind(with: self) { owner, value in
                 if value {
-//                    owner.coordinator?.didFinish()
                     owner.coordinator?.didFinishSignUp()
                 }
             }
@@ -202,16 +207,12 @@ extension SignUpViewController {
             }
             .disposed(by: disposeBag)
         
-        reactor.state.map { $0.isSignUpSuccesss }
-            .filter { $0 == true }
-            .distinctUntilChanged()
-            .bind(with: self) { owner, _ in
-                //회원가입 성공 처리
-                
-                print("회원가입 성공!!!!")
-                
-                print(KeychainManager.shared.getToken(forKey: .accessToken))
-                print(KeychainManager.shared.getToken(forKey: .refreshToken))
+        reactor.state.map { ($0.isSignUpSuccesss, $0.nickname) }
+            .filter { $0.0 == true }
+            .take(1)
+            .bind(with: self) { owner, value in
+                //회원가입 성공으로 화면전환 진행
+                owner.coordinator?.showWorkspaceInitial(nickname: value.1)
             }
             .disposed(by: disposeBag)
     }

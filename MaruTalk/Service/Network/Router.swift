@@ -49,8 +49,8 @@ extension Router: URLRequestConvertible {
                 "SesacKey": APIKey.apiKey
             ]
             
-        default:
-            return [:]
+//        default:
+//            return [:]
         }
     }
     
@@ -70,8 +70,8 @@ extension Router: URLRequestConvertible {
                 BodyKey.deviceToken: deviceToken
             ])
             
-        default:
-            return nil
+//        default:
+//            return nil
         }
     }
     

@@ -10,9 +10,6 @@ import Foundation
 import ReactorKit
 
 final class SignUpReactor: Reactor {
-    
-    private let disposeBag = DisposeBag()
-    
     //사용자가 UI에서 수행할 수 있는 작업
     enum Action {
         case closeButtonTapped

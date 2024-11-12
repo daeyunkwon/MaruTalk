@@ -68,12 +68,27 @@ extension OnboardingCoordinator {
 
 extension OnboardingCoordinator {
     func showSignUp() {
-        let signUpVC = SignUpViewController()
+        let reactor = SignUpReactor()
+        let signUpVC = SignUpViewController(reactor: reactor)
         signUpVC.coordinator = self
         navigationController.pushViewController(signUpVC, animated: true)
     }
     
     func didFinishSignUp() {
         navigationController.popViewController(animated: true)
+    }
+}
+
+extension OnboardingCoordinator {
+    func showWorkspaceInitial(nickname: String) {
+        let reactor = WorkspaceInitialReactor(nickname: nickname)
+        let workspaceInitialVC = WorkspaceInitialViewController(reactor: reactor)
+        workspaceInitialVC.coordinator = self
+        navigationController.navigationBar.isHidden = false
+        navigationController.pushViewController(workspaceInitialVC, animated: true)
+    }
+    
+    func didFinishWorkspaceInitial() {
+        //TODO: 화면 종료 처리 -> 홈 화면
     }
 }

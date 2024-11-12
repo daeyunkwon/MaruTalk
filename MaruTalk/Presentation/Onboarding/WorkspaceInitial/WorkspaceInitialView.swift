@@ -22,10 +22,8 @@ final class WorkspaceInitialView: BaseView {
         return label
     }()
     
-    let bodyLabel: UILabel = {
+    private let bodyLabel: UILabel = {
         let label = UILabel()
-        let text = "옹골찬 고래밥님의 조직을 위해 새로운 마루톡 워크스페이스를 시작할 준비가 완료되었어요!"
-        label.setTextFontWithLineHeight(text: text, font: Constant.Font.body, lineHeight: Constant.Font.LineHeight.body)
         label.numberOfLines = 0
         label.textAlignment = .center
         label.textColor = Constant.Color.brandBlack
@@ -80,5 +78,12 @@ final class WorkspaceInitialView: BaseView {
     
     override func configureUI() {
         super.configureUI()
+    }
+    
+    //MARK: - Methods
+    
+    func configureBodyLabel(nickname: String) {
+        let text = "\(nickname)님의 조직을 위해 새로운 마루톡 워크스페이스를 시작할 준비가 완료되었어요!"
+        self.bodyLabel.setTextFontWithLineHeight(text: text, font: Constant.Font.body, lineHeight: Constant.Font.LineHeight.body)
     }
 }

@@ -10,7 +10,7 @@ import UIKit
 import Toast
 
 extension UIViewController {
-    //Alert
+    //NetworkErrorToast
     func showToastForNetworkError(api: Router.APIType, errorCode: String?) {
         var style = ToastStyle()
         style.backgroundColor = Constant.Color.brandRed
@@ -33,6 +33,13 @@ extension UIViewController {
             switch errorCode {
             case "E11": message = "이메일 형식이 올바르지 않습니다."
             case "E12": message = "이미 사용중인 이메일 주소입니다."
+            default: break
+            }
+            
+        case .join:
+            switch errorCode {
+            case "E11": message = "계정 형식이 올바르지 않습니다."
+            case "E12": message = "이미 가입된 회원입니다. 로그인을 진행해주세요."
             default: break
             }
             
