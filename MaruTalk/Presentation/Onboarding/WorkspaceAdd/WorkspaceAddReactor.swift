@@ -13,19 +13,37 @@ final class WorkspaceAddReactor: Reactor {
     enum Action {
         case inputName(String)
         case inputDescription(String)
+        
+        case imageSettingButtonTapped
+        case selectPhotoFromAlbum
+        case selectPhotoFromCamera
+        case selectPhotoImage(Data)
     }
     
     enum Mutation {
         case setName(String)
         case setDescription(String)
         case setDoneButtonEnabled(Bool)
+        case setActionSheetVisible(Bool)
+        case setAlbumVisible(Bool)
+        case setCameraVisible(Bool)
+        case setImageData(Data)
     }
     
     struct State {
         var name = ""
         var description = ""
+        var imageData = Data() {
+            didSet {
+                print(self)
+            }
+        }
         
         var isDoneButtonEnabled = false
+        
+        var isActionSheetVisible = false
+        var isAlbumVisible = false
+        var isCameraVisible = false
     }
     
     let initialState: State = State()
@@ -49,6 +67,26 @@ extension WorkspaceAddReactor {
             return .concat([
                 .just(.setDescription(value)),
             ])
+            
+        case .imageSettingButtonTapped:
+            return .concat([
+                .just(.setActionSheetVisible(true)),
+                .just(.setActionSheetVisible(false))
+            ])
+        case .selectPhotoFromAlbum:
+            return .concat([
+                .just(.setAlbumVisible(true)),
+                .just(.setAlbumVisible(false))
+            ])
+            
+        case .selectPhotoFromCamera:
+            return .concat([
+                .just(.setCameraVisible(true)),
+                .just(.setCameraVisible(false))
+            ])
+        
+        case .selectPhotoImage(let value):
+            return .just(.setImageData(value))
         }
     }
 }
@@ -68,6 +106,18 @@ extension WorkspaceAddReactor {
             
         case .setDoneButtonEnabled(let value):
             newState.isDoneButtonEnabled = value
+            
+        case .setActionSheetVisible(let value):
+            newState.isActionSheetVisible = value
+        
+        case .setAlbumVisible(let value):
+            newState.isAlbumVisible = value
+        
+        case .setCameraVisible(let value):
+            newState.isCameraVisible = value
+        
+        case .setImageData(let value):
+            newState.imageData = value
         }
         return newState
     }

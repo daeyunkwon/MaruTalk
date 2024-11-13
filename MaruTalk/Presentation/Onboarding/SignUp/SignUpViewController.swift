@@ -9,7 +9,6 @@ import UIKit
 
 import ReactorKit
 import RxCocoa
-import RxSwift
 
 final class SignUpViewController: BaseViewController<SignUpView>, View {
     

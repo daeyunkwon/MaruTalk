@@ -8,6 +8,7 @@
 import UIKit
 
 import ReactorKit
+import RxCocoa
 
 final class WorkspaceInitialViewController: BaseViewController<WorkspaceInitialView>, View {
     
