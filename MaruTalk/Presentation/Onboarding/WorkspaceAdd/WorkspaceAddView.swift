@@ -14,6 +14,17 @@ final class WorkspaceAddView: BaseView {
     //MARK: - UI Components
     
     let imageSettingButton: UIButton = {
+        let btn = UIButton(type: .custom)
+        btn.setImage(UIImage(systemName: "star"), for: .normal)
+        btn.imageView?.contentMode = .scaleAspectFill
+        btn.backgroundColor = .clear
+        btn.clipsToBounds = true
+        btn.layer.cornerRadius = 8
+        btn.tintColor = .clear
+        return btn
+    }()
+    
+    private let placeholderImage: UIButton = {
         let btn = UIButton(type: .system)
         var config = UIButton.Configuration.filled()
         config.baseBackgroundColor = Constant.Color.brandGreen
@@ -21,7 +32,11 @@ final class WorkspaceAddView: BaseView {
         config.imagePadding = -10
         config.imagePlacement = .bottom
         config.title = " "
+        btn.imageView?.contentMode = .scaleAspectFit
         btn.configuration = config
+        btn.clipsToBounds = true
+        btn.layer.cornerRadius = 8
+        btn.isUserInteractionEnabled = false
         return btn
     }()
     
@@ -48,6 +63,7 @@ final class WorkspaceAddView: BaseView {
     
     override func configureHierarchy() {
         addSubviews(
+            placeholderImage,
             imageSettingButton,
             cameraIconButton,
             nameFieldView,
@@ -57,6 +73,12 @@ final class WorkspaceAddView: BaseView {
     }
     
     override func configureLayout() {
+        placeholderImage.snp.makeConstraints { make in
+            make.top.equalTo(safeAreaLayoutGuide).offset(24)
+            make.centerX.equalToSuperview()
+            make.size.equalTo(70)
+        }
+        
         imageSettingButton.snp.makeConstraints { make in
             make.top.equalTo(safeAreaLayoutGuide).offset(24)
             make.centerX.equalToSuperview()
