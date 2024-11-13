@@ -92,3 +92,22 @@ extension OnboardingCoordinator {
         //TODO: 화면 종료 처리 -> 홈 화면
     }
 }
+
+extension OnboardingCoordinator {
+    func showWorkspaceAdd() {
+        let reactor = WorkspaceAddReactor()
+        let workspaceAddVC = WorkspaceAddViewController()
+        workspaceAddVC.reactor = reactor
+        workspaceAddVC.coordinator = self
+
+        let navController = UINavigationController(rootViewController: workspaceAddVC)
+        navController.modalPresentationStyle = .pageSheet
+
+        if let sheet = navController.sheetPresentationController {
+            sheet.detents = [.large()]
+            sheet.prefersGrabberVisible = true
+        }
+
+        navigationController.present(navController, animated: true)
+    }
+}

@@ -8,7 +8,6 @@
 import UIKit
 
 extension UIButton {
-    
     func setBackgroundColor(_ color: UIColor, for state: UIControl.State) {
         UIGraphicsBeginImageContext(CGSize(width: 1.0, height: 1.0))
         guard let context = UIGraphicsGetCurrentContext() else { return }
@@ -19,5 +18,15 @@ extension UIButton {
         UIGraphicsEndImageContext()
         
         setBackgroundImage(backgroundImage, for: state)
+    }
+    
+    func setButtonEnabled(isEnabled: Bool) {
+        if isEnabled {
+            setBackgroundColor(Constant.Color.brandGreen, for: .normal)
+            self.isUserInteractionEnabled = true
+        } else {
+            setBackgroundColor(Constant.Color.brandInactive, for: .normal)
+            self.isUserInteractionEnabled = false
+        }
     }
 }

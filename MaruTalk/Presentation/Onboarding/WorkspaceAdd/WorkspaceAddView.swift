@@ -25,7 +25,7 @@ final class WorkspaceAddView: BaseView {
         return btn
     }()
     
-    let cameraIconButton: UIButton = {
+    private let cameraIconButton: UIButton = {
         let btn = UIButton(type: .system)
         let image = UIImage(named: "Camera")?.resizeImageTo(size: CGSize(width: 14, height: 14))
         btn.setImage(image?.withRenderingMode(.alwaysOriginal), for: .normal)
@@ -34,6 +34,7 @@ final class WorkspaceAddView: BaseView {
         btn.clipsToBounds = true
         btn.layer.borderColor = Constant.Color.brandWhite.cgColor
         btn.layer.borderWidth = 3
+        btn.isUserInteractionEnabled = false
         return btn
     }()
     

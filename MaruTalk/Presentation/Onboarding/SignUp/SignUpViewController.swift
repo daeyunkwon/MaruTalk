@@ -115,11 +115,9 @@ extension SignUpViewController {
             .distinctUntilChanged()
             .bind(with: self, onNext: { owner, value in
                 if value {
-                    owner.rootView.emailCheckButton.setBackgroundColor(Constant.Color.brandGreen, for: .normal)
-                    owner.rootView.emailCheckButton.isUserInteractionEnabled = true
+                    owner.rootView.emailCheckButton.setButtonEnabled(isEnabled: true)
                 } else {
-                    owner.rootView.emailCheckButton.setBackgroundColor(Constant.Color.brandInactive, for: .normal)
-                    owner.rootView.emailCheckButton.isUserInteractionEnabled = false
+                    owner.rootView.emailCheckButton.setButtonEnabled(isEnabled: false)
                 }
             })
             .disposed(by: disposeBag)
@@ -133,11 +131,9 @@ extension SignUpViewController {
             .distinctUntilChanged()
             .bind(with: self) { owner, value in
                 if value {
-                    owner.rootView.signUpButton.setBackgroundColor(Constant.Color.brandGreen, for: .normal)
-                    owner.rootView.signUpButton.isUserInteractionEnabled = true
+                    owner.rootView.signUpButton.setButtonEnabled(isEnabled: true)
                 } else {
-                    owner.rootView.signUpButton.setBackgroundColor(Constant.Color.brandInactive, for: .normal)
-                    owner.rootView.signUpButton.isUserInteractionEnabled = false
+                    owner.rootView.signUpButton.setButtonEnabled(isEnabled: false)
                 }
             }
             .disposed(by: disposeBag)
@@ -207,7 +203,7 @@ extension SignUpViewController {
             }
             .disposed(by: disposeBag)
         
-        reactor.state.map { ($0.isSignUpSuccesss, $0.nickname) }
+        reactor.state.map { ($0.isSignUpSuccess, $0.nickname) }
             .filter { $0.0 == true }
             .take(1)
             .bind(with: self) { owner, value in

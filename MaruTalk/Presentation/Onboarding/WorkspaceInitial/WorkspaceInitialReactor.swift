@@ -11,15 +11,16 @@ import ReactorKit
 
 final class WorkspaceInitialReactor: Reactor {
     enum Action {
-        
+        case createWorkspaceButtonTapped
     }
     
     enum Mutation {
-        
+        case setNavigateToWorkspaceAdd(Bool)
     }
     
     struct State {
         var nickname = ""
+        var shouldNavigateToWorkspaceAdd = false
     }
     
     let initialState: State
@@ -33,7 +34,10 @@ final class WorkspaceInitialReactor: Reactor {
 
 extension WorkspaceInitialReactor {
     func mutate(action: Action) -> Observable<Mutation> {
-        
+        switch action {
+        case .createWorkspaceButtonTapped:
+            return .just(.setNavigateToWorkspaceAdd(true))
+        }
     }
 }
 
@@ -41,6 +45,12 @@ extension WorkspaceInitialReactor {
 
 extension WorkspaceInitialReactor {
     func reduce(state: State, mutation: Mutation) -> State {
+        var newState = state
         
+        switch mutation {
+        case .setNavigateToWorkspaceAdd(let value):
+            newState.shouldNavigateToWorkspaceAdd = value
+        }
+        return newState
     }
 }

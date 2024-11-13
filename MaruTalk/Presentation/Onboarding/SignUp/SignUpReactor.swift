@@ -70,7 +70,7 @@ final class SignUpReactor: Reactor {
         
         var validationStates: [Bool] = []
         var isSignUpInProgress = false
-        var isSignUpSuccesss = false
+        var isSignUpSuccess = false
         
         var isFormValid: Bool {
             return isEmailDuplicateCheckPassed && isEmailValid && isNicknameValid && isPhoneNumberValid && isPasswordValid && isPasswordCheckValid
@@ -238,7 +238,7 @@ extension SignUpReactor {
             newState.isSignUpInProgress = value
             
         case .setSignUpSuccess(let value):
-            newState.isSignUpSuccesss = value
+            newState.isSignUpSuccess = value
             
         case .toastMessageValue(let value):
             newState.toastMessage = value

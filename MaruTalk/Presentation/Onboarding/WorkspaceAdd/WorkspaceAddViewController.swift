@@ -14,13 +14,7 @@ final class WorkspaceAddViewController: BaseViewController<WorkspaceAddView>, Vi
     //MARK: - Properties
     
     var disposeBag: DisposeBag = DisposeBag()
-    var reactor: WorkspaceAddReactor
     weak var coordinator: OnboardingCoordinator?
-    
-    init(reactor: WorkspaceAddReactor) {
-        self.reactor = reactor
-        super.init()
-    }
     
     //MARK: - Life Cycle
     
@@ -49,7 +43,15 @@ final class WorkspaceAddViewController: BaseViewController<WorkspaceAddView>, Vi
 
 extension WorkspaceAddViewController {
     private func bindAction(reactor: Reactor) {
+        rootView.nameFieldView.inputTextField.rx.text.orEmpty
+            .map { Reactor.Action.inputName($0) }
+            .bind(to: reactor.action)
+            .disposed(by: disposeBag)
         
+        rootView.descriptionFieldView.inputTextField.rx.text.orEmpty
+            .map { Reactor.Action.inputDescription($0) }
+            .bind(to: reactor.action)
+            .disposed(by: disposeBag)
     }
 }
 
@@ -57,6 +59,11 @@ extension WorkspaceAddViewController {
 
 extension WorkspaceAddViewController {
     private func bindState(reactor: Reactor) {
-        
+        reactor.state.map { $0.isDoneButtonEnabled }
+            .distinctUntilChanged()
+            .bind(with: self) { owner, value in
+                owner.rootView.doneButton.setButtonEnabled(isEnabled: value)
+            }
+            .disposed(by: disposeBag)
     }
 }

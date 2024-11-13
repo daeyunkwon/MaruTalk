@@ -51,7 +51,10 @@ final class WorkspaceInitialViewController: BaseViewController<WorkspaceInitialV
 
 extension WorkspaceInitialViewController {
     private func bindAction(reactor: Reactor) {
-        
+        rootView.createWorkspaceButton.rx.tap
+            .map { Reactor.Action.createWorkspaceButtonTapped }
+            .bind(to: reactor.action)
+            .disposed(by: disposeBag)
     }
 }
 
@@ -63,6 +66,13 @@ extension WorkspaceInitialViewController {
             .distinctUntilChanged()
             .bind(with: self) { owner, value in
                 owner.rootView.configureBodyLabel(nickname: value)
+            }
+            .disposed(by: disposeBag)
+        
+        reactor.state.map { $0.shouldNavigateToWorkspaceAdd }
+            .filter { $0 == true }
+            .bind(with: self) { owner, _ in
+                owner.coordinator?.showWorkspaceAdd()
             }
             .disposed(by: disposeBag)
     }
