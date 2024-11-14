@@ -16,10 +16,21 @@ final class OnboardingCoordinator: Coordinator {
         self.navigationController = navigationController
     }
     
+    deinit {
+        print("DEBUG: OnboardingCoordinator deinit")
+    }
+    
     func start() {
         let onboardingVC = OnboardingViewController()
         onboardingVC.coordinator = self
         navigationController.pushViewController(onboardingVC, animated: true)
+    }
+    
+    func didFinish() {
+        parentCoordinator?.removeCoordinator(child: self)
+        if let appCoordinator = parentCoordinator as? AppCoordinator {
+            appCoordinator.showMainTabBar()
+        }
     }
 }
 

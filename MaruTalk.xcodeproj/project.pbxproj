@@ -16,6 +16,19 @@
 		441114D62CE34ECA000D1B2B /* WorkspaceAddViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 441114D52CE34ECA000D1B2B /* WorkspaceAddViewController.swift */; };
 		441114D82CE3515D000D1B2B /* WorkspaceAddReactor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 441114D72CE3515D000D1B2B /* WorkspaceAddReactor.swift */; };
 		441114DA2CE363B3000D1B2B /* UIImage+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 441114D92CE363B3000D1B2B /* UIImage+Extension.swift */; };
+		441114DF2CE5EA34000D1B2B /* MainTabBarCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 441114DE2CE5EA34000D1B2B /* MainTabBarCoordinator.swift */; };
+		441114E42CE5EEF8000D1B2B /* HomeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 441114E32CE5EEF8000D1B2B /* HomeView.swift */; };
+		441114E62CE5EF03000D1B2B /* HomeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 441114E52CE5EF03000D1B2B /* HomeViewController.swift */; };
+		441114E82CE5EF51000D1B2B /* HomeCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 441114E72CE5EF51000D1B2B /* HomeCoordinator.swift */; };
+		441114EA2CE60BAD000D1B2B /* DMCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 441114E92CE60BAD000D1B2B /* DMCoordinator.swift */; };
+		441114EC2CE60BF5000D1B2B /* SearchCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 441114EB2CE60BF5000D1B2B /* SearchCoordinator.swift */; };
+		441114EE2CE60C21000D1B2B /* SettingCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 441114ED2CE60C21000D1B2B /* SettingCoordinator.swift */; };
+		441114F02CE60C48000D1B2B /* DMView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 441114EF2CE60C48000D1B2B /* DMView.swift */; };
+		441114F22CE60C76000D1B2B /* SearchView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 441114F12CE60C76000D1B2B /* SearchView.swift */; };
+		441114F42CE60C82000D1B2B /* SettingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 441114F32CE60C82000D1B2B /* SettingView.swift */; };
+		441114F62CE60C99000D1B2B /* DMViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 441114F52CE60C99000D1B2B /* DMViewController.swift */; };
+		441114F82CE60CB5000D1B2B /* SearchViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 441114F72CE60CB5000D1B2B /* SearchViewController.swift */; };
+		441114FA2CE60CCC000D1B2B /* SettingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 441114F92CE60CCC000D1B2B /* SettingViewController.swift */; };
 		444910DA2CD77315005AB2F7 /* SignUpReactor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 444910D92CD77315005AB2F7 /* SignUpReactor.swift */; };
 		444910DC2CD8AC5C005AB2F7 /* Router.swift in Sources */ = {isa = PBXBuildFile; fileRef = 444910DB2CD8AC5C005AB2F7 /* Router.swift */; };
 		444910DF2CD8AC9F005AB2F7 /* Alamofire in Frameworks */ = {isa = PBXBuildFile; productRef = 444910DE2CD8AC9F005AB2F7 /* Alamofire */; };
@@ -27,7 +40,6 @@
 		444910EC2CD91C7B005AB2F7 /* Toast in Frameworks */ = {isa = PBXBuildFile; productRef = 444910EB2CD91C7B005AB2F7 /* Toast */; };
 		444DE6B62CD0FC9D00821269 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 444DE6B52CD0FC9D00821269 /* AppDelegate.swift */; };
 		444DE6B82CD0FC9D00821269 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 444DE6B72CD0FC9D00821269 /* SceneDelegate.swift */; };
-		444DE6BA2CD0FC9D00821269 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 444DE6B92CD0FC9D00821269 /* ViewController.swift */; };
 		444DE6BF2CD0FC9F00821269 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 444DE6BE2CD0FC9F00821269 /* Assets.xcassets */; };
 		444DE6C22CD0FC9F00821269 /* Base in Resources */ = {isa = PBXBuildFile; fileRef = 444DE6C12CD0FC9F00821269 /* Base */; };
 		444DE6CA2CD0FDD000821269 /* .gitignore in Resources */ = {isa = PBXBuildFile; fileRef = 444DE6C92CD0FDD000821269 /* .gitignore */; };
@@ -70,6 +82,19 @@
 		441114D52CE34ECA000D1B2B /* WorkspaceAddViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WorkspaceAddViewController.swift; sourceTree = "<group>"; };
 		441114D72CE3515D000D1B2B /* WorkspaceAddReactor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WorkspaceAddReactor.swift; sourceTree = "<group>"; };
 		441114D92CE363B3000D1B2B /* UIImage+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIImage+Extension.swift"; sourceTree = "<group>"; };
+		441114DE2CE5EA34000D1B2B /* MainTabBarCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainTabBarCoordinator.swift; sourceTree = "<group>"; };
+		441114E32CE5EEF8000D1B2B /* HomeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeView.swift; sourceTree = "<group>"; };
+		441114E52CE5EF03000D1B2B /* HomeViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeViewController.swift; sourceTree = "<group>"; };
+		441114E72CE5EF51000D1B2B /* HomeCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeCoordinator.swift; sourceTree = "<group>"; };
+		441114E92CE60BAD000D1B2B /* DMCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DMCoordinator.swift; sourceTree = "<group>"; };
+		441114EB2CE60BF5000D1B2B /* SearchCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchCoordinator.swift; sourceTree = "<group>"; };
+		441114ED2CE60C21000D1B2B /* SettingCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingCoordinator.swift; sourceTree = "<group>"; };
+		441114EF2CE60C48000D1B2B /* DMView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DMView.swift; sourceTree = "<group>"; };
+		441114F12CE60C76000D1B2B /* SearchView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchView.swift; sourceTree = "<group>"; };
+		441114F32CE60C82000D1B2B /* SettingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingView.swift; sourceTree = "<group>"; };
+		441114F52CE60C99000D1B2B /* DMViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DMViewController.swift; sourceTree = "<group>"; };
+		441114F72CE60CB5000D1B2B /* SearchViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchViewController.swift; sourceTree = "<group>"; };
+		441114F92CE60CCC000D1B2B /* SettingViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingViewController.swift; sourceTree = "<group>"; };
 		444910D92CD77315005AB2F7 /* SignUpReactor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignUpReactor.swift; sourceTree = "<group>"; };
 		444910DB2CD8AC5C005AB2F7 /* Router.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Router.swift; sourceTree = "<group>"; };
 		444910E02CD8B072005AB2F7 /* BodyKey.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BodyKey.swift; sourceTree = "<group>"; };
@@ -80,7 +105,6 @@
 		444DE6B22CD0FC9D00821269 /* MaruTalk.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = MaruTalk.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		444DE6B52CD0FC9D00821269 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		444DE6B72CD0FC9D00821269 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
-		444DE6B92CD0FC9D00821269 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
 		444DE6BE2CD0FC9F00821269 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		444DE6C12CD0FC9F00821269 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		444DE6C32CD0FC9F00821269 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -140,6 +164,9 @@
 		441114D12CE33504000D1B2B /* Home */ = {
 			isa = PBXGroup;
 			children = (
+				441114E72CE5EF51000D1B2B /* HomeCoordinator.swift */,
+				441114E32CE5EEF8000D1B2B /* HomeView.swift */,
+				441114E52CE5EF03000D1B2B /* HomeViewController.swift */,
 			);
 			path = Home;
 			sourceTree = "<group>";
@@ -152,6 +179,44 @@
 				441114D52CE34ECA000D1B2B /* WorkspaceAddViewController.swift */,
 			);
 			path = WorkspaceAdd;
+			sourceTree = "<group>";
+		};
+		441114DB2CE5E1A6000D1B2B /* TabBar */ = {
+			isa = PBXGroup;
+			children = (
+				441114DE2CE5EA34000D1B2B /* MainTabBarCoordinator.swift */,
+			);
+			path = TabBar;
+			sourceTree = "<group>";
+		};
+		441114E02CE5EADE000D1B2B /* DM */ = {
+			isa = PBXGroup;
+			children = (
+				441114E92CE60BAD000D1B2B /* DMCoordinator.swift */,
+				441114EF2CE60C48000D1B2B /* DMView.swift */,
+				441114F52CE60C99000D1B2B /* DMViewController.swift */,
+			);
+			path = DM;
+			sourceTree = "<group>";
+		};
+		441114E12CE5EAE8000D1B2B /* Search */ = {
+			isa = PBXGroup;
+			children = (
+				441114EB2CE60BF5000D1B2B /* SearchCoordinator.swift */,
+				441114F12CE60C76000D1B2B /* SearchView.swift */,
+				441114F72CE60CB5000D1B2B /* SearchViewController.swift */,
+			);
+			path = Search;
+			sourceTree = "<group>";
+		};
+		441114E22CE5EB02000D1B2B /* Setting */ = {
+			isa = PBXGroup;
+			children = (
+				441114ED2CE60C21000D1B2B /* SettingCoordinator.swift */,
+				441114F32CE60C82000D1B2B /* SettingView.swift */,
+				441114F92CE60CCC000D1B2B /* SettingViewController.swift */,
+			);
+			path = Setting;
 			sourceTree = "<group>";
 		};
 		444DE6A92CD0FC9D00821269 = {
@@ -207,9 +272,12 @@
 		444DE6CD2CD100B600821269 /* Presentation */ = {
 			isa = PBXGroup;
 			children = (
-				444DE6B92CD0FC9D00821269 /* ViewController.swift */,
+				441114DB2CE5E1A6000D1B2B /* TabBar */,
 				444DE6DE2CD11F9A00821269 /* Onboarding */,
 				441114D12CE33504000D1B2B /* Home */,
+				441114E02CE5EADE000D1B2B /* DM */,
+				441114E12CE5EAE8000D1B2B /* Search */,
+				441114E22CE5EB02000D1B2B /* Setting */,
 			);
 			path = Presentation;
 			sourceTree = "<group>";
@@ -428,14 +496,16 @@
 			files = (
 				444DE7192CD74D7E00821269 /* CustomHandleNavigationBar.swift in Sources */,
 				441114CC2CE1DDD8000D1B2B /* WorkspaceInitialView.swift in Sources */,
+				441114E82CE5EF51000D1B2B /* HomeCoordinator.swift in Sources */,
 				444910E52CD8E0B1005AB2F7 /* NetworkError.swift in Sources */,
-				444DE6BA2CD0FC9D00821269 /* ViewController.swift in Sources */,
 				444DE6B62CD0FC9D00821269 /* AppDelegate.swift in Sources */,
 				444DE6E72CD24C1F00821269 /* BaseViewController.swift in Sources */,
 				441114CE2CE1DDF3000D1B2B /* WorkspaceInitialViewController.swift in Sources */,
 				444DE7152CD6222D00821269 /* SignUpViewController.swift in Sources */,
+				441114E62CE5EF03000D1B2B /* HomeViewController.swift in Sources */,
 				444910E92CD8F04B005AB2F7 /* SLPErrorResponse.swift in Sources */,
 				444DE7132CD6222400821269 /* SignUpView.swift in Sources */,
+				441114F62CE60C99000D1B2B /* DMViewController.swift in Sources */,
 				441114D62CE34ECA000D1B2B /* WorkspaceAddViewController.swift in Sources */,
 				444DE6D22CD1012700821269 /* APIKey.swift in Sources */,
 				444910DA2CD77315005AB2F7 /* SignUpReactor.swift in Sources */,
@@ -443,27 +513,37 @@
 				444DE6F42CD27B1600821269 /* UIButton+Extension.swift in Sources */,
 				441114D42CE34EBD000D1B2B /* WorkspaceAddView.swift in Sources */,
 				441114C72CE08B03000D1B2B /* User.swift in Sources */,
+				441114E42CE5EEF8000D1B2B /* HomeView.swift in Sources */,
+				441114F02CE60C48000D1B2B /* DMView.swift in Sources */,
 				444910E72CD8E734005AB2F7 /* UIViewController+Extension.swift in Sources */,
 				444DE7022CD4D2A700821269 /* Coordinator.swift in Sources */,
 				444DE7172CD6251100821269 /* TitleWithInputFieldView.swift in Sources */,
+				441114EC2CE60BF5000D1B2B /* SearchCoordinator.swift in Sources */,
 				444DE6E22CD1207300821269 /* UIView+Extension.swift in Sources */,
 				444910E12CD8B072005AB2F7 /* BodyKey.swift in Sources */,
 				444DE6E02CD11FC100821269 /* OnboardingViewController.swift in Sources */,
 				444DE6DD2CD112EE00821269 /* UILabel+Extension.swift in Sources */,
 				441114D02CE1F942000D1B2B /* WorkspaceInitialReactor.swift in Sources */,
 				444910E32CD8B258005AB2F7 /* NetworkManager.swift in Sources */,
+				441114EA2CE60BAD000D1B2B /* DMCoordinator.swift in Sources */,
+				441114F42CE60C82000D1B2B /* SettingView.swift in Sources */,
+				441114EE2CE60C21000D1B2B /* SettingCoordinator.swift in Sources */,
+				441114F82CE60CB5000D1B2B /* SearchViewController.swift in Sources */,
 				444DE7062CD609FC00821269 /* OnboardingCoordinator.swift in Sources */,
 				444DE6B82CD0FC9D00821269 /* SceneDelegate.swift in Sources */,
 				441114D82CE3515D000D1B2B /* WorkspaceAddReactor.swift in Sources */,
 				441114DA2CE363B3000D1B2B /* UIImage+Extension.swift in Sources */,
 				444DE6E52CD121AA00821269 /* BaseView.swift in Sources */,
 				444DE7042CD6093000821269 /* AppCoordinator.swift in Sources */,
+				441114FA2CE60CCC000D1B2B /* SettingViewController.swift in Sources */,
+				441114F22CE60C76000D1B2B /* SearchView.swift in Sources */,
 				444910DC2CD8AC5C005AB2F7 /* Router.swift in Sources */,
 				444DE6D52CD1022600821269 /* Reusable.swift in Sources */,
 				444DE6EB2CD24F1D00821269 /* BaseCollectionViewCell.swift in Sources */,
 				444DE6D72CD102DD00821269 /* Constant.swift in Sources */,
 				441114C92CE1BDA5000D1B2B /* KeychainManager.swift in Sources */,
 				444DE6F72CD366DB00821269 /* AuthView.swift in Sources */,
+				441114DF2CE5EA34000D1B2B /* MainTabBarCoordinator.swift in Sources */,
 				444DE6EF2CD2529D00821269 /* OnboardingView.swift in Sources */,
 				444DE6F92CD366E600821269 /* AuthViewController.swift in Sources */,
 				444DE6F22CD2777800821269 /* RectangleBrandColorButton.swift in Sources */,

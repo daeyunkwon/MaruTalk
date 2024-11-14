@@ -12,6 +12,9 @@ import UIKit
 import ReactorKit
 import RxCocoa
 
+
+//TODO: X 버튼 동작 처리, 완료 버튼 동작 처리
+
 final class WorkspaceAddViewController: BaseViewController<WorkspaceAddView>, View {
     
     //MARK: - Properties
