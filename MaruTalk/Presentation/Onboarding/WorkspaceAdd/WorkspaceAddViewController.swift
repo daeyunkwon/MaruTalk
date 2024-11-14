@@ -5,8 +5,9 @@
 //  Created by 권대윤 on 11/12/24.
 //
 
-import UIKit
 import AVFoundation
+import PhotosUI
+import UIKit
 
 import ReactorKit
 import RxCocoa
@@ -63,7 +64,7 @@ final class WorkspaceAddViewController: BaseViewController<WorkspaceAddView>, Vi
         
         switch cameraAuthorizationStatus {
         case .notDetermined:
-            // 권한이 아직 설정되지 않았으므로 권한 요청
+            //권한 요청
             AVCaptureDevice.requestAccess(for: .video) { granted in
                 DispatchQueue.main.async {
                     completion(granted)
@@ -81,6 +82,41 @@ final class WorkspaceAddViewController: BaseViewController<WorkspaceAddView>, Vi
         @unknown default:
             // 예외 처리
             completion(false)
+        }
+    }
+    
+    private func requestPhotoLibraryPermission() {
+        let status = PHPhotoLibrary.authorizationStatus(for: .readWrite)
+        
+        switch status {
+        case .notDetermined:
+            //권한 요청
+            PHPhotoLibrary.requestAuthorization {[weak self] status in
+                guard let self else { return }
+                
+                DispatchQueue.main.async {
+                    self.handlePhotoLibraryAuthorizationStatus(status)
+                }
+            }
+        case .restricted, .denied:
+            self.showToastMessage(message: "앨범 접근 권한이 거부되었습니다.", backgroundColor: Constant.Color.brandRed)
+        case .authorized, .limited:
+            self.openPhotoPicker()
+        @unknown default:
+            break
+        }
+    }
+    
+    private func handlePhotoLibraryAuthorizationStatus(_ status: PHAuthorizationStatus) {
+        switch status {
+        case .authorized, .limited:
+            self.openPhotoPicker()
+        case .denied, .restricted:
+            self.showToastMessage(message: "앨범 접근 권한이 거부되었습니다.", backgroundColor: Constant.Color.brandRed)
+        case .notDetermined:
+            break
+        @unknown default:
+            break
         }
     }
 }
@@ -127,7 +163,7 @@ extension WorkspaceAddViewController {
         reactor.state.map { $0.isAlbumVisible }
             .filter { $0 == true }
             .bind(with: self) { owner, _ in
-                print(11111)
+                owner.requestPhotoLibraryPermission()
             }
             .disposed(by: disposeBag)
         
@@ -167,4 +203,37 @@ extension WorkspaceAddViewController: UINavigationControllerDelegate, UIImagePic
         
         picker.dismiss(animated: true, completion: nil)
       }
+}
+
+//MARK: - PHPickerViewControllerDelegate
+
+extension WorkspaceAddViewController: PHPickerViewControllerDelegate {
+    func picker(_ picker: PHPickerViewController, didFinishPicking results: [PHPickerResult]) {
+        picker.dismiss(animated: true, completion: nil)
+        
+        if let itemProvider = results.first?.itemProvider, itemProvider.canLoadObject(ofClass: UIImage.self) {
+                itemProvider.loadObject(ofClass: UIImage.self) {[weak self] object, error in
+                    if let image = object as? UIImage {
+                        DispatchQueue.main.async {
+                            self?.rootView.imageSettingButton.setImage(image, for: .normal)
+                            
+                            if let imageData = image.jpegData(compressionQuality: 0.7) {
+                                self?.reactor?.action.onNext(.selectPhotoImage(imageData))
+                            }
+                        }
+                    }
+                }
+            }
+    }
+    
+    private func openPhotoPicker() {
+        var configuration = PHPickerConfiguration()
+        configuration.selectionLimit = 1 // 최대 선택 가능 수
+        configuration.filter = .images
+        
+        let picker = PHPickerViewController(configuration: configuration)
+        picker.delegate = self
+        
+        present(picker, animated: true, completion: nil)
+    }
 }

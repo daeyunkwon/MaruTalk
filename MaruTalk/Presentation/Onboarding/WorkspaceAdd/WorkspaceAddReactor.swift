@@ -33,11 +33,7 @@ final class WorkspaceAddReactor: Reactor {
     struct State {
         var name = ""
         var description = ""
-        var imageData = Data() {
-            didSet {
-                print(self)
-            }
-        }
+        var imageData = Data()
         
         var isDoneButtonEnabled = false
         
