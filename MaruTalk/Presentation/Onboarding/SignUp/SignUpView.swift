@@ -29,7 +29,7 @@ final class SignUpView: BaseView {
     
     let emailFieldView: TitleWithInputFieldView = TitleWithInputFieldView(title: "이메일", placeholderText: "이메일을 입력하세요")
     
-    let emailCheckButton: RectangleBrandColorButton = RectangleBrandColorButton(title: "중복 확인")
+    let emailCheckButton: RoundedBrandButton = RoundedBrandButton(title: "중복 확인")
     
     let nicknameFieldView: TitleWithInputFieldView = TitleWithInputFieldView(title: "닉네임", placeholderText: "닉네임을 입력하세요")
     
@@ -39,7 +39,7 @@ final class SignUpView: BaseView {
     
     let passwordCheckFieldView: TitleWithInputFieldView = TitleWithInputFieldView(title: "비밀번호 확인", placeholderText: "비밀번호를 한 번 더 입력하세요")
     
-    let signUpButton: RectangleBrandColorButton = RectangleBrandColorButton(title: "가입하기")
+    let signUpButton: RoundedBrandButton = RoundedBrandButton(title: "가입하기")
     
     //MARK: - Configurations
     

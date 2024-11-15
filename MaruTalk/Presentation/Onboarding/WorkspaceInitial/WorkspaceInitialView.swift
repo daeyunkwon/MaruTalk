@@ -38,7 +38,7 @@ final class WorkspaceInitialView: BaseView {
         return iv
     }()
     
-    let createWorkspaceButton = RectangleBrandColorButton(title: "워크스페이스 생성")
+    let createWorkspaceButton = RoundedBrandButton(title: "워크스페이스 생성")
     
     //MARK: - Configurations
     

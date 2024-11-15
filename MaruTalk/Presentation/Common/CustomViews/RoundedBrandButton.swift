@@ -1,5 +1,5 @@
 //
-//  RectangleBrandColorButton.swift
+//  RoundedBrandButton.swift
 //  MaruTalk
 //
 //  Created by 권대윤 on 10/30/24.
@@ -7,7 +7,7 @@
 
 import UIKit
 
-final class RectangleBrandColorButton: UIButton {
+final class RoundedBrandButton: UIButton {
     
     init(title: String, backgroundColor: UIColor = Constant.Color.brandGreen) {
         super.init(frame: .zero)

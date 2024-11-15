@@ -31,7 +31,7 @@ final class OnboardingView: BaseView {
         return iv
     }()
     
-    let startButton = RectangleBrandColorButton(title: "시작하기")
+    let startButton = RoundedBrandButton(title: "시작하기")
     
     //MARK: - Configurations
     

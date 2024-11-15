@@ -57,7 +57,7 @@ final class WorkspaceAddView: BaseView {
     
     let descriptionFieldView = TitleWithInputFieldView(title: "워크스페이스 설명", placeholderText: "워크스페이스를 설명하세요 (옵션)")
     
-    let doneButton = RectangleBrandColorButton(title: "완료")
+    let doneButton = RoundedBrandButton(title: "완료")
     
     //MARK: - Configurations
     

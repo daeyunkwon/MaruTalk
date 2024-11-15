@@ -21,13 +21,6 @@ final class HomeViewController: BaseViewController<HomeView> {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
-        rootView.doneButton.rx.tap
-            .bind(with: self) { owner, _ in
-                owner.coordinator?.didFinish()
-                print(1111)
-            }
-            .disposed(by: disposeBag)
     }
     
     //MARK: - Methods

@@ -29,6 +29,7 @@
 		441114F62CE60C99000D1B2B /* DMViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 441114F52CE60C99000D1B2B /* DMViewController.swift */; };
 		441114F82CE60CB5000D1B2B /* SearchViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 441114F72CE60CB5000D1B2B /* SearchViewController.swift */; };
 		441114FA2CE60CCC000D1B2B /* SettingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 441114F92CE60CCC000D1B2B /* SettingViewController.swift */; };
+		441114FE2CE73CD3000D1B2B /* HomeEmptyView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 441114FD2CE73CD3000D1B2B /* HomeEmptyView.swift */; };
 		444910DA2CD77315005AB2F7 /* SignUpReactor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 444910D92CD77315005AB2F7 /* SignUpReactor.swift */; };
 		444910DC2CD8AC5C005AB2F7 /* Router.swift in Sources */ = {isa = PBXBuildFile; fileRef = 444910DB2CD8AC5C005AB2F7 /* Router.swift */; };
 		444910DF2CD8AC9F005AB2F7 /* Alamofire in Frameworks */ = {isa = PBXBuildFile; productRef = 444910DE2CD8AC9F005AB2F7 /* Alamofire */; };
@@ -55,7 +56,7 @@
 		444DE6E92CD24E4100821269 /* BaseTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 444DE6E82CD24E4100821269 /* BaseTableViewCell.swift */; };
 		444DE6EB2CD24F1D00821269 /* BaseCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 444DE6EA2CD24F1D00821269 /* BaseCollectionViewCell.swift */; };
 		444DE6EF2CD2529D00821269 /* OnboardingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 444DE6EE2CD2529D00821269 /* OnboardingView.swift */; };
-		444DE6F22CD2777800821269 /* RectangleBrandColorButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 444DE6F12CD2777800821269 /* RectangleBrandColorButton.swift */; };
+		444DE6F22CD2777800821269 /* RoundedBrandButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 444DE6F12CD2777800821269 /* RoundedBrandButton.swift */; };
 		444DE6F42CD27B1600821269 /* UIButton+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 444DE6F32CD27B1600821269 /* UIButton+Extension.swift */; };
 		444DE6F72CD366DB00821269 /* AuthView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 444DE6F62CD366DB00821269 /* AuthView.swift */; };
 		444DE6F92CD366E600821269 /* AuthViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 444DE6F82CD366E600821269 /* AuthViewController.swift */; };
@@ -95,6 +96,7 @@
 		441114F52CE60C99000D1B2B /* DMViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DMViewController.swift; sourceTree = "<group>"; };
 		441114F72CE60CB5000D1B2B /* SearchViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchViewController.swift; sourceTree = "<group>"; };
 		441114F92CE60CCC000D1B2B /* SettingViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingViewController.swift; sourceTree = "<group>"; };
+		441114FD2CE73CD3000D1B2B /* HomeEmptyView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeEmptyView.swift; sourceTree = "<group>"; };
 		444910D92CD77315005AB2F7 /* SignUpReactor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignUpReactor.swift; sourceTree = "<group>"; };
 		444910DB2CD8AC5C005AB2F7 /* Router.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Router.swift; sourceTree = "<group>"; };
 		444910E02CD8B072005AB2F7 /* BodyKey.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BodyKey.swift; sourceTree = "<group>"; };
@@ -120,7 +122,7 @@
 		444DE6E82CD24E4100821269 /* BaseTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseTableViewCell.swift; sourceTree = "<group>"; };
 		444DE6EA2CD24F1D00821269 /* BaseCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseCollectionViewCell.swift; sourceTree = "<group>"; };
 		444DE6EE2CD2529D00821269 /* OnboardingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardingView.swift; sourceTree = "<group>"; };
-		444DE6F12CD2777800821269 /* RectangleBrandColorButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RectangleBrandColorButton.swift; sourceTree = "<group>"; };
+		444DE6F12CD2777800821269 /* RoundedBrandButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RoundedBrandButton.swift; sourceTree = "<group>"; };
 		444DE6F32CD27B1600821269 /* UIButton+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIButton+Extension.swift"; sourceTree = "<group>"; };
 		444DE6F62CD366DB00821269 /* AuthView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthView.swift; sourceTree = "<group>"; };
 		444DE6F82CD366E600821269 /* AuthViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthViewController.swift; sourceTree = "<group>"; };
@@ -166,6 +168,7 @@
 			children = (
 				441114E72CE5EF51000D1B2B /* HomeCoordinator.swift */,
 				441114E32CE5EEF8000D1B2B /* HomeView.swift */,
+				441114FD2CE73CD3000D1B2B /* HomeEmptyView.swift */,
 				441114E52CE5EF03000D1B2B /* HomeViewController.swift */,
 			);
 			path = Home;
@@ -397,7 +400,7 @@
 		444DE6F02CD276FB00821269 /* CustomViews */ = {
 			isa = PBXGroup;
 			children = (
-				444DE6F12CD2777800821269 /* RectangleBrandColorButton.swift */,
+				444DE6F12CD2777800821269 /* RoundedBrandButton.swift */,
 				444DE7162CD6251100821269 /* TitleWithInputFieldView.swift */,
 				444DE7182CD74D7E00821269 /* CustomHandleNavigationBar.swift */,
 			);
@@ -553,6 +556,7 @@
 				444DE7042CD6093000821269 /* AppCoordinator.swift in Sources */,
 				441114FA2CE60CCC000D1B2B /* SettingViewController.swift in Sources */,
 				441114F22CE60C76000D1B2B /* SearchView.swift in Sources */,
+				441114FE2CE73CD3000D1B2B /* HomeEmptyView.swift in Sources */,
 				444910DC2CD8AC5C005AB2F7 /* Router.swift in Sources */,
 				444DE6D52CD1022600821269 /* Reusable.swift in Sources */,
 				444DE6EB2CD24F1D00821269 /* BaseCollectionViewCell.swift in Sources */,
@@ -562,7 +566,7 @@
 				441114DF2CE5EA34000D1B2B /* MainTabBarCoordinator.swift in Sources */,
 				444DE6EF2CD2529D00821269 /* OnboardingView.swift in Sources */,
 				444DE6F92CD366E600821269 /* AuthViewController.swift in Sources */,
-				444DE6F22CD2777800821269 /* RectangleBrandColorButton.swift in Sources */,
+				444DE6F22CD2777800821269 /* RoundedBrandButton.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

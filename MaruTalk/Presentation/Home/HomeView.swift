@@ -13,22 +13,35 @@ final class HomeView: BaseView {
     
     //MARK: - UI Components
     
-    let doneButton = RectangleBrandColorButton(title: "끝!!")
-    
-    
+    let emptyView: HomeEmptyView = {
+        let view = HomeEmptyView()
+        view.isHidden = true
+        return view
+    }()
+
+    let tableView: UITableView = {
+        let tv = UITableView()
+        tv.backgroundColor = .systemYellow
+        return tv
+    }()
     
     //MARK: - Configurations
     
     override func configureHierarchy() {
         addSubviews(
-            doneButton
+            tableView,
+            emptyView
         )
     }
     
     override func configureLayout() {
-        doneButton.snp.makeConstraints { make in
-            make.center.equalToSuperview()
-            make.height.equalTo(44)
+        tableView.snp.makeConstraints { make in
+            make.edges.equalTo(safeAreaLayoutGuide)
+        }
+        
+        emptyView.snp.makeConstraints { make in
+            make.top.equalTo(safeAreaLayoutGuide)
+            make.horizontalEdges.bottom.equalToSuperview()
         }
     }
     
