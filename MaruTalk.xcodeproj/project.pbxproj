@@ -219,6 +219,22 @@
 			path = Setting;
 			sourceTree = "<group>";
 		};
+		441114FB2CE73B50000D1B2B /* Cell */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Cell;
+			sourceTree = "<group>";
+		};
+		441114FC2CE73B58000D1B2B /* Common */ = {
+			isa = PBXGroup;
+			children = (
+				444DE6F02CD276FB00821269 /* CustomViews */,
+				441114FB2CE73B50000D1B2B /* Cell */,
+			);
+			path = Common;
+			sourceTree = "<group>";
+		};
 		444DE6A92CD0FC9D00821269 = {
 			isa = PBXGroup;
 			children = (
@@ -272,6 +288,7 @@
 		444DE6CD2CD100B600821269 /* Presentation */ = {
 			isa = PBXGroup;
 			children = (
+				441114FC2CE73B58000D1B2B /* Common */,
 				441114DB2CE5E1A6000D1B2B /* TabBar */,
 				444DE6DE2CD11F9A00821269 /* Onboarding */,
 				441114D12CE33504000D1B2B /* Home */,
@@ -287,7 +304,6 @@
 			children = (
 				444DE6D62CD102DD00821269 /* Constant.swift */,
 				444DE6E32CD1219A00821269 /* Base */,
-				444DE6F02CD276FB00821269 /* CustomViews */,
 				444DE6DB2CD112D300821269 /* Extensions */,
 				444DE6D32CD1021500821269 /* Protocols */,
 			);
