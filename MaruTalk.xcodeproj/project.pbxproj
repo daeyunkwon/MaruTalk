@@ -30,6 +30,12 @@
 		441114F82CE60CB5000D1B2B /* SearchViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 441114F72CE60CB5000D1B2B /* SearchViewController.swift */; };
 		441114FA2CE60CCC000D1B2B /* SettingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 441114F92CE60CCC000D1B2B /* SettingViewController.swift */; };
 		441114FE2CE73CD3000D1B2B /* HomeEmptyView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 441114FD2CE73CD3000D1B2B /* HomeEmptyView.swift */; };
+		441115002CE75290000D1B2B /* DropdownArrowTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 441114FF2CE75290000D1B2B /* DropdownArrowTableViewCell.swift */; };
+		441115022CE75A38000D1B2B /* PlusTitleTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 441115012CE75A38000D1B2B /* PlusTitleTableViewCell.swift */; };
+		441115042CE75C4C000D1B2B /* ImageTitleCountTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 441115032CE75C4C000D1B2B /* ImageTitleCountTableViewCell.swift */; };
+		441115062CE86F70000D1B2B /* HashTitleCountTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 441115052CE86F70000D1B2B /* HashTitleCountTableViewCell.swift */; };
+		441115092CE87428000D1B2B /* Differentiator in Frameworks */ = {isa = PBXBuildFile; productRef = 441115082CE87428000D1B2B /* Differentiator */; };
+		4411150B2CE87428000D1B2B /* RxDataSources in Frameworks */ = {isa = PBXBuildFile; productRef = 4411150A2CE87428000D1B2B /* RxDataSources */; };
 		444910DA2CD77315005AB2F7 /* SignUpReactor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 444910D92CD77315005AB2F7 /* SignUpReactor.swift */; };
 		444910DC2CD8AC5C005AB2F7 /* Router.swift in Sources */ = {isa = PBXBuildFile; fileRef = 444910DB2CD8AC5C005AB2F7 /* Router.swift */; };
 		444910DF2CD8AC9F005AB2F7 /* Alamofire in Frameworks */ = {isa = PBXBuildFile; productRef = 444910DE2CD8AC9F005AB2F7 /* Alamofire */; };
@@ -97,6 +103,10 @@
 		441114F72CE60CB5000D1B2B /* SearchViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchViewController.swift; sourceTree = "<group>"; };
 		441114F92CE60CCC000D1B2B /* SettingViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingViewController.swift; sourceTree = "<group>"; };
 		441114FD2CE73CD3000D1B2B /* HomeEmptyView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeEmptyView.swift; sourceTree = "<group>"; };
+		441114FF2CE75290000D1B2B /* DropdownArrowTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DropdownArrowTableViewCell.swift; sourceTree = "<group>"; };
+		441115012CE75A38000D1B2B /* PlusTitleTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlusTitleTableViewCell.swift; sourceTree = "<group>"; };
+		441115032CE75C4C000D1B2B /* ImageTitleCountTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageTitleCountTableViewCell.swift; sourceTree = "<group>"; };
+		441115052CE86F70000D1B2B /* HashTitleCountTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HashTitleCountTableViewCell.swift; sourceTree = "<group>"; };
 		444910D92CD77315005AB2F7 /* SignUpReactor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignUpReactor.swift; sourceTree = "<group>"; };
 		444910DB2CD8AC5C005AB2F7 /* Router.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Router.swift; sourceTree = "<group>"; };
 		444910E02CD8B072005AB2F7 /* BodyKey.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BodyKey.swift; sourceTree = "<group>"; };
@@ -144,7 +154,9 @@
 				444DE6FC2CD36B4200821269 /* RxCocoa in Frameworks */,
 				444DE7002CD36B4200821269 /* RxSwift in Frameworks */,
 				444910DF2CD8AC9F005AB2F7 /* Alamofire in Frameworks */,
+				441115092CE87428000D1B2B /* Differentiator in Frameworks */,
 				444DE71C2CD7720600821269 /* ReactorKit in Frameworks */,
+				4411150B2CE87428000D1B2B /* RxDataSources in Frameworks */,
 				444910EC2CD91C7B005AB2F7 /* Toast in Frameworks */,
 				444DE6DA2CD10A7A00821269 /* SnapKit in Frameworks */,
 			);
@@ -225,6 +237,10 @@
 		441114FB2CE73B50000D1B2B /* Cell */ = {
 			isa = PBXGroup;
 			children = (
+				441114FF2CE75290000D1B2B /* DropdownArrowTableViewCell.swift */,
+				441115012CE75A38000D1B2B /* PlusTitleTableViewCell.swift */,
+				441115052CE86F70000D1B2B /* HashTitleCountTableViewCell.swift */,
+				441115032CE75C4C000D1B2B /* ImageTitleCountTableViewCell.swift */,
 			);
 			path = Cell;
 			sourceTree = "<group>";
@@ -450,6 +466,8 @@
 				444DE71B2CD7720600821269 /* ReactorKit */,
 				444910DE2CD8AC9F005AB2F7 /* Alamofire */,
 				444910EB2CD91C7B005AB2F7 /* Toast */,
+				441115082CE87428000D1B2B /* Differentiator */,
+				4411150A2CE87428000D1B2B /* RxDataSources */,
 			);
 			productName = MaruTalk;
 			productReference = 444DE6B22CD0FC9D00821269 /* MaruTalk.app */;
@@ -485,6 +503,7 @@
 				444DE71A2CD7720600821269 /* XCRemoteSwiftPackageReference "ReactorKit" */,
 				444910DD2CD8AC9F005AB2F7 /* XCRemoteSwiftPackageReference "Alamofire" */,
 				444910EA2CD91C7B005AB2F7 /* XCRemoteSwiftPackageReference "Toast-Swift" */,
+				441115072CE87428000D1B2B /* XCRemoteSwiftPackageReference "RxDataSources" */,
 			);
 			productRefGroup = 444DE6B32CD0FC9D00821269 /* Products */;
 			projectDirPath = "";
@@ -534,7 +553,10 @@
 				441114C72CE08B03000D1B2B /* User.swift in Sources */,
 				441114E42CE5EEF8000D1B2B /* HomeView.swift in Sources */,
 				441114F02CE60C48000D1B2B /* DMView.swift in Sources */,
+				441115002CE75290000D1B2B /* DropdownArrowTableViewCell.swift in Sources */,
 				444910E72CD8E734005AB2F7 /* UIViewController+Extension.swift in Sources */,
+				441115042CE75C4C000D1B2B /* ImageTitleCountTableViewCell.swift in Sources */,
+				441115062CE86F70000D1B2B /* HashTitleCountTableViewCell.swift in Sources */,
 				444DE7022CD4D2A700821269 /* Coordinator.swift in Sources */,
 				444DE7172CD6251100821269 /* TitleWithInputFieldView.swift in Sources */,
 				441114EC2CE60BF5000D1B2B /* SearchCoordinator.swift in Sources */,
@@ -544,6 +566,7 @@
 				444DE6DD2CD112EE00821269 /* UILabel+Extension.swift in Sources */,
 				441114D02CE1F942000D1B2B /* WorkspaceInitialReactor.swift in Sources */,
 				444910E32CD8B258005AB2F7 /* NetworkManager.swift in Sources */,
+				441115022CE75A38000D1B2B /* PlusTitleTableViewCell.swift in Sources */,
 				441114EA2CE60BAD000D1B2B /* DMCoordinator.swift in Sources */,
 				441114F42CE60C82000D1B2B /* SettingView.swift in Sources */,
 				441114EE2CE60C21000D1B2B /* SettingCoordinator.swift in Sources */,
@@ -791,6 +814,14 @@
 /* End XCConfigurationList section */
 
 /* Begin XCRemoteSwiftPackageReference section */
+		441115072CE87428000D1B2B /* XCRemoteSwiftPackageReference "RxDataSources" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/RxSwiftCommunity/RxDataSources.git";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 5.0.2;
+			};
+		};
 		444910DD2CD8AC9F005AB2F7 /* XCRemoteSwiftPackageReference "Alamofire" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/Alamofire/Alamofire";
@@ -834,6 +865,16 @@
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
+		441115082CE87428000D1B2B /* Differentiator */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 441115072CE87428000D1B2B /* XCRemoteSwiftPackageReference "RxDataSources" */;
+			productName = Differentiator;
+		};
+		4411150A2CE87428000D1B2B /* RxDataSources */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 441115072CE87428000D1B2B /* XCRemoteSwiftPackageReference "RxDataSources" */;
+			productName = RxDataSources;
+		};
 		444910DE2CD8AC9F005AB2F7 /* Alamofire */ = {
 			isa = XCSwiftPackageProductDependency;
 			package = 444910DD2CD8AC9F005AB2F7 /* XCRemoteSwiftPackageReference "Alamofire" */;
