@@ -14,7 +14,7 @@ final class SettingViewController: BaseViewController<SettingView> {
     
     //MARK: - Properties
     
-    weak var coordinator: HomeCoordinator?
+    weak var coordinator: SettingCoordinator?
     var disposeBag = DisposeBag()
     
     //MARK: - Life Cycle

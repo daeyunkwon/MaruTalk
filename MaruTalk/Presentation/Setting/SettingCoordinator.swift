@@ -11,14 +11,14 @@ final class SettingCoordinator: Coordinator {
     var childCoordinators: [any Coordinator] = []
     var navigationController: UINavigationController
     var parentCoordinator: (any Coordinator)?
-    var viewController: SettingViewController
     
-    init(navigationController: UINavigationController, viewController: SettingViewController) {
+    init(navigationController: UINavigationController) {
         self.navigationController = navigationController
-        self.viewController = viewController
     }
     
     func start() {
-        
+        let settingVC = SettingViewController()
+        settingVC.coordinator = self
+        navigationController.pushViewController(settingVC, animated: true)
     }
 }

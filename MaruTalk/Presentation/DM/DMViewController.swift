@@ -14,7 +14,7 @@ final class DMViewController: BaseViewController<DMView> {
     
     //MARK: - Properties
     
-    weak var coordinator: HomeCoordinator?
+    weak var coordinator: DMCoordinator?
     var disposeBag = DisposeBag()
     
     //MARK: - Life Cycle

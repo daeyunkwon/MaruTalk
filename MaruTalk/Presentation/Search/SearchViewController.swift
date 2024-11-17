@@ -14,7 +14,7 @@ final class SearchViewController: BaseViewController<SearchView> {
     
     //MARK: - Properties
     
-    weak var coordinator: HomeCoordinator?
+    weak var coordinator: SearchCoordinator?
     var disposeBag = DisposeBag()
     
     //MARK: - Life Cycle

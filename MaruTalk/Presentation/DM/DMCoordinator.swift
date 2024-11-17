@@ -11,14 +11,14 @@ final class DMCoordinator: Coordinator {
     var childCoordinators: [any Coordinator] = []
     var navigationController: UINavigationController
     var parentCoordinator: (any Coordinator)?
-    var viewController: DMViewController
     
-    init(navigationController: UINavigationController, viewController: DMViewController) {
+    init(navigationController: UINavigationController) {
         self.navigationController = navigationController
-        self.viewController = viewController
     }
     
     func start() {
-        
+        let dmVC = DMViewController()
+        dmVC.coordinator = self
+        navigationController.pushViewController(dmVC, animated: true)
     }
 }

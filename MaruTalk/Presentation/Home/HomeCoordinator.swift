@@ -11,11 +11,9 @@ final class HomeCoordinator: Coordinator {
     var childCoordinators: [any Coordinator] = []
     var navigationController: UINavigationController
     weak var parentCoordinator: (any Coordinator)?
-    var viewController: HomeViewController
     
-    init(navigationController: UINavigationController, viewController: HomeViewController) {
+    init(navigationController: UINavigationController) {
         self.navigationController = navigationController
-        self.viewController = viewController
     }
     
     deinit {
@@ -23,7 +21,10 @@ final class HomeCoordinator: Coordinator {
     }
     
     func start() {
-        viewController.coordinator = self
+        let reactor = HomeReactor()
+        let homeVC = HomeViewController(reactor: reactor)
+        homeVC.coordinator = self
+        navigationController.pushViewController(homeVC, animated: true)
     }
     
     func didFinish() {
