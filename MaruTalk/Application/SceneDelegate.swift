@@ -27,11 +27,12 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         window?.rootViewController = navigationConroller
         
         //UI 확인용 임시
+//        let vc = WorkspaceAddViewController()
+//        vc.reactor = WorkspaceAddReactor()
 //        window?.rootViewController = UINavigationController(
-//            rootViewController: WorkspaceAddViewController(
-//                reactor: WorkspaceAddReactor()
-//            )
+//            rootViewController: vc
 //        )
+        
         
         window?.makeKeyAndVisible()
     }

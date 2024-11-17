@@ -20,9 +20,25 @@ final class HomeView: BaseView {
     }()
 
     let tableView: UITableView = {
-        let tv = UITableView()
+        let tv = UITableView(frame: .zero, style: .grouped)
+        tv.register(PlusTitleTableViewCell.self, forCellReuseIdentifier: PlusTitleTableViewCell.reuseIdentifier)
+        tv.register(HashTitleCountTableViewCell.self, forCellReuseIdentifier: HashTitleCountTableViewCell.reuseIdentifier)
+        tv.register(ImageTitleCountTableViewCell.self, forCellReuseIdentifier: ImageTitleCountTableViewCell.reuseIdentifier)
+        tv.register(DropdownArrowTableViewCell.self, forHeaderFooterViewReuseIdentifier: DropdownArrowTableViewCell.reuseIdentifier)
+        tv.register(PlusTitleHeaderTableViewCell.self, forHeaderFooterViewReuseIdentifier: PlusTitleHeaderTableViewCell.reuseIdentifier)
         tv.backgroundColor = .systemYellow
+        tv.sectionFooterHeight = 0 //섹션 상단 빈 여백 제거하기
+        tv.rowHeight = 41
+        tv.sectionHeaderHeight = 56
+        tv.separatorStyle = .none
         return tv
+    }()
+    
+    let newMessageButton: UIButton = {
+        let btn = UIButton(type: .custom)
+        btn.setImage(UIImage(named: "newMessageCircle"), for: .normal)
+        btn.imageView?.contentMode = .scaleAspectFill
+        return btn
     }()
     
     //MARK: - Configurations
@@ -30,6 +46,7 @@ final class HomeView: BaseView {
     override func configureHierarchy() {
         addSubviews(
             tableView,
+            newMessageButton,
             emptyView
         )
     }
@@ -37,6 +54,11 @@ final class HomeView: BaseView {
     override func configureLayout() {
         tableView.snp.makeConstraints { make in
             make.edges.equalTo(safeAreaLayoutGuide)
+        }
+        
+        newMessageButton.snp.makeConstraints { make in
+            make.trailing.bottom.equalTo(safeAreaLayoutGuide).inset(16)
+            make.size.equalTo(54)
         }
         
         emptyView.snp.makeConstraints { make in
