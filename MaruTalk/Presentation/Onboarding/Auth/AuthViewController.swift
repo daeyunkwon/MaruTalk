@@ -19,6 +19,11 @@ final class AuthViewController: BaseViewController<AuthView> {
     
     //MARK: - Life Cycle
     
+    override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillDisappear(animated)
+        coordinator?.didFinishAuth()
+    }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
     }

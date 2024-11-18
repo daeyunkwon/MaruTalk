@@ -106,9 +106,8 @@ extension OnboardingCoordinator {
 
 extension OnboardingCoordinator {
     func showWorkspaceAdd() {
-        let reactor = WorkspaceAddReactor()
-        let workspaceAddVC = WorkspaceAddViewController()
-        workspaceAddVC.reactor = reactor
+        let reactor = WorkspaceAddReactor(previousScreen: .workspaceInitial)
+        let workspaceAddVC = WorkspaceAddViewController(reactor: reactor)
         workspaceAddVC.coordinator = self
 
         let navController = UINavigationController(rootViewController: workspaceAddVC)

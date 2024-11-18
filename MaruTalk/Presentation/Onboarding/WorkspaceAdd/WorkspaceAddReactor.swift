@@ -18,6 +18,8 @@ final class WorkspaceAddReactor: Reactor {
         case selectPhotoFromAlbum
         case selectPhotoFromCamera
         case selectPhotoImage(Data)
+        
+        case xButtonTapped
     }
     
     enum Mutation {
@@ -28,6 +30,8 @@ final class WorkspaceAddReactor: Reactor {
         case setAlbumVisible(Bool)
         case setCameraVisible(Bool)
         case setImageData(Data)
+        
+        case setNavigateToHomeEmpty(Bool)
     }
     
     struct State {
@@ -40,9 +44,21 @@ final class WorkspaceAddReactor: Reactor {
         var isActionSheetVisible = false
         var isAlbumVisible = false
         var isCameraVisible = false
+        
+        var shouldNavigateToHomeEmpty = false
     }
     
     let initialState: State = State()
+    
+    enum PreviousScreen {
+        case workspaceInitial
+        case workspaceList
+    }
+    private var previousScreen: PreviousScreen
+    
+    init(previousScreen: PreviousScreen) {
+        self.previousScreen = previousScreen
+    }
 }
 
 //MARK: - Mutate
@@ -83,6 +99,20 @@ extension WorkspaceAddReactor {
         
         case .selectPhotoImage(let value):
             return .just(.setImageData(value))
+        
+        case .xButtonTapped:
+            //이전화면에 따라 동작 분기 처리
+            switch self.previousScreen {
+            case .workspaceInitial:
+                print(11111)
+                return .concat([
+                    removeRecentWorkspaceID(),
+                    .just(.setNavigateToHomeEmpty(true))
+                ])
+                
+            case .workspaceList:
+                return .empty()
+            }
         }
     }
 }
@@ -114,6 +144,9 @@ extension WorkspaceAddReactor {
         
         case .setImageData(let value):
             newState.imageData = value
+        
+        case .setNavigateToHomeEmpty(let value):
+            newState.shouldNavigateToHomeEmpty = value
         }
         return newState
     }
@@ -122,7 +155,15 @@ extension WorkspaceAddReactor {
 //MARK: - Logic
 
 extension WorkspaceAddReactor {
-    func isDoneButtonEnabled(name: String) -> Bool {
+    private func isDoneButtonEnabled(name: String) -> Bool {
         return !name.trimmingCharacters(in: .whitespaces).isEmpty
+    }
+    
+    private func removeRecentWorkspaceID() -> Observable<Mutation> {
+        return .create { observer in
+            UserDefaultsManager.shared.removeItem(key: .recentWorkspaceID)
+            observer.onCompleted()
+            return Disposables.create()
+        }
     }
 }

@@ -13,7 +13,7 @@ import ReactorKit
 import RxCocoa
 
 
-//TODO: X 버튼 동작 처리, 완료 버튼 동작 처리
+//TODO: 완료 버튼 동작 처리
 
 final class WorkspaceAddViewController: BaseViewController<WorkspaceAddView>, View {
     
@@ -21,7 +21,15 @@ final class WorkspaceAddViewController: BaseViewController<WorkspaceAddView>, Vi
     
     var disposeBag: DisposeBag = DisposeBag()
     weak var coordinator: OnboardingCoordinator?
+    
     private let imagePickerController = UIImagePickerController()
+    
+    private lazy var xMarkButton: UIBarButtonItem = UIBarButtonItem(image: UIImage(systemName: "xmark")?.applyingSymbolConfiguration(.init(pointSize: 14)), style: .plain, target: self, action: nil)
+    
+    init(reactor: WorkspaceAddReactor) {
+        super.init()
+        self.reactor = reactor
+    }
     
     //MARK: - Life Cycle
     
@@ -34,9 +42,7 @@ final class WorkspaceAddViewController: BaseViewController<WorkspaceAddView>, Vi
     
     override func setupNavi() {
         navigationItem.title = "워크스페이스 생성"
-        
-        let closeButton = UIBarButtonItem(image: UIImage(systemName: "xmark")?.applyingSymbolConfiguration(.init(pointSize: 14)), style: .plain, target: self, action: nil)
-        navigationItem.leftBarButtonItem = closeButton
+        navigationItem.leftBarButtonItem = xMarkButton
     }
     
     //MARK: - Methods
@@ -127,7 +133,7 @@ final class WorkspaceAddViewController: BaseViewController<WorkspaceAddView>, Vi
 //MARK: - Bind Action
 
 extension WorkspaceAddViewController {
-    private func bindAction(reactor: Reactor) {
+    private func bindAction(reactor: WorkspaceAddReactor) {
         rootView.nameFieldView.inputTextField.rx.text.orEmpty
             .map { Reactor.Action.inputName($0) }
             .bind(to: reactor.action)
@@ -140,6 +146,11 @@ extension WorkspaceAddViewController {
         
         rootView.imageSettingButton.rx.tap
             .map { Reactor.Action.imageSettingButtonTapped }
+            .bind(to: reactor.action)
+            .disposed(by: disposeBag)
+        
+        xMarkButton.rx.tap
+            .map { Reactor.Action.xButtonTapped }
             .bind(to: reactor.action)
             .disposed(by: disposeBag)
     }
@@ -184,6 +195,13 @@ extension WorkspaceAddViewController {
                         owner.showToastMessage(message: "카메라 접근 권한이 거부되었습니다.", backgroundColor: Constant.Color.brandRed)
                     }
                 }
+            }
+            .disposed(by: disposeBag)
+        
+        reactor.state.map { $0.shouldNavigateToHomeEmpty }
+            .filter { $0 == true }
+            .bind(with: self) { owner, _ in
+                owner.coordinator?.didFinish()
             }
             .disposed(by: disposeBag)
     }
