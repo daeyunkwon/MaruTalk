@@ -52,6 +52,7 @@ final class KeychainManager {
         guard status == errSecSuccess,
               let data = item as? Data else {
             print(SecCopyErrorMessageString(status, nil) ?? "")
+            print("DEBUG: 키체인에 저장된 토큰 없음")
             return nil
         }
         

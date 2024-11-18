@@ -10,7 +10,7 @@ import UIKit
 final class SearchCoordinator: Coordinator {
     var childCoordinators: [any Coordinator] = []
     var navigationController: UINavigationController
-    var parentCoordinator: (any Coordinator)?
+    weak var parentCoordinator: (any Coordinator)?
     
     init(navigationController: UINavigationController) {
         self.navigationController = navigationController
@@ -19,6 +19,6 @@ final class SearchCoordinator: Coordinator {
     func start() {
         let searchVC = SearchViewController()
         searchVC.coordinator = self
-        navigationController.pushViewController(searchVC, animated: true)
+        navigationController.setViewControllers([searchVC], animated: true)
     }
 }

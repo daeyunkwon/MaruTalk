@@ -11,10 +11,12 @@ final class AppCoordinator: Coordinator {
     var childCoordinators: [any Coordinator] = []
     var navigationController: UINavigationController
     weak var parentCoordinator: (any Coordinator)?
+    var window: UIWindow
     
     private var isLoggedIn: Bool
     
-    init(navigationController: UINavigationController, isLoggedIn: Bool) {
+    init(window: UIWindow, navigationController: UINavigationController, isLoggedIn: Bool) {
+        self.window = window
         self.navigationController = navigationController
         self.isLoggedIn = isLoggedIn
     }
@@ -35,6 +37,12 @@ extension AppCoordinator {
         onboardingCoordinator.parentCoordinator = self
         childCoordinators.append(onboardingCoordinator)
         onboardingCoordinator.start()
+        
+        if let scene = UIApplication.shared.connectedScenes.first?.delegate as? SceneDelegate,
+           let window = scene.window {
+            window.rootViewController = navigationController
+            UIView.transition(with: window, duration: 0.2, options: [.transitionCrossDissolve], animations: nil, completion: nil)
+        }
     }
 }
 
@@ -45,7 +53,5 @@ extension AppCoordinator {
         mainTabBarCoordinator.parentCoordinator = self
         childCoordinators.append(mainTabBarCoordinator)
         mainTabBarCoordinator.start()
-        
-        navigationController.viewControllers = [mainTabBarCoordinator.tabBarController]
     }
 }

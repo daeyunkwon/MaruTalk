@@ -12,15 +12,18 @@ import ReactorKit
 final class WorkspaceInitialReactor: Reactor {
     enum Action {
         case createWorkspaceButtonTapped
+        case xButtonTapped
     }
     
     enum Mutation {
         case setNavigateToWorkspaceAdd(Bool)
+        case setNavigateToHome(Bool)
     }
     
     struct State {
         var nickname = ""
         var shouldNavigateToWorkspaceAdd = false
+        var shouldNavigateToHome = false
     }
     
     let initialState: State
@@ -37,6 +40,33 @@ extension WorkspaceInitialReactor {
         switch action {
         case .createWorkspaceButtonTapped:
             return .just(.setNavigateToWorkspaceAdd(true))
+            
+        case .xButtonTapped:
+            return .concat([
+                NetworkManager.shared.performRequest(api: .workspaces, model: [Workspace].self)
+                    .asObservable()
+                    .flatMap { result -> Observable<Mutation> in
+                        switch result {
+                        case .success(let value):
+                            print("통신값:", value)
+                            if !value.isEmpty {
+                                
+                                let sortedValue = value.sorted {
+                                    $0.createdDate > $1.createdDate
+                                }
+                                UserDefaultsManager.shared.recentWorkspaceID = sortedValue.first?.id
+                            } else {
+                                UserDefaultsManager.shared.removeItem(key: .recentWorkspaceID)
+                            }
+                            
+                            return .just(.setNavigateToHome(true))
+                        
+                        case .failure(_):
+                            UserDefaultsManager.shared.removeItem(key: .recentWorkspaceID)
+                            return .just(.setNavigateToHome(true))
+                        }
+                    }
+            ])
         }
     }
 }
@@ -50,6 +80,9 @@ extension WorkspaceInitialReactor {
         switch mutation {
         case .setNavigateToWorkspaceAdd(let value):
             newState.shouldNavigateToWorkspaceAdd = value
+            
+        case .setNavigateToHome(let value):
+            newState.shouldNavigateToHome = value
         }
         return newState
     }

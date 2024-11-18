@@ -64,9 +64,7 @@ extension HomeViewController {
         profileCircleView.rxTap
             .bind(with: self) { owner, _ in
                 print(11111)
-                owner.workspaceNameView.backgroundColor = .red
-                owner.tabBarController?.tabBar.isHidden = true
-                owner.rootView.emptyView.isHidden = false
+                owner.coordinator?.didFinish()
             }
             .disposed(by: disposeBag)
         

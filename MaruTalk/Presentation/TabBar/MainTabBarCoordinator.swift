@@ -23,34 +23,25 @@ final class MainTabBarCoordinator: Coordinator {
     }
     
     func start() {
-        let homeNavigationController = UINavigationController()
-        let homeCoordinator = HomeCoordinator(navigationController: homeNavigationController)
-        homeCoordinator.parentCoordinator = self
-        childCoordinators.append(homeCoordinator)
-        homeCoordinator.start()
+        let homeCoordinator = HomeCoordinator(navigationController: UINavigationController())
+        let dmCoordinator = DMCoordinator(navigationController: UINavigationController())
+        let searchCoordinator = SearchCoordinator(navigationController: UINavigationController())
+        let settingCoordinator = SettingCoordinator(navigationController: UINavigationController())
         
-        let dmNavigationController = UINavigationController()
-        let dmCoordinator = DMCoordinator(navigationController: dmNavigationController)
-        dmCoordinator.parentCoordinator = self
-        childCoordinators.append(dmCoordinator)
-        dmCoordinator.start()
+        [homeCoordinator, dmCoordinator, searchCoordinator, settingCoordinator].forEach {
+            if let object = $0 as? Coordinator {
+                self.childCoordinators.append(object)
+                object.parentCoordinator = self
+                object.start()
+            }
+        }
         
-        let searchNavigationController = UINavigationController()
-        let searchCoordinator = SearchCoordinator(navigationController: searchNavigationController)
-        searchCoordinator.parentCoordinator = self
-        childCoordinators.append(searchCoordinator)
-        searchCoordinator.start()
+        homeCoordinator.navigationController.tabBarItem = UITabBarItem(title: "홈", image: UIImage(named: "home"), selectedImage: UIImage(named: "home_active"))
+        dmCoordinator.navigationController.tabBarItem = UITabBarItem(title: "DM", image: UIImage(named: "message"), selectedImage: UIImage(named: "message_active"))
+        searchCoordinator.navigationController.tabBarItem = UITabBarItem(title: "검색", image: UIImage(named: "profile"), selectedImage: UIImage(named: "profile_active"))
+        settingCoordinator.navigationController.tabBarItem = UITabBarItem(title: "설정", image: UIImage(named: "setting"), selectedImage: UIImage(named: "setting_active"))
         
-        let settingNavigationController = UINavigationController()
-        let settingCoordinator = SettingCoordinator(navigationController: settingNavigationController)
-        settingCoordinator.parentCoordinator = self
-        childCoordinators.append(settingCoordinator)
-        settingCoordinator.start()
-        
-        homeNavigationController.tabBarItem = UITabBarItem(title: "홈", image: UIImage(named: "home"), selectedImage: UIImage(named: "home_active"))
-        dmNavigationController.tabBarItem = UITabBarItem(title: "DM", image: UIImage(named: "message"), selectedImage: UIImage(named: "message_active"))
-        searchNavigationController.tabBarItem = UITabBarItem(title: "검색", image: UIImage(named: "profile"), selectedImage: UIImage(named: "profile_active"))
-        settingNavigationController.tabBarItem = UITabBarItem(title: "설정", image: UIImage(named: "setting"), selectedImage: UIImage(named: "setting_active"))
+        homeCoordinator.navigationController.tabBarItem = UITabBarItem(title: "홈", image: UIImage(named: "home"), selectedImage: UIImage(named: "home_active"))
         
         //Appearance
         let appearance = UITabBarAppearance()
@@ -58,12 +49,19 @@ final class MainTabBarCoordinator: Coordinator {
         tabBarController.tabBar.scrollEdgeAppearance = appearance
         tabBarController.tabBar.tintColor = Constant.Color.brandBlack
         
-        tabBarController.setViewControllers([homeNavigationController, dmNavigationController, searchNavigationController, settingNavigationController], animated: false)
+        tabBarController.viewControllers = [homeCoordinator.navigationController, dmCoordinator.navigationController, searchCoordinator.navigationController, settingCoordinator.navigationController]
+        
+        if let scene = UIApplication.shared.connectedScenes.first?.delegate as? SceneDelegate,
+           let window = scene.window {
+            window.rootViewController = tabBarController
+            UIView.transition(with: window, duration: 0.2, options: [.transitionCrossDissolve], animations: nil, completion: nil)
+        }
     }
     
     func didFinish() {
         parentCoordinator?.removeCoordinator(child: self)
-        navigationController.viewControllers = []
+        tabBarController.viewControllers = []
+        
         if let appCoordinator = parentCoordinator as? AppCoordinator {
             appCoordinator.showOnboarding()
         }

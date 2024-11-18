@@ -10,7 +10,7 @@ import UIKit
 final class SettingCoordinator: Coordinator {
     var childCoordinators: [any Coordinator] = []
     var navigationController: UINavigationController
-    var parentCoordinator: (any Coordinator)?
+    weak var parentCoordinator: (any Coordinator)?
     
     init(navigationController: UINavigationController) {
         self.navigationController = navigationController
@@ -19,6 +19,6 @@ final class SettingCoordinator: Coordinator {
     func start() {
         let settingVC = SettingViewController()
         settingVC.coordinator = self
-        navigationController.pushViewController(settingVC, animated: true)
+        navigationController.setViewControllers([settingVC], animated: true)
     }
 }

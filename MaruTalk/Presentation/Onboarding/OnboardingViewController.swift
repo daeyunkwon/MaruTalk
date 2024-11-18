@@ -35,8 +35,8 @@ final class OnboardingViewController: BaseViewController<OnboardingView> {
     override func bind() {
         rootView.startButton.rx.tap
             .bind(with: self) { owner, _ in
-//                owner.coordinator?.showAuth()
-                owner.coordinator?.didFinish()
+                owner.coordinator?.showAuth()
+//                owner.coordinator?.didFinish()
             }
             .disposed(by: disposeBag)
     }

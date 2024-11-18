@@ -10,7 +10,7 @@ import UIKit
 final class DMCoordinator: Coordinator {
     var childCoordinators: [any Coordinator] = []
     var navigationController: UINavigationController
-    var parentCoordinator: (any Coordinator)?
+    weak var parentCoordinator: (any Coordinator)?
     
     init(navigationController: UINavigationController) {
         self.navigationController = navigationController
@@ -19,6 +19,6 @@ final class DMCoordinator: Coordinator {
     func start() {
         let dmVC = DMViewController()
         dmVC.coordinator = self
-        navigationController.pushViewController(dmVC, animated: true)
+        navigationController.setViewControllers([dmVC], animated: true)
     }
 }

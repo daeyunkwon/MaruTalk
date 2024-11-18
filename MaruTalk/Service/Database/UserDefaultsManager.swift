@@ -34,4 +34,9 @@ final class UserDefaultsManager {
     
     @UserDefaultsPropertyWrapper(key: Key.recentWorkspaceID.rawValue, defaultValue: nil, storage: UserDefaults.standard)
     var recentWorkspaceID: String?
+    
+    
+    func removeItem(key: Key) {
+        UserDefaults.standard.removeObject(forKey: key.rawValue)
+    }
 }

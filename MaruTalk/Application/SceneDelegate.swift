@@ -20,15 +20,17 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         
         let navigationConroller = UINavigationController()
         let isLoggedIn: Bool = false
-        appCoordinator = AppCoordinator(navigationController: navigationConroller, isLoggedIn: isLoggedIn)
-        appCoordinator?.start()
+        
         
         window = UIWindow(windowScene: windowScene)
         window?.rootViewController = navigationConroller
         
+        appCoordinator = AppCoordinator(window: UIWindow(windowScene: windowScene), navigationController: navigationConroller, isLoggedIn: isLoggedIn)
+        appCoordinator?.start()
+        
         //UI 확인용 임시
-//        let vc = WorkspaceAddViewController()
-//        vc.reactor = WorkspaceAddReactor()
+//        let reactor = WorkspaceInitialReactor(nickname: "test")
+//        let vc = WorkspaceInitialViewController(reactor: reactor)
 //        window?.rootViewController = UINavigationController(
 //            rootViewController: vc
 //        )

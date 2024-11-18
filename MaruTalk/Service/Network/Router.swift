@@ -12,12 +12,14 @@ import Alamofire
 enum Router {
     case emailValidation(String)
     case join(email: String, password: String, nickname: String, phone: String, deviceToken: String)
+    case workspaces
     
     
     enum APIType {
         case empty //초기화용 빈 값
         case emailValidation
         case join
+        case workspaces
     }
 }
 
@@ -31,6 +33,7 @@ extension Router: URLRequestConvertible {
         switch self {
         case .emailValidation(_): return APIURL.validEmail
         case .join: return APIURL.join
+        case .workspaces: return APIURL.workspaces
         }
     }
     
@@ -38,6 +41,9 @@ extension Router: URLRequestConvertible {
         switch self {
         case .emailValidation(_), .join:
             return .post
+            
+        case .workspaces:
+            return .get
         }
     }
     
@@ -49,8 +55,12 @@ extension Router: URLRequestConvertible {
                 "SesacKey": APIKey.apiKey
             ]
             
-//        default:
-//            return [:]
+        case .workspaces:
+            return [
+                "Content-Type": "application/json",
+                "Authorization": KeychainManager.shared.getToken(forKey: .accessToken) ?? "",
+                "SesacKey": APIKey.apiKey
+            ]
         }
     }
     
@@ -70,8 +80,7 @@ extension Router: URLRequestConvertible {
                 BodyKey.deviceToken: deviceToken
             ])
             
-//        default:
-//            return nil
+        default: return nil
         }
     }
     

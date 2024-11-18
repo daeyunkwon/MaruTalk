@@ -24,7 +24,7 @@ final class HomeCoordinator: Coordinator {
         let reactor = HomeReactor()
         let homeVC = HomeViewController(reactor: reactor)
         homeVC.coordinator = self
-        navigationController.pushViewController(homeVC, animated: true)
+        navigationController.setViewControllers([homeVC], animated: true)
     }
     
     func didFinish() {
