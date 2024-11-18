@@ -12,10 +12,13 @@ import ReactorKit
 final class HomeReactor: Reactor {
     enum Action {
         case sectionTapped(Int)
+        case checkWorkspace
     }
     
     enum Mutation {
         case setExpanded(isExpanded: Bool, sectionIndex: Int)
+        
+        case setShowEmpty(Bool)
     }
     
     struct State {
@@ -24,8 +27,7 @@ final class HomeReactor: Reactor {
             SectionModel(headerTitle: "다이렉트 메시지", items: [.dm("첫번째"), .dm("두번째"), .add("새 메시지 시작")], index: 1),
             SectionModel(headerTitle: "팀원 추가", items: [], index: 2)
         ]
-        
-        var expandedSections: Set<Int> = []
+        var isShowEmpty: Bool = false
     }
     
     let initialState: State = State()
@@ -41,6 +43,10 @@ extension HomeReactor {
             isExpanded.toggle()
             
             return .just(.setExpanded(isExpanded: isExpanded, sectionIndex: sectionIndex))
+            
+        case .checkWorkspace:
+            let isShowEmpty = UserDefaultsManager.shared.recentWorkspaceID == nil ? true : false
+            return .just(.setShowEmpty(isShowEmpty))
         }
     }
 }
@@ -60,6 +66,8 @@ extension HomeReactor {
                 newState.sections[1].items = []
             }
             
+        case .setShowEmpty(let value):
+            newState.isShowEmpty = value
         }
         return newState
     }

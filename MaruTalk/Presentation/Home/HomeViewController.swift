@@ -34,6 +34,7 @@ final class HomeViewController: BaseViewController<HomeView>, View {
     override func viewDidLoad() {
         super.viewDidLoad()
         bind(reactor: reactor)
+        reactor.action.onNext(.checkWorkspace)
     }
     
     //MARK: - Configurations
@@ -57,6 +58,9 @@ final class HomeViewController: BaseViewController<HomeView>, View {
 
 extension HomeViewController {
     private func bindAction(reactor: HomeReactor) {
+            
+        
+        
         profileCircleView.rxTap
             .bind(with: self) { owner, _ in
                 print(11111)
@@ -73,9 +77,6 @@ extension HomeViewController {
                 owner.rootView.emptyView.isHidden = true
             }
             .disposed(by: disposeBag)
-            
-            
-            
     }
 }
 
@@ -83,7 +84,18 @@ extension HomeViewController {
 
 extension HomeViewController {
     private func bindState(reactor: HomeReactor) {
-        
+        reactor.state.map { $0.isShowEmpty }
+            .distinctUntilChanged()
+            .bind(with: self) { owner, value in
+                if value {
+                    owner.rootView.emptyView.isHidden = false
+                    owner.tabBarController?.tabBar.isHidden = true
+                } else {
+                    owner.rootView.emptyView.isHidden = true
+                    owner.tabBarController?.tabBar.isHidden = false
+                }
+            }
+            .disposed(by: disposeBag)
     }
 }
 
