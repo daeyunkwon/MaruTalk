@@ -98,10 +98,6 @@ extension OnboardingCoordinator {
         navigationController.navigationBar.isHidden = false
         navigationController.pushViewController(workspaceInitialVC, animated: true)
     }
-    
-    func didFinishWorkspaceInitial() {
-        //TODO: 화면 종료 처리 -> 홈 화면
-    }
 }
 
 extension OnboardingCoordinator {

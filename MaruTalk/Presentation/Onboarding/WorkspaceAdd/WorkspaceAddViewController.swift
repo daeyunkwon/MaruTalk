@@ -213,6 +213,21 @@ extension WorkspaceAddViewController {
                 owner.showToastMessage(message: value, backgroundColor: Constant.Color.brandRed)
             }
             .disposed(by: disposeBag)
+        
+        reactor.state.map { $0.networkError }
+            .filter { $0.0 != .empty }
+            .bind(with: self) { owner, value in
+                owner.rootView.endEditing(true) //토스트 확인을 위해 키보드 닫기
+                owner.showToastForNetworkError(api: value.0, errorCode: value.1)
+            }
+            .disposed(by: disposeBag)
+        
+        reactor.state.map { $0.isCreateWorkspaceSuccess }
+            .filter { $0 == true }
+            .bind(with: self) { owner, _ in
+                owner.coordinator?.didFinish()
+            }
+            .disposed(by: disposeBag)
     }
 }
 

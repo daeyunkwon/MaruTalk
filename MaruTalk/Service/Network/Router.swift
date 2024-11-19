@@ -12,14 +12,18 @@ import Alamofire
 enum Router {
     case emailValidation(String)
     case join(email: String, password: String, nickname: String, phone: String, deviceToken: String)
+    
     case workspaces
+    case createWorkspace(name: String, description: String, imageData: Data)
     
     
     enum APIType {
         case empty //초기화용 빈 값
         case emailValidation
         case join
+        
         case workspaces
+        case createWorkspace
     }
 }
 
@@ -33,13 +37,13 @@ extension Router: URLRequestConvertible {
         switch self {
         case .emailValidation(_): return APIURL.validEmail
         case .join: return APIURL.join
-        case .workspaces: return APIURL.workspaces
+        case .workspaces, .createWorkspace: return APIURL.workspaces
         }
     }
     
     var method: HTTPMethod {
         switch self {
-        case .emailValidation(_), .join:
+        case .emailValidation(_), .join, .createWorkspace:
             return .post
             
         case .workspaces:
@@ -58,6 +62,13 @@ extension Router: URLRequestConvertible {
         case .workspaces:
             return [
                 "Content-Type": "application/json",
+                "Authorization": KeychainManager.shared.getToken(forKey: .accessToken) ?? "",
+                "SesacKey": APIKey.apiKey
+            ]
+            
+        case .createWorkspace:
+            return [
+                "Content-Type": "multipart/form-data",
                 "Authorization": KeychainManager.shared.getToken(forKey: .accessToken) ?? "",
                 "SesacKey": APIKey.apiKey
             ]
@@ -80,6 +91,19 @@ extension Router: URLRequestConvertible {
                 BodyKey.deviceToken: deviceToken
             ])
             
+        default: return nil
+        }
+    }
+    
+    var multipartFormData: MultipartFormData? {
+        switch self {
+        case .createWorkspace(let name, let description, let imageData):
+            let multipartFormData = MultipartFormData()
+            multipartFormData.append(Data(name.utf8), withName: "name")
+            multipartFormData.append(Data(description.utf8), withName: "description")
+            multipartFormData.append(imageData, withName: "image", fileName: UUID().uuidString, mimeType: "image/jpeg")
+            return multipartFormData
+        
         default: return nil
         }
     }

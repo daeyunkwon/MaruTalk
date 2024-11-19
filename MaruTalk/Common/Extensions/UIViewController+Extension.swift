@@ -43,6 +43,12 @@ extension UIViewController {
             default: break
             }
             
+        case .createWorkspace:
+            switch errorCode {
+            case "E12": message = "워크스페이스 명은 고유한 데이터로 중복될 수 없습니다."
+            default: break
+            }
+            
         default: break
         }
         

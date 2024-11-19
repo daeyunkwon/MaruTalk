@@ -37,6 +37,9 @@ final class WorkspaceAddReactor: Reactor {
         case setNameValid(Bool)
         case setImageValid(Bool)
         case setToastMessage(String)
+        
+        case setCreateWorkspaceSuccess(Bool)
+        case setNetworkError((Router.APIType, String?))
     }
     
     struct State {
@@ -55,9 +58,14 @@ final class WorkspaceAddReactor: Reactor {
         var isNameValid = false
         var isImageValid = false
         var toastMessage = ""
+        
+        var isCreateWorkspaceSuccess = false
+        var networkError: (Router.APIType, String?) = (.empty, nil)
     }
     
     let initialState: State = State()
+    
+    private let disposeBag = DisposeBag()
     
     enum PreviousScreen {
         case workspaceInitial
@@ -137,7 +145,7 @@ extension WorkspaceAddReactor {
                 ])
             } else {
                 //생성 진행
-                return .empty()
+                return createWorkspace()
             }
         }
     }
@@ -182,6 +190,12 @@ extension WorkspaceAddReactor {
         
         case .setToastMessage(let value):
             newState.toastMessage = value
+        
+        case .setCreateWorkspaceSuccess(let value):
+            newState.isCreateWorkspaceSuccess = value
+        
+        case .setNetworkError(let value):
+            newState.networkError = value
         }
         return newState
     }
@@ -219,6 +233,33 @@ extension WorkspaceAddReactor {
             return "워크스페이스 이미지를 등록해주세요."
         }
         
-        return nil
+        return nil //유효한 경우로 판별
+    }
+    
+    //워크스페이스 생성 네트워크 작업 실행
+    private func createWorkspace() -> Observable<Mutation> {
+        NetworkManager.shared.performRequestMultipartFormData(api: .createWorkspace(name: currentState.name, description: currentState.description, imageData: currentState.imageData ?? Data()), model: Workspace.self)
+            .asObservable()
+            .flatMap { result -> Observable<Mutation> in
+                switch result {
+                case .success(let value):
+                    print("DEBUG: 워크스페이스 생성 성공")
+                    
+                    UserDefaultsManager.shared.recentWorkspaceID = value.id
+                    
+                    return .concat([
+                        .just(.setCreateWorkspaceSuccess(true))
+                    ])
+                
+                case .failure(let error):
+                    print("DEBUG: 워크스페이스 생성 실패")
+                    let errorCodeValue = error.errorCode
+                    return .concat([
+                        .just(.setCreateWorkspaceSuccess(false)),
+                        .just(.setNetworkError((Router.APIType.createWorkspace, errorCodeValue))),
+                        .just(.setNetworkError((Router.APIType.empty, nil)))
+                    ])
+                }
+            }
     }
 }

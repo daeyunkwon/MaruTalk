@@ -29,8 +29,8 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         appCoordinator?.start()
         
         //UI 확인용 임시
-//        let reactor = WorkspaceInitialReactor(nickname: "test")
-//        let vc = WorkspaceInitialViewController(reactor: reactor)
+//        let reactor = WorkspaceAddReactor(previousScreen: .workspaceInitial)
+//        let vc = WorkspaceAddViewController(reactor: reactor)
 //        window?.rootViewController = UINavigationController(
 //            rootViewController: vc
 //        )
