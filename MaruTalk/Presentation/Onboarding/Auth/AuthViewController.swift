@@ -37,6 +37,13 @@ final class AuthViewController: BaseViewController<AuthView> {
                 owner.coordinator?.showSignUp()
             }
             .disposed(by: disposeBag)
+        
+        rootView.emailLoginButton.rx.tap
+            .bind(with: self) { owner, _ in
+                owner.coordinator?.didFinishAuth()
+                owner.coordinator?.showLogin()
+            }
+            .disposed(by: disposeBag)
     }
 }
 

@@ -78,6 +78,23 @@ extension OnboardingCoordinator {
 }
 
 extension OnboardingCoordinator {
+    func showLogin() {
+        let loginVC = LoginViewController()
+        loginVC.coordinator = self
+        
+        let navController = UINavigationController(rootViewController: loginVC)
+        navController.modalPresentationStyle = .pageSheet
+        
+        if let sheet = navController.sheetPresentationController {
+            sheet.detents = [.large()]
+            sheet.prefersGrabberVisible = true
+        }
+        
+        navigationController.present(navController, animated: true)
+    }
+}
+
+extension OnboardingCoordinator {
     func showSignUp() {
         let reactor = SignUpReactor()
         let signUpVC = SignUpViewController(reactor: reactor)
