@@ -20,6 +20,7 @@ final class WorkspaceAddReactor: Reactor {
         case selectPhotoImage(Data)
         
         case xButtonTapped
+        case doneButtonTapped
     }
     
     enum Mutation {
@@ -32,12 +33,16 @@ final class WorkspaceAddReactor: Reactor {
         case setImageData(Data)
         
         case setNavigateToHomeEmpty(Bool)
+        
+        case setNameValid(Bool)
+        case setImageValid(Bool)
+        case setToastMessage(String)
     }
     
     struct State {
         var name = ""
         var description = ""
-        var imageData = Data()
+        var imageData: Data?
         
         var isDoneButtonEnabled = false
         
@@ -46,6 +51,10 @@ final class WorkspaceAddReactor: Reactor {
         var isCameraVisible = false
         
         var shouldNavigateToHomeEmpty = false
+        
+        var isNameValid = false
+        var isImageValid = false
+        var toastMessage = ""
     }
     
     let initialState: State = State()
@@ -68,9 +77,11 @@ extension WorkspaceAddReactor {
         switch action {
         case .inputName(let value):
             let isEnabled = isDoneButtonEnabled(name: value)
+            let isValid = isValidWorkspaceName(name: value)
             
             return .concat([
                 .just(.setName(value)),
+                .just(.setNameValid(isValid)),
                 .just(.setDoneButtonEnabled(isEnabled))
             ])
         
@@ -98,19 +109,34 @@ extension WorkspaceAddReactor {
             ])
         
         case .selectPhotoImage(let value):
-            return .just(.setImageData(value))
+            let isValid = isValidPhotoImage(image: value)
+            
+            return .concat([
+                .just(.setImageData(value)),
+                .just(.setImageValid(isValid))
+            ])
         
         case .xButtonTapped:
             //이전화면에 따라 동작 분기 처리
             switch self.previousScreen {
             case .workspaceInitial:
-                print(11111)
                 return .concat([
                     removeRecentWorkspaceID(),
                     .just(.setNavigateToHomeEmpty(true))
                 ])
                 
             case .workspaceList:
+                return .empty()
+            }
+        
+        case .doneButtonTapped:
+            if let invalidMessage = makeInvalidMessage(name: currentState.name, image: currentState.imageData) {
+                return .concat([
+                    .just(.setToastMessage(invalidMessage)),
+                    .just(.setToastMessage(""))
+                ])
+            } else {
+                //생성 진행
                 return .empty()
             }
         }
@@ -147,6 +173,15 @@ extension WorkspaceAddReactor {
         
         case .setNavigateToHomeEmpty(let value):
             newState.shouldNavigateToHomeEmpty = value
+        
+        case .setNameValid(let value):
+            newState.isNameValid = value
+        
+        case .setImageValid(let value):
+            newState.isImageValid = value
+        
+        case .setToastMessage(let value):
+            newState.toastMessage = value
         }
         return newState
     }
@@ -165,5 +200,25 @@ extension WorkspaceAddReactor {
             observer.onCompleted()
             return Disposables.create()
         }
+    }
+    
+    private func isValidWorkspaceName(name: String) -> Bool {
+        return name.trimmingCharacters(in: .whitespaces).count >= 1 && name.trimmingCharacters(in: .whitespaces).count <= 30
+    }
+    
+    private func isValidPhotoImage(image: Data?) -> Bool {
+        return image != nil
+    }
+    
+    private func makeInvalidMessage(name: String, image: Data?) -> String? {
+        if !isValidWorkspaceName(name: name) {
+            return "워크스페이스 이름은 1~30자로 설정해주세요."
+        }
+        
+        if !isValidPhotoImage(image: image) {
+            return "워크스페이스 이미지를 등록해주세요."
+        }
+        
+        return nil
     }
 }

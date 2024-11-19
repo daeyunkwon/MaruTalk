@@ -12,9 +12,6 @@ import UIKit
 import ReactorKit
 import RxCocoa
 
-
-//TODO: 완료 버튼 동작 처리
-
 final class WorkspaceAddViewController: BaseViewController<WorkspaceAddView>, View {
     
     //MARK: - Properties
@@ -153,6 +150,11 @@ extension WorkspaceAddViewController {
             .map { Reactor.Action.xButtonTapped }
             .bind(to: reactor.action)
             .disposed(by: disposeBag)
+        
+        rootView.doneButton.rx.tap
+            .map { Reactor.Action.doneButtonTapped }
+            .bind(to: reactor.action)
+            .disposed(by: disposeBag)
     }
 }
 
@@ -202,6 +204,13 @@ extension WorkspaceAddViewController {
             .filter { $0 == true }
             .bind(with: self) { owner, _ in
                 owner.coordinator?.didFinish()
+            }
+            .disposed(by: disposeBag)
+        
+        reactor.state.map { $0.toastMessage }
+            .filter { !$0.isEmpty }
+            .bind(with: self) { owner, value in
+                owner.showToastMessage(message: value, backgroundColor: Constant.Color.brandRed)
             }
             .disposed(by: disposeBag)
     }
