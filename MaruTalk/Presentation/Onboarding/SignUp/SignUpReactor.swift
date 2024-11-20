@@ -65,7 +65,7 @@ final class SignUpReactor: Reactor {
         var isPasswordValid = false
         var isPasswordCheckValid = false
         
-        var toastMessage: (String) = ""
+        @Pulse var toastMessage: (String) = ""
         var networkError: (Router.APIType, String?) = (Router.APIType.empty, nil)
         
         var validationStates: [Bool] = []
@@ -78,10 +78,6 @@ final class SignUpReactor: Reactor {
     }
     
     let initialState: State = State()
-    
-    //    init(initialState: State) {
-    //        self.initialState = initialState
-    //    }
 }
 
 //MARK: - Mutate
@@ -118,14 +114,12 @@ extension SignUpReactor {
                     return checkEmailDuplication(email: currentState.email)
                 } else {
                     return .concat([
-                        .just(.toastMessageValue("사용 가능한 이메일입니다.")),
-                        .just(.toastMessageValue(""))
+                        .just(.toastMessageValue("사용 가능한 이메일입니다."))
                     ])
                 }
             } else {
                 return .concat([
-                    .just(.toastMessageValue("이메일 형식이 올바르지 않습니다.")),
-                    .just(.toastMessageValue(""))
+                    .just(.toastMessageValue("이메일 형식이 올바르지 않습니다."))
                 ])
             }
             
@@ -282,7 +276,6 @@ extension SignUpReactor {
                     return .concat([
                         .just(.setEmailDuplicateStatus(true)),
                         .just(.toastMessageValue("사용 가능한 이메일입니다.")),
-                        .just(.toastMessageValue(""))
                     ])
                     
                 case .failure(let error):

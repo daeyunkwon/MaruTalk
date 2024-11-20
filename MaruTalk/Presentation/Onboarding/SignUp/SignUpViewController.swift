@@ -135,8 +135,7 @@ extension SignUpViewController {
             }
             .disposed(by: disposeBag)
         
-        reactor.state.map { $0.toastMessage }
-            .filter { !$0.isEmpty }
+        reactor.pulse(\.$toastMessage)
             .bind(with: self) { owner, value in
                 owner.showToastMessage(message: value)
             }

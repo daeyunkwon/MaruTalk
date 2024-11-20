@@ -57,7 +57,7 @@ final class WorkspaceAddReactor: Reactor {
         
         var isNameValid = false
         var isImageValid = false
-        var toastMessage = ""
+        @Pulse var toastMessage: String?
         
         var isCreateWorkspaceSuccess = false
         var networkError: (Router.APIType, String?) = (.empty, nil)
@@ -140,8 +140,7 @@ extension WorkspaceAddReactor {
         case .doneButtonTapped:
             if let invalidMessage = makeInvalidMessage(name: currentState.name, image: currentState.imageData) {
                 return .concat([
-                    .just(.setToastMessage(invalidMessage)),
-                    .just(.setToastMessage(""))
+                    .just(.setToastMessage(invalidMessage))
                 ])
             } else {
                 //생성 진행
