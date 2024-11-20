@@ -14,6 +14,7 @@ final class LoginReactor: Reactor {
         case xButtonTapped
         case inputEmail(String)
         case inputPassword(String)
+        case loginButtonTapped
     }
     
     enum Mutation {
@@ -24,6 +25,7 @@ final class LoginReactor: Reactor {
         case setValidEmail(Bool)
         case setValidPassword(Bool)
         case setLoginButtonEnabled(Bool)
+        case setValidationStates([Bool])
     }
     
     struct State {
@@ -34,6 +36,7 @@ final class LoginReactor: Reactor {
         var isValidEmail = false
         var isValidPassword = false
         var isLoginButtonEnabled = false
+        @Pulse var validationStates: [Bool] = []
     }
     
     let initialState: State = State()
@@ -64,6 +67,12 @@ extension LoginReactor {
                 .just(.setLoginButtonEnabled(isEnabled))
             ])
             
+        case .loginButtonTapped:
+            if currentState.isValidEmail && currentState.isValidPassword {
+                return .empty()
+            } else {
+                return .just(.setValidationStates([currentState.isValidEmail, currentState.isValidPassword]))
+            }
         }
     }
 }
@@ -94,6 +103,9 @@ extension LoginReactor {
         
         case .setLoginButtonEnabled(let value):
             newState.isLoginButtonEnabled = value
+        
+        case .setValidationStates(let value):
+            newState.validationStates = value
         }
         return newState
     }
