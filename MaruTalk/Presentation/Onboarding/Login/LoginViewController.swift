@@ -19,7 +19,12 @@ final class LoginViewController: BaseViewController<LoginView>, View {
     
     private var shouldNavigateToAuth: Bool = true
     
-    private lazy var xMarkButton: UIBarButtonItem = UIBarButtonItem(image: UIImage(systemName: "xmark")?.applyingSymbolConfiguration(.init(pointSize: 14)), style: .plain, target: self, action: nil)
+    private let xMarkButton: UIBarButtonItem = UIBarButtonItem(image: UIImage(systemName: "xmark")?.applyingSymbolConfiguration(.init(pointSize: 14)), style: .plain, target: nil, action: nil)
+    
+    init(reactor: LoginReactor) {
+        super.init()
+        self.reactor = reactor
+    }
     
     //MARK: - Life Cycle
     
@@ -54,7 +59,10 @@ final class LoginViewController: BaseViewController<LoginView>, View {
 
 extension LoginViewController {
     private func bindAction(reactor: LoginReactor) {
-        
+        xMarkButton.rx.tap
+            .map { Reactor.Action.xButtonTapped }
+            .bind(to: reactor.action)
+            .disposed(by: disposeBag)
     }
 }
 
@@ -62,6 +70,18 @@ extension LoginViewController {
 
 extension LoginViewController {
     private func bindState(reactor: LoginReactor) {
+        reactor.state.map { $0.shouldNavigateToAuth }
+            .filter { $0 == true }
+            .bind(with: self) { owner, _ in
+                owner.coordinator?.didFinishLogin()
+            }
+            .disposed(by: disposeBag)
         
+        reactor.state.map { $0.shouldNavigateToHome }
+            .filter { $0 == true }
+            .bind(with: self) { owner, _ in
+                owner.coordinator?.didFinish()
+            }
+            .disposed(by: disposeBag)
     }
 }

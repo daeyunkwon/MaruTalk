@@ -79,7 +79,8 @@ extension OnboardingCoordinator {
 
 extension OnboardingCoordinator {
     func showLogin() {
-        let loginVC = LoginViewController()
+        let reactor = LoginReactor()
+        let loginVC = LoginViewController(reactor: reactor)
         loginVC.coordinator = self
         
         let navController = UINavigationController(rootViewController: loginVC)
@@ -91,6 +92,10 @@ extension OnboardingCoordinator {
         }
         
         navigationController.present(navController, animated: true)
+    }
+    
+    func didFinishLogin() {
+        navigationController.dismiss(animated: true)
     }
 }
 

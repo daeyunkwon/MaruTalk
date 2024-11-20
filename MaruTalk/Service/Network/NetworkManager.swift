@@ -57,7 +57,7 @@ final class NetworkManager {
         return Single.create { single -> Disposable in
             
             guard let multipartFormData = api.multipartFormData else {
-                single(.success(.failure(.invalidURL)))
+                single(.success(.failure(.invalidRequestData)))
                 print("ERROR: invalid multipartFormData")
                 return Disposables.create()
             }

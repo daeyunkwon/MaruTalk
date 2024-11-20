@@ -9,6 +9,7 @@ import Foundation
 
 enum NetworkError: Error {
     case invalidURL
+    case invalidRequestData
     case responseCode(errorCode: String?)
     
     var errorCode: String? {

@@ -11,15 +11,17 @@ import ReactorKit
 
 final class LoginReactor: Reactor {
     enum Action {
-        
+        case xButtonTapped
     }
     
     enum Mutation {
-        
+        case setNavigateToAuth(Bool)
+        case setNavigateToHome(Bool)
     }
     
     struct State {
-        
+        var shouldNavigateToAuth = false
+        var shouldNavigateToHome = false
     }
     
     let initialState: State = State()
@@ -29,7 +31,10 @@ final class LoginReactor: Reactor {
 
 extension LoginReactor {
     func mutate(action: Action) -> Observable<Mutation> {
-        
+        switch action {
+        case .xButtonTapped:
+            return .just(.setNavigateToAuth(true))
+        }
     }
 }
 
@@ -37,6 +42,14 @@ extension LoginReactor {
 
 extension LoginReactor {
     func reduce(state: State, mutation: Mutation) -> State {
+        var newState = state
+        switch mutation {
+        case .setNavigateToAuth(let value):
+            newState.shouldNavigateToAuth = value
         
+        case .setNavigateToHome(let value):
+            newState.shouldNavigateToHome = value
+        }
+        return newState
     }
 }
