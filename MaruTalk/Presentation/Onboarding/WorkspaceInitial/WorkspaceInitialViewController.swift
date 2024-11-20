@@ -19,27 +19,24 @@ final class WorkspaceInitialViewController: BaseViewController<WorkspaceInitialV
     weak var coordinator: OnboardingCoordinator?
     var disposeBag = DisposeBag()
     
-    private let reactor: WorkspaceInitialReactor
+    private let xMarkButton = UIBarButtonItem(image: UIImage(systemName: "xmark")?.applyingSymbolConfiguration(.init(pointSize: 14)), style: .plain, target: nil, action: nil)
     
     init(reactor: WorkspaceInitialReactor) {
-        self.reactor = reactor
         super.init()
+        self.reactor = reactor
     }
     
     //MARK: - Life Cycle
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        bind(reactor: reactor)
     }
     
     //MARK: - Configurations
     
     override func setupNavi() {
         navigationItem.title = "시작하기"
-        
-        let closeButton = UIBarButtonItem(image: UIImage(systemName: "xmark")?.applyingSymbolConfiguration(.init(pointSize: 14)), style: .plain, target: self, action: nil)
-        navigationItem.leftBarButtonItem = closeButton
+        navigationItem.leftBarButtonItem = self.xMarkButton
     }
     
     //MARK: - Methods
@@ -59,7 +56,7 @@ extension WorkspaceInitialViewController {
             .bind(to: reactor.action)
             .disposed(by: disposeBag)
         
-        navigationItem.leftBarButtonItem?.rx.tap
+        xMarkButton.rx.tap
             .map { Reactor.Action.xButtonTapped }
             .bind(to: reactor.action)
             .disposed(by: disposeBag)

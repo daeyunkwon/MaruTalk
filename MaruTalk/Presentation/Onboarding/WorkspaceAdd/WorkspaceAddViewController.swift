@@ -21,7 +21,7 @@ final class WorkspaceAddViewController: BaseViewController<WorkspaceAddView>, Vi
     
     private let imagePickerController = UIImagePickerController()
     
-    private lazy var xMarkButton: UIBarButtonItem = UIBarButtonItem(image: UIImage(systemName: "xmark")?.applyingSymbolConfiguration(.init(pointSize: 14)), style: .plain, target: self, action: nil)
+    private let xMarkButton: UIBarButtonItem = UIBarButtonItem(image: UIImage(systemName: "xmark")?.applyingSymbolConfiguration(.init(pointSize: 14)), style: .plain, target: nil, action: nil)
     
     init(reactor: WorkspaceAddReactor) {
         super.init()

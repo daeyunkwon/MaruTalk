@@ -19,11 +19,9 @@ final class HomeViewController: BaseViewController<HomeView>, View {
     var disposeBag = DisposeBag()
     private var sections: [SectionModel] = []
     
-    private let reactor: HomeReactor
-    
     init(reactor: HomeReactor) {
-        self.reactor = reactor
         super.init()
+        self.reactor = reactor
     }
     
     private let profileCircleView = ProfileCircleView()
@@ -33,8 +31,7 @@ final class HomeViewController: BaseViewController<HomeView>, View {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        bind(reactor: reactor)
-        reactor.action.onNext(.checkWorkspace)
+        reactor?.action.onNext(.checkWorkspace)
     }
     
     //MARK: - Configurations
@@ -192,7 +189,7 @@ extension HomeViewController: UITableViewDelegate {
 
 extension HomeViewController: DropdownArrowTableViewCellDelegate {
     func sectionHeaderTapped(section: Int) {
-        reactor.action.onNext(.sectionTapped(section))
+        reactor?.action.onNext(.sectionTapped(section))
     }
 }
 

@@ -17,18 +17,17 @@ final class SignUpViewController: BaseViewController<SignUpView>, View {
     weak var coordinator: OnboardingCoordinator?
     var disposeBag = DisposeBag()
     
-    private var reactor: SignUpReactor
+    private let xMarkButton = UIBarButtonItem(image: UIImage(systemName: "xmark")?.applyingSymbolConfiguration(.init(pointSize: 14)), style: .plain, target: nil, action: nil)
     
     init(reactor: SignUpReactor) {
-        self.reactor = reactor
         super.init()
+        self.reactor = reactor
     }
     
     //MARK: - Life Cycle
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        bind(reactor: self.reactor)
     }
     
     //MARK: - Configurations
@@ -37,8 +36,7 @@ final class SignUpViewController: BaseViewController<SignUpView>, View {
         navigationController?.navigationBar.isHidden = true
         
         let titleItem = UINavigationItem(title: "회원가입")
-        let closeButton = UIBarButtonItem(image: UIImage(systemName: "xmark")?.applyingSymbolConfiguration(.init(pointSize: 14)), style: .plain, target: self, action: nil)
-        titleItem.leftBarButtonItem = closeButton
+        titleItem.leftBarButtonItem = self.xMarkButton
         // 네비게이션 아이템 추가
         rootView.customNaviBar.items = [titleItem]
     }
@@ -55,7 +53,7 @@ final class SignUpViewController: BaseViewController<SignUpView>, View {
 
 extension SignUpViewController {
     private func bindAction(reactor: SignUpReactor) {
-        rootView.customNaviBar.items?[0].leftBarButtonItem?.rx.tap
+        xMarkButton.rx.tap
             .map { Reactor.Action.closeButtonTapped }
             .bind(to: reactor.action)
             .disposed(by: disposeBag)
