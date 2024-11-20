@@ -49,6 +49,7 @@
 		441115222CECA501000D1B2B /* LoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 441115212CECA501000D1B2B /* LoginViewController.swift */; };
 		441115242CECABB6000D1B2B /* LoginReactor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 441115232CECABB6000D1B2B /* LoginReactor.swift */; };
 		441115272CEE1C46000D1B2B /* AuthReactor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 441115262CEE1C46000D1B2B /* AuthReactor.swift */; };
+		4411152A2CEE3C8C000D1B2B /* RxKakaoSDKUser in Frameworks */ = {isa = PBXBuildFile; productRef = 441115292CEE3C8C000D1B2B /* RxKakaoSDKUser */; };
 		444910DA2CD77315005AB2F7 /* SignUpReactor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 444910D92CD77315005AB2F7 /* SignUpReactor.swift */; };
 		444910DC2CD8AC5C005AB2F7 /* Router.swift in Sources */ = {isa = PBXBuildFile; fileRef = 444910DB2CD8AC5C005AB2F7 /* Router.swift */; };
 		444910DF2CD8AC9F005AB2F7 /* Alamofire in Frameworks */ = {isa = PBXBuildFile; productRef = 444910DE2CD8AC9F005AB2F7 /* Alamofire */; };
@@ -185,6 +186,7 @@
 				444DE71C2CD7720600821269 /* ReactorKit in Frameworks */,
 				4411150B2CE87428000D1B2B /* RxDataSources in Frameworks */,
 				444910EC2CD91C7B005AB2F7 /* Toast in Frameworks */,
+				4411152A2CEE3C8C000D1B2B /* RxKakaoSDKUser in Frameworks */,
 				444DE6DA2CD10A7A00821269 /* SnapKit in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -517,6 +519,7 @@
 				444910EB2CD91C7B005AB2F7 /* Toast */,
 				441115082CE87428000D1B2B /* Differentiator */,
 				4411150A2CE87428000D1B2B /* RxDataSources */,
+				441115292CEE3C8C000D1B2B /* RxKakaoSDKUser */,
 			);
 			productName = MaruTalk;
 			productReference = 444DE6B22CD0FC9D00821269 /* MaruTalk.app */;
@@ -553,6 +556,7 @@
 				444910DD2CD8AC9F005AB2F7 /* XCRemoteSwiftPackageReference "Alamofire" */,
 				444910EA2CD91C7B005AB2F7 /* XCRemoteSwiftPackageReference "Toast-Swift" */,
 				441115072CE87428000D1B2B /* XCRemoteSwiftPackageReference "RxDataSources" */,
+				441115282CEE3C8C000D1B2B /* XCRemoteSwiftPackageReference "kakao-ios-sdk-rx" */,
 			);
 			productRefGroup = 444DE6B32CD0FC9D00821269 /* Products */;
 			projectDirPath = "";
@@ -886,6 +890,14 @@
 				minimumVersion = 5.0.2;
 			};
 		};
+		441115282CEE3C8C000D1B2B /* XCRemoteSwiftPackageReference "kakao-ios-sdk-rx" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/kakao/kakao-ios-sdk-rx";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 2.23.0;
+			};
+		};
 		444910DD2CD8AC9F005AB2F7 /* XCRemoteSwiftPackageReference "Alamofire" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/Alamofire/Alamofire";
@@ -938,6 +950,11 @@
 			isa = XCSwiftPackageProductDependency;
 			package = 441115072CE87428000D1B2B /* XCRemoteSwiftPackageReference "RxDataSources" */;
 			productName = RxDataSources;
+		};
+		441115292CEE3C8C000D1B2B /* RxKakaoSDKUser */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 441115282CEE3C8C000D1B2B /* XCRemoteSwiftPackageReference "kakao-ios-sdk-rx" */;
+			productName = RxKakaoSDKUser;
 		};
 		444910DE2CD8AC9F005AB2F7 /* Alamofire */ = {
 			isa = XCSwiftPackageProductDependency;
