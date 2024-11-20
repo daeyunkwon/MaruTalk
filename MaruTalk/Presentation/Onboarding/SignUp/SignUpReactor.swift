@@ -33,11 +33,11 @@ final class SignUpReactor: Reactor {
         case setSignUpButtonEnabled(Bool)
         case setEmailDuplicateStatus(Bool)
         
-        case setEmailValid(Bool)
-        case setNicknameValid(Bool)
-        case setPhoneNumberValid(Bool)
-        case setPasswordValid(Bool)
-        case setPasswordCheckValid(Bool)
+        case setValidEmail(Bool)
+        case setValidNickname(Bool)
+        case setValidPhoneNumber(Bool)
+        case setValidPassword(Bool)
+        case setValidPasswordCheck(Bool)
         
         case setSignUpInProgress(Bool)
         case setValidationStates([Bool])
@@ -59,11 +59,11 @@ final class SignUpReactor: Reactor {
         var shouldClose = false
         var isEmailDuplicateCheckPassed = false //true일 경우 중복 검사 통과로 인식
         
-        var isEmailValid = false
-        var isNicknameValid = false
-        var isPhoneNumberValid = false
-        var isPasswordValid = false
-        var isPasswordCheckValid = false
+        var isValidEmail = false
+        var isValidNickname = false
+        var isValidPhoneNumber = false
+        var isValidPassword = false
+        var isValidPasswordCheck = false
         
         @Pulse var toastMessage: (String) = ""
         var networkError: (Router.APIType, String?) = (Router.APIType.empty, nil)
@@ -73,7 +73,7 @@ final class SignUpReactor: Reactor {
         var isSignUpSuccess = false
         
         var isFormValid: Bool {
-            return isEmailDuplicateCheckPassed && isEmailValid && isNicknameValid && isPhoneNumberValid && isPasswordValid && isPasswordCheckValid
+            return isEmailDuplicateCheckPassed && isValidEmail && isValidNickname && isValidPhoneNumber && isValidPassword && isValidPasswordCheck
         }
     }
     
@@ -103,12 +103,12 @@ extension SignUpReactor {
                 .just(.setEmailDuplicateCheckButtonEnabled(isEmailCheckButtonEnabled)),
                 .just(.setSignUpButtonEnabled(isEnabled)),
                 .just(.setEmailDuplicateStatus(isPassed)),
-                .just(.setEmailValid(isValid))
+                .just(.setValidEmail(isValid))
             ])
             
         case .emailCheckButtonTapped:
             //앞서 이메일 형식이 유효 여부 고려
-            if currentState.isEmailValid {
+            if currentState.isValidEmail {
                 //중복 체크 이미 통과한 경우 고려
                 if !currentState.isEmailDuplicateCheckPassed {
                     return checkEmailDuplication(email: currentState.email)
@@ -130,7 +130,7 @@ extension SignUpReactor {
             return .merge(
                 .just(.nicknameValue(value)),
                 .just(.setSignUpButtonEnabled(isEnabled)),
-                .just(.setNicknameValid(isValid))
+                .just(.setValidNickname(isValid))
             )
             
         case .inputPhoneNumber(let value):
@@ -141,7 +141,7 @@ extension SignUpReactor {
             return .merge(
                 .just(.phoneNumberValue(formatValue)),
                 .just(.setSignUpButtonEnabled(isEnabled)),
-                .just(.setPhoneNumberValid(isValid))
+                .just(.setValidPhoneNumber(isValid))
             )
             
         case .inputPassword(let value):
@@ -151,7 +151,7 @@ extension SignUpReactor {
             return .merge(
                 .just(.passwordValue(value)),
                 .just(.setSignUpButtonEnabled(isEnabled)),
-                .just(.setPasswordValid(isValid))
+                .just(.setValidPassword(isValid))
             )
             
         case .inputPasswordCheck(let value):
@@ -161,11 +161,11 @@ extension SignUpReactor {
             return .concat(
                 .just(.passwordCheckValue(value)),
                 .just(.setSignUpButtonEnabled(isEnabled)),
-                .just(.setPasswordCheckValid(isValid))
+                .just(.setValidPasswordCheck(isValid))
             )
             
         case .signUpButtonTapped:
-            let stateList = [currentState.isEmailDuplicateCheckPassed, currentState.isNicknameValid, currentState.isPhoneNumberValid, currentState.isPasswordValid, currentState.isPasswordCheckValid]
+            let stateList = [currentState.isEmailDuplicateCheckPassed, currentState.isValidNickname, currentState.isValidPhoneNumber, currentState.isValidPassword, currentState.isValidPasswordCheck]
             
             return .concat(
                 .just(.setValidationStates(stateList)),
@@ -210,20 +210,20 @@ extension SignUpReactor {
         case .setEmailDuplicateStatus(let value):
             newState.isEmailDuplicateCheckPassed = value
             
-        case .setEmailValid(let value):
-            newState.isEmailValid = value
+        case .setValidEmail(let value):
+            newState.isValidEmail = value
             
-        case .setNicknameValid(let value):
-            newState.isNicknameValid = value
+        case .setValidNickname(let value):
+            newState.isValidNickname = value
             
-        case .setPhoneNumberValid(let value):
-            newState.isPhoneNumberValid = value
+        case .setValidPhoneNumber(let value):
+            newState.isValidPhoneNumber = value
             
-        case .setPasswordValid(let value):
-            newState.isPasswordValid = value
+        case .setValidPassword(let value):
+            newState.isValidPassword = value
             
-        case .setPasswordCheckValid(let value):
-            newState.isPasswordCheckValid = value
+        case .setValidPasswordCheck(let value):
+            newState.isValidPasswordCheck = value
             
         case .setValidationStates(let value):
             newState.validationStates = value

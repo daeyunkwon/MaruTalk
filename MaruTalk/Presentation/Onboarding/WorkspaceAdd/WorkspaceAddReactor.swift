@@ -34,8 +34,8 @@ final class WorkspaceAddReactor: Reactor {
         
         case setNavigateToHomeEmpty(Bool)
         
-        case setNameValid(Bool)
-        case setImageValid(Bool)
+        case setValidName(Bool)
+        case setValidImage(Bool)
         case setToastMessage(String)
         
         case setCreateWorkspaceSuccess(Bool)
@@ -55,8 +55,8 @@ final class WorkspaceAddReactor: Reactor {
         
         var shouldNavigateToHomeEmpty = false
         
-        var isNameValid = false
-        var isImageValid = false
+        var isValidName = false
+        var isValidImage = false
         @Pulse var toastMessage: String?
         
         var isCreateWorkspaceSuccess = false
@@ -89,7 +89,7 @@ extension WorkspaceAddReactor {
             
             return .concat([
                 .just(.setName(value)),
-                .just(.setNameValid(isValid)),
+                .just(.setValidName(isValid)),
                 .just(.setDoneButtonEnabled(isEnabled))
             ])
         
@@ -121,7 +121,7 @@ extension WorkspaceAddReactor {
             
             return .concat([
                 .just(.setImageData(value)),
-                .just(.setImageValid(isValid))
+                .just(.setValidImage(isValid))
             ])
         
         case .xButtonTapped:
@@ -181,11 +181,11 @@ extension WorkspaceAddReactor {
         case .setNavigateToHomeEmpty(let value):
             newState.shouldNavigateToHomeEmpty = value
         
-        case .setNameValid(let value):
-            newState.isNameValid = value
+        case .setValidName(let value):
+            newState.isValidName = value
         
-        case .setImageValid(let value):
-            newState.isImageValid = value
+        case .setValidImage(let value):
+            newState.isValidImage = value
         
         case .setToastMessage(let value):
             newState.toastMessage = value
