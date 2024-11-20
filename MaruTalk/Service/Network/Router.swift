@@ -12,6 +12,7 @@ import Alamofire
 enum Router {
     case emailValidation(String)
     case join(email: String, password: String, nickname: String, phone: String, deviceToken: String)
+    case login(email: String, password: String, deviceToken: String)
     
     case workspaces
     case createWorkspace(name: String, description: String, imageData: Data)
@@ -21,6 +22,7 @@ enum Router {
         case empty //초기화용 빈 값
         case emailValidation
         case join
+        case login
         
         case workspaces
         case createWorkspace
@@ -35,15 +37,16 @@ extension Router: URLRequestConvertible {
     
     var path: String {
         switch self {
-        case .emailValidation(_): return APIURL.validEmail
+        case .emailValidation: return APIURL.validEmail
         case .join: return APIURL.join
+        case .login: return APIURL.login
         case .workspaces, .createWorkspace: return APIURL.workspaces
         }
     }
     
     var method: HTTPMethod {
         switch self {
-        case .emailValidation(_), .join, .createWorkspace:
+        case .emailValidation(_), .join, .login, .createWorkspace:
             return .post
             
         case .workspaces:
@@ -53,7 +56,7 @@ extension Router: URLRequestConvertible {
     
     var header: [String: String] {
         switch self {
-        case .emailValidation(_), .join:
+        case .emailValidation, .join, .login:
             return [
                 "Content-Type": "application/json",
                 "SesacKey": APIKey.apiKey
@@ -88,6 +91,13 @@ extension Router: URLRequestConvertible {
                 BodyKey.password: password,
                 BodyKey.nickname: nickname,
                 BodyKey.phone: phone,
+                BodyKey.deviceToken: deviceToken
+            ])
+            
+        case .login(let email, let password, let deviceToken):
+            return try? JSONEncoder().encode([
+                BodyKey.email: email,
+                BodyKey.password: password,
                 BodyKey.deviceToken: deviceToken
             ])
             

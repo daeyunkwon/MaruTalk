@@ -50,7 +50,6 @@ extension WorkspaceInitialReactor {
                         case .success(let value):
                             print("통신값:", value)
                             if !value.isEmpty {
-                                
                                 let sortedValue = value.sorted {
                                     $0.createdDate > $1.createdDate
                                 }

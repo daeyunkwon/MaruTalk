@@ -26,6 +26,8 @@ final class LoginReactor: Reactor {
         case setValidPassword(Bool)
         case setLoginButtonEnabled(Bool)
         case setValidationStates([Bool])
+        case setNetworkError((Router.APIType, String?))
+        case setLoginInProgress(Bool)
     }
     
     struct State {
@@ -37,6 +39,8 @@ final class LoginReactor: Reactor {
         var isValidPassword = false
         var isLoginButtonEnabled = false
         @Pulse var validationStates: [Bool] = []
+        @Pulse var networkError: (Router.APIType, String?) = (Router.APIType.empty, nil)
+        var isLoginInProgress = false
     }
     
     let initialState: State = State()
@@ -69,7 +73,11 @@ extension LoginReactor {
             
         case .loginButtonTapped:
             if currentState.isValidEmail && currentState.isValidPassword {
-                return .empty()
+                return .concat([
+                    .just(.setLoginInProgress(true)),
+                    executeLogin(),
+                    .just(.setLoginInProgress(false))
+                ])
             } else {
                 return .just(.setValidationStates([currentState.isValidEmail, currentState.isValidPassword]))
             }
@@ -106,6 +114,12 @@ extension LoginReactor {
         
         case .setValidationStates(let value):
             newState.validationStates = value
+        
+        case .setNetworkError(let value):
+            newState.networkError = value
+        
+        case .setLoginInProgress(let value):
+            newState.isLoginInProgress = value
         }
         return newState
     }
@@ -130,5 +144,61 @@ extension LoginReactor {
     
     private func isLoginButtonEnabled(email: String, password: String) -> Bool {
         return !email.trimmingCharacters(in: .whitespaces).isEmpty && !password.trimmingCharacters(in: .whitespaces).isEmpty
+    }
+    
+    //로그인 요청
+    private func executeLogin() -> Observable<Mutation> {
+        let email: String = currentState.email
+        let password: String = currentState.password
+        let deviceToken: String = ""
+        
+        return NetworkManager.shared.performRequest(api: .login(email: email, password: password, deviceToken: deviceToken), model: User.self)
+            .asObservable()
+            .flatMap {[weak self] result -> Observable<Mutation> in
+                guard let self else { return .empty()}
+                switch result {
+                case .success(let value):
+                    //토큰 저장
+                    let isAcessTokenSaved = KeychainManager.shared.saveToken(token: value.token.accessToken, forKey: .accessToken)
+                    let isRefreshTokenSaved = KeychainManager.shared.saveToken(token: value.token.refreshToken, forKey: .refreshToken)
+                    //토큰 저장 정상 처리 시 워크스페이스 조회
+                    if isAcessTokenSaved && isRefreshTokenSaved {
+                        return self.fetchWorkspace()
+                    } else {
+                        print("ERROR: 토큰 저장 실패")
+                        return .empty()
+                    }
+                
+                case .failure(let error):
+                    let errorCode = error.errorCode
+                    return .just(.setNetworkError((Router.APIType.login, errorCode)))
+                }
+            }
+    }
+    
+    //워크스페이스 조회
+    private func fetchWorkspace() -> Observable<Mutation> {
+        return NetworkManager.shared.performRequest(api: .workspaces, model: [Workspace].self)
+            .asObservable()
+            .flatMap { result -> Observable<Mutation> in
+                switch result {
+                case .success(let value):
+                    print(value)
+                    if !value.isEmpty {
+                        let sortedValue = value.sorted {
+                            $0.createdDate > $1.createdDate
+                        }
+                        UserDefaultsManager.shared.recentWorkspaceID = sortedValue.first?.id
+                    } else {
+                        UserDefaultsManager.shared.removeItem(key: .recentWorkspaceID)
+                    }
+                    
+                    return .just(.setNavigateToHome(true))
+                
+                case .failure(let error):
+                    let errorCode = error.errorCode
+                    return .just(.setNetworkError((Router.APIType.workspaces, errorCode)))
+                }
+            }
     }
 }

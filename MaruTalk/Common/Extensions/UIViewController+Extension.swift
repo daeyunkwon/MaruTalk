@@ -49,6 +49,12 @@ extension UIViewController {
             default: break
             }
             
+        case .login:
+            switch errorCode {
+            case "E03": message = "이메일 또는 비밀번호가 올바르지 않습니다."
+            default: break
+            }
+            
         default: break
         }
         
@@ -67,5 +73,14 @@ extension UIViewController {
         let x = (view.bounds.width / 2)
         let y: Double = 660//711
         view.makeToast(message, point: CGPoint(x: x, y: y), title: nil, image: nil, style: style, completion: nil)
+    }
+    
+    //로딩중
+    func showToastActivity(shouldShow: Bool) {
+        if shouldShow {
+            view.makeToastActivity(.center)
+        } else {
+            view.hideToastActivity()
+        }
     }
 }

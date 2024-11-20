@@ -95,6 +95,7 @@ extension LoginViewController {
         reactor.state.map { $0.shouldNavigateToHome }
             .filter { $0 == true }
             .bind(with: self) { owner, _ in
+                owner.shouldNavigateToAuth = false
                 owner.coordinator?.didFinish()
             }
             .disposed(by: disposeBag)
@@ -132,6 +133,19 @@ extension LoginViewController {
                         didShowToastMessage = true
                     }
                 }
+            }
+            .disposed(by: disposeBag)
+        
+        reactor.pulse(\.$networkError)
+            .bind(with: self) { owner, value in
+                owner.showToastForNetworkError(api: value.0, errorCode: value.1)
+            }
+            .disposed(by: disposeBag)
+        
+        reactor.state.map { $0.isLoginInProgress }
+            .distinctUntilChanged()
+            .bind(with: self) { owner, value in
+                owner.showToastActivity(shouldShow: value)
             }
             .disposed(by: disposeBag)
     }
