@@ -48,6 +48,7 @@
 		441115202CECA4F3000D1B2B /* LoginView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4411151F2CECA4F3000D1B2B /* LoginView.swift */; };
 		441115222CECA501000D1B2B /* LoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 441115212CECA501000D1B2B /* LoginViewController.swift */; };
 		441115242CECABB6000D1B2B /* LoginReactor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 441115232CECABB6000D1B2B /* LoginReactor.swift */; };
+		441115272CEE1C46000D1B2B /* AuthReactor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 441115262CEE1C46000D1B2B /* AuthReactor.swift */; };
 		444910DA2CD77315005AB2F7 /* SignUpReactor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 444910D92CD77315005AB2F7 /* SignUpReactor.swift */; };
 		444910DC2CD8AC5C005AB2F7 /* Router.swift in Sources */ = {isa = PBXBuildFile; fileRef = 444910DB2CD8AC5C005AB2F7 /* Router.swift */; };
 		444910DF2CD8AC9F005AB2F7 /* Alamofire in Frameworks */ = {isa = PBXBuildFile; productRef = 444910DE2CD8AC9F005AB2F7 /* Alamofire */; };
@@ -131,6 +132,8 @@
 		4411151F2CECA4F3000D1B2B /* LoginView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginView.swift; sourceTree = "<group>"; };
 		441115212CECA501000D1B2B /* LoginViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginViewController.swift; sourceTree = "<group>"; };
 		441115232CECABB6000D1B2B /* LoginReactor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginReactor.swift; sourceTree = "<group>"; };
+		441115252CEE11C5000D1B2B /* MaruTalk.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = MaruTalk.entitlements; sourceTree = "<group>"; };
+		441115262CEE1C46000D1B2B /* AuthReactor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthReactor.swift; sourceTree = "<group>"; };
 		444910D92CD77315005AB2F7 /* SignUpReactor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignUpReactor.swift; sourceTree = "<group>"; };
 		444910DB2CD8AC5C005AB2F7 /* Router.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Router.swift; sourceTree = "<group>"; };
 		444910E02CD8B072005AB2F7 /* BodyKey.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BodyKey.swift; sourceTree = "<group>"; };
@@ -311,6 +314,7 @@
 		444DE6B42CD0FC9D00821269 /* MaruTalk */ = {
 			isa = PBXGroup;
 			children = (
+				441115252CEE11C5000D1B2B /* MaruTalk.entitlements */,
 				444DE6CB2CD100A400821269 /* Application */,
 				444DE6CE2CD100FD00821269 /* Common */,
 				444DE6CF2CD1010400821269 /* Service */,
@@ -470,6 +474,7 @@
 		444DE6F52CD366CD00821269 /* Auth */ = {
 			isa = PBXGroup;
 			children = (
+				441115262CEE1C46000D1B2B /* AuthReactor.swift */,
 				444DE6F62CD366DB00821269 /* AuthView.swift */,
 				444DE6F82CD366E600821269 /* AuthViewController.swift */,
 			);
@@ -619,6 +624,7 @@
 				441114D02CE1F942000D1B2B /* WorkspaceInitialReactor.swift in Sources */,
 				444910E32CD8B258005AB2F7 /* NetworkManager.swift in Sources */,
 				441115022CE75A38000D1B2B /* PlusTitleTableViewCell.swift in Sources */,
+				441115272CEE1C46000D1B2B /* AuthReactor.swift in Sources */,
 				441114EA2CE60BAD000D1B2B /* DMCoordinator.swift in Sources */,
 				441114F42CE60C82000D1B2B /* SettingView.swift in Sources */,
 				441114EE2CE60C21000D1B2B /* SettingCoordinator.swift in Sources */,
@@ -787,6 +793,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_ENTITLEMENTS = MaruTalk/MaruTalk.entitlements;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = 9M37U587ZT;
@@ -819,6 +826,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_ENTITLEMENTS = MaruTalk/MaruTalk.entitlements;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = 9M37U587ZT;

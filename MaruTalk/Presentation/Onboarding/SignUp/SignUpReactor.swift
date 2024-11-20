@@ -367,8 +367,8 @@ extension SignUpReactor {
                 case .success(let value):
                     print("DEBUG: 회원가입 성공 응답값:\n\(value)")
                     
-                    let isAccessTokenSaved = KeychainManager.shared.saveToken(token: value.token.accessToken, forKey: .accessToken)
-                    let isRefreshTokenSaved = KeychainManager.shared.saveToken(token: value.token.refreshToken, forKey: .refreshToken)
+                    let isAccessTokenSaved = KeychainManager.shared.saveItem(item: value.token.accessToken, forKey: .accessToken)
+                    let isRefreshTokenSaved = KeychainManager.shared.saveItem(item: value.token.refreshToken, forKey: .refreshToken)
                     
                     //토큰 저장 실패 시 로그인 유도
                     return isAccessTokenSaved && isRefreshTokenSaved ? .just(.setSignUpSuccess(true)).delay(.seconds(1), scheduler: MainScheduler.instance) : .just(.toastMessageValue("가입성공! 로그인을 진행해주세요!"))

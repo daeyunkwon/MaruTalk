@@ -13,6 +13,7 @@ enum Router {
     case emailValidation(String)
     case join(email: String, password: String, nickname: String, phone: String, deviceToken: String)
     case login(email: String, password: String, deviceToken: String)
+    case loginWithApple(idToken: String, nickname: String, deviceToken: String)
     
     case workspaces
     case createWorkspace(name: String, description: String, imageData: Data)
@@ -23,6 +24,7 @@ enum Router {
         case emailValidation
         case join
         case login
+        case loginWithApple
         
         case workspaces
         case createWorkspace
@@ -40,13 +42,14 @@ extension Router: URLRequestConvertible {
         case .emailValidation: return APIURL.validEmail
         case .join: return APIURL.join
         case .login: return APIURL.login
+        case .loginWithApple: return APIURL.loginWithApple
         case .workspaces, .createWorkspace: return APIURL.workspaces
         }
     }
     
     var method: HTTPMethod {
         switch self {
-        case .emailValidation(_), .join, .login, .createWorkspace:
+        case .emailValidation(_), .join, .login, .loginWithApple, .createWorkspace:
             return .post
             
         case .workspaces:
@@ -56,7 +59,7 @@ extension Router: URLRequestConvertible {
     
     var header: [String: String] {
         switch self {
-        case .emailValidation, .join, .login:
+        case .emailValidation, .join, .login, .loginWithApple:
             return [
                 "Content-Type": "application/json",
                 "SesacKey": APIKey.apiKey
@@ -65,14 +68,14 @@ extension Router: URLRequestConvertible {
         case .workspaces:
             return [
                 "Content-Type": "application/json",
-                "Authorization": KeychainManager.shared.getToken(forKey: .accessToken) ?? "",
+                "Authorization": KeychainManager.shared.getItem(forKey: .accessToken) ?? "",
                 "SesacKey": APIKey.apiKey
             ]
             
         case .createWorkspace:
             return [
                 "Content-Type": "multipart/form-data",
-                "Authorization": KeychainManager.shared.getToken(forKey: .accessToken) ?? "",
+                "Authorization": KeychainManager.shared.getItem(forKey: .accessToken) ?? "",
                 "SesacKey": APIKey.apiKey
             ]
         }
@@ -98,6 +101,13 @@ extension Router: URLRequestConvertible {
             return try? JSONEncoder().encode([
                 BodyKey.email: email,
                 BodyKey.password: password,
+                BodyKey.deviceToken: deviceToken
+            ])
+            
+        case .loginWithApple(let idToken, let nickname, let deviceToken):
+            return try? JSONEncoder().encode([
+                BodyKey.idToken: idToken,
+                BodyKey.nickname: nickname,
                 BodyKey.deviceToken: deviceToken
             ])
             

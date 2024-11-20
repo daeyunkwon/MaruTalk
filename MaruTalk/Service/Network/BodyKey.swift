@@ -13,4 +13,5 @@ enum BodyKey {
     static let nickname = "nickname"
     static let phone = "phone"
     static let deviceToken = "deviceToken"
+    static let idToken = "idToken"
 }

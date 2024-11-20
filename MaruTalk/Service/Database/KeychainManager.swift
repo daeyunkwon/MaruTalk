@@ -16,10 +16,14 @@ final class KeychainManager {
     enum KeyType: String {
         case accessToken
         case refreshToken
+        case appleUserName
+        case appleUserNickname
+        case appleUserEmail
+        case appleUserToken
     }
     
-    func saveToken(token: String, forKey key: KeyType) -> Bool {
-        guard let data = token.data(using: .utf8) else { return false }
+    func saveItem(item: String, forKey key: KeyType) -> Bool {
+        guard let data = item.data(using: .utf8) else { return false }
         
         let query = [
             kSecClass: kSecClassGenericPassword,
@@ -30,16 +34,16 @@ final class KeychainManager {
         let status = SecItemAdd(query, nil)
         
         if status == errSecSuccess {
-            print("DEBUG: 키체인을 이용해 토큰 저장 성공")
+            print("DEBUG: 키체인을 이용해 저장 성공, \(key.rawValue)")
         } else {
-            print("DEBUG: 키체인을 이용해 토큰 저장 실패")
+            print("DEBUG: 키체인을 이용해 저장 실패, \(key.rawValue)")
             print(SecCopyErrorMessageString(status, nil) ?? "")
         }
         
         return status == errSecSuccess
     }
     
-    func getToken(forKey key: KeyType) -> String? {
+    func getItem(forKey key: KeyType) -> String? {
         let query = [
             kSecClass: kSecClassGenericPassword,
             kSecAttrAccount: key.rawValue,
@@ -52,14 +56,14 @@ final class KeychainManager {
         guard status == errSecSuccess,
               let data = item as? Data else {
             print(SecCopyErrorMessageString(status, nil) ?? "")
-            print("DEBUG: 키체인에 저장된 토큰 없음")
+            print("DEBUG: 키체인에 저장된 내용 없음, \(key.rawValue)")
             return nil
         }
         
         return String(data: data, encoding: .utf8)
     }
     
-    func deleteToken(forKey key: KeyType) -> Bool {
+    func deleteItem(forKey key: KeyType) -> Bool {
         let query = [
             kSecClass: kSecClassGenericPassword,
             kSecAttrAccount: key.rawValue] as CFDictionary
@@ -67,9 +71,9 @@ final class KeychainManager {
         let status = SecItemDelete(query)
         
         if status == errSecSuccess {
-            print("DEBUG: 키체인에 저장된 토큰 삭제 성공")
+            print("DEBUG: 키체인에 저장된 항목 삭제 성공, \(key.rawValue)")
         } else {
-            print("DEBUG: 키체인에 저장된 토큰 삭제 실패")
+            print("DEBUG: 키체인에 저장된 항목 삭제 실패, \(key.rawValue)")
             print(SecCopyErrorMessageString(status, nil) ?? "")
         }
         

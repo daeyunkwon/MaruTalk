@@ -36,7 +36,8 @@ final class OnboardingCoordinator: Coordinator {
 
 extension OnboardingCoordinator {
     func showAuth() {
-        let authVC = AuthViewController()
+        let reactor = AuthReactor()
+        let authVC = AuthViewController(reactor: reactor)
         authVC.coordinator = self
         
         //AuthVC Sheet 설정

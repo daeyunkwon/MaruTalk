@@ -49,9 +49,10 @@ extension UIViewController {
             default: break
             }
             
-        case .login:
+        case .login, .loginWithApple:
             switch errorCode {
             case "E03": message = "이메일 또는 비밀번호가 올바르지 않습니다."
+            case "E12": message = "이미 회원가입 된 계정입니다."
             default: break
             }
             
