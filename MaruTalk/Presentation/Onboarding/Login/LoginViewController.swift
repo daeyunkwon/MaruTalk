@@ -63,6 +63,16 @@ extension LoginViewController {
             .map { Reactor.Action.xButtonTapped }
             .bind(to: reactor.action)
             .disposed(by: disposeBag)
+        
+        rootView.emailFieldView.inputTextField.rx.text.orEmpty
+            .map { Reactor.Action.inputEmail($0) }
+            .bind(to: reactor.action)
+            .disposed(by: disposeBag)
+        
+        rootView.passwordFieldView.inputTextField.rx.text.orEmpty
+            .map { Reactor.Action.inputPassword($0) }
+            .bind(to: reactor.action)
+            .disposed(by: disposeBag)
     }
 }
 
@@ -81,6 +91,13 @@ extension LoginViewController {
             .filter { $0 == true }
             .bind(with: self) { owner, _ in
                 owner.coordinator?.didFinish()
+            }
+            .disposed(by: disposeBag)
+        
+        reactor.state.map { $0.isLoginButtonEnabled }
+            .distinctUntilChanged()
+            .bind(with: self) { owner, value in
+                owner.rootView.loginButton.setButtonEnabled(isEnabled: value)
             }
             .disposed(by: disposeBag)
     }
