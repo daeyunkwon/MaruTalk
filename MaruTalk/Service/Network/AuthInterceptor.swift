@@ -55,11 +55,12 @@ final class AuthInterceptor: RequestInterceptor {
                 case .success(let value):
                     let newToken = value.values.map { String($0) }.first ?? ""
                     let _ = KeychainManager.shared.saveItem(item: newToken, forKey: .accessToken)
+                    print("DEBUG: 액세스 토큰 갱신 성공으로 retry 진행")
                     completion(.retryWithDelay(0.2))
                 
-                case .failure(let error):
-                    let errorCode = error.errorCode
-                    completion(.doNotRetryWithError(error))
+                case .failure(_):
+                    completion(.doNotRetryWithError(NetworkError.responseCode(errorCode: "Refresh token expiration")))
+                    print("ERROR: 액세스 토큰 갱신 실패로 retry 미진행")
                 }
             }
             .disposed(by: disposeBag)

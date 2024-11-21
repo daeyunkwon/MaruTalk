@@ -59,7 +59,22 @@ extension UIViewController {
         default: break
         }
         
-        view.makeToast(message, point: CGPoint(x: x, y: y), title: nil, image: nil, style: style, completion: nil)
+        if errorCode == "Refresh token expiration" {
+            message = "로그인 기간이 만료되어 재 로그인이 필요합니다."
+        }
+        
+        view.makeToast(message, point: CGPoint(x: x, y: y), title: nil, image: nil, style: style) { [weak self] didTap in
+            if errorCode == "Refresh token expiration" {
+                self?.shouldNavigateToLogin()
+            }
+        }
+    }
+    
+    func shouldNavigateToLogin() {
+        if let scene = UIApplication.shared.connectedScenes.first?.delegate as? SceneDelegate {
+            scene.appCoordinator?.childCoordinators.removeAll()
+            scene.appCoordinator?.start()
+        }
     }
     
     //Toast
