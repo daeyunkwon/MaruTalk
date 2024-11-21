@@ -94,6 +94,7 @@ extension LoginViewController {
         
         reactor.state.map { $0.shouldNavigateToHome }
             .filter { $0 == true }
+            .distinctUntilChanged()
             .bind(with: self) { owner, _ in
                 owner.shouldNavigateToAuth = false
                 owner.coordinator?.didFinish()
