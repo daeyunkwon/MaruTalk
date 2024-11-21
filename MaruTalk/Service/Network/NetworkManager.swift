@@ -14,8 +14,6 @@ final class NetworkManager {
     
     static let shared = NetworkManager()
     private init() { }
-    
-    static let session = Session(interceptor: AuthInterceptor.shared)
                                    
     func performRequest<T: Decodable>(api: Router, model: T.Type) -> Single<Result<T, NetworkError>> {
         return Single.create { single -> Disposable in
@@ -145,6 +143,7 @@ final class NetworkManager {
         }
     }
     
+    //서버로부터 이미지 데이터 요청(사용안할듯?)
     func fetchImageData(imagePath: String) -> Single<Result<Data, NetworkError>> {
         return Single.create { single -> Disposable in
             
@@ -152,18 +151,16 @@ final class NetworkManager {
                 let request = try Router.fetchImage(imagePath: imagePath).asURLRequest()
                 
                 AF.request(request, interceptor: AuthInterceptor.shared).validate(statusCode: 200..<300).responseData { response in
-                    print("여기실행됨1")
                     switch response.result {
                     case .success(let value):
                         single(.success(.success(value)))
-                        print("여기실행됨2")
+                        
                     case .failure(let error):
                         if let refreshError = error.asAFError?.underlyingError as? NetworkError {
                             //리프레시 만료 에러의 경우
                             single(.success(.failure(.responseCode(errorCode: refreshError.errorCode))))
                         }
                         
-                        print("여기실행됨3")
                         if let data = response.data {
                             //에러 코드 디코딩 작업
                             if let result = try? JSONDecoder().decode(SLPErrorResponse.self, from: data) {
@@ -183,8 +180,26 @@ final class NetworkManager {
                 print("Error: request 생성 실패")
                 single(.success(.failure(.invalidURL)))
             }
-            
             return Disposables.create()
+        }
+    }
+    
+    //서버로부터 이미지 요청
+    func downloadImageData(imagePath: String?, completion: @escaping (Data) -> Void) {
+        do {
+            guard let path = imagePath else { return }
+            let request = try Router.fetchImage(imagePath: path).asURLRequest()
+            
+            AF.request(request, interceptor: AuthInterceptor.shared).responseData { response in
+                switch response.result {
+                case .success(let value):
+                    completion(value)
+                case .failure(let error):
+                    print(error)
+                }
+            }
+        } catch {
+            print("Error: request 만들기 실패: \(error)")
         }
     }
     

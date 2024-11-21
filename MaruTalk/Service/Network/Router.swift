@@ -19,8 +19,9 @@ enum Router {
     case loginWithApple(idToken: String, nickname: String, deviceToken: String)
     case loginWithKakao(oauthToken: String, deviceToken: String)
     
-    case workspaces
+    case workspaces //사용자가 속한 워크스페이스 리스트
     case createWorkspace(name: String, description: String, imageData: Data)
+    case workspace(id: String) //특정 워크스페이스
     
     
     enum APIType {
@@ -34,6 +35,7 @@ enum Router {
         
         case workspaces
         case createWorkspace
+        case workspace
     }
 }
 
@@ -45,13 +47,13 @@ extension Router: URLRequestConvertible {
     var path: String {
         switch self {
         case .refresh: return APIURL.refresh
-        case .fetchImage(let imagePath): return "v1/workspace/\(imagePath)"
+        case .fetchImage(let imagePath): return "v1\(imagePath)"
         case .emailValidation: return APIURL.validEmail
         case .join: return APIURL.join
         case .login: return APIURL.login
         case .loginWithApple: return APIURL.loginWithApple
         case .loginWithKakao: return APIURL.loginWithKakao
-        case .workspaces, .createWorkspace: return APIURL.workspaces
+        case .workspaces, .createWorkspace, .workspace: return APIURL.workspaces
         }
     }
     
@@ -60,7 +62,7 @@ extension Router: URLRequestConvertible {
         case .emailValidation(_), .join, .login, .loginWithApple, .loginWithKakao, .createWorkspace:
             return .post
             
-        case .refresh, .fetchImage, .workspaces:
+        case .refresh, .fetchImage, .workspaces, .workspace:
             return .get
         }
     }
@@ -81,7 +83,7 @@ extension Router: URLRequestConvertible {
                 "SesacKey": APIKey.apiKey
             ]
             
-        case .fetchImage, .workspaces:
+        case .workspaces, .workspace:
             return [
                 "Content-Type": "application/json",
                 "Authorization": KeychainManager.shared.getItem(forKey: .accessToken) ?? "",
@@ -91,6 +93,12 @@ extension Router: URLRequestConvertible {
         case .createWorkspace:
             return [
                 "Content-Type": "multipart/form-data",
+                "Authorization": KeychainManager.shared.getItem(forKey: .accessToken) ?? "",
+                "SesacKey": APIKey.apiKey
+            ]
+            
+        case .fetchImage:
+            return [
                 "Authorization": KeychainManager.shared.getItem(forKey: .accessToken) ?? "",
                 "SesacKey": APIKey.apiKey
             ]
@@ -155,6 +163,11 @@ extension Router: URLRequestConvertible {
         case .refresh(let refreshToken):
             return [
                 URLQueryItem(name: "RefreshToken", value: refreshToken)
+            ]
+            
+        case .workspace(let id):
+            return [
+                URLQueryItem(name: "workspaceID", value: id)
             ]
             
         default:
