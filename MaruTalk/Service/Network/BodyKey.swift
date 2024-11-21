@@ -15,4 +15,5 @@ enum BodyKey {
     static let deviceToken = "deviceToken"
     static let idToken = "idToken"
     static let oauthToken = "oauthToken"
+    static let accessToken = "accessToken"
 }

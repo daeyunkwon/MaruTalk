@@ -21,7 +21,7 @@ final class NetworkManager {
             do {
                 let request = try api.asURLRequest()
                 
-                AF.request(request).validate(statusCode: 200..<300).responseDecodable(of: T.self) { response in
+                AF.request(request, interceptor: AuthInterceptor.shared).validate(statusCode: 200..<300).responseDecodable(of: T.self) { response in
                     switch response.result {
                     case .success(let value):
                         single(.success(.success(value)))

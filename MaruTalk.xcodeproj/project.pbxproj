@@ -50,6 +50,7 @@
 		441115242CECABB6000D1B2B /* LoginReactor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 441115232CECABB6000D1B2B /* LoginReactor.swift */; };
 		441115272CEE1C46000D1B2B /* AuthReactor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 441115262CEE1C46000D1B2B /* AuthReactor.swift */; };
 		4411152A2CEE3C8C000D1B2B /* RxKakaoSDKUser in Frameworks */ = {isa = PBXBuildFile; productRef = 441115292CEE3C8C000D1B2B /* RxKakaoSDKUser */; };
+		4411152E2CEEE309000D1B2B /* AuthInterceptor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4411152D2CEEE309000D1B2B /* AuthInterceptor.swift */; };
 		444910DA2CD77315005AB2F7 /* SignUpReactor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 444910D92CD77315005AB2F7 /* SignUpReactor.swift */; };
 		444910DC2CD8AC5C005AB2F7 /* Router.swift in Sources */ = {isa = PBXBuildFile; fileRef = 444910DB2CD8AC5C005AB2F7 /* Router.swift */; };
 		444910DF2CD8AC9F005AB2F7 /* Alamofire in Frameworks */ = {isa = PBXBuildFile; productRef = 444910DE2CD8AC9F005AB2F7 /* Alamofire */; };
@@ -135,6 +136,7 @@
 		441115232CECABB6000D1B2B /* LoginReactor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginReactor.swift; sourceTree = "<group>"; };
 		441115252CEE11C5000D1B2B /* MaruTalk.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = MaruTalk.entitlements; sourceTree = "<group>"; };
 		441115262CEE1C46000D1B2B /* AuthReactor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthReactor.swift; sourceTree = "<group>"; };
+		4411152D2CEEE309000D1B2B /* AuthInterceptor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthInterceptor.swift; sourceTree = "<group>"; };
 		444910D92CD77315005AB2F7 /* SignUpReactor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignUpReactor.swift; sourceTree = "<group>"; };
 		444910DB2CD8AC5C005AB2F7 /* Router.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Router.swift; sourceTree = "<group>"; };
 		444910E02CD8B072005AB2F7 /* BodyKey.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BodyKey.swift; sourceTree = "<group>"; };
@@ -448,6 +450,7 @@
 				444910E42CD8E0B1005AB2F7 /* NetworkError.swift */,
 				444910E82CD8F04B005AB2F7 /* SLPErrorResponse.swift */,
 				444910E22CD8B258005AB2F7 /* NetworkManager.swift */,
+				4411152D2CEEE309000D1B2B /* AuthInterceptor.swift */,
 			);
 			path = Network;
 			sourceTree = "<group>";
@@ -618,6 +621,7 @@
 				4411151B2CEB3190000D1B2B /* UserDefaultsManager.swift in Sources */,
 				441115042CE75C4C000D1B2B /* ImageTitleCountTableViewCell.swift in Sources */,
 				441115062CE86F70000D1B2B /* HashTitleCountTableViewCell.swift in Sources */,
+				4411152E2CEEE309000D1B2B /* AuthInterceptor.swift in Sources */,
 				444DE7022CD4D2A700821269 /* Coordinator.swift in Sources */,
 				444DE7172CD6251100821269 /* TitleWithInputFieldView.swift in Sources */,
 				441114EC2CE60BF5000D1B2B /* SearchCoordinator.swift in Sources */,

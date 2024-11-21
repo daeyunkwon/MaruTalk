@@ -10,6 +10,8 @@ import Foundation
 import Alamofire
 
 enum Router {
+    case refresh(refreshToken: String)
+    
     case emailValidation(String)
     case join(email: String, password: String, nickname: String, phone: String, deviceToken: String)
     case login(email: String, password: String, deviceToken: String)
@@ -22,6 +24,7 @@ enum Router {
     
     enum APIType {
         case empty //초기화용 빈 값
+        case refresh
         case emailValidation
         case join
         case login
@@ -34,13 +37,13 @@ enum Router {
 }
 
 extension Router: URLRequestConvertible {
-    
     var baseURL: String {
         return APIURL.baseURL
     }
     
     var path: String {
         switch self {
+        case .refresh: return APIURL.refresh
         case .emailValidation: return APIURL.validEmail
         case .join: return APIURL.join
         case .login: return APIURL.login
@@ -55,14 +58,14 @@ extension Router: URLRequestConvertible {
         case .emailValidation(_), .join, .login, .loginWithApple, .loginWithKakao, .createWorkspace:
             return .post
             
-        case .workspaces:
+        case .refresh, .workspaces:
             return .get
         }
     }
     
     var header: [String: String] {
         switch self {
-        case .emailValidation, .join, .login, .loginWithApple, .loginWithKakao:
+        case .refresh, .emailValidation, .join, .login, .loginWithApple, .loginWithKakao:
             return [
                 "Content-Type": "application/json",
                 "SesacKey": APIKey.apiKey
@@ -132,14 +135,17 @@ extension Router: URLRequestConvertible {
             multipartFormData.append(Data(description.utf8), withName: "description")
             multipartFormData.append(imageData, withName: "image", fileName: UUID().uuidString, mimeType: "image/jpeg")
             return multipartFormData
-        
+            
         default: return nil
         }
     }
     
     var query: [URLQueryItem]? {
         switch self {
-        
+        case .refresh(let refreshToken):
+            return [
+                URLQueryItem(name: "RefreshToken", value: refreshToken)
+            ]
             
         default:
             return nil
@@ -176,4 +182,3 @@ extension Router: URLRequestConvertible {
         return request
     }
 }
-
