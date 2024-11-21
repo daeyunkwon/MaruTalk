@@ -51,6 +51,7 @@
 		441115272CEE1C46000D1B2B /* AuthReactor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 441115262CEE1C46000D1B2B /* AuthReactor.swift */; };
 		4411152A2CEE3C8C000D1B2B /* RxKakaoSDKUser in Frameworks */ = {isa = PBXBuildFile; productRef = 441115292CEE3C8C000D1B2B /* RxKakaoSDKUser */; };
 		4411152E2CEEE309000D1B2B /* AuthInterceptor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4411152D2CEEE309000D1B2B /* AuthInterceptor.swift */; };
+		441115302CEF2430000D1B2B /* NotificationName+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4411152F2CEF2430000D1B2B /* NotificationName+Extension.swift */; };
 		444910DA2CD77315005AB2F7 /* SignUpReactor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 444910D92CD77315005AB2F7 /* SignUpReactor.swift */; };
 		444910DC2CD8AC5C005AB2F7 /* Router.swift in Sources */ = {isa = PBXBuildFile; fileRef = 444910DB2CD8AC5C005AB2F7 /* Router.swift */; };
 		444910DF2CD8AC9F005AB2F7 /* Alamofire in Frameworks */ = {isa = PBXBuildFile; productRef = 444910DE2CD8AC9F005AB2F7 /* Alamofire */; };
@@ -137,6 +138,7 @@
 		441115252CEE11C5000D1B2B /* MaruTalk.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = MaruTalk.entitlements; sourceTree = "<group>"; };
 		441115262CEE1C46000D1B2B /* AuthReactor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthReactor.swift; sourceTree = "<group>"; };
 		4411152D2CEEE309000D1B2B /* AuthInterceptor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthInterceptor.swift; sourceTree = "<group>"; };
+		4411152F2CEF2430000D1B2B /* NotificationName+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "NotificationName+Extension.swift"; sourceTree = "<group>"; };
 		444910D92CD77315005AB2F7 /* SignUpReactor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignUpReactor.swift; sourceTree = "<group>"; };
 		444910DB2CD8AC5C005AB2F7 /* Router.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Router.swift; sourceTree = "<group>"; };
 		444910E02CD8B072005AB2F7 /* BodyKey.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BodyKey.swift; sourceTree = "<group>"; };
@@ -411,6 +413,7 @@
 				444DE6F32CD27B1600821269 /* UIButton+Extension.swift */,
 				444910E62CD8E734005AB2F7 /* UIViewController+Extension.swift */,
 				441114D92CE363B3000D1B2B /* UIImage+Extension.swift */,
+				4411152F2CEF2430000D1B2B /* NotificationName+Extension.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -657,6 +660,7 @@
 				444DE6F72CD366DB00821269 /* AuthView.swift in Sources */,
 				441115152CE9E7F6000D1B2B /* PlusTitleHeaderTableViewCellDelegate.swift in Sources */,
 				441114DF2CE5EA34000D1B2B /* MainTabBarCoordinator.swift in Sources */,
+				441115302CEF2430000D1B2B /* NotificationName+Extension.swift in Sources */,
 				444DE6EF2CD2529D00821269 /* OnboardingView.swift in Sources */,
 				444DE6F92CD366E600821269 /* AuthViewController.swift in Sources */,
 				444DE6F22CD2777800821269 /* RoundedBrandButton.swift in Sources */,

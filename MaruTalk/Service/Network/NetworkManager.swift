@@ -15,12 +15,13 @@ final class NetworkManager {
     static let shared = NetworkManager()
     private init() { }
     
+    static let session = Session(interceptor: AuthInterceptor.shared)
+                                   
     func performRequest<T: Decodable>(api: Router, model: T.Type) -> Single<Result<T, NetworkError>> {
         return Single.create { single -> Disposable in
             
             do {
                 let request = try api.asURLRequest()
-                
                 AF.request(request, interceptor: AuthInterceptor.shared).validate(statusCode: 200..<300).responseDecodable(of: T.self) { response in
                     switch response.result {
                     case .success(let value):
@@ -28,6 +29,11 @@ final class NetworkManager {
                     
                     case .failure(let error):
                         print(error)
+                        
+                        if let refreshError = error.asAFError?.underlyingError as? NetworkError {
+                            //리프레시 만료 에러의 경우
+                            single(.success(.failure(.responseCode(errorCode: refreshError.errorCode))))
+                        }
                         
                         if let data = response.data {
                             //에러 코드 디코딩 작업
@@ -70,13 +76,18 @@ final class NetworkManager {
             
             let headers: HTTPHeaders = HTTPHeaders(api.header.map { HTTPHeader(name: $0.key, value: $0.value) })
             
-            AF.upload(multipartFormData: multipartFormData, to: url, method: api.method, headers: headers).responseDecodable(of: T.self) { response in
+            AF.upload(multipartFormData: multipartFormData, to: url, method: api.method, headers: headers, interceptor: AuthInterceptor.shared).responseDecodable(of: T.self) { response in
                 switch response.result {
                 case .success(let value):
                     single(.success(.success(value)))
                     
                 case .failure(let error):
                     print(error)
+                    
+                    if let refreshError = error.asAFError?.underlyingError as? NetworkError {
+                        //리프레시 만료 에러의 경우
+                        single(.success(.failure(.responseCode(errorCode: refreshError.errorCode))))
+                    }
                     
                     if let data = response.data {
                         //에러 코드 디코딩 작업
@@ -131,6 +142,80 @@ final class NetworkManager {
             }
             
             return Disposables.create()
+        }
+    }
+    
+    func fetchImageData(imagePath: String) -> Single<Result<Data, NetworkError>> {
+        return Single.create { single -> Disposable in
+            
+            do {
+                let request = try Router.fetchImage(imagePath: imagePath).asURLRequest()
+                
+                AF.request(request, interceptor: AuthInterceptor.shared).validate(statusCode: 200..<300).responseData { response in
+                    print("여기실행됨1")
+                    switch response.result {
+                    case .success(let value):
+                        single(.success(.success(value)))
+                        print("여기실행됨2")
+                    case .failure(let error):
+                        if let refreshError = error.asAFError?.underlyingError as? NetworkError {
+                            //리프레시 만료 에러의 경우
+                            single(.success(.failure(.responseCode(errorCode: refreshError.errorCode))))
+                        }
+                        
+                        print("여기실행됨3")
+                        if let data = response.data {
+                            //에러 코드 디코딩 작업
+                            if let result = try? JSONDecoder().decode(SLPErrorResponse.self, from: data) {
+                                print("Error response: \(result)")
+                                single(.success(.failure(.responseCode(errorCode: result.errorCode))))
+                            } else {
+                                //디코딩 작업 실패
+                                single(.success(.failure(.responseCode(errorCode: nil))))
+                            }
+                        } else {
+                            //서버에서 주는 에러 코드 데이터가 없는 경우
+                            single(.success(.failure(.responseCode(errorCode: nil))))
+                        }
+                    }
+                }
+            } catch {
+                print("Error: request 생성 실패")
+                single(.success(.failure(.invalidURL)))
+            }
+            
+            return Disposables.create()
+        }
+    }
+    
+    //액세스 토큰 갱신 요청
+    func refreshToken(completionHandler: @escaping (Result<Bool, NetworkError>) -> Void) {
+        do {
+            guard let token = KeychainManager.shared.getItem(forKey: .refreshToken) else { return }
+            let request = try Router.refresh(refreshToken: token).asURLRequest()
+            
+            AF.request(request).validate(statusCode: 200...299).responseDecodable(of: [String: String].self) { response in
+                
+                switch response.result {
+                case .success(let value):
+                    let newToken = value.values.map { String($0) }.first ?? ""
+                    let _ = KeychainManager.shared.saveItem(item: newToken, forKey: .accessToken)
+                    completionHandler(.success(true))
+                    
+                case .failure(let error):
+                    print(error)
+                    completionHandler(.failure(.invalidRequestData))
+                    
+                    if let data = response.data {
+                        //에러 코드 디코딩 작업
+                        if let result = try? JSONDecoder().decode(SLPErrorResponse.self, from: data) {
+                            print("Error response: \(result)")
+                        }
+                    }
+                }
+            }
+        } catch {
+            print("Error: request 만들기 실패: \(error)")
         }
     }
 }

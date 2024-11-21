@@ -23,13 +23,12 @@ final class AuthInterceptor: RequestInterceptor {
 
         var urlRequest = urlRequest
         urlRequest.setValue(accessToken, forHTTPHeaderField: "Authorization")
-        print("DEBUG: adator 적용 \(urlRequest.headers)")
+        print("DEBUG: adapt 실행")
         completion(.success(urlRequest))
     }
     
     func retry(_ request: Request, for session: Session, dueTo error: Error, completion: @escaping (RetryResult) -> Void) {
-        print("DEBUG: retry 진행(\(request.retryCount)")
-        
+        print("DEBUG: retry 진행 \(request.retryCount)")
         // 최대 재시도 횟수 초과 시 중단
         if request.retryCount >= maxRetryCount {
             print("DEBUG: 최대 재시도 횟수 초과로 retry 중단")
@@ -42,27 +41,20 @@ final class AuthInterceptor: RequestInterceptor {
             return
         }
         
-        let disposeBag = DisposeBag()
         guard let refreshToken = KeychainManager.shared.getItem(forKey: .refreshToken) else {
             completion(.doNotRetryWithError(error))
             return
         }
         
-        NetworkManager.shared.performRequest(api: .refresh(refreshToken: refreshToken), model: [String: String].self)
-            .asObservable()
-            .bind(with: self) { owner, result in
-                switch result {
-                case .success(let value):
-                    let newToken = value.values.map { String($0) }.first ?? ""
-                    let _ = KeychainManager.shared.saveItem(item: newToken, forKey: .accessToken)
-                    print("DEBUG: 액세스 토큰 갱신 성공으로 retry 진행")
-                    completion(.retryWithDelay(0.2))
-                
-                case .failure(_):
-                    completion(.doNotRetryWithError(NetworkError.responseCode(errorCode: "Refresh token expiration")))
-                    print("ERROR: 액세스 토큰 갱신 실패로 retry 미진행")
-                }
+        NetworkManager.shared.refreshToken { result in
+            switch result {
+            case .success(let success):
+                completion(.retry)
+                print("토큰 성공 리트라이 진행")
+            case .failure(let failure):
+                completion(.doNotRetryWithError(NetworkError.responseCode(errorCode: "Refresh token expiration")))
+                print("토큰 실패 리트라이 스탑")
             }
-            .disposed(by: disposeBag)
+        }
     }
 }

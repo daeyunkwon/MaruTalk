@@ -11,6 +11,7 @@ import Alamofire
 
 enum Router {
     case refresh(refreshToken: String)
+    case fetchImage(imagePath: String)
     
     case emailValidation(String)
     case join(email: String, password: String, nickname: String, phone: String, deviceToken: String)
@@ -44,6 +45,7 @@ extension Router: URLRequestConvertible {
     var path: String {
         switch self {
         case .refresh: return APIURL.refresh
+        case .fetchImage(let imagePath): return "v1/workspace/\(imagePath)"
         case .emailValidation: return APIURL.validEmail
         case .join: return APIURL.join
         case .login: return APIURL.login
@@ -58,20 +60,28 @@ extension Router: URLRequestConvertible {
         case .emailValidation(_), .join, .login, .loginWithApple, .loginWithKakao, .createWorkspace:
             return .post
             
-        case .refresh, .workspaces:
+        case .refresh, .fetchImage, .workspaces:
             return .get
         }
     }
     
     var header: [String: String] {
         switch self {
-        case .refresh, .emailValidation, .join, .login, .loginWithApple, .loginWithKakao:
+        case .refresh(let refreshToken):
+            return [
+                "Content-Type": "application/json",
+                "Authorization": KeychainManager.shared.getItem(forKey: .accessToken) ?? "",
+                "RefreshToken": refreshToken,
+                "SesacKey": APIKey.apiKey
+            ]
+            
+        case .emailValidation, .join, .login, .loginWithApple, .loginWithKakao:
             return [
                 "Content-Type": "application/json",
                 "SesacKey": APIKey.apiKey
             ]
             
-        case .workspaces:
+        case .fetchImage, .workspaces:
             return [
                 "Content-Type": "application/json",
                 "Authorization": KeychainManager.shared.getItem(forKey: .accessToken) ?? "",

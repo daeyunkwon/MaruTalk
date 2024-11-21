@@ -19,7 +19,7 @@ extension UIViewController {
         style.titleAlignment = .center
         style.cornerRadius = 8
         let x = (view.bounds.width / 2)
-        let y: Double = 660
+        let y: Double = 630
         
         var message: String = "에러가 발생했어요. 잠시 후 다시 시도해주세요."
         
