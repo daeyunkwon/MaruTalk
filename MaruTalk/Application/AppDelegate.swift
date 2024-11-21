@@ -7,6 +7,8 @@
 
 import UIKit
 
+import RxKakaoSDKCommon
+
 @main
 class AppDelegate: UIResponder, UIApplicationDelegate {
 
@@ -17,6 +19,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         sleep(2)
         
         appearance()
+        
+        RxKakaoSDK.initSDK(appKey: "f83129f04ee8161fd09fa9e28cd7f264")
         
         return true
     }

@@ -51,6 +51,11 @@ final class AuthViewController: BaseViewController<AuthView>, View {
             }
             .disposed(by: disposeBag)
         
+        rootView.kakaoLoginButton.rx.tap
+            .map { Reactor.Action.loginWithKakao }
+            .bind(to: reactor.action)
+            .disposed(by: disposeBag)
+        
         rootView.signUpButton.rx.tap
             .bind(with: self) { owner, _ in
                 owner.coordinator?.didFinishAuth()

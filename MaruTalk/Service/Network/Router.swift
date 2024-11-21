@@ -14,6 +14,7 @@ enum Router {
     case join(email: String, password: String, nickname: String, phone: String, deviceToken: String)
     case login(email: String, password: String, deviceToken: String)
     case loginWithApple(idToken: String, nickname: String, deviceToken: String)
+    case loginWithKakao(oauthToken: String, deviceToken: String)
     
     case workspaces
     case createWorkspace(name: String, description: String, imageData: Data)
@@ -25,6 +26,7 @@ enum Router {
         case join
         case login
         case loginWithApple
+        case loginWithKakao
         
         case workspaces
         case createWorkspace
@@ -43,13 +45,14 @@ extension Router: URLRequestConvertible {
         case .join: return APIURL.join
         case .login: return APIURL.login
         case .loginWithApple: return APIURL.loginWithApple
+        case .loginWithKakao: return APIURL.loginWithKakao
         case .workspaces, .createWorkspace: return APIURL.workspaces
         }
     }
     
     var method: HTTPMethod {
         switch self {
-        case .emailValidation(_), .join, .login, .loginWithApple, .createWorkspace:
+        case .emailValidation(_), .join, .login, .loginWithApple, .loginWithKakao, .createWorkspace:
             return .post
             
         case .workspaces:
@@ -59,7 +62,7 @@ extension Router: URLRequestConvertible {
     
     var header: [String: String] {
         switch self {
-        case .emailValidation, .join, .login, .loginWithApple:
+        case .emailValidation, .join, .login, .loginWithApple, .loginWithKakao:
             return [
                 "Content-Type": "application/json",
                 "SesacKey": APIKey.apiKey
@@ -108,6 +111,12 @@ extension Router: URLRequestConvertible {
             return try? JSONEncoder().encode([
                 BodyKey.idToken: idToken,
                 BodyKey.nickname: nickname,
+                BodyKey.deviceToken: deviceToken
+            ])
+            
+        case .loginWithKakao(let oauthToken, let deviceToken):
+            return try? JSONEncoder().encode([
+                BodyKey.oauthToken: oauthToken,
                 BodyKey.deviceToken: deviceToken
             ])
             

@@ -20,6 +20,7 @@ final class KeychainManager {
         case appleUserNickname
         case appleUserEmail
         case appleUserToken
+        case kakaoOauthToken
     }
     
     func saveItem(item: String, forKey key: KeyType) -> Bool {

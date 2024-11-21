@@ -13,7 +13,7 @@ final class AuthView: BaseView {
     
     //MARK: - UI Components
     
-    let containerView: UIView = {
+    private let containerView: UIView = {
         let view = UIView()
         view.backgroundColor = Constant.Color.backgroundPrimary
         view.layer.maskedCorners = [.layerMinXMinYCorner, .layerMaxXMinYCorner]
