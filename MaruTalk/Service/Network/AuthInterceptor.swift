@@ -41,19 +41,19 @@ final class AuthInterceptor: RequestInterceptor {
             return
         }
         
-        guard let refreshToken = KeychainManager.shared.getItem(forKey: .refreshToken) else {
+        guard KeychainManager.shared.getItem(forKey: .refreshToken) != nil else {
             completion(.doNotRetryWithError(error))
             return
         }
         
         NetworkManager.shared.refreshToken { result in
             switch result {
-            case .success(let success):
+            case .success(_):
                 completion(.retry)
-                print("토큰 성공 리트라이 진행")
-            case .failure(let failure):
+                print("DEBUG: 토큰 갱신 성공 retry 진행")
+            case .failure(_):
                 completion(.doNotRetryWithError(NetworkError.responseCode(errorCode: "Refresh token expiration")))
-                print("토큰 실패 리트라이 스탑")
+                print("ERROR: 토큰 갱신 실패 retry 스탑")
             }
         }
     }

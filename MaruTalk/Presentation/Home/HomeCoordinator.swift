@@ -34,3 +34,24 @@ final class HomeCoordinator: Coordinator {
         }
     }
 }
+
+extension HomeCoordinator {
+    func showWorkspaceAdd() {
+        let reactor = WorkspaceAddReactor(previousScreen: .workspaceInitial)
+        let workspaceAddVC = WorkspaceAddViewController(reactor: reactor)
+        workspaceAddVC.coordinator = self
+
+        let navController = UINavigationController(rootViewController: workspaceAddVC)
+        navController.modalPresentationStyle = .pageSheet
+
+        if let sheet = navController.sheetPresentationController {
+            sheet.detents = [.large()]
+            sheet.prefersGrabberVisible = true
+        }
+        navigationController.present(navController, animated: true)
+    }
+    
+    func didFinishWorkspaceAdd() {
+        navigationController.dismiss(animated: true)
+    }
+}

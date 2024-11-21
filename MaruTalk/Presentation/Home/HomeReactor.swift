@@ -12,13 +12,16 @@ import ReactorKit
 final class HomeReactor: Reactor {
     enum Action {
         case sectionTapped(Int)
-        case checkWorkspace
+        case fetch
+        case workspaceAddButtonTapped
     }
     
     enum Mutation {
         case setExpanded(isExpanded: Bool, sectionIndex: Int)
-        
         case setShowEmpty(Bool)
+        case setNavigateToWorkspaceAdd
+        case setNetworkError((Router.APIType, String?))
+        case setWorkspace(Workspace)
     }
     
     struct State {
@@ -27,7 +30,10 @@ final class HomeReactor: Reactor {
             SectionModel(headerTitle: "다이렉트 메시지", items: [.dm("첫번째"), .dm("두번째"), .add("새 메시지 시작")], index: 1),
             SectionModel(headerTitle: "팀원 추가", items: [], index: 2)
         ]
-        var isShowEmpty: Bool = false
+        @Pulse var isShowEmpty: Bool = false
+        @Pulse var shouldNavigateToWorkspaceAdd: Void = ()
+        @Pulse var workspace: Workspace?
+        @Pulse var networkError: (Router.APIType, String?) = (Router.APIType.empty, nil)
     }
     
     let initialState: State = State()
@@ -44,9 +50,20 @@ extension HomeReactor {
             
             return .just(.setExpanded(isExpanded: isExpanded, sectionIndex: sectionIndex))
             
-        case .checkWorkspace:
+        case .fetch:
             let isShowEmpty = UserDefaultsManager.shared.recentWorkspaceID == nil ? true : false
-            return .just(.setShowEmpty(isShowEmpty))
+            //조회할 워크스페이스가 없는 경우 HomeEmpty UI 표시하기
+            if isShowEmpty {
+                return .just(.setShowEmpty(isShowEmpty))
+            } else {
+                return .concat([
+                    .just(.setShowEmpty(false)),
+                    fetchWorkspace()
+                ])
+            }
+        
+        case .workspaceAddButtonTapped:
+            return .just(.setNavigateToWorkspaceAdd)
         }
     }
 }
@@ -56,7 +73,6 @@ extension HomeReactor {
 extension HomeReactor {
     func reduce(state: State, mutation: Mutation) -> State {
         var newState = state
-        
         switch mutation {
         case .setExpanded(let isExpanded, let sectionIndex):
             newState.sections[sectionIndex].isExpanded = isExpanded
@@ -68,6 +84,15 @@ extension HomeReactor {
             
         case .setShowEmpty(let value):
             newState.isShowEmpty = value
+        
+        case .setNavigateToWorkspaceAdd:
+            newState.shouldNavigateToWorkspaceAdd = ()
+        
+        case .setNetworkError(let value):
+            newState.networkError = value
+            
+        case .setWorkspace(let value):
+            newState.workspace = value
         }
         return newState
     }
@@ -76,6 +101,26 @@ extension HomeReactor {
 //MARK: - Logic
 
 extension HomeReactor {
+    //특정 워크스페이스 조회
+    private func fetchWorkspace() -> Observable<Mutation> {
+        guard let workspaceID = UserDefaultsManager.shared.recentWorkspaceID else { return .empty()}
+        return NetworkManager.shared.performRequest(api: .workspace(id: workspaceID), model: [Workspace].self)
+            .asObservable()
+            .flatMap { result -> Observable<Mutation> in
+                switch result {
+                case .success(let value):
+                    print("--------------------------------")
+                    print(value)
+                    return value.isEmpty ? .empty() : .just(.setWorkspace(value[0]))
+                
+                case .failure(let error):
+                    return .just(.setNetworkError((Router.APIType.workspace, error.errorCode)))
+                }
+            }
+    }
+    
+    
+    
     
 }
 

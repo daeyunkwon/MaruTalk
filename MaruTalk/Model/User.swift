@@ -8,7 +8,7 @@
 import Foundation
 
 struct User: Decodable {
-    let userId: String
+    let userID: String
     let email: String
     let nickname: String
     let profileImage: String?
@@ -18,7 +18,7 @@ struct User: Decodable {
     let token: Token
     
     enum CodingKeys: String, CodingKey {
-        case userId = "user_id"
+        case userID = "user_id"
         case email
         case nickname
         case profileImage

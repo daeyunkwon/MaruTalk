@@ -17,7 +17,7 @@ final class WorkspaceAddViewController: BaseViewController<WorkspaceAddView>, Vi
     //MARK: - Properties
     
     var disposeBag: DisposeBag = DisposeBag()
-    weak var coordinator: OnboardingCoordinator?
+    weak var coordinator: Coordinator?
     
     private let imagePickerController = UIImagePickerController()
     
@@ -200,10 +200,17 @@ extension WorkspaceAddViewController {
             }
             .disposed(by: disposeBag)
         
-        reactor.state.map { $0.shouldNavigateToHomeEmpty }
+        reactor.state.map { $0.shouldNavigateToHome }
             .filter { $0 == true }
+            .distinctUntilChanged()
             .bind(with: self) { owner, _ in
-                owner.coordinator?.didFinish()
+                if let onboardingCoordinator = owner.coordinator as? OnboardingCoordinator {
+                    onboardingCoordinator.didFinish()
+                }
+                
+                if let homeCoordinator = owner.coordinator as? HomeCoordinator {
+                    homeCoordinator.didFinishWorkspaceAdd()
+                }
             }
             .disposed(by: disposeBag)
         
@@ -225,7 +232,14 @@ extension WorkspaceAddViewController {
         reactor.state.map { $0.isCreateWorkspaceSuccess }
             .filter { $0 == true }
             .bind(with: self) { owner, _ in
-                owner.coordinator?.didFinish()
+                if let onboardingCoordinator = owner.coordinator as? OnboardingCoordinator {
+                    onboardingCoordinator.didFinish()
+                }
+                
+                if let homeCoordinator = owner.coordinator as? HomeCoordinator {
+                    NotificationCenter.default.post(name: .workspaceAddModalDismiss, object: nil)
+                    homeCoordinator.didFinishWorkspaceAdd()
+                }
             }
             .disposed(by: disposeBag)
     }

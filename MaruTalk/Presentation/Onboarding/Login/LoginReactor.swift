@@ -178,7 +178,7 @@ extension LoginReactor {
     
     //워크스페이스 조회
     private func fetchWorkspace() -> Observable<Mutation> {
-        return NetworkManager.shared.performRequest(api: .workspaces, model: [Workspace].self)
+        return NetworkManager.shared.performRequest(api: .workspaces, model: [WorkspaceList].self)
             .asObservable()
             .flatMap { result -> Observable<Mutation> in
                 switch result {

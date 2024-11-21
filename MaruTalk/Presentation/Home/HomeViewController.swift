@@ -27,11 +27,15 @@ final class HomeViewController: BaseViewController<HomeView>, View {
     private let profileCircleView = ProfileCircleView()
     private let workspaceNameView = RoundedImageTitleView()
     
+    deinit {
+        NotificationCenter.default.removeObserver(self)
+    }
+    
     //MARK: - Life Cycle
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        reactor?.action.onNext(.checkWorkspace)
+        NotificationCenter.default.addObserver(self, selector: #selector(handleModalDismissed), name: .workspaceAddModalDismiss, object: nil)
     }
     
     //MARK: - Configurations
@@ -39,7 +43,6 @@ final class HomeViewController: BaseViewController<HomeView>, View {
     override func setupNavi() {
         navigationItem.leftBarButtonItem = UIBarButtonItem(customView: workspaceNameView)
         navigationItem.rightBarButtonItem = UIBarButtonItem(customView: profileCircleView)
-        
     }
     
     //MARK: - Methods
@@ -49,19 +52,35 @@ final class HomeViewController: BaseViewController<HomeView>, View {
         bindState(reactor: reactor)
         bindTableView(reactor: reactor)
     }
+    
+    @objc private func handleModalDismissed() {
+        reactor?.action.onNext(.fetch)
+    }
 }
 
-//MARK: - BindAction
+//MARK: - Bind Action
 
 extension HomeViewController {
     private func bindAction(reactor: HomeReactor) {
-            
+        rootView.emptyView.createWorkspaceButton.rx.tap
+            .map { Reactor.Action.workspaceAddButtonTapped }
+            .bind(to: reactor.action)
+            .disposed(by: disposeBag)
+        
+        rx.methodInvoked(#selector(viewWillAppear(_:)))
+            .map { _ in Reactor.Action.fetch }
+            .bind(to: reactor.action)
+            .disposed(by: disposeBag)
+        
+        
+        
         
         
         profileCircleView.rxTap
             .bind(with: self) { owner, _ in
                 print(11111)
-                owner.coordinator?.didFinish()
+//                owner.coordinator?.didFinish()
+                owner.showToastForNetworkError(api: .refresh, errorCode: "Refresh token expiration")
             }
             .disposed(by: disposeBag)
         
@@ -72,15 +91,17 @@ extension HomeViewController {
                 owner.rootView.emptyView.isHidden = true
             }
             .disposed(by: disposeBag)
+        
+        
+        
     }
 }
 
-//MARK: - BindState
+//MARK: - Bind State
 
 extension HomeViewController {
     private func bindState(reactor: HomeReactor) {
-        reactor.state.map { $0.isShowEmpty }
-            .distinctUntilChanged()
+        reactor.pulse(\.$isShowEmpty)
             .bind(with: self) { owner, value in
                 if value {
                     owner.rootView.emptyView.isHidden = false
@@ -89,6 +110,26 @@ extension HomeViewController {
                     owner.rootView.emptyView.isHidden = true
                     owner.tabBarController?.tabBar.isHidden = false
                 }
+            }
+            .disposed(by: disposeBag)
+        
+        reactor.pulse(\.$shouldNavigateToWorkspaceAdd)
+            .bind(with: self) { owner, _ in
+                owner.coordinator?.showWorkspaceAdd()
+            }
+            .disposed(by: disposeBag)
+        
+        reactor.pulse(\.$networkError)
+            .bind(with: self) { owner, value in
+                owner.showToastForNetworkError(api: value.0, errorCode: value.1)
+            }
+            .disposed(by: disposeBag)
+        
+        reactor.pulse(\.$workspace)
+            .compactMap { $0 }
+            .bind(with: self) { owner, workspace in
+                owner.workspaceNameView.titleLabel.text = workspace.name
+                owner.workspaceNameView.photoImageView.setImage(imagePath: workspace.coverImage)
             }
             .disposed(by: disposeBag)
     }

@@ -32,7 +32,7 @@ final class WorkspaceAddReactor: Reactor {
         case setCameraVisible(Bool)
         case setImageData(Data)
         
-        case setNavigateToHomeEmpty(Bool)
+        case setNavigateToHome(Bool)
         
         case setValidName(Bool)
         case setValidImage(Bool)
@@ -53,7 +53,7 @@ final class WorkspaceAddReactor: Reactor {
         var isAlbumVisible = false
         var isCameraVisible = false
         
-        var shouldNavigateToHomeEmpty = false
+        var shouldNavigateToHome = false
         
         var isValidName = false
         var isValidImage = false
@@ -130,11 +130,11 @@ extension WorkspaceAddReactor {
             case .workspaceInitial:
                 return .concat([
                     removeRecentWorkspaceID(),
-                    .just(.setNavigateToHomeEmpty(true))
+                    .just(.setNavigateToHome(true))
                 ])
                 
             case .workspaceList:
-                return .empty()
+                return .just(.setNavigateToHome(true))
             }
         
         case .doneButtonTapped:
@@ -178,8 +178,8 @@ extension WorkspaceAddReactor {
         case .setImageData(let value):
             newState.imageData = value
         
-        case .setNavigateToHomeEmpty(let value):
-            newState.shouldNavigateToHomeEmpty = value
+        case .setNavigateToHome(let value):
+            newState.shouldNavigateToHome = value
         
         case .setValidName(let value):
             newState.isValidName = value
@@ -237,7 +237,7 @@ extension WorkspaceAddReactor {
     
     //워크스페이스 생성 네트워크 작업 실행
     private func createWorkspace() -> Observable<Mutation> {
-        NetworkManager.shared.performRequestMultipartFormData(api: .createWorkspace(name: currentState.name, description: currentState.description, imageData: currentState.imageData ?? Data()), model: Workspace.self)
+        NetworkManager.shared.performRequestMultipartFormData(api: .createWorkspace(name: currentState.name, description: currentState.description, imageData: currentState.imageData ?? Data()), model: WorkspaceList.self)
             .asObservable()
             .flatMap { result -> Observable<Mutation> in
                 switch result {

@@ -43,7 +43,7 @@ extension WorkspaceInitialReactor {
             
         case .xButtonTapped:
             return .concat([
-                NetworkManager.shared.performRequest(api: .workspaces, model: [Workspace].self)
+                NetworkManager.shared.performRequest(api: .workspaces, model: [WorkspaceList].self)
                     .asObservable()
                     .flatMap { result -> Observable<Mutation> in
                         switch result {
