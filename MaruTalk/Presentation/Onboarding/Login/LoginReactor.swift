@@ -159,8 +159,8 @@ extension LoginReactor {
                 switch result {
                 case .success(let value):
                     //토큰 저장
-                    let isAcessTokenSaved = KeychainManager.shared.saveItem(item: value.token.accessToken, forKey: .accessToken)
-                    let isRefreshTokenSaved = KeychainManager.shared.saveItem(item: value.token.refreshToken, forKey: .refreshToken)
+                    let isAcessTokenSaved = KeychainManager.shared.saveItem(item: value.token?.accessToken ?? "", forKey: .accessToken)
+                    let isRefreshTokenSaved = KeychainManager.shared.saveItem(item: value.token?.refreshToken ?? "", forKey: .refreshToken)
                     //토큰 저장 정상 처리 시 워크스페이스 조회
                     if isAcessTokenSaved && isRefreshTokenSaved {
                         return self.fetchWorkspace()

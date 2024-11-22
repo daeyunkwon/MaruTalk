@@ -23,6 +23,8 @@ enum Router {
     case createWorkspace(name: String, description: String, imageData: Data)
     case workspace(id: String) //특정 워크스페이스
     
+    case userMe //내 프로필 정보 조회
+    
     
     enum APIType {
         case empty //초기화용 빈 값
@@ -36,6 +38,8 @@ enum Router {
         case workspaces
         case createWorkspace
         case workspace
+        
+        case userMe
     }
 }
 
@@ -54,6 +58,7 @@ extension Router: URLRequestConvertible {
         case .loginWithApple: return APIURL.loginWithApple
         case .loginWithKakao: return APIURL.loginWithKakao
         case .workspaces, .createWorkspace, .workspace: return APIURL.workspaces
+        case .userMe: return APIURL.userMe
         }
     }
     
@@ -62,7 +67,7 @@ extension Router: URLRequestConvertible {
         case .emailValidation(_), .join, .login, .loginWithApple, .loginWithKakao, .createWorkspace:
             return .post
             
-        case .refresh, .fetchImage, .workspaces, .workspace:
+        case .refresh, .fetchImage, .workspaces, .workspace, .userMe:
             return .get
         }
     }
@@ -83,7 +88,7 @@ extension Router: URLRequestConvertible {
                 "SesacKey": APIKey.apiKey
             ]
             
-        case .workspaces, .workspace:
+        case .workspaces, .workspace, .userMe:
             return [
                 "Content-Type": "application/json",
                 "Authorization": KeychainManager.shared.getItem(forKey: .accessToken) ?? "",

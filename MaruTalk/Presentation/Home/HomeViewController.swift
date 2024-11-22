@@ -132,6 +132,17 @@ extension HomeViewController {
                 owner.workspaceNameView.photoImageView.setImage(imagePath: workspace.coverImage)
             }
             .disposed(by: disposeBag)
+        
+        reactor.pulse(\.$user)
+            .compactMap { $0 }
+            .bind(with: self) { owner, user in
+                if user.profileImage != nil {
+                    owner.profileCircleView.profileImageView.setImage(imagePath: user.profileImage)
+                } else {
+                    owner.profileCircleView.profileImageView.image = UIImage(named: "noPhotoB")
+                }
+            }
+            .disposed(by: disposeBag)
     }
 }
 

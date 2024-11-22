@@ -22,6 +22,7 @@ final class HomeReactor: Reactor {
         case setNavigateToWorkspaceAdd
         case setNetworkError((Router.APIType, String?))
         case setWorkspace(Workspace)
+        case setUser(User)
     }
     
     struct State {
@@ -33,6 +34,8 @@ final class HomeReactor: Reactor {
         @Pulse var isShowEmpty: Bool = false
         @Pulse var shouldNavigateToWorkspaceAdd: Void = ()
         @Pulse var workspace: Workspace?
+        @Pulse var user: User?
+        
         @Pulse var networkError: (Router.APIType, String?) = (Router.APIType.empty, nil)
     }
     
@@ -58,7 +61,8 @@ extension HomeReactor {
             } else {
                 return .concat([
                     .just(.setShowEmpty(false)),
-                    fetchWorkspace()
+                    fetchWorkspace(),
+                    fetchProfile()
                 ])
             }
         
@@ -93,6 +97,9 @@ extension HomeReactor {
             
         case .setWorkspace(let value):
             newState.workspace = value
+        
+        case .setUser(let value):
+            newState.user = value
         }
         return newState
     }
@@ -115,6 +122,22 @@ extension HomeReactor {
                 
                 case .failure(let error):
                     return .just(.setNetworkError((Router.APIType.workspace, error.errorCode)))
+                }
+            }
+    }
+    
+    //내 프로필 조회
+    private func fetchProfile() -> Observable<Mutation> {
+        return NetworkManager.shared.performRequest(api: .userMe, model: User.self)
+            .asObservable()
+            .flatMap { result -> Observable<Mutation> in
+                switch result {
+                case .success(let value):
+                    print("--------------------------------")
+                    print(value)
+                    return .just(.setUser(value))
+                case .failure(let error):
+                    return .just(.setNetworkError((Router.APIType.userMe, error.errorCode)))
                 }
             }
     }

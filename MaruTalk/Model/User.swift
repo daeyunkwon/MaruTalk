@@ -15,7 +15,8 @@ struct User: Decodable {
     let phone: String?
     let provider: String?
     let createdAt: String
-    let token: Token
+    let token: Token?
+    let sesacCoin: Int?
     
     enum CodingKeys: String, CodingKey {
         case userID = "user_id"
@@ -26,6 +27,7 @@ struct User: Decodable {
         case provider
         case createdAt
         case token
+        case sesacCoin
     }
 }
 
