@@ -78,7 +78,7 @@ extension UIViewController {
     }
     
     //Toast
-    func showToastMessage(message: String, backgroundColor: UIColor = Constant.Color.brandGreen) {
+    func showToastMessage(message: String, backgroundColor: UIColor = Constant.Color.brandColor) {
         var style = ToastStyle()
         style.backgroundColor = backgroundColor
         style.maxHeightPercentage = 36.0

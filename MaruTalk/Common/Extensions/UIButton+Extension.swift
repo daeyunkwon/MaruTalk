@@ -22,7 +22,7 @@ extension UIButton {
     
     func setButtonEnabled(isEnabled: Bool) {
         if isEnabled {
-            setBackgroundColor(Constant.Color.brandGreen, for: .normal)
+            setBackgroundColor(Constant.Color.brandColor, for: .normal)
             self.isUserInteractionEnabled = true
         } else {
             setBackgroundColor(Constant.Color.brandInactive, for: .normal)

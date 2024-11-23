@@ -9,7 +9,7 @@ import UIKit
 
 final class RoundedBrandButton: UIButton {
     
-    init(title: String, backgroundColor: UIColor = Constant.Color.brandGreen) {
+    init(title: String, backgroundColor: UIColor = Constant.Color.brandColor) {
         super.init(frame: .zero)
         configure(title: title, backgroundColor: backgroundColor)
     }

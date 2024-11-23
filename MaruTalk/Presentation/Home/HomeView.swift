@@ -36,8 +36,14 @@ final class HomeView: BaseView {
     
     let newMessageButton: UIButton = {
         let btn = UIButton(type: .custom)
-        btn.setImage(UIImage(named: "newMessageCircle"), for: .normal)
+        btn.setImage(UIImage(systemName: "plus.message"), for: .normal)
         btn.imageView?.contentMode = .scaleAspectFill
+        btn.backgroundColor = Constant.Color.brandColor
+        btn.tintColor = Constant.Color.brandWhite
+        btn.layer.cornerRadius = 54 / 2
+        btn.layer.shadowRadius = 3
+        btn.layer.shadowOpacity = 0.3
+        btn.layer.shadowOffset = .init(width: 0, height: 1)
         return btn
     }()
     

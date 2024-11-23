@@ -32,7 +32,7 @@ final class ImageTitleCountTableViewCell: BaseTableViewCell {
     
     private let countBackView: UIView = {
         let view = UIView()
-        view.backgroundColor = Constant.Color.brandGreen
+        view.backgroundColor = Constant.Color.brandColor
         view.clipsToBounds = true
         view.layer.cornerRadius = 8
         return view

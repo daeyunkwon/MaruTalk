@@ -27,7 +27,7 @@ final class WorkspaceAddView: BaseView {
     private let placeholderImage: UIButton = {
         let btn = UIButton(type: .system)
         var config = UIButton.Configuration.filled()
-        config.baseBackgroundColor = Constant.Color.brandGreen
+        config.baseBackgroundColor = Constant.Color.brandColor
         config.image = UIImage(named: "workspace")
         config.imagePadding = -10
         config.imagePlacement = .bottom
@@ -44,7 +44,7 @@ final class WorkspaceAddView: BaseView {
         let btn = UIButton(type: .system)
         let image = UIImage(named: "Camera")?.resizeImageTo(size: CGSize(width: 14, height: 14))
         btn.setImage(image?.withRenderingMode(.alwaysOriginal), for: .normal)
-        btn.backgroundColor = Constant.Color.brandGreen
+        btn.backgroundColor = Constant.Color.brandColor
         btn.layer.cornerRadius = 24 / 2
         btn.clipsToBounds = true
         btn.layer.borderColor = Constant.Color.brandWhite.cgColor

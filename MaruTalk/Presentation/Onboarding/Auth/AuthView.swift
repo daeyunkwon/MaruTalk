@@ -49,7 +49,7 @@ final class AuthView: BaseView {
         btn.setTitle(" 이메일로 계속하기", for: .normal)
         btn.setImage(UIImage(named: "email_icon"), for: .normal)
         btn.tintColor = .white
-        btn.backgroundColor = Constant.Color.brandGreen
+        btn.backgroundColor = Constant.Color.brandColor
         btn.titleLabel?.font = Constant.Font.title2
         btn.layer.cornerRadius = 8
         return btn
@@ -58,7 +58,7 @@ final class AuthView: BaseView {
     let signUpButton: UIButton = {
         let btn = UIButton(type: .system)
         let attributedString = NSMutableAttributedString(string: "또는 ", attributes: [.foregroundColor: Constant.Color.brandBlack, .font: Constant.Font.title2])
-        attributedString.append(NSAttributedString(string: "새롭게 회원가입 하기", attributes: [.foregroundColor: Constant.Color.brandGreen, .font: Constant.Font.title2]))
+        attributedString.append(NSAttributedString(string: "새롭게 회원가입 하기", attributes: [.foregroundColor: Constant.Color.brandColor, .font: Constant.Font.title2]))
         btn.setAttributedTitle(attributedString, for: .normal)
         return btn
     }()
