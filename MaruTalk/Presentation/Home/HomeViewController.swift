@@ -177,15 +177,14 @@ extension HomeViewController {
             }
         )
         
-        reactor.state.map { $0.sections }
+        reactor.pulse(\.$sections)
             .bind(to: rootView.tableView.rx.items(dataSource: dataSource))
             .disposed(by: disposeBag)
         
         rootView.tableView.rx.setDelegate(self)
             .disposed(by: disposeBag)
         
-        reactor.state.map { $0.sections }
-            .distinctUntilChanged()
+        reactor.pulse(\.$sections)
             .bind(with: self, onNext: { owner, value in
                 owner.sections = value
                 

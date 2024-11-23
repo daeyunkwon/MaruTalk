@@ -23,14 +23,22 @@ final class HomeReactor: Reactor {
         case setNetworkError((Router.APIType, String?))
         case setWorkspace(Workspace)
         case setUser(User)
+        case setChannelSection([Channel])
     }
     
     struct State {
-        var sections: [SectionModel] = [
-            SectionModel(headerTitle: "채널", items: [.channel("첫번째"), .channel("두번째"), .add("채널 추가")], index: 0),
+        @Pulse var sections: [SectionModel] = [
+            SectionModel(headerTitle: "채널", items: [], index: 0),
             SectionModel(headerTitle: "다이렉트 메시지", items: [.dm("첫번째"), .dm("두번째"), .add("새 메시지 시작")], index: 1),
             SectionModel(headerTitle: "팀원 추가", items: [], index: 2)
-        ]
+        ] {
+            didSet {
+                print(sections[0])
+            }
+        }
+        
+        var channelSectionModel = SectionModel(headerTitle: "채널", items: [], index: 0)
+        
         @Pulse var isShowEmpty: Bool = false
         @Pulse var shouldNavigateToWorkspaceAdd: Void = ()
         @Pulse var workspace: Workspace?
@@ -51,7 +59,9 @@ extension HomeReactor {
             var isExpanded = currentState.sections[sectionIndex].isExpanded
             isExpanded.toggle()
             
-            return .just(.setExpanded(isExpanded: isExpanded, sectionIndex: sectionIndex))
+            return .concat([
+                .just(.setExpanded(isExpanded: isExpanded, sectionIndex: sectionIndex))
+            ])
             
         case .fetch:
             let isShowEmpty = UserDefaultsManager.shared.recentWorkspaceID == nil ? true : false
@@ -62,7 +72,8 @@ extension HomeReactor {
                 return .concat([
                     .just(.setShowEmpty(false)),
                     fetchWorkspace(),
-                    fetchProfile()
+                    fetchProfile(),
+                    fetchMyChannels()
                 ])
             }
         
@@ -80,10 +91,20 @@ extension HomeReactor {
         switch mutation {
         case .setExpanded(let isExpanded, let sectionIndex):
             newState.sections[sectionIndex].isExpanded = isExpanded
+            
             if isExpanded {
-                newState.sections[1].items = [.dm("asd"), .dm("wwww")]
+                switch sectionIndex {
+                case 0:
+                    newState.sections[0].items = currentState.channelSectionModel.items
+                case 1: break
+                default: break
+                }
             } else {
-                newState.sections[1].items = []
+                switch sectionIndex {
+                case 0: newState.sections[0].items = []
+                case 1: break
+                default: break
+                }
             }
             
         case .setShowEmpty(let value):
@@ -100,6 +121,13 @@ extension HomeReactor {
         
         case .setUser(let value):
             newState.user = value
+        
+        case .setChannelSection(let value):
+            var items: [SectionItem] = value.map { .channel($0.name) }
+            items.append(.add("채널 추가"))
+            
+            newState.channelSectionModel.items = items
+            newState.channelSectionModel.isExpanded = true
         }
         return newState
     }
@@ -116,8 +144,6 @@ extension HomeReactor {
             .flatMap { result -> Observable<Mutation> in
                 switch result {
                 case .success(let value):
-                    print("--------------------------------")
-                    print(value)
                     return value.isEmpty ? .empty() : .just(.setWorkspace(value[0]))
                 
                 case .failure(let error):
@@ -133,18 +159,30 @@ extension HomeReactor {
             .flatMap { result -> Observable<Mutation> in
                 switch result {
                 case .success(let value):
-                    print("--------------------------------")
-                    print(value)
                     return .just(.setUser(value))
+                
                 case .failure(let error):
                     return .just(.setNetworkError((Router.APIType.userMe, error.errorCode)))
                 }
             }
     }
     
-    
-    
-    
+    //속한 채널 조회
+    private func fetchMyChannels() -> Observable<Mutation> {
+        guard let workspaceID = UserDefaultsManager.shared.recentWorkspaceID else { return .empty() }
+        return NetworkManager.shared.performRequest(api: .myChannels(workspaceID: workspaceID), model: [Channel].self)
+            .asObservable()
+            .flatMap { [weak self] result -> Observable<Mutation> in
+                guard let self else { return .empty() }
+                switch result {
+                case .success(let value):
+                    return .just(.setChannelSection(value))
+                
+                case .failure(let error):
+                    return .just(.setNetworkError((Router.APIType.userMe, error.errorCode)))
+                }
+            }
+    }
 }
 
 
