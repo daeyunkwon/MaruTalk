@@ -50,28 +50,28 @@ import RxDataSources
 
 
 enum SectionItem: Equatable, IdentifiableType {
-    case channel(String)
-    case dm(String)
+    case channel(Channel)
+    case dm(DMS)
     case add(String)
     
     // IdentifiableType의 요구사항
     var identity: String {
         switch self {
-        case .channel(let value):
-            return "channel-\(value)"
-        case .dm(let value):
-            return "dm-\(value)"
+        case .channel(let channel):
+            return "channel-\(channel.id)"
+        case .dm(let dm):
+            return "dm-\(dm.roomID)"
         case .add(let value):
-            return "dm-\(value)"
+            return "add-\(value)"
         }
     }
     
     static func == (lhs: SectionItem, rhs: SectionItem) -> Bool {
         switch (lhs, rhs) {
-        case let (.channel(lhsValue), .channel(rhsValue)):
-            return lhsValue == rhsValue
-        case let (.dm(lhsValue), .dm(rhsValue)):
-            return lhsValue == rhsValue
+        case let (.channel(lhsChannel), .channel(rhsChannel)):
+            return lhsChannel == rhsChannel
+        case let (.dm(lhsDM), .dm(rhsDM)):
+            return lhsDM == rhsDM
         case let (.add(lhsValue), .add(rhsValue)):
             return lhsValue == rhsValue
         default:

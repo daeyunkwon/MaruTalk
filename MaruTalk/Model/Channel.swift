@@ -7,7 +7,7 @@
 
 import Foundation
 
-struct Channel: Decodable {
+struct Channel: Decodable, Equatable {
     let id: String
     let name: String
     let description: String?
@@ -22,5 +22,9 @@ struct Channel: Decodable {
         case coverImage
         case ownerID = "owner_id"
         case createdAt
+    }
+    
+    static func == (lhs: Channel, rhs: Channel) -> Bool {
+        return lhs.id == rhs.id
     }
 }

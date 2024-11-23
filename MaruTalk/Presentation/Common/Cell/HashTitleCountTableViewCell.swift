@@ -87,7 +87,7 @@ final class HashTitleCountTableViewCell: BaseTableViewCell {
         backgroundColor = Constant.Color.brandWhite
     }
     
-    func configure(title: String) {
-        self.titleLabel.text = title
+    func configure(channel: Channel) {
+        self.titleLabel.text = channel.name
     }
 }

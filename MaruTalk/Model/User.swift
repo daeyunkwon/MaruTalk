@@ -14,7 +14,7 @@ struct User: Decodable {
     let profileImage: String?
     let phone: String?
     let provider: String?
-    let createdAt: String
+    let createdAt: String?
     let token: Token?
     let sesacCoin: Int?
     

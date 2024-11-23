@@ -7,7 +7,7 @@
 
 import Foundation
 
-struct Workspace: Decodable {
+struct Workspace: Decodable, Equatable {
     let id: String
     let name: String
     let description: String?
@@ -26,6 +26,10 @@ struct Workspace: Decodable {
         case createdAt
         case channels
         case workspaceMembers
+    }
+    
+    static func == (lhs: Workspace, rhs: Workspace) -> Bool {
+        lhs.id == rhs.id
     }
 }
 

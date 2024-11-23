@@ -57,6 +57,7 @@
 		441115362CEF8FBE000D1B2B /* UIImageView+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 441115352CEF8FBE000D1B2B /* UIImageView+Extension.swift */; };
 		441115382CEF9637000D1B2B /* ImageCacheManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 441115372CEF9636000D1B2B /* ImageCacheManager.swift */; };
 		4411153A2CF07D70000D1B2B /* Channel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 441115392CF07D70000D1B2B /* Channel.swift */; };
+		4411153C2CF1DE41000D1B2B /* DMS.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4411153B2CF1DE41000D1B2B /* DMS.swift */; };
 		444910DA2CD77315005AB2F7 /* SignUpReactor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 444910D92CD77315005AB2F7 /* SignUpReactor.swift */; };
 		444910DC2CD8AC5C005AB2F7 /* Router.swift in Sources */ = {isa = PBXBuildFile; fileRef = 444910DB2CD8AC5C005AB2F7 /* Router.swift */; };
 		444910DF2CD8AC9F005AB2F7 /* Alamofire in Frameworks */ = {isa = PBXBuildFile; productRef = 444910DE2CD8AC9F005AB2F7 /* Alamofire */; };
@@ -149,6 +150,7 @@
 		441115352CEF8FBE000D1B2B /* UIImageView+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIImageView+Extension.swift"; sourceTree = "<group>"; };
 		441115372CEF9636000D1B2B /* ImageCacheManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageCacheManager.swift; sourceTree = "<group>"; };
 		441115392CF07D70000D1B2B /* Channel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Channel.swift; sourceTree = "<group>"; };
+		4411153B2CF1DE41000D1B2B /* DMS.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DMS.swift; sourceTree = "<group>"; };
 		444910D92CD77315005AB2F7 /* SignUpReactor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignUpReactor.swift; sourceTree = "<group>"; };
 		444910DB2CD8AC5C005AB2F7 /* Router.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Router.swift; sourceTree = "<group>"; };
 		444910E02CD8B072005AB2F7 /* BodyKey.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BodyKey.swift; sourceTree = "<group>"; };
@@ -403,6 +405,7 @@
 				4411151C2CEB4430000D1B2B /* WorkspaceList.swift */,
 				441115312CEF7FB4000D1B2B /* Workspace.swift */,
 				441115392CF07D70000D1B2B /* Channel.swift */,
+				4411153B2CF1DE41000D1B2B /* DMS.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -649,6 +652,7 @@
 				444DE6E02CD11FC100821269 /* OnboardingViewController.swift in Sources */,
 				444DE6DD2CD112EE00821269 /* UILabel+Extension.swift in Sources */,
 				441114D02CE1F942000D1B2B /* WorkspaceInitialReactor.swift in Sources */,
+				4411153C2CF1DE41000D1B2B /* DMS.swift in Sources */,
 				444910E32CD8B258005AB2F7 /* NetworkManager.swift in Sources */,
 				441115022CE75A38000D1B2B /* PlusTitleTableViewCell.swift in Sources */,
 				441115272CEE1C46000D1B2B /* AuthReactor.swift in Sources */,

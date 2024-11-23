@@ -89,7 +89,15 @@ final class ImageTitleCountTableViewCell: BaseTableViewCell {
         backgroundColor = Constant.Color.brandWhite
     }
     
-    func configure(title: String) {
-        self.titleLabel.text = title
+    func configure(dm: DMS) {
+        self.titleLabel.text = dm.user.nickname
+        
+        if let path = dm.user.profileImage {
+            //유저 프로필 이미지 적용
+            self.profileImageView.setImage(imagePath: path)
+        } else {
+            //랜덤 이미지 적용
+            self.profileImageView.image = [UIImage(named: "noPhotoA") ?? UIImage(), UIImage(named: "noPhotoB") ?? UIImage(), UIImage(named: "noPhotoC") ?? UIImage()].randomElement()
+        }
     }
 }

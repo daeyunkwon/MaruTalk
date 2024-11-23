@@ -153,18 +153,18 @@ extension HomeViewController {
         let dataSource = RxTableViewSectionedAnimatedDataSource<SectionModel>(
             configureCell: { _, tableView, indexPath, item in
                 switch item {
-                case .channel(let text):
+                case .channel(let channel):
                     guard let cell = tableView.dequeueReusableCell(withIdentifier: HashTitleCountTableViewCell.reuseIdentifier, for: indexPath) as? HashTitleCountTableViewCell else {
                         return UITableViewCell()
                     }
-                    cell.configure(title: text)
+                    cell.configure(channel: channel)
                     return cell
                 
-                case .dm(let text):
+                case .dm(let dm):
                     guard let cell = tableView.dequeueReusableCell(withIdentifier: ImageTitleCountTableViewCell.reuseIdentifier, for: indexPath) as? ImageTitleCountTableViewCell else {
                         return UITableViewCell()
                     }
-                    cell.configure(title: text)
+                    cell.configure(dm: dm)
                     return cell
                     
                 case .add(let text):

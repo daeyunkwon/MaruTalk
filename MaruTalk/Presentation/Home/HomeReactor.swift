@@ -24,20 +24,18 @@ final class HomeReactor: Reactor {
         case setWorkspace(Workspace)
         case setUser(User)
         case setChannelSection([Channel])
+        case setDMSection([DMS])
     }
     
     struct State {
         @Pulse var sections: [SectionModel] = [
             SectionModel(headerTitle: "채널", items: [], index: 0),
-            SectionModel(headerTitle: "다이렉트 메시지", items: [.dm("첫번째"), .dm("두번째"), .add("새 메시지 시작")], index: 1),
+            SectionModel(headerTitle: "다이렉트 메시지", items: [], index: 1),
             SectionModel(headerTitle: "팀원 추가", items: [], index: 2)
-        ] {
-            didSet {
-                print(sections[0])
-            }
-        }
+        ]
         
         var channelSectionModel = SectionModel(headerTitle: "채널", items: [], index: 0)
+        var dmSectionModel = SectionModel(headerTitle: "다이렉트 메시지", items: [], index: 1)
         
         @Pulse var isShowEmpty: Bool = false
         @Pulse var shouldNavigateToWorkspaceAdd: Void = ()
@@ -96,13 +94,14 @@ extension HomeReactor {
                 switch sectionIndex {
                 case 0:
                     newState.sections[0].items = currentState.channelSectionModel.items
-                case 1: break
+                case 1:
+                    newState.sections[1].items = currentState.dmSectionModel.items
                 default: break
                 }
             } else {
                 switch sectionIndex {
                 case 0: newState.sections[0].items = []
-                case 1: break
+                case 1: newState.sections[1].items = []
                 default: break
                 }
             }
@@ -123,11 +122,18 @@ extension HomeReactor {
             newState.user = value
         
         case .setChannelSection(let value):
-            var items: [SectionItem] = value.map { .channel($0.name) }
+            var items: [SectionItem] = value.map { .channel($0) }
             items.append(.add("채널 추가"))
             
             newState.channelSectionModel.items = items
             newState.channelSectionModel.isExpanded = true
+        
+        case .setDMSection(let value):
+            var items: [SectionItem] = value.map { .dm($0) }
+            items.append(.add("새 메시지"))
+            
+            newState.dmSectionModel.items = items
+            newState.dmSectionModel.isExpanded = true
         }
         return newState
     }
@@ -172,11 +178,26 @@ extension HomeReactor {
         guard let workspaceID = UserDefaultsManager.shared.recentWorkspaceID else { return .empty() }
         return NetworkManager.shared.performRequest(api: .myChannels(workspaceID: workspaceID), model: [Channel].self)
             .asObservable()
-            .flatMap { [weak self] result -> Observable<Mutation> in
-                guard let self else { return .empty() }
+            .flatMap { result -> Observable<Mutation> in
                 switch result {
                 case .success(let value):
                     return .just(.setChannelSection(value))
+                
+                case .failure(let error):
+                    return .just(.setNetworkError((Router.APIType.userMe, error.errorCode)))
+                }
+            }
+    }
+    
+    //DM 방 리스트 조회
+    private func fetchDMS() -> Observable<Mutation> {
+        guard let workspaceID = UserDefaultsManager.shared.recentWorkspaceID else { return .empty() }
+        return NetworkManager.shared.performRequest(api: .dms(workspaceID: workspaceID), model: [DMS].self)
+            .asObservable()
+            .flatMap { result -> Observable<Mutation> in
+                switch result {
+                case .success(let value):
+                    return .just(.setDMSection(value))
                 
                 case .failure(let error):
                     return .just(.setNetworkError((Router.APIType.userMe, error.errorCode)))
