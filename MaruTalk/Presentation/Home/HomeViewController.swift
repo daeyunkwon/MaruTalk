@@ -143,6 +143,13 @@ extension HomeViewController {
                 }
             }
             .disposed(by: disposeBag)
+        
+        reactor.pulse(\.$toastMessage)
+            .compactMap { $0 }
+            .bind(with: self) { owner, value in
+                owner.showToastMessage(message: value)
+            }
+            .disposed(by: disposeBag)
     }
 }
 
@@ -248,6 +255,6 @@ extension HomeViewController: DropdownArrowTableViewCellDelegate {
 
 extension HomeViewController: PlusTitleHeaderTableViewCellDelegate {
     func cellTapped() {
-        print(#function)
+        reactor?.action.onNext(.addTeamMembersTapped)
     }
 }

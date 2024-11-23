@@ -158,6 +158,9 @@ extension LoginReactor {
                 guard let self else { return .empty()}
                 switch result {
                 case .success(let value):
+                    //유저 ID 저장
+                    UserDefaultsManager.shared.userID = value.userID
+                    print("유저ID: \(value.userID)")
                     //토큰 저장
                     let isAcessTokenSaved = KeychainManager.shared.saveItem(item: value.token?.accessToken ?? "", forKey: .accessToken)
                     let isRefreshTokenSaved = KeychainManager.shared.saveItem(item: value.token?.refreshToken ?? "", forKey: .refreshToken)
@@ -189,8 +192,10 @@ extension LoginReactor {
                             $0.createdDate > $1.createdDate
                         }
                         UserDefaultsManager.shared.recentWorkspaceID = sortedValue.first?.id
+                        UserDefaultsManager.shared.recentWorkspaceOwnerID = sortedValue.first?.ownerID
                     } else {
                         UserDefaultsManager.shared.removeItem(key: .recentWorkspaceID)
+                        UserDefaultsManager.shared.removeItem(key: .recentWorkspaceOwnerID)
                     }
                     
                     return .just(.setNavigateToHome(true))

@@ -207,8 +207,10 @@ extension AuthReactor {
                             $0.createdDate > $1.createdDate
                         }
                         UserDefaultsManager.shared.recentWorkspaceID = sortedValue.first?.id
+                        UserDefaultsManager.shared.recentWorkspaceOwnerID = sortedValue.first?.ownerID
                     } else {
                         UserDefaultsManager.shared.removeItem(key: .recentWorkspaceID)
+                        UserDefaultsManager.shared.removeItem(key: .recentWorkspaceOwnerID)
                     }
                     
                     return .just(.setLoginSuccess(true))

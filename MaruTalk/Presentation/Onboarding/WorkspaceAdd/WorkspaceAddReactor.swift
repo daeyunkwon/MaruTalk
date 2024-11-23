@@ -245,6 +245,7 @@ extension WorkspaceAddReactor {
                     print("DEBUG: 워크스페이스 생성 성공")
                     
                     UserDefaultsManager.shared.recentWorkspaceID = value.id
+                    UserDefaultsManager.shared.recentWorkspaceOwnerID = value.ownerID
                     
                     return .concat([
                         .just(.setCreateWorkspaceSuccess(true))

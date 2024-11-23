@@ -30,10 +30,18 @@ final class UserDefaultsManager {
     
     enum Key: String {
         case recentWorkspaceID
+        case recentWorkspaceOwnerID
+        case userID
     }
     
     @UserDefaultsPropertyWrapper(key: Key.recentWorkspaceID.rawValue, defaultValue: nil, storage: UserDefaults.standard)
     var recentWorkspaceID: String?
+    
+    @UserDefaultsPropertyWrapper(key: Key.recentWorkspaceOwnerID.rawValue, defaultValue: nil, storage: UserDefaults.standard)
+    var recentWorkspaceOwnerID: String?
+    
+    @UserDefaultsPropertyWrapper(key: Key.userID.rawValue, defaultValue: nil, storage: UserDefaults.standard)
+    var userID: String?
     
     
     func removeItem(key: Key) {

@@ -87,7 +87,7 @@ extension UIViewController {
         style.cornerRadius = 8
         
         let x = (view.bounds.width / 2)
-        let y: Double = 660//711
+        let y: Double = 630
         view.makeToast(message, point: CGPoint(x: x, y: y), title: nil, image: nil, style: style, completion: nil)
     }
     

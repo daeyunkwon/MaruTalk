@@ -14,6 +14,7 @@ final class HomeReactor: Reactor {
         case sectionTapped(Int)
         case fetch
         case workspaceAddButtonTapped
+        case addTeamMembersTapped
     }
     
     enum Mutation {
@@ -25,6 +26,7 @@ final class HomeReactor: Reactor {
         case setUser(User)
         case setChannelSection([Channel])
         case setDMSection([DMS])
+        case setToastMessage(String)
     }
     
     struct State {
@@ -41,7 +43,7 @@ final class HomeReactor: Reactor {
         @Pulse var shouldNavigateToWorkspaceAdd: Void = ()
         @Pulse var workspace: Workspace?
         @Pulse var user: User?
-        
+        @Pulse var toastMessage: String?
         @Pulse var networkError: (Router.APIType, String?) = (Router.APIType.empty, nil)
     }
     
@@ -77,6 +79,16 @@ extension HomeReactor {
         
         case .workspaceAddButtonTapped:
             return .just(.setNavigateToWorkspaceAdd)
+        
+        case .addTeamMembersTapped:
+            guard let workspaceOwnerID = UserDefaultsManager.shared.recentWorkspaceOwnerID,
+                  let userID = UserDefaultsManager.shared.userID else { return .empty() }
+            
+            if workspaceOwnerID == userID {
+                return .just(.setToastMessage("관리자가 맞습니다."))
+            } else {
+                return .just(.setToastMessage("워크스페이스 관리자만 팀원을 초대할 수 있어요. 관리자에게 요청을 해보세요."))
+            }
         }
     }
 }
@@ -134,6 +146,9 @@ extension HomeReactor {
             
             newState.dmSectionModel.items = items
             newState.dmSectionModel.isExpanded = true
+        
+        case .setToastMessage(let value):
+            newState.toastMessage = value
         }
         return newState
     }
@@ -150,6 +165,9 @@ extension HomeReactor {
             .flatMap { result -> Observable<Mutation> in
                 switch result {
                 case .success(let value):
+                    print("워크스페이스 조회----------------")
+                    print(value)
+                    print("----------------------------")
                     return value.isEmpty ? .empty() : .just(.setWorkspace(value[0]))
                 
                 case .failure(let error):
@@ -176,6 +194,8 @@ extension HomeReactor {
     //속한 채널 조회
     private func fetchMyChannels() -> Observable<Mutation> {
         guard let workspaceID = UserDefaultsManager.shared.recentWorkspaceID else { return .empty() }
+        print("조회할 워크스페이스 아이디: \(workspaceID)")
+        print("액세스 토큰: \(String(describing: KeychainManager.shared.getItem(forKey: .accessToken)))")
         return NetworkManager.shared.performRequest(api: .myChannels(workspaceID: workspaceID), model: [Channel].self)
             .asObservable()
             .flatMap { result -> Observable<Mutation> in
