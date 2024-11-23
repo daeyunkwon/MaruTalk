@@ -58,6 +58,9 @@
 		441115382CEF9637000D1B2B /* ImageCacheManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 441115372CEF9636000D1B2B /* ImageCacheManager.swift */; };
 		4411153A2CF07D70000D1B2B /* Channel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 441115392CF07D70000D1B2B /* Channel.swift */; };
 		4411153C2CF1DE41000D1B2B /* DMS.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4411153B2CF1DE41000D1B2B /* DMS.swift */; };
+		4411153E2CF217C2000D1B2B /* ChannelAddView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4411153D2CF217C2000D1B2B /* ChannelAddView.swift */; };
+		441115412CF217FF000D1B2B /* ChannelAddViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 441115402CF217FF000D1B2B /* ChannelAddViewController.swift */; };
+		441115432CF2191E000D1B2B /* ChannelAddReactor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 441115422CF2191E000D1B2B /* ChannelAddReactor.swift */; };
 		444910DA2CD77315005AB2F7 /* SignUpReactor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 444910D92CD77315005AB2F7 /* SignUpReactor.swift */; };
 		444910DC2CD8AC5C005AB2F7 /* Router.swift in Sources */ = {isa = PBXBuildFile; fileRef = 444910DB2CD8AC5C005AB2F7 /* Router.swift */; };
 		444910DF2CD8AC9F005AB2F7 /* Alamofire in Frameworks */ = {isa = PBXBuildFile; productRef = 444910DE2CD8AC9F005AB2F7 /* Alamofire */; };
@@ -151,6 +154,9 @@
 		441115372CEF9636000D1B2B /* ImageCacheManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageCacheManager.swift; sourceTree = "<group>"; };
 		441115392CF07D70000D1B2B /* Channel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Channel.swift; sourceTree = "<group>"; };
 		4411153B2CF1DE41000D1B2B /* DMS.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DMS.swift; sourceTree = "<group>"; };
+		4411153D2CF217C2000D1B2B /* ChannelAddView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChannelAddView.swift; sourceTree = "<group>"; };
+		441115402CF217FF000D1B2B /* ChannelAddViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChannelAddViewController.swift; sourceTree = "<group>"; };
+		441115422CF2191E000D1B2B /* ChannelAddReactor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChannelAddReactor.swift; sourceTree = "<group>"; };
 		444910D92CD77315005AB2F7 /* SignUpReactor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignUpReactor.swift; sourceTree = "<group>"; };
 		444910DB2CD8AC5C005AB2F7 /* Router.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Router.swift; sourceTree = "<group>"; };
 		444910E02CD8B072005AB2F7 /* BodyKey.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BodyKey.swift; sourceTree = "<group>"; };
@@ -228,6 +234,7 @@
 				441114E32CE5EEF8000D1B2B /* HomeView.swift */,
 				441114FD2CE73CD3000D1B2B /* HomeEmptyView.swift */,
 				441114E52CE5EF03000D1B2B /* HomeViewController.swift */,
+				4411153F2CF217C6000D1B2B /* ChannelAdd */,
 			);
 			path = Home;
 			sourceTree = "<group>";
@@ -310,6 +317,16 @@
 				441115212CECA501000D1B2B /* LoginViewController.swift */,
 			);
 			path = Login;
+			sourceTree = "<group>";
+		};
+		4411153F2CF217C6000D1B2B /* ChannelAdd */ = {
+			isa = PBXGroup;
+			children = (
+				441115422CF2191E000D1B2B /* ChannelAddReactor.swift */,
+				4411153D2CF217C2000D1B2B /* ChannelAddView.swift */,
+				441115402CF217FF000D1B2B /* ChannelAddViewController.swift */,
+			);
+			path = ChannelAdd;
 			sourceTree = "<group>";
 		};
 		444DE6A92CD0FC9D00821269 = {
@@ -621,6 +638,7 @@
 				441115172CE9FC18000D1B2B /* RoundedImageTitleView.swift in Sources */,
 				4411151D2CEB4430000D1B2B /* WorkspaceList.swift in Sources */,
 				441115202CECA4F3000D1B2B /* LoginView.swift in Sources */,
+				441115412CF217FF000D1B2B /* ChannelAddViewController.swift in Sources */,
 				441114CE2CE1DDF3000D1B2B /* WorkspaceInitialViewController.swift in Sources */,
 				444DE7152CD6222D00821269 /* SignUpViewController.swift in Sources */,
 				441114E62CE5EF03000D1B2B /* HomeViewController.swift in Sources */,
@@ -652,7 +670,9 @@
 				444DE6E02CD11FC100821269 /* OnboardingViewController.swift in Sources */,
 				444DE6DD2CD112EE00821269 /* UILabel+Extension.swift in Sources */,
 				441114D02CE1F942000D1B2B /* WorkspaceInitialReactor.swift in Sources */,
+				441115432CF2191E000D1B2B /* ChannelAddReactor.swift in Sources */,
 				4411153C2CF1DE41000D1B2B /* DMS.swift in Sources */,
+				4411153E2CF217C2000D1B2B /* ChannelAddView.swift in Sources */,
 				444910E32CD8B258005AB2F7 /* NetworkManager.swift in Sources */,
 				441115022CE75A38000D1B2B /* PlusTitleTableViewCell.swift in Sources */,
 				441115272CEE1C46000D1B2B /* AuthReactor.swift in Sources */,

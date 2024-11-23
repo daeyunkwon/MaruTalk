@@ -99,4 +99,20 @@ extension UIViewController {
             view.hideToastActivity()
         }
     }
+    
+    //액션시트
+    func showActionSheet(actions: [(String, (() -> Void)?)]) {
+        let alert = UIAlertController(title: nil, message: nil, preferredStyle: .actionSheet)
+        
+        for (title, handler) in actions {
+            let action = UIAlertAction(title: title, style: .default) { _ in
+                handler?()
+            }
+            alert.addAction(action)
+        }
+        
+        alert.addAction(UIAlertAction(title: "취소", style: .cancel))
+        
+        self.present(alert, animated: true)
+    }
 }

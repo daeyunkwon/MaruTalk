@@ -45,6 +45,8 @@ final class MainTabBarCoordinator: Coordinator {
         
         //Appearance
         let appearance = UITabBarAppearance()
+        appearance.backgroundColor = Constant.Color.brandWhite
+        appearance.shadowColor = Constant.Color.brandGray
         tabBarController.tabBar.standardAppearance = appearance
         tabBarController.tabBar.scrollEdgeAppearance = appearance
         tabBarController.tabBar.tintColor = Constant.Color.brandBlack

@@ -8,5 +8,7 @@
 import Foundation
 
 extension Notification.Name {
-    static let workspaceAddModalDismiss = Notification.Name("workspaceAddModalDismiss")
+    static let workspaceAddComplete = Notification.Name("workspaceAddComplete")
+    
+    static let channelAddComplete = Notification.Name("channelAddComplete")
 }

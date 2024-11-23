@@ -237,7 +237,7 @@ extension WorkspaceAddViewController {
                 }
                 
                 if let homeCoordinator = owner.coordinator as? HomeCoordinator {
-                    NotificationCenter.default.post(name: .workspaceAddModalDismiss, object: nil)
+                    NotificationCenter.default.post(name: .workspaceAddComplete, object: nil)
                     homeCoordinator.didFinishWorkspaceAdd()
                 }
             }
@@ -294,5 +294,24 @@ extension WorkspaceAddViewController: PHPickerViewControllerDelegate {
         picker.delegate = self
         
         present(picker, animated: true, completion: nil)
+        
+//        var configuration = PHPickerConfiguration(photoLibrary: .shared())
+//        configuration.selectionLimit = 2
+//        if #available(iOS 17.0, *) {
+//            configuration.selection = .default
+//            configuration.mode = .default
+//            configuration.edgesWithoutContentMargins = .all
+//            configuration.disabledCapabilities = .selectionActions
+//            let picker = PHPickerViewController(configuration: configuration)
+//            self.addChild(picker)
+//            var update = PHPickerConfiguration.Update()
+//            update.edgesWithoutContentMargins = []
+//            picker.updatePicker(using: update)
+//            rootView.addSubview(picker.view)
+//            picker.view.snp.makeConstraints { make in
+//                make.edges.equalToSuperview()
+//            }
+//            picker.didMove(toParent: self)
+//        }
     }
 }

@@ -32,11 +32,11 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         appCoordinator?.start()
         
         //UI 확인용 임시
-        //        let reactor = WorkspaceAddReactor(previousScreen: .workspaceInitial)
-        //        let vc = WorkspaceAddViewController(reactor: reactor)
-        //        window?.rootViewController = UINavigationController(
-        //            rootViewController: vc
-        //        )
+//        let reactor = ChannelAddReactor()
+//        let vc = ChannelAddViewController(reactor: reactor)
+//        window?.rootViewController = UINavigationController(
+//            rootViewController: vc
+//        )
         
         
         window?.makeKeyAndVisible()

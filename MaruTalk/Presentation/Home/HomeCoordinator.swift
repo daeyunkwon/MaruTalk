@@ -55,3 +55,24 @@ extension HomeCoordinator {
         navigationController.dismiss(animated: true)
     }
 }
+
+extension HomeCoordinator {
+    func showChannelAdd() {
+        let reactor = ChannelAddReactor()
+        let channelAddVC = ChannelAddViewController(reactor: reactor)
+        channelAddVC.coordinator = self
+
+        let navController = UINavigationController(rootViewController: channelAddVC)
+        navController.modalPresentationStyle = .pageSheet
+
+        if let sheet = navController.sheetPresentationController {
+            sheet.detents = [.large()]
+            sheet.prefersGrabberVisible = true
+        }
+        navigationController.present(navController, animated: true)
+    }
+    
+    func didFinishChannelAdd() {
+        navigationController.dismiss(animated: true)
+    }
+}

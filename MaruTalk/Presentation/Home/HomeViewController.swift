@@ -35,7 +35,7 @@ final class HomeViewController: BaseViewController<HomeView>, View {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        NotificationCenter.default.addObserver(self, selector: #selector(handleModalDismissed), name: .workspaceAddModalDismiss, object: nil)
+        setupNotificationCenter()
     }
     
     //MARK: - Configurations
@@ -43,6 +43,11 @@ final class HomeViewController: BaseViewController<HomeView>, View {
     override func setupNavi() {
         navigationItem.leftBarButtonItem = UIBarButtonItem(customView: workspaceNameView)
         navigationItem.rightBarButtonItem = UIBarButtonItem(customView: profileCircleView)
+    }
+    
+    private func setupNotificationCenter() {
+        NotificationCenter.default.addObserver(self, selector: #selector(handleModalDismissed), name: .workspaceAddComplete, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(handleModalDismissed), name: .channelAddComplete, object: nil)
     }
     
     //MARK: - Methods
@@ -53,8 +58,12 @@ final class HomeViewController: BaseViewController<HomeView>, View {
         bindTableView(reactor: reactor)
     }
     
-    @objc private func handleModalDismissed() {
+    @objc private func handleModalDismissed(notification: Notification) {
         reactor?.action.onNext(.fetch)
+        
+        if notification.name == .channelAddComplete {
+            showToastMessage(message: "채널이 생성되었습니다.")
+        }
     }
 }
 
@@ -72,28 +81,35 @@ extension HomeViewController {
             .bind(to: reactor.action)
             .disposed(by: disposeBag)
         
-        
-        
-        
-        
-        profileCircleView.rxTap
-            .bind(with: self) { owner, _ in
-                print(11111)
-//                owner.coordinator?.didFinish()
-                owner.showToastForNetworkError(api: .refresh, errorCode: "Refresh token expiration")
-            }
-            .disposed(by: disposeBag)
-        
-        workspaceNameView.rxTap
-            .bind(with: self) { owner, _ in
-                print(22222)
-                owner.tabBarController?.tabBar.isHidden = false
-                owner.rootView.emptyView.isHidden = true
+        rootView.tableView.rx.modelSelected(SectionModel.Item.self)
+            .filter { $0 == .add("채널 추가") }
+            .bind(with: self) { owner, value in
+                owner.showActionSheet(actions: [
+                    ("채널 추가", { owner.coordinator?.showChannelAdd() }),
+                    ("채널 탐색", { print("탐색 선택됨") }),
+                ])
             }
             .disposed(by: disposeBag)
         
         
         
+        
+        
+//        profileCircleView.rxTap
+//            .bind(with: self) { owner, _ in
+//                print(11111)
+////                owner.coordinator?.didFinish()
+//                owner.showToastForNetworkError(api: .refresh, errorCode: "Refresh token expiration")
+//            }
+//            .disposed(by: disposeBag)
+//        
+//        workspaceNameView.rxTap
+//            .bind(with: self) { owner, _ in
+//                print(22222)
+//                owner.tabBarController?.tabBar.isHidden = false
+//                owner.rootView.emptyView.isHidden = true
+//            }
+//            .disposed(by: disposeBag)
     }
 }
 
@@ -240,6 +256,10 @@ extension HomeViewController: UITableViewDelegate {
             
         default: return nil
         }
+    }
+    
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        tableView.reloadRows(at: [indexPath], with: .automatic)
     }
 }
 

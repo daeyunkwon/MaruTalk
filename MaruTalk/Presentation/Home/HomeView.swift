@@ -26,7 +26,7 @@ final class HomeView: BaseView {
         tv.register(ImageTitleCountTableViewCell.self, forCellReuseIdentifier: ImageTitleCountTableViewCell.reuseIdentifier)
         tv.register(DropdownArrowTableViewCell.self, forHeaderFooterViewReuseIdentifier: DropdownArrowTableViewCell.reuseIdentifier)
         tv.register(PlusTitleHeaderTableViewCell.self, forHeaderFooterViewReuseIdentifier: PlusTitleHeaderTableViewCell.reuseIdentifier)
-        tv.backgroundColor = .systemYellow
+        tv.backgroundColor = Constant.Color.brandWhite
         tv.sectionFooterHeight = 0 //섹션 상단 빈 여백 제거하기
         tv.rowHeight = 41
         tv.sectionHeaderHeight = 56
