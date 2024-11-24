@@ -49,7 +49,10 @@ final class ChannelAddViewController: BaseViewController<ChannelAddView>, View {
 
 extension ChannelAddViewController {
     private func bindAction(reactor: ChannelAddReactor) {
-        
+        xMarkButton.rx.tap
+            .map { Reactor.Action.xMarkButtonTapped }
+            .bind(to: reactor.action)
+            .disposed(by: disposeBag)
     }
 }
 
@@ -57,6 +60,11 @@ extension ChannelAddViewController {
 
 extension ChannelAddViewController {
     private func bindState(reactor: ChannelAddReactor) {
-        
+        reactor.pulse(\.$shouldDismiss)
+            .compactMap { $0 }
+            .bind(with: self) { owner, _ in
+                owner.coordinator?.didFinishChannelAdd()
+            }
+            .disposed(by: disposeBag)
     }
 }
