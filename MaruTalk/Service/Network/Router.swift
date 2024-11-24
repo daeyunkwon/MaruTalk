@@ -27,6 +27,7 @@ enum Router {
     case userMe //내 프로필 정보 조회
     //Channel
     case myChannels(workspaceID: String)
+    case createChannel(workspaceID: String, name: String, description: String?, imageData: Data?)
     //DMS
     case dms(workspaceID: String)
     
@@ -47,6 +48,7 @@ enum Router {
         case userMe
         //Channel
         case myChannels
+        case createChannel
         //DMS
         case dms
     }
@@ -69,13 +71,14 @@ extension Router: URLRequestConvertible {
         case .workspaces, .createWorkspace, .workspace: return APIURL.workspaces
         case .userMe: return APIURL.userMe
         case .myChannels(let workspaceID): return APIURL.myChaanels(workspaceID: workspaceID)
+        case .createChannel(let workspaceID, _, _, _): return APIURL.createChannel(workspaceID: workspaceID)
         case .dms(let workspaceID): return APIURL.dms(workspaceID: workspaceID)
         }
     }
     
     var method: HTTPMethod {
         switch self {
-        case .emailValidation(_), .join, .login, .loginWithApple, .loginWithKakao, .createWorkspace:
+        case .emailValidation(_), .join, .login, .loginWithApple, .loginWithKakao, .createWorkspace, .createChannel:
             return .post
             
         case .refresh, .fetchImage, .workspaces, .workspace, .userMe, .myChannels, .dms:
@@ -106,7 +109,7 @@ extension Router: URLRequestConvertible {
                 "SesacKey": APIKey.apiKey
             ]
             
-        case .createWorkspace:
+        case .createWorkspace, .createChannel:
             return [
                 "Content-Type": "multipart/form-data",
                 "Authorization": KeychainManager.shared.getItem(forKey: .accessToken) ?? "",
@@ -168,6 +171,17 @@ extension Router: URLRequestConvertible {
             multipartFormData.append(Data(name.utf8), withName: "name")
             multipartFormData.append(Data(description.utf8), withName: "description")
             multipartFormData.append(imageData, withName: "image", fileName: UUID().uuidString, mimeType: "image/jpeg")
+            return multipartFormData
+            
+        case .createChannel(_, let name, let description, let imageData):
+            let multipartFormData = MultipartFormData()
+            multipartFormData.append(Data(name.utf8), withName: "name")
+            if let description = description {
+                multipartFormData.append(Data(description.utf8), withName: "description")
+            }
+            if let imageData = imageData {
+                multipartFormData.append(imageData, withName: "image", fileName: UUID().uuidString, mimeType: "image/jpeg")
+            }
             return multipartFormData
             
         default: return nil

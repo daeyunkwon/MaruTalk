@@ -56,6 +56,12 @@ extension UIViewController {
             default: break
             }
             
+        case .createChannel:
+            switch errorCode {
+            case "E12": message = "워크스페이스에 이미 있는 채널 이름입니다. 다른 이름을 입력해주세요."
+            default: break
+            }
+            
         default: break
         }
         

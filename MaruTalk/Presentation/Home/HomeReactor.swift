@@ -198,10 +198,14 @@ extension HomeReactor {
         print("액세스 토큰: \(String(describing: KeychainManager.shared.getItem(forKey: .accessToken)))")
         return NetworkManager.shared.performRequest(api: .myChannels(workspaceID: workspaceID), model: [Channel].self)
             .asObservable()
-            .flatMap { result -> Observable<Mutation> in
+            .flatMap { [weak self] result -> Observable<Mutation> in
+                guard let self else { return .empty() }
                 switch result {
                 case .success(let value):
-                    return .just(.setChannelSection(value))
+                    return .concat([
+                        .just(.setChannelSection(value)),
+                        .just(.setExpanded(isExpanded: self.currentState.sections[0].isExpanded, sectionIndex: 0))
+                    ])
                 
                 case .failure(let error):
                     return .just(.setNetworkError((Router.APIType.userMe, error.errorCode)))
@@ -214,10 +218,14 @@ extension HomeReactor {
         guard let workspaceID = UserDefaultsManager.shared.recentWorkspaceID else { return .empty() }
         return NetworkManager.shared.performRequest(api: .dms(workspaceID: workspaceID), model: [DMS].self)
             .asObservable()
-            .flatMap { result -> Observable<Mutation> in
+            .flatMap { [weak self] result -> Observable<Mutation> in
+                guard let self else { return .empty() }
                 switch result {
                 case .success(let value):
-                    return .just(.setDMSection(value))
+                    return .concat([
+                        .just(.setDMSection(value)),
+                        .just(.setExpanded(isExpanded: self.currentState.sections[1].isExpanded, sectionIndex: 1))
+                    ])
                 
                 case .failure(let error):
                     return .just(.setNetworkError((Router.APIType.userMe, error.errorCode)))

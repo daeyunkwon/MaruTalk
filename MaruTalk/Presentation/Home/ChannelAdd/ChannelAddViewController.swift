@@ -63,6 +63,11 @@ extension ChannelAddViewController {
             .map { Reactor.Action.inputDescription($0) }
             .bind(to: reactor.action)
             .disposed(by: disposeBag)
+        
+        rootView.createButton.rx.tap
+            .map { Reactor.Action.createButtonTapped }
+            .bind(to: reactor.action)
+            .disposed(by: disposeBag)
     }
 }
 
@@ -71,7 +76,6 @@ extension ChannelAddViewController {
 extension ChannelAddViewController {
     private func bindState(reactor: ChannelAddReactor) {
         reactor.pulse(\.$shouldDismiss)
-            .debug("테스트")
             .compactMap { $0 }
             .bind(with: self) { owner, _ in
                 owner.coordinator?.didFinishChannelAdd()
@@ -82,6 +86,13 @@ extension ChannelAddViewController {
             .distinctUntilChanged()
             .bind(with: self) { owner, value in
                 owner.rootView.createButton.setButtonEnabled(isEnabled: value)
+            }
+            .disposed(by: disposeBag)
+        
+        reactor.pulse(\.$networkError)
+            .compactMap { $0 }
+            .bind(with: self) { owner, value in
+                owner.showToastForNetworkError(api: value.0, errorCode: value.1)
             }
             .disposed(by: disposeBag)
     }

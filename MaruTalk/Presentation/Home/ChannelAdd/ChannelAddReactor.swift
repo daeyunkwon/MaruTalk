@@ -14,6 +14,7 @@ final class ChannelAddReactor: Reactor {
         case xMarkButtonTapped
         case inputName(String)
         case inputDescription(String)
+        case createButtonTapped
     }
     
     enum Mutation {
@@ -21,13 +22,15 @@ final class ChannelAddReactor: Reactor {
         case setChannelName(String)
         case setChannelDescription(String)
         case setCreateButtonEnabled(Bool)
+        case setNetworkError((Router.APIType, String?))
     }
     
     struct State {
         @Pulse var shouldDismiss: Void?
         var channelName = ""
-        var chaanelDescription = ""
+        var channelDescription: String?
         var isCreateButtonEnabled = false
+        @Pulse var networkError: (Router.APIType, String?)?
     }
     
     let initialState: State = State()
@@ -51,6 +54,9 @@ extension ChannelAddReactor {
             
         case .inputDescription(let value):
             return .just(.setChannelDescription(value))
+            
+        case .createButtonTapped:
+            return createChannel()
         }
     }
 }
@@ -68,10 +74,13 @@ extension ChannelAddReactor {
             newState.channelName = value
         
         case .setChannelDescription(let value):
-            newState.chaanelDescription = value
+            newState.channelDescription = value
         
         case .setCreateButtonEnabled(let value):
             newState.isCreateButtonEnabled = value
+        
+        case .setNetworkError(let value):
+            newState.networkError = value
         }
         return newState
     }
@@ -82,5 +91,29 @@ extension ChannelAddReactor {
 extension ChannelAddReactor {
     private func isChannelNameValid(name: String) -> Bool {
         return !name.trimmingCharacters(in: .whitespaces).isEmpty ? true : false
+    }
+    
+    //채널 생성 요청
+    private func createChannel() -> Observable<Mutation> {
+        guard let workspaceID = UserDefaultsManager.shared.recentWorkspaceID else { return .empty() }
+        let channelName = currentState.channelName
+        let description = currentState.channelDescription
+        
+        return NetworkManager.shared.performRequestMultipartFormData(api: .createChannel(workspaceID: workspaceID, name: channelName, description: description, imageData: nil), model: Channel.self)
+            .asObservable()
+            .flatMap { result -> Observable<Mutation> in
+                switch result {
+                case .success(let value):
+                    print("채널생성--------------------------")
+                    print(value)
+                    print("--------------------------------")
+                    NotificationCenter.default.post(name: .channelAddComplete, object: nil)
+                    return .just(.setDismiss(()))
+                
+                case .failure(let error):
+                    let errorCode = error.errorCode
+                    return .just(.setNetworkError((Router.APIType.createChannel, errorCode)))
+                }
+            }
     }
 }
