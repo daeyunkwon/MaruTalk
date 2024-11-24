@@ -53,7 +53,7 @@ final class PlusTitleTableViewCell: BaseTableViewCell {
     }
     
     override func configureUI() {
-        backgroundColor = Constant.Color.brandWhite
+        backgroundColor = Constant.Color.brandWhite.withAlphaComponent(0.5)
     }
     
     func configure(title: String) {

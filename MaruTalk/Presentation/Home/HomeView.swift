@@ -31,6 +31,11 @@ final class HomeView: BaseView {
         tv.rowHeight = 41
         tv.sectionHeaderHeight = 56
         tv.separatorStyle = .none
+        //배경이미지 설정
+        let backImageView = UIImageView()
+        backImageView.image = UIImage(named: "backImage")
+        backImageView.contentMode = .scaleAspectFit
+        tv.backgroundView = backImageView
         return tv
     }()
     

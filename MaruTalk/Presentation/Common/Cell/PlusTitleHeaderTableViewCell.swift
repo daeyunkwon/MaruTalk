@@ -85,7 +85,7 @@ final class PlusTitleHeaderTableViewCell: UITableViewHeaderFooterView {
     }
     
     private func configureUI() {
-        contentView.backgroundColor = Constant.Color.brandWhite
+        contentView.backgroundColor = Constant.Color.brandWhite.withAlphaComponent(0.5)
     }
     
     func configure(title: String) {

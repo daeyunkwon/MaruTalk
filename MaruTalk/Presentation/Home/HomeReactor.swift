@@ -202,8 +202,14 @@ extension HomeReactor {
                 guard let self else { return .empty() }
                 switch result {
                 case .success(let value):
+                    let sorted = value.sorted {
+                        let item = Date.createdDate(dateString: $0.createdAt)
+                        let nextItem = Date.createdDate(dateString: $1.createdAt)
+                        return item < nextItem
+                    }
+                    
                     return .concat([
-                        .just(.setChannelSection(value)),
+                        .just(.setChannelSection(sorted)),
                         .just(.setExpanded(isExpanded: self.currentState.sections[0].isExpanded, sectionIndex: 0))
                     ])
                 
