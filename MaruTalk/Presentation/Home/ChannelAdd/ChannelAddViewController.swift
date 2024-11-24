@@ -53,6 +53,16 @@ extension ChannelAddViewController {
             .map { Reactor.Action.xMarkButtonTapped }
             .bind(to: reactor.action)
             .disposed(by: disposeBag)
+        
+        rootView.channelNameFieldView.inputTextField.rx.text.orEmpty
+            .map { Reactor.Action.inputName($0) }
+            .bind(to: reactor.action)
+            .disposed(by: disposeBag)
+        
+        rootView.channelDescriptionFieldView.inputTextField.rx.text.orEmpty
+            .map { Reactor.Action.inputDescription($0) }
+            .bind(to: reactor.action)
+            .disposed(by: disposeBag)
     }
 }
 
@@ -61,9 +71,17 @@ extension ChannelAddViewController {
 extension ChannelAddViewController {
     private func bindState(reactor: ChannelAddReactor) {
         reactor.pulse(\.$shouldDismiss)
+            .debug("테스트")
             .compactMap { $0 }
             .bind(with: self) { owner, _ in
                 owner.coordinator?.didFinishChannelAdd()
+            }
+            .disposed(by: disposeBag)
+        
+        reactor.state.map { $0.isCreateButtonEnabled }
+            .distinctUntilChanged()
+            .bind(with: self) { owner, value in
+                owner.rootView.createButton.setButtonEnabled(isEnabled: value)
             }
             .disposed(by: disposeBag)
     }
