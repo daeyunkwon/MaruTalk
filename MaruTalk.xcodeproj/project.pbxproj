@@ -61,6 +61,17 @@
 		4411153E2CF217C2000D1B2B /* ChannelAddView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4411153D2CF217C2000D1B2B /* ChannelAddView.swift */; };
 		441115412CF217FF000D1B2B /* ChannelAddViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 441115402CF217FF000D1B2B /* ChannelAddViewController.swift */; };
 		441115432CF2191E000D1B2B /* ChannelAddReactor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 441115422CF2191E000D1B2B /* ChannelAddReactor.swift */; };
+		441115462CF32461000D1B2B /* ChannelChattingReactor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 441115452CF32461000D1B2B /* ChannelChattingReactor.swift */; };
+		441115482CF3246C000D1B2B /* ChannelChattingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 441115472CF3246C000D1B2B /* ChannelChattingView.swift */; };
+		4411154A2CF32477000D1B2B /* ChannelChattingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 441115492CF32477000D1B2B /* ChannelChattingViewController.swift */; };
+		4411154C2CF441E5000D1B2B /* MessageSelectedImageCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4411154B2CF441E5000D1B2B /* MessageSelectedImageCollectionViewCell.swift */; };
+		4411154E2CF447FE000D1B2B /* MessageOnePhotoTextTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4411154D2CF447FE000D1B2B /* MessageOnePhotoTextTableViewCell.swift */; };
+		441115502CF453D8000D1B2B /* MessageTwoPhotoTextTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4411154F2CF453D8000D1B2B /* MessageTwoPhotoTextTableViewCell.swift */; };
+		441115522CF4552D000D1B2B /* MessageThreePhotoTextTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 441115512CF4552D000D1B2B /* MessageThreePhotoTextTableViewCell.swift */; };
+		441115542CF45DE0000D1B2B /* MessageFourPhotoTextTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 441115532CF45DE0000D1B2B /* MessageFourPhotoTextTableViewCell.swift */; };
+		441115562CF45F56000D1B2B /* MessageFivePhotoTextTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 441115552CF45F56000D1B2B /* MessageFivePhotoTextTableViewCell.swift */; };
+		441115582CF46C6D000D1B2B /* Chat.swift in Sources */ = {isa = PBXBuildFile; fileRef = 441115572CF46C6D000D1B2B /* Chat.swift */; };
+		4411155E2CF46DD8000D1B2B /* RealmSwift in Frameworks */ = {isa = PBXBuildFile; productRef = 4411155D2CF46DD8000D1B2B /* RealmSwift */; };
 		444910DA2CD77315005AB2F7 /* SignUpReactor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 444910D92CD77315005AB2F7 /* SignUpReactor.swift */; };
 		444910DC2CD8AC5C005AB2F7 /* Router.swift in Sources */ = {isa = PBXBuildFile; fileRef = 444910DB2CD8AC5C005AB2F7 /* Router.swift */; };
 		444910DF2CD8AC9F005AB2F7 /* Alamofire in Frameworks */ = {isa = PBXBuildFile; productRef = 444910DE2CD8AC9F005AB2F7 /* Alamofire */; };
@@ -157,6 +168,16 @@
 		4411153D2CF217C2000D1B2B /* ChannelAddView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChannelAddView.swift; sourceTree = "<group>"; };
 		441115402CF217FF000D1B2B /* ChannelAddViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChannelAddViewController.swift; sourceTree = "<group>"; };
 		441115422CF2191E000D1B2B /* ChannelAddReactor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChannelAddReactor.swift; sourceTree = "<group>"; };
+		441115452CF32461000D1B2B /* ChannelChattingReactor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChannelChattingReactor.swift; sourceTree = "<group>"; };
+		441115472CF3246C000D1B2B /* ChannelChattingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChannelChattingView.swift; sourceTree = "<group>"; };
+		441115492CF32477000D1B2B /* ChannelChattingViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChannelChattingViewController.swift; sourceTree = "<group>"; };
+		4411154B2CF441E5000D1B2B /* MessageSelectedImageCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MessageSelectedImageCollectionViewCell.swift; sourceTree = "<group>"; };
+		4411154D2CF447FE000D1B2B /* MessageOnePhotoTextTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MessageOnePhotoTextTableViewCell.swift; sourceTree = "<group>"; };
+		4411154F2CF453D8000D1B2B /* MessageTwoPhotoTextTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MessageTwoPhotoTextTableViewCell.swift; sourceTree = "<group>"; };
+		441115512CF4552D000D1B2B /* MessageThreePhotoTextTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MessageThreePhotoTextTableViewCell.swift; sourceTree = "<group>"; };
+		441115532CF45DE0000D1B2B /* MessageFourPhotoTextTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MessageFourPhotoTextTableViewCell.swift; sourceTree = "<group>"; };
+		441115552CF45F56000D1B2B /* MessageFivePhotoTextTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MessageFivePhotoTextTableViewCell.swift; sourceTree = "<group>"; };
+		441115572CF46C6D000D1B2B /* Chat.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Chat.swift; sourceTree = "<group>"; };
 		444910D92CD77315005AB2F7 /* SignUpReactor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignUpReactor.swift; sourceTree = "<group>"; };
 		444910DB2CD8AC5C005AB2F7 /* Router.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Router.swift; sourceTree = "<group>"; };
 		444910E02CD8B072005AB2F7 /* BodyKey.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BodyKey.swift; sourceTree = "<group>"; };
@@ -208,6 +229,7 @@
 				444DE71C2CD7720600821269 /* ReactorKit in Frameworks */,
 				4411150B2CE87428000D1B2B /* RxDataSources in Frameworks */,
 				444910EC2CD91C7B005AB2F7 /* Toast in Frameworks */,
+				4411155E2CF46DD8000D1B2B /* RealmSwift in Frameworks */,
 				4411152A2CEE3C8C000D1B2B /* RxKakaoSDKUser in Frameworks */,
 				444DE6DA2CD10A7A00821269 /* SnapKit in Frameworks */,
 			);
@@ -235,6 +257,7 @@
 				441114FD2CE73CD3000D1B2B /* HomeEmptyView.swift */,
 				441114E52CE5EF03000D1B2B /* HomeViewController.swift */,
 				4411153F2CF217C6000D1B2B /* ChannelAdd */,
+				441115442CF3243B000D1B2B /* ChannelChatting */,
 			);
 			path = Home;
 			sourceTree = "<group>";
@@ -295,6 +318,12 @@
 				441115012CE75A38000D1B2B /* PlusTitleTableViewCell.swift */,
 				441115052CE86F70000D1B2B /* HashTitleCountTableViewCell.swift */,
 				441115032CE75C4C000D1B2B /* ImageTitleCountTableViewCell.swift */,
+				4411154B2CF441E5000D1B2B /* MessageSelectedImageCollectionViewCell.swift */,
+				4411154D2CF447FE000D1B2B /* MessageOnePhotoTextTableViewCell.swift */,
+				4411154F2CF453D8000D1B2B /* MessageTwoPhotoTextTableViewCell.swift */,
+				441115512CF4552D000D1B2B /* MessageThreePhotoTextTableViewCell.swift */,
+				441115532CF45DE0000D1B2B /* MessageFourPhotoTextTableViewCell.swift */,
+				441115552CF45F56000D1B2B /* MessageFivePhotoTextTableViewCell.swift */,
 			);
 			path = Cell;
 			sourceTree = "<group>";
@@ -327,6 +356,16 @@
 				441115402CF217FF000D1B2B /* ChannelAddViewController.swift */,
 			);
 			path = ChannelAdd;
+			sourceTree = "<group>";
+		};
+		441115442CF3243B000D1B2B /* ChannelChatting */ = {
+			isa = PBXGroup;
+			children = (
+				441115452CF32461000D1B2B /* ChannelChattingReactor.swift */,
+				441115472CF3246C000D1B2B /* ChannelChattingView.swift */,
+				441115492CF32477000D1B2B /* ChannelChattingViewController.swift */,
+			);
+			path = ChannelChatting;
 			sourceTree = "<group>";
 		};
 		444DE6A92CD0FC9D00821269 = {
@@ -423,6 +462,7 @@
 				441115312CEF7FB4000D1B2B /* Workspace.swift */,
 				441115392CF07D70000D1B2B /* Channel.swift */,
 				4411153B2CF1DE41000D1B2B /* DMS.swift */,
+				441115572CF46C6D000D1B2B /* Chat.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -561,6 +601,7 @@
 				441115082CE87428000D1B2B /* Differentiator */,
 				4411150A2CE87428000D1B2B /* RxDataSources */,
 				441115292CEE3C8C000D1B2B /* RxKakaoSDKUser */,
+				4411155D2CF46DD8000D1B2B /* RealmSwift */,
 			);
 			productName = MaruTalk;
 			productReference = 444DE6B22CD0FC9D00821269 /* MaruTalk.app */;
@@ -598,6 +639,7 @@
 				444910EA2CD91C7B005AB2F7 /* XCRemoteSwiftPackageReference "Toast-Swift" */,
 				441115072CE87428000D1B2B /* XCRemoteSwiftPackageReference "RxDataSources" */,
 				441115282CEE3C8C000D1B2B /* XCRemoteSwiftPackageReference "kakao-ios-sdk-rx" */,
+				4411155C2CF46DD8000D1B2B /* XCRemoteSwiftPackageReference "realm-swift" */,
 			);
 			productRefGroup = 444DE6B32CD0FC9D00821269 /* Products */;
 			projectDirPath = "";
@@ -630,6 +672,7 @@
 				444DE7192CD74D7E00821269 /* CustomHandleNavigationBar.swift in Sources */,
 				441114CC2CE1DDD8000D1B2B /* WorkspaceInitialView.swift in Sources */,
 				441115222CECA501000D1B2B /* LoginViewController.swift in Sources */,
+				441115522CF4552D000D1B2B /* MessageThreePhotoTextTableViewCell.swift in Sources */,
 				441114E82CE5EF51000D1B2B /* HomeCoordinator.swift in Sources */,
 				444910E52CD8E0B1005AB2F7 /* NetworkError.swift in Sources */,
 				444DE6B62CD0FC9D00821269 /* AppDelegate.swift in Sources */,
@@ -638,6 +681,7 @@
 				441115172CE9FC18000D1B2B /* RoundedImageTitleView.swift in Sources */,
 				4411151D2CEB4430000D1B2B /* WorkspaceList.swift in Sources */,
 				441115202CECA4F3000D1B2B /* LoginView.swift in Sources */,
+				441115582CF46C6D000D1B2B /* Chat.swift in Sources */,
 				441115412CF217FF000D1B2B /* ChannelAddViewController.swift in Sources */,
 				441114CE2CE1DDF3000D1B2B /* WorkspaceInitialViewController.swift in Sources */,
 				444DE7152CD6222D00821269 /* SignUpViewController.swift in Sources */,
@@ -651,6 +695,7 @@
 				444DE6E92CD24E4100821269 /* BaseTableViewCell.swift in Sources */,
 				441115242CECABB6000D1B2B /* LoginReactor.swift in Sources */,
 				444DE6F42CD27B1600821269 /* UIButton+Extension.swift in Sources */,
+				4411154C2CF441E5000D1B2B /* MessageSelectedImageCollectionViewCell.swift in Sources */,
 				441114D42CE34EBD000D1B2B /* WorkspaceAddView.swift in Sources */,
 				441114C72CE08B03000D1B2B /* User.swift in Sources */,
 				441114E42CE5EEF8000D1B2B /* HomeView.swift in Sources */,
@@ -665,13 +710,16 @@
 				444DE7022CD4D2A700821269 /* Coordinator.swift in Sources */,
 				444DE7172CD6251100821269 /* TitleWithInputFieldView.swift in Sources */,
 				441114EC2CE60BF5000D1B2B /* SearchCoordinator.swift in Sources */,
+				441115562CF45F56000D1B2B /* MessageFivePhotoTextTableViewCell.swift in Sources */,
 				444DE6E22CD1207300821269 /* UIView+Extension.swift in Sources */,
 				444910E12CD8B072005AB2F7 /* BodyKey.swift in Sources */,
+				441115502CF453D8000D1B2B /* MessageTwoPhotoTextTableViewCell.swift in Sources */,
 				444DE6E02CD11FC100821269 /* OnboardingViewController.swift in Sources */,
 				444DE6DD2CD112EE00821269 /* UILabel+Extension.swift in Sources */,
 				441114D02CE1F942000D1B2B /* WorkspaceInitialReactor.swift in Sources */,
 				441115432CF2191E000D1B2B /* ChannelAddReactor.swift in Sources */,
 				4411153C2CF1DE41000D1B2B /* DMS.swift in Sources */,
+				441115542CF45DE0000D1B2B /* MessageFourPhotoTextTableViewCell.swift in Sources */,
 				4411153E2CF217C2000D1B2B /* ChannelAddView.swift in Sources */,
 				444910E32CD8B258005AB2F7 /* NetworkManager.swift in Sources */,
 				441115022CE75A38000D1B2B /* PlusTitleTableViewCell.swift in Sources */,
@@ -680,11 +728,14 @@
 				441114F42CE60C82000D1B2B /* SettingView.swift in Sources */,
 				441114EE2CE60C21000D1B2B /* SettingCoordinator.swift in Sources */,
 				441114F82CE60CB5000D1B2B /* SearchViewController.swift in Sources */,
+				441115482CF3246C000D1B2B /* ChannelChattingView.swift in Sources */,
+				4411154A2CF32477000D1B2B /* ChannelChattingViewController.swift in Sources */,
 				441115342CEF8123000D1B2B /* Date+Extension.swift in Sources */,
 				444DE7062CD609FC00821269 /* OnboardingCoordinator.swift in Sources */,
 				441115132CE9E2F4000D1B2B /* PlusTitleHeaderTableViewCell.swift in Sources */,
 				444DE6B82CD0FC9D00821269 /* SceneDelegate.swift in Sources */,
 				441115362CEF8FBE000D1B2B /* UIImageView+Extension.swift in Sources */,
+				441115462CF32461000D1B2B /* ChannelChattingReactor.swift in Sources */,
 				4411153A2CF07D70000D1B2B /* Channel.swift in Sources */,
 				441114D82CE3515D000D1B2B /* WorkspaceAddReactor.swift in Sources */,
 				441115112CE8A871000D1B2B /* DropdownArrowTableViewCellDelegate.swift in Sources */,
@@ -692,6 +743,7 @@
 				444DE6E52CD121AA00821269 /* BaseView.swift in Sources */,
 				444DE7042CD6093000821269 /* AppCoordinator.swift in Sources */,
 				441114FA2CE60CCC000D1B2B /* SettingViewController.swift in Sources */,
+				4411154E2CF447FE000D1B2B /* MessageOnePhotoTextTableViewCell.swift in Sources */,
 				441114F22CE60C76000D1B2B /* SearchView.swift in Sources */,
 				441114FE2CE73CD3000D1B2B /* HomeEmptyView.swift in Sources */,
 				444910DC2CD8AC5C005AB2F7 /* Router.swift in Sources */,
@@ -954,6 +1006,14 @@
 				minimumVersion = 2.23.0;
 			};
 		};
+		4411155C2CF46DD8000D1B2B /* XCRemoteSwiftPackageReference "realm-swift" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/realm/realm-swift";
+			requirement = {
+				kind = exactVersion;
+				version = 10.54.1;
+			};
+		};
 		444910DD2CD8AC9F005AB2F7 /* XCRemoteSwiftPackageReference "Alamofire" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/Alamofire/Alamofire";
@@ -1011,6 +1071,11 @@
 			isa = XCSwiftPackageProductDependency;
 			package = 441115282CEE3C8C000D1B2B /* XCRemoteSwiftPackageReference "kakao-ios-sdk-rx" */;
 			productName = RxKakaoSDKUser;
+		};
+		4411155D2CF46DD8000D1B2B /* RealmSwift */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 4411155C2CF46DD8000D1B2B /* XCRemoteSwiftPackageReference "realm-swift" */;
+			productName = RealmSwift;
 		};
 		444910DE2CD8AC9F005AB2F7 /* Alamofire */ = {
 			isa = XCSwiftPackageProductDependency;
