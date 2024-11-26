@@ -76,3 +76,16 @@ extension HomeCoordinator {
         navigationController.dismiss(animated: true)
     }
 }
+
+extension HomeCoordinator {
+    func showChannelChatting(channelID: String) {
+        let reactor = ChannelChattingReactor(viewType: .channel(channelID: channelID))
+        let channelChattingVC = ChannelChattingViewController(reactor: reactor)
+        channelChattingVC.coordinator = self
+        navigationController.pushViewController(channelChattingVC, animated: true)
+    }
+    
+    func didFinishChannelChatting() {
+        navigationController.popViewController(animated: true)
+    }
+}

@@ -43,6 +43,7 @@ final class HomeViewController: BaseViewController<HomeView>, View {
     override func setupNavi() {
         navigationItem.leftBarButtonItem = UIBarButtonItem(customView: workspaceNameView)
         navigationItem.rightBarButtonItem = UIBarButtonItem(customView: profileCircleView)
+        navigationItem.title = ""
     }
     
     private func setupNotificationCenter() {
@@ -88,6 +89,18 @@ extension HomeViewController {
                     ("채널 추가", { owner.coordinator?.showChannelAdd() }),
                     ("채널 탐색", { print("탐색 선택됨") }),
                 ])
+            }
+            .disposed(by: disposeBag)
+        
+        rootView.tableView.rx.modelSelected(SectionModel.Item.self)
+            .bind(with: self) { owner, item in
+                switch item {
+                case .channel(let data):
+                    owner.coordinator?.showChannelChatting(channelID: data.id)
+                case .dm(let data):
+                    print(data)
+                default: break
+                }
             }
             .disposed(by: disposeBag)
         
