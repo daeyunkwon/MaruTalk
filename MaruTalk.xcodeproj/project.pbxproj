@@ -72,6 +72,11 @@
 		441115562CF45F56000D1B2B /* MessageFivePhotoTextTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 441115552CF45F56000D1B2B /* MessageFivePhotoTextTableViewCell.swift */; };
 		441115582CF46C6D000D1B2B /* Chat.swift in Sources */ = {isa = PBXBuildFile; fileRef = 441115572CF46C6D000D1B2B /* Chat.swift */; };
 		4411155E2CF46DD8000D1B2B /* RealmSwift in Frameworks */ = {isa = PBXBuildFile; productRef = 4411155D2CF46DD8000D1B2B /* RealmSwift */; };
+		4411155F2CF46EED000D1B2B /* RealmSwift in Embed Frameworks */ = {isa = PBXBuildFile; productRef = 4411155D2CF46DD8000D1B2B /* RealmSwift */; settings = {ATTRIBUTES = (CodeSignOnCopy, ); }; };
+		441115622CF48397000D1B2B /* RealmChat.swift in Sources */ = {isa = PBXBuildFile; fileRef = 441115612CF48397000D1B2B /* RealmChat.swift */; };
+		441115642CF483B9000D1B2B /* RealmUser.swift in Sources */ = {isa = PBXBuildFile; fileRef = 441115632CF483B9000D1B2B /* RealmUser.swift */; };
+		441115662CF489DB000D1B2B /* RealmRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = 441115652CF489DB000D1B2B /* RealmRepository.swift */; };
+		441115692CF59694000D1B2B /* SocketIO in Frameworks */ = {isa = PBXBuildFile; productRef = 441115682CF59694000D1B2B /* SocketIO */; };
 		444910DA2CD77315005AB2F7 /* SignUpReactor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 444910D92CD77315005AB2F7 /* SignUpReactor.swift */; };
 		444910DC2CD8AC5C005AB2F7 /* Router.swift in Sources */ = {isa = PBXBuildFile; fileRef = 444910DB2CD8AC5C005AB2F7 /* Router.swift */; };
 		444910DF2CD8AC9F005AB2F7 /* Alamofire in Frameworks */ = {isa = PBXBuildFile; productRef = 444910DE2CD8AC9F005AB2F7 /* Alamofire */; };
@@ -114,6 +119,20 @@
 		444DE7192CD74D7E00821269 /* CustomHandleNavigationBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 444DE7182CD74D7E00821269 /* CustomHandleNavigationBar.swift */; };
 		444DE71C2CD7720600821269 /* ReactorKit in Frameworks */ = {isa = PBXBuildFile; productRef = 444DE71B2CD7720600821269 /* ReactorKit */; };
 /* End PBXBuildFile section */
+
+/* Begin PBXCopyFilesBuildPhase section */
+		441115602CF46EED000D1B2B /* Embed Frameworks */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 10;
+			files = (
+				4411155F2CF46EED000D1B2B /* RealmSwift in Embed Frameworks */,
+			);
+			name = "Embed Frameworks";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
 		441114C62CE08B03000D1B2B /* User.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = User.swift; sourceTree = "<group>"; };
@@ -178,6 +197,9 @@
 		441115532CF45DE0000D1B2B /* MessageFourPhotoTextTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MessageFourPhotoTextTableViewCell.swift; sourceTree = "<group>"; };
 		441115552CF45F56000D1B2B /* MessageFivePhotoTextTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MessageFivePhotoTextTableViewCell.swift; sourceTree = "<group>"; };
 		441115572CF46C6D000D1B2B /* Chat.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Chat.swift; sourceTree = "<group>"; };
+		441115612CF48397000D1B2B /* RealmChat.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RealmChat.swift; sourceTree = "<group>"; };
+		441115632CF483B9000D1B2B /* RealmUser.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RealmUser.swift; sourceTree = "<group>"; };
+		441115652CF489DB000D1B2B /* RealmRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RealmRepository.swift; sourceTree = "<group>"; };
 		444910D92CD77315005AB2F7 /* SignUpReactor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignUpReactor.swift; sourceTree = "<group>"; };
 		444910DB2CD8AC5C005AB2F7 /* Router.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Router.swift; sourceTree = "<group>"; };
 		444910E02CD8B072005AB2F7 /* BodyKey.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BodyKey.swift; sourceTree = "<group>"; };
@@ -226,6 +248,7 @@
 				444DE7002CD36B4200821269 /* RxSwift in Frameworks */,
 				444910DF2CD8AC9F005AB2F7 /* Alamofire in Frameworks */,
 				441115092CE87428000D1B2B /* Differentiator in Frameworks */,
+				441115692CF59694000D1B2B /* SocketIO in Frameworks */,
 				444DE71C2CD7720600821269 /* ReactorKit in Frameworks */,
 				4411150B2CE87428000D1B2B /* RxDataSources in Frameworks */,
 				444910EC2CD91C7B005AB2F7 /* Toast in Frameworks */,
@@ -538,6 +561,9 @@
 			children = (
 				441114C82CE1BDA5000D1B2B /* KeychainManager.swift */,
 				4411151A2CEB3190000D1B2B /* UserDefaultsManager.swift */,
+				441115612CF48397000D1B2B /* RealmChat.swift */,
+				441115632CF483B9000D1B2B /* RealmUser.swift */,
+				441115652CF489DB000D1B2B /* RealmRepository.swift */,
 			);
 			path = Database;
 			sourceTree = "<group>";
@@ -584,6 +610,7 @@
 				444DE6AE2CD0FC9D00821269 /* Sources */,
 				444DE6AF2CD0FC9D00821269 /* Frameworks */,
 				444DE6B02CD0FC9D00821269 /* Resources */,
+				441115602CF46EED000D1B2B /* Embed Frameworks */,
 			);
 			buildRules = (
 			);
@@ -602,6 +629,7 @@
 				4411150A2CE87428000D1B2B /* RxDataSources */,
 				441115292CEE3C8C000D1B2B /* RxKakaoSDKUser */,
 				4411155D2CF46DD8000D1B2B /* RealmSwift */,
+				441115682CF59694000D1B2B /* SocketIO */,
 			);
 			productName = MaruTalk;
 			productReference = 444DE6B22CD0FC9D00821269 /* MaruTalk.app */;
@@ -640,6 +668,7 @@
 				441115072CE87428000D1B2B /* XCRemoteSwiftPackageReference "RxDataSources" */,
 				441115282CEE3C8C000D1B2B /* XCRemoteSwiftPackageReference "kakao-ios-sdk-rx" */,
 				4411155C2CF46DD8000D1B2B /* XCRemoteSwiftPackageReference "realm-swift" */,
+				441115672CF59694000D1B2B /* XCRemoteSwiftPackageReference "socket.io-client-swift" */,
 			);
 			productRefGroup = 444DE6B32CD0FC9D00821269 /* Products */;
 			projectDirPath = "";
@@ -684,6 +713,7 @@
 				441115582CF46C6D000D1B2B /* Chat.swift in Sources */,
 				441115412CF217FF000D1B2B /* ChannelAddViewController.swift in Sources */,
 				441114CE2CE1DDF3000D1B2B /* WorkspaceInitialViewController.swift in Sources */,
+				441115642CF483B9000D1B2B /* RealmUser.swift in Sources */,
 				444DE7152CD6222D00821269 /* SignUpViewController.swift in Sources */,
 				441114E62CE5EF03000D1B2B /* HomeViewController.swift in Sources */,
 				444910E92CD8F04B005AB2F7 /* SLPErrorResponse.swift in Sources */,
@@ -737,12 +767,14 @@
 				441115362CEF8FBE000D1B2B /* UIImageView+Extension.swift in Sources */,
 				441115462CF32461000D1B2B /* ChannelChattingReactor.swift in Sources */,
 				4411153A2CF07D70000D1B2B /* Channel.swift in Sources */,
+				441115662CF489DB000D1B2B /* RealmRepository.swift in Sources */,
 				441114D82CE3515D000D1B2B /* WorkspaceAddReactor.swift in Sources */,
 				441115112CE8A871000D1B2B /* DropdownArrowTableViewCellDelegate.swift in Sources */,
 				441114DA2CE363B3000D1B2B /* UIImage+Extension.swift in Sources */,
 				444DE6E52CD121AA00821269 /* BaseView.swift in Sources */,
 				444DE7042CD6093000821269 /* AppCoordinator.swift in Sources */,
 				441114FA2CE60CCC000D1B2B /* SettingViewController.swift in Sources */,
+				441115622CF48397000D1B2B /* RealmChat.swift in Sources */,
 				4411154E2CF447FE000D1B2B /* MessageOnePhotoTextTableViewCell.swift in Sources */,
 				441114F22CE60C76000D1B2B /* SearchView.swift in Sources */,
 				441114FE2CE73CD3000D1B2B /* HomeEmptyView.swift in Sources */,
@@ -1014,6 +1046,14 @@
 				version = 10.54.1;
 			};
 		};
+		441115672CF59694000D1B2B /* XCRemoteSwiftPackageReference "socket.io-client-swift" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/socketio/socket.io-client-swift.git";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 16.1.1;
+			};
+		};
 		444910DD2CD8AC9F005AB2F7 /* XCRemoteSwiftPackageReference "Alamofire" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/Alamofire/Alamofire";
@@ -1076,6 +1116,11 @@
 			isa = XCSwiftPackageProductDependency;
 			package = 4411155C2CF46DD8000D1B2B /* XCRemoteSwiftPackageReference "realm-swift" */;
 			productName = RealmSwift;
+		};
+		441115682CF59694000D1B2B /* SocketIO */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 441115672CF59694000D1B2B /* XCRemoteSwiftPackageReference "socket.io-client-swift" */;
+			productName = SocketIO;
 		};
 		444910DE2CD8AC9F005AB2F7 /* Alamofire */ = {
 			isa = XCSwiftPackageProductDependency;
