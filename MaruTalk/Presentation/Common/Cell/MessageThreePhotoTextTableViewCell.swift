@@ -70,7 +70,7 @@ final class MessageThreePhotoTextTableViewCell: BaseTableViewCell {
     private let timeLabel: UILabel = {
         let label = UILabel()
         label.textColor = Constant.Color.textSecondary
-        label.font = Constant.Font.caption
+        label.font = .systemFont(ofSize: 10, weight: .regular)
         label.textAlignment = .left
         return label
     }()
@@ -184,7 +184,7 @@ final class MessageThreePhotoTextTableViewCell: BaseTableViewCell {
             thirdPhotoImageView.isHidden = true
         }
         
-        timeLabel.text = Date.dateToString(date: data.createdAt)
+        timeLabel.setTimeString(date: data.createdAt)
         
         if data.user?.userID == UserDefaultsManager.shared.userID {
             //자신이 보낸 메시지의 경우 오른쪽 배치
