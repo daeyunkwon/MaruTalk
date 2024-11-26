@@ -7,6 +7,7 @@
 
 import UIKit
 
+import RealmSwift
 import RxKakaoSDKCommon
 
 @main
@@ -21,6 +22,10 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         appearance()
         
         RxKakaoSDK.initSDK(appKey: "f83129f04ee8161fd09fa9e28cd7f264")
+        
+        print("RealmSwift 경로-----------------------------")
+        print(String(describing: Realm.Configuration.defaultConfiguration.fileURL))
+        print("-------------------------------------------")
         
         return true
     }

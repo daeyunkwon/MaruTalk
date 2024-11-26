@@ -32,8 +32,8 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         appCoordinator?.start()
         
         //UI 확인용 임시
-//        let reactor = ChannelAddReactor()
-//        let vc = ChannelAddViewController(reactor: reactor)
+//        let reactor = ChannelChattingReactor()
+//        let vc = ChannelChattingViewController(reactor: reactor)
 //        window?.rootViewController = UINavigationController(
 //            rootViewController: vc
 //        )

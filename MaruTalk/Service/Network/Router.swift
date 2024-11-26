@@ -22,12 +22,14 @@ enum Router {
     case workspaces //사용자가 속한 워크스페이스 리스트
     case createWorkspace(name: String, description: String, imageData: Data)
     case workspace(id: String) //특정 워크스페이스
-    
     //User
     case userMe //내 프로필 정보 조회
     //Channel
     case myChannels(workspaceID: String)
+    case channel(workspaceID: String, channelID: String)
     case createChannel(workspaceID: String, name: String, description: String?, imageData: Data?)
+    case chats(workspaceID: String, channelID: String, cursorDate: String?)
+    case sendChannelChat(workspaceID: String, channelID: String, content: String, files: [Data])
     //DMS
     case dms(workspaceID: String)
     
@@ -48,7 +50,10 @@ enum Router {
         case userMe
         //Channel
         case myChannels
+        case channel
         case createChannel
+        case chats
+        case sendChannelChat
         //DMS
         case dms
     }
@@ -71,17 +76,20 @@ extension Router: URLRequestConvertible {
         case .workspaces, .createWorkspace, .workspace: return APIURL.workspaces
         case .userMe: return APIURL.userMe
         case .myChannels(let workspaceID): return APIURL.myChaanels(workspaceID: workspaceID)
+        case .channel(let workspaceID, let channelID): return APIURL.channel(workspaceID: workspaceID, channelID: channelID)
         case .createChannel(let workspaceID, _, _, _): return APIURL.createChannel(workspaceID: workspaceID)
+        case .chats(let workspaceID, let channelID, _): return APIURL.chats(workspaceID: workspaceID, channelID: channelID)
+        case .sendChannelChat(let workspaceID, let channelID, _, _): return APIURL.sendChannelChat(workspaceID: workspaceID, channelID: channelID)
         case .dms(let workspaceID): return APIURL.dms(workspaceID: workspaceID)
         }
     }
     
     var method: HTTPMethod {
         switch self {
-        case .emailValidation(_), .join, .login, .loginWithApple, .loginWithKakao, .createWorkspace, .createChannel:
+        case .emailValidation(_), .join, .login, .loginWithApple, .loginWithKakao, .createWorkspace, .createChannel, .sendChannelChat:
             return .post
             
-        case .refresh, .fetchImage, .workspaces, .workspace, .userMe, .myChannels, .dms:
+        case .refresh, .fetchImage, .workspaces, .workspace, .userMe, .myChannels, .dms, .chats, .channel:
             return .get
         }
     }
@@ -102,14 +110,14 @@ extension Router: URLRequestConvertible {
                 "SesacKey": APIKey.apiKey
             ]
             
-        case .workspaces, .workspace, .userMe, .myChannels, .dms:
+        case .workspaces, .workspace, .userMe, .myChannels, .dms, .chats, .channel:
             return [
                 "Content-Type": "application/json",
                 "Authorization": KeychainManager.shared.getItem(forKey: .accessToken) ?? "",
                 "SesacKey": APIKey.apiKey
             ]
             
-        case .createWorkspace, .createChannel:
+        case .createWorkspace, .createChannel, .sendChannelChat:
             return [
                 "Content-Type": "multipart/form-data",
                 "Authorization": KeychainManager.shared.getItem(forKey: .accessToken) ?? "",
@@ -184,6 +192,14 @@ extension Router: URLRequestConvertible {
             }
             return multipartFormData
             
+        case .sendChannelChat(_, _, let content, let files):
+            let multipartFormData = MultipartFormData()
+            multipartFormData.append(Data(content.utf8), withName: "content")
+            for item in files {
+                multipartFormData.append(item, withName: "files", fileName: UUID().uuidString, mimeType: "image/jpeg")
+            }
+            return multipartFormData
+            
         default: return nil
         }
     }
@@ -198,6 +214,11 @@ extension Router: URLRequestConvertible {
         case .workspace(let id):
             return [
                 URLQueryItem(name: "workspaceID", value: id)
+            ]
+            
+        case .chats(_, _, let cursorDate):
+            return [
+                URLQueryItem(name: "cursor_date", value: cursorDate)
             ]
             
         default:

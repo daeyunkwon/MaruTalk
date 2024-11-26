@@ -24,6 +24,7 @@ final class RealmChat: Object {
         self.channelID = chat.channelID
         self.content = chat.content
         self.createdAt = Date.createdDate(dateString: chat.createdAt)
+        self.channelName = chat.channelName
         
         if let files = chat.files {
             self.files.append(objectsIn: files)

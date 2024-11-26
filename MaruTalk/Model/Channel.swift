@@ -14,6 +14,7 @@ struct Channel: Decodable, Equatable {
     let coverImage: String?
     let ownerID: String
     let createdAt: String
+    let channelMembers: [User]?
     
     enum CodingKeys: String, CodingKey {
         case id = "channel_id"
@@ -22,6 +23,7 @@ struct Channel: Decodable, Equatable {
         case coverImage
         case ownerID = "owner_id"
         case createdAt
+        case channelMembers
     }
     
     static func == (lhs: Channel, rhs: Channel) -> Bool {

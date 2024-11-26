@@ -10,6 +10,7 @@ import UIKit
 enum Constant {
     enum Color {
         static let brandColor: UIColor = UIColor(red: 170/255, green: 199/255, blue: 254/255, alpha: 1.0)
+        static let brandBlue: UIColor = UIColor(red: 0.03, green: 0.24, blue: 0.50, alpha: 1.00)
         static let brandRed: UIColor = UIColor(red: 233/255, green: 102/255, blue: 107/255, alpha: 1.0)
         static let brandInactive: UIColor = UIColor(red: 170/255, green: 170/255, blue: 170/255, alpha: 1.0)
         static let brandBlack: UIColor = .black
@@ -32,6 +33,7 @@ enum Constant {
         static let bodyBold: UIFont = .systemFont(ofSize: 13, weight: .bold)
         static let body: UIFont = .systemFont(ofSize: 13, weight: .regular)
         static let caption: UIFont = .systemFont(ofSize: 12, weight: .regular)
+        static let captionSemiBold: UIFont = .systemFont(ofSize: 12, weight: .semibold)
         
         enum LineHeight {
             static let title1: CGFloat = 30

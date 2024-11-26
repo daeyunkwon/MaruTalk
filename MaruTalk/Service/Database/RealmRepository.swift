@@ -25,7 +25,7 @@ final class RealmRepository {
 }
 
 extension RealmRepository {
-    func fetchChatList(channelID: String) -> [RealmChat]? {
+    func fetchChatList(channelID: String) -> [RealmChat] {
         do {
             let realm = try getRealm()
             
@@ -35,7 +35,7 @@ extension RealmRepository {
         } catch {
             print("ERROR: RealmChat Fetch Failed")
             print(error)
-            return nil
+            return []
         }
     }
     
