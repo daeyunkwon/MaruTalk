@@ -171,6 +171,7 @@ extension ChannelChattingViewController {
                 } else {
                     owner.rootView.collectionView.isHidden = false
                 }
+                owner.rootView.updateMessageSendButtonActiveState()
             }
             .disposed(by: disposeBag)
         

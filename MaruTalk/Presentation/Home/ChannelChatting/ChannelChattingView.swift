@@ -169,11 +169,19 @@ final class ChannelChattingView: BaseView {
         endEditing(true)
     }
     
-    private func updateMessageSendButtonActiveState() {
-        if messageInputTextView.text.trimmingCharacters(in: .whitespaces).isEmpty {
+    func updateMessageSendButtonActiveState() {
+        if messageInputTextView.textColor == Constant.Color.textSecondary && collectionView.isHidden || messageInputTextView.text.trimmingCharacters(in: .whitespaces).isEmpty {
+            
             messageSendButton.setImage(UIImage(systemName: "arrow.up.message"), for: .normal)
             messageSendButton.tintColor = Constant.Color.textSecondary
             messageSendButton.isUserInteractionEnabled = false
+            
+            //공백이지만 사진 첨부된 경우 다시 활성화
+            if !collectionView.isHidden && messageInputTextView.text.trimmingCharacters(in: .whitespaces).isEmpty {
+                messageSendButton.setImage(UIImage(systemName: "arrow.up.message.fill"), for: .normal)
+                messageSendButton.tintColor = Constant.Color.brandColor
+                messageSendButton.isUserInteractionEnabled = true
+            }
         } else {
             messageSendButton.setImage(UIImage(systemName: "arrow.up.message.fill"), for: .normal)
             messageSendButton.tintColor = Constant.Color.brandColor
