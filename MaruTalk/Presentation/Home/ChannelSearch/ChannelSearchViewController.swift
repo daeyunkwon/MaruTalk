@@ -28,6 +28,7 @@ final class ChannelSearchViewController: BaseViewController<ChannelSearchView>, 
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        reactor?.action.onNext(.fetch)
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -63,6 +64,7 @@ extension ChannelSearchViewController {
             .map { Reactor.Action.xMarkButtonTapped }
             .bind(to: reactor.action)
             .disposed(by: disposeBag)
+        
     }
 }
 
@@ -74,6 +76,20 @@ extension ChannelSearchViewController {
             .compactMap { $0 }
             .bind(with: self) { owner, _ in
                 owner.coordinator?.didFinishChannelSearch()
+            }
+            .disposed(by: disposeBag)
+        
+        reactor.pulse(\.$networkError)
+            .compactMap { $0 }
+            .bind(with: self) { owner, value in
+                owner.showToastForNetworkError(api: value.0, errorCode: value.1)
+            }
+            .disposed(by: disposeBag)
+        
+        reactor.pulse(\.$channelList)
+            .compactMap { $0 }
+            .bind(to: rootView.tableView.rx.items(cellIdentifier: HashTitleCountTableViewCell.reuseIdentifier, cellType: HashTitleCountTableViewCell.self)) { row, element, cell in
+                cell.configure(channel: element)
             }
             .disposed(by: disposeBag)
     }

@@ -17,7 +17,7 @@ final class ChannelSearchView: BaseView {
         let tv = UITableView()
         tv.register(HashTitleCountTableViewCell.self, forCellReuseIdentifier: HashTitleCountTableViewCell.reuseIdentifier)
         tv.separatorStyle = .none
-        tv.backgroundColor = .yellow
+        tv.backgroundColor = Constant.Color.brandWhite
         tv.rowHeight = UITableView.automaticDimension
         return tv
     }()

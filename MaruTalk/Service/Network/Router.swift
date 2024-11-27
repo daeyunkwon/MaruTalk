@@ -26,7 +26,8 @@ enum Router {
     //User
     case userMe //내 프로필 정보 조회
     //Channel
-    case myChannels(workspaceID: String)
+    case channels(workspaceID: String) //워크 스페이스에 속하는 모든 채널들
+    case myChannels(workspaceID: String) //워크 스페이스에 속하는 사용자가 속한 채널들
     case channel(workspaceID: String, channelID: String)
     case createChannel(workspaceID: String, name: String, description: String?, imageData: Data?)
     case chats(workspaceID: String, channelID: String, cursorDate: String?)
@@ -51,6 +52,7 @@ enum Router {
         //User
         case userMe
         //Channel
+        case channels
         case myChannels
         case channel
         case createChannel
@@ -78,7 +80,8 @@ extension Router: URLRequestConvertible {
         case .workspaces, .createWorkspace, .workspace: return APIURL.workspaces
         case .workspaceMemberInvite(let workspaceID, _): return APIURL.workspaceMemberInvite(workspaceID: workspaceID)
         case .userMe: return APIURL.userMe
-        case .myChannels(let workspaceID): return APIURL.myChaanels(workspaceID: workspaceID)
+        case .channels(let workspaceID): return APIURL.channels(workspaceID: workspaceID)
+        case .myChannels(let workspaceID): return APIURL.myChannels(workspaceID: workspaceID)
         case .channel(let workspaceID, let channelID): return APIURL.channel(workspaceID: workspaceID, channelID: channelID)
         case .createChannel(let workspaceID, _, _, _): return APIURL.createChannel(workspaceID: workspaceID)
         case .chats(let workspaceID, let channelID, _): return APIURL.chats(workspaceID: workspaceID, channelID: channelID)
@@ -92,7 +95,7 @@ extension Router: URLRequestConvertible {
         case .emailValidation(_), .join, .login, .loginWithApple, .loginWithKakao, .createWorkspace, .createChannel, .sendChannelChat, .workspaceMemberInvite:
             return .post
             
-        case .refresh, .fetchImage, .workspaces, .workspace, .userMe, .myChannels, .dms, .chats, .channel:
+        case .refresh, .fetchImage, .workspaces, .workspace, .userMe, .myChannels, .dms, .chats, .channel, .channels:
             return .get
         }
     }
@@ -113,7 +116,7 @@ extension Router: URLRequestConvertible {
                 "SesacKey": APIKey.apiKey
             ]
             
-        case .workspaces, .workspace, .userMe, .myChannels, .dms, .chats, .channel, .workspaceMemberInvite:
+        case .workspaces, .workspace, .userMe, .myChannels, .dms, .chats, .channel, .workspaceMemberInvite, .channels:
             return [
                 "Content-Type": "application/json",
                 "Authorization": KeychainManager.shared.getItem(forKey: .accessToken) ?? "",

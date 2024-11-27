@@ -23,6 +23,7 @@ final class HashTitleCountTableViewCell: BaseTableViewCell {
     private let titleLabel: UILabel = {
         let label = UILabel()
         label.font = Constant.Font.body
+        label.textColor = Constant.Color.textPrimary
         label.textAlignment = .left
         
         return label
