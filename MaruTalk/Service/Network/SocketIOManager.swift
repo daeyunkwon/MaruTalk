@@ -29,7 +29,7 @@ final class SocketIOManager {
             print("ERROR: URL 생성 실패 - \(#function)")
             return
         }
-        manager = SocketManager(socketURL: url, config: [.log(true), .forceWebsockets(true)])
+        manager = SocketManager(socketURL: url, config: [.log(true), .compress]) //설정: 로그 출력 및 데이터 압축
         socket = manager?.socket(forNamespace: "/ws-channel-\(channelID)")
         
         //소켓 연결
@@ -57,7 +57,8 @@ final class SocketIOManager {
     
     func disconnect() {
         socket?.disconnect() //소켓 연결 해제
-        socket?.didDisconnect(reason: "소켓 연결 해제됨")
+        socket = nil
+        manager = nil
     }
 }
 
