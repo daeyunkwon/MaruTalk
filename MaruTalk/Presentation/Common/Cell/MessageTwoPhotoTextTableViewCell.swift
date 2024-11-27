@@ -50,6 +50,7 @@ final class MessageTwoPhotoTextTableViewCell: BaseTableViewCell {
         iv.contentMode = .scaleAspectFill
         iv.layer.cornerRadius = 12
         iv.layer.maskedCorners = [.layerMinXMinYCorner, .layerMinXMaxYCorner]
+        iv.clipsToBounds = true
         return iv
     }()
     
@@ -58,6 +59,7 @@ final class MessageTwoPhotoTextTableViewCell: BaseTableViewCell {
         iv.contentMode = .scaleAspectFill
         iv.layer.cornerRadius = 12
         iv.layer.maskedCorners = [.layerMaxXMinYCorner, .layerMaxXMaxYCorner]
+        iv.clipsToBounds = true
         return iv
     }()
     
@@ -157,17 +159,21 @@ final class MessageTwoPhotoTextTableViewCell: BaseTableViewCell {
             messageBodyBackView.isHidden = true
         }
         
+        let imageViewList = [firstPhotoImageView, secondPhotoImageView]
         if !data.files.isEmpty {
-            firstPhotoImageView.isHidden = false
-            secondPhotoImageView.isHidden = false
-            for path in data.files {
-                firstPhotoImageView.setImage(imagePath: path)
-                secondPhotoImageView.setImage(imagePath: path)
+            imageViewList.forEach {
+                $0.isHidden = false
+            }
+            
+            for (path, imageView) in zip(data.files, imageViewList) {
+                imageView.setImage(imagePath: path)
             }
         } else {
-            firstPhotoImageView.isHidden = true
-            secondPhotoImageView.isHidden = true
+            imageViewList.forEach {
+                $0.isHidden = true
+            }
         }
+        
         
         timeLabel.setTimeString(date: data.createdAt)
         

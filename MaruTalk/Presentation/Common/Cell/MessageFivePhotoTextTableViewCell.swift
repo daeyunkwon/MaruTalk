@@ -50,12 +50,14 @@ final class MessageFivePhotoTextTableViewCell: BaseTableViewCell {
         iv.contentMode = .scaleAspectFill
         iv.layer.cornerRadius = 12
         iv.layer.maskedCorners = [.layerMinXMinYCorner]
+        iv.clipsToBounds = true
         return iv
     }()
     
     private let secondPhotoImageView: UIImageView = {
         let iv = UIImageView()
         iv.contentMode = .scaleAspectFill
+        iv.clipsToBounds = true
         return iv
     }()
     
@@ -64,6 +66,7 @@ final class MessageFivePhotoTextTableViewCell: BaseTableViewCell {
         iv.contentMode = .scaleAspectFill
         iv.layer.cornerRadius = 12
         iv.layer.maskedCorners = [.layerMaxXMinYCorner]
+        iv.clipsToBounds = true
         return iv
     }()
     
@@ -72,6 +75,7 @@ final class MessageFivePhotoTextTableViewCell: BaseTableViewCell {
         iv.contentMode = .scaleAspectFill
         iv.layer.cornerRadius = 12
         iv.layer.maskedCorners = [.layerMinXMaxYCorner]
+        iv.clipsToBounds = true
         return iv
     }()
     
@@ -80,6 +84,7 @@ final class MessageFivePhotoTextTableViewCell: BaseTableViewCell {
         iv.contentMode = .scaleAspectFill
         iv.layer.cornerRadius = 12
         iv.layer.maskedCorners = [.layerMaxXMaxYCorner]
+        iv.clipsToBounds = true
         return iv
     }()
     
@@ -214,25 +219,19 @@ final class MessageFivePhotoTextTableViewCell: BaseTableViewCell {
             messageBodyBackView.isHidden = true
         }
         
+        let imageViewList = [firstPhotoImageView, secondPhotoImageView, thirdPhotoImageView, fourthPhotoImageView, fifthPhotoImageView]
         if !data.files.isEmpty {
-            firstPhotoImageView.isHidden = false
-            secondPhotoImageView.isHidden = false
-            thirdPhotoImageView.isHidden = false
-            fourthPhotoImageView.isHidden = false
-            fifthPhotoImageView.isHidden = false
-            for path in data.files {
-                firstPhotoImageView.setImage(imagePath: path)
-                secondPhotoImageView.setImage(imagePath: path)
-                thirdPhotoImageView.setImage(imagePath: path)
-                fourthPhotoImageView.setImage(imagePath: path)
-                fifthPhotoImageView.setImage(imagePath: path)
+            imageViewList.forEach {
+                $0.isHidden = false
+            }
+            
+            for (path, imageView) in zip(data.files, imageViewList) {
+                imageView.setImage(imagePath: path)
             }
         } else {
-            firstPhotoImageView.isHidden = true
-            secondPhotoImageView.isHidden = true
-            thirdPhotoImageView.isHidden = true
-            fourthPhotoImageView.isHidden = true
-            fifthPhotoImageView.isHidden = true
+            imageViewList.forEach {
+                $0.isHidden = true
+            }
         }
         
         timeLabel.setTimeString(date: data.createdAt)

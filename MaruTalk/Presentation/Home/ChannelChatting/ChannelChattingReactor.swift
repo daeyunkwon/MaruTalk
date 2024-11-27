@@ -13,7 +13,7 @@ final class ChannelChattingReactor: Reactor {
     enum Action {
         case fetch
         case viewDisappear
-        case inputContent(String)
+        case inputContent((String, Bool))
         case sendButtonTapped
         case newMessageReceived([Chat])
         case messagePlusButtonTapped
@@ -42,6 +42,7 @@ final class ChannelChattingReactor: Reactor {
         @Pulse var chatList: [RealmChat]?
         
         var content: String = ""
+        
         @Pulse var messageSendSuccess: Void?
         @Pulse var shouldScrollToBottom: Void?
         @Pulse var shouldShowPhotoAlbum: Void?
@@ -104,9 +105,12 @@ extension ChannelChattingReactor {
             return disconnectSocket()
         
         case .inputContent(let value):
+            let content = value.0
+            let isPlaceholderText = value.1
+            
             //공백 체크
-            if !value.trimmingCharacters(in: .whitespaces).isEmpty {
-                return .just(.setContent(value))
+            if !content.trimmingCharacters(in: .whitespaces).isEmpty, !isPlaceholderText {
+                return .just(.setContent(content))
             } else {
                 return .just(.setContent(""))
             }
@@ -283,7 +287,7 @@ extension ChannelChattingReactor {
         guard let workspaceID = UserDefaultsManager.shared.recentWorkspaceID else { return .empty() }
         guard let channelID = currentState.channelID else { return .empty() }
         let content = currentState.content
-        let files: [Data] = []
+        let files: [Data] = currentState.photoImageDatas
         
         return NetworkManager.shared.performRequestMultipartFormData(api: .sendChannelChat(workspaceID: workspaceID, channelID: channelID, content: content, files: files), model: Chat.self)
             .asObservable()
@@ -295,6 +299,7 @@ extension ChannelChattingReactor {
                     return .concat([
                         .just(.setMessageSendSuccess(())),
                         .just(.setChatList([RealmChat(chat: value)])),
+                        .just(.setPhotoImageDatas([])),
                         .just(.setScrollToBottom(()))
                     ])
                     

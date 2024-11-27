@@ -49,6 +49,7 @@ final class MessageOnePhotoTextTableViewCell: BaseTableViewCell {
         let iv = UIImageView()
         iv.contentMode = .scaleAspectFill
         iv.layer.cornerRadius = 12
+        iv.clipsToBounds = true
         return iv
     }()
     

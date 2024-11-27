@@ -54,8 +54,16 @@ final class ChannelChattingViewController: BaseViewController<ChannelChattingVie
 extension ChannelChattingViewController {
     private func bindAction(reactor: ChannelChattingReactor) {
         rootView.messageInputTextView.rx.text.orEmpty
-            .map { Reactor.Action.inputContent($0) }
-            .bind(to: reactor.action)
+            .bind(with: self) { owner, value in
+                
+                var isPlaceholderText: Bool = false
+                
+                if owner.rootView.messageInputTextView.textColor == Constant.Color.textSecondary {
+                    isPlaceholderText = true
+                }
+                
+                owner.reactor?.action.onNext(.inputContent((value, isPlaceholderText)))
+            }
             .disposed(by: disposeBag)
         
         rootView.messageSendButton.rx.tap

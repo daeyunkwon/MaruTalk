@@ -216,7 +216,7 @@ extension ChannelChattingView: UITextViewDelegate {
     
     func textViewDidBeginEditing(_ textView: UITextView) {
         //플레이스 홀더 제거
-        if textView.text == "메시지를 입력하세요" {
+        if textView.text == "메시지를 입력하세요" && textView.textColor == Constant.Color.textSecondary {
             textView.text = nil
             textView.textColor = Constant.Color.textPrimary
         }
