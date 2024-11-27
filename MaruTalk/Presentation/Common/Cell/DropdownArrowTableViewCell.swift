@@ -47,7 +47,7 @@ final class DropdownArrowTableViewCell: UITableViewHeaderFooterView {
         configureHierarchy()
         configureLayout()
         
-        contentView.backgroundColor = Constant.Color.brandWhite.withAlphaComponent(0.5)
+        contentView.backgroundColor = Constant.Color.brandWhite.withAlphaComponent(0.8)
         
         let tapGesture = UITapGestureRecognizer(target: self, action: #selector(tapGesture))
         contentView.addGestureRecognizer(tapGesture)
