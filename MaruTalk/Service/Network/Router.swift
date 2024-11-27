@@ -22,6 +22,7 @@ enum Router {
     case workspaces //사용자가 속한 워크스페이스 리스트
     case createWorkspace(name: String, description: String, imageData: Data)
     case workspace(id: String) //특정 워크스페이스
+    case workspaceMemberInvite(workspaceID: String, email: String)
     //User
     case userMe //내 프로필 정보 조회
     //Channel
@@ -46,6 +47,7 @@ enum Router {
         case workspaces
         case createWorkspace
         case workspace
+        case workspaceMemberInvite
         //User
         case userMe
         //Channel
@@ -74,6 +76,7 @@ extension Router: URLRequestConvertible {
         case .loginWithApple: return APIURL.loginWithApple
         case .loginWithKakao: return APIURL.loginWithKakao
         case .workspaces, .createWorkspace, .workspace: return APIURL.workspaces
+        case .workspaceMemberInvite(let workspaceID, _): return APIURL.workspaceMemberInvite(workspaceID: workspaceID)
         case .userMe: return APIURL.userMe
         case .myChannels(let workspaceID): return APIURL.myChaanels(workspaceID: workspaceID)
         case .channel(let workspaceID, let channelID): return APIURL.channel(workspaceID: workspaceID, channelID: channelID)
@@ -86,7 +89,7 @@ extension Router: URLRequestConvertible {
     
     var method: HTTPMethod {
         switch self {
-        case .emailValidation(_), .join, .login, .loginWithApple, .loginWithKakao, .createWorkspace, .createChannel, .sendChannelChat:
+        case .emailValidation(_), .join, .login, .loginWithApple, .loginWithKakao, .createWorkspace, .createChannel, .sendChannelChat, .workspaceMemberInvite:
             return .post
             
         case .refresh, .fetchImage, .workspaces, .workspace, .userMe, .myChannels, .dms, .chats, .channel:
@@ -110,7 +113,7 @@ extension Router: URLRequestConvertible {
                 "SesacKey": APIKey.apiKey
             ]
             
-        case .workspaces, .workspace, .userMe, .myChannels, .dms, .chats, .channel:
+        case .workspaces, .workspace, .userMe, .myChannels, .dms, .chats, .channel, .workspaceMemberInvite:
             return [
                 "Content-Type": "application/json",
                 "Authorization": KeychainManager.shared.getItem(forKey: .accessToken) ?? "",
@@ -166,6 +169,11 @@ extension Router: URLRequestConvertible {
             return try? JSONEncoder().encode([
                 BodyKey.oauthToken: oauthToken,
                 BodyKey.deviceToken: deviceToken
+            ])
+            
+        case .workspaceMemberInvite(_, let email):
+            return try? JSONEncoder().encode([
+                BodyKey.email: email
             ])
             
         default: return nil

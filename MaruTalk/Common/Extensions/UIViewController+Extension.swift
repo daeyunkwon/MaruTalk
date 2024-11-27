@@ -62,6 +62,13 @@ extension UIViewController {
             default: break
             }
             
+        case .workspaceMemberInvite:
+            switch errorCode {
+            case "E12": message = "이미 워크스페이스에 소속된 팀원이에요."
+            case "E03", "E13", "E11": message = "회원 정보를 찾을 수 없습니다."
+            default: break
+            }
+            
         default: break
         }
         

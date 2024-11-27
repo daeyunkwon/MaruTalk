@@ -11,4 +11,6 @@ extension Notification.Name {
     static let workspaceAddComplete = Notification.Name("workspaceAddComplete")
     
     static let channelAddComplete = Notification.Name("channelAddComplete")
+    
+    static let memberInviteComplete = Notification.Name("memberInviteComplete")
 }

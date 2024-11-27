@@ -53,6 +53,16 @@ extension MemberInviteViewController {
             .map { Reactor.Action.inputEmail($0) }
             .bind(to: reactor.action)
             .disposed(by: disposeBag)
+        
+        xMarkButton.rx.tap
+            .map { Reactor.Action.xMarkButtonTapped }
+            .bind(to: reactor.action)
+            .disposed(by: disposeBag)
+        
+        rootView.inviteButton.rx.tap
+            .map { Reactor.Action.inviteButtonTapped }
+            .bind(to: reactor.action)
+            .disposed(by: disposeBag)
     }
 }
 
@@ -64,6 +74,28 @@ extension MemberInviteViewController {
             .distinctUntilChanged()
             .bind(with: self) { owner, value in
                 owner.rootView.inviteButton.setButtonEnabled(isEnabled: value)
+            }
+            .disposed(by: disposeBag)
+        
+        reactor.state.map { $0.shouldNavigateToHome }
+            .filter { $0 == true }
+            .bind(with: self) { owner, _ in
+                owner.coordinator?.didFinishMemberInvite()
+            }
+            .disposed(by: disposeBag)
+        
+        reactor.state.map { $0.inviteSuccess }
+            .filter { $0 == true }
+            .bind(with: self) { owner, _ in
+                NotificationCenter.default.post(name: .memberInviteComplete, object: nil)
+                owner.coordinator?.didFinishMemberInvite()
+            }
+            .disposed(by: disposeBag)
+        
+        reactor.pulse(\.$networkError)
+            .compactMap { $0 }
+            .bind(with: self) { owner, value in
+                owner.showToastForNetworkError(api: value.0, errorCode: value.1)
             }
             .disposed(by: disposeBag)
     }

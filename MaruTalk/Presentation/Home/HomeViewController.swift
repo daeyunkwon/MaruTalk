@@ -49,6 +49,7 @@ final class HomeViewController: BaseViewController<HomeView>, View {
     private func setupNotificationCenter() {
         NotificationCenter.default.addObserver(self, selector: #selector(handleModalDismissed), name: .workspaceAddComplete, object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(handleModalDismissed), name: .channelAddComplete, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(handleModalDismissed), name: .memberInviteComplete, object: nil)
     }
     
     //MARK: - Methods
@@ -62,8 +63,12 @@ final class HomeViewController: BaseViewController<HomeView>, View {
     @objc private func handleModalDismissed(notification: Notification) {
         reactor?.action.onNext(.fetch)
         
-        if notification.name == .channelAddComplete {
+        switch notification.name {
+        case .channelAddComplete:
             showToastMessage(message: "채널이 생성되었습니다.")
+        case .memberInviteComplete:
+            showToastMessage(message: "멤버를 성공적으로 초대했습니다.")
+        default: break
         }
     }
 }
