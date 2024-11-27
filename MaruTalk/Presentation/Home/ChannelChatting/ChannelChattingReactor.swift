@@ -24,6 +24,7 @@ final class ChannelChattingReactor: Reactor {
         case setChatList([RealmChat])
         case setContent(String)
         case setMessageSendSuccess(Void)
+        case setScrollToBottom(Void)
     }
     
     struct State {
@@ -37,6 +38,7 @@ final class ChannelChattingReactor: Reactor {
         
         var content: String = ""
         @Pulse var messageSendSuccess: Void?
+        @Pulse var shouldScrollToBottom: Void?
     }
     
     let initialState: State
@@ -152,6 +154,9 @@ extension ChannelChattingReactor {
         
         case .setMessageSendSuccess(let value):
             newState.messageSendSuccess = value
+        
+        case .setScrollToBottom(let value):
+            newState.shouldScrollToBottom = value
         }
         return newState
     }
@@ -192,7 +197,8 @@ extension ChannelChattingReactor {
             
             return .concat([
                 .just(.setChatList(result)),
-                fetchChats(cursorDate: Date.formatToISO8601String(date: result.last?.createdAt ?? Date()))
+                fetchChats(cursorDate: Date.formatToISO8601String(date: result.last?.createdAt ?? Date())),
+                .just(.setScrollToBottom(()))
             ])
         }
     }
@@ -224,7 +230,10 @@ extension ChannelChattingReactor {
                         chatList.sort {
                             $0.createdAt < $1.createdAt
                         }
-                        return .just(.setChatList(chatList))
+                        return .concat([
+                            .just(.setChatList(chatList)),
+                            .just(.setScrollToBottom(()))
+                        ])
                     } else {
                         return .empty()
                     }
@@ -260,7 +269,8 @@ extension ChannelChattingReactor {
                     RealmRepository.shared.saveChat(chat: RealmChat(chat: value))
                     return .concat([
                         .just(.setMessageSendSuccess(())),
-                        .just(.setChatList([RealmChat(chat: value)]))
+                        .just(.setChatList([RealmChat(chat: value)])),
+                        .just(.setScrollToBottom(()))
                     ])
                     
                 case .failure(let error):

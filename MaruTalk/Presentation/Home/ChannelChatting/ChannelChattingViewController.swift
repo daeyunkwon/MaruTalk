@@ -139,5 +139,16 @@ extension ChannelChattingViewController {
                 }
             }
             .disposed(by: disposeBag)
+        
+        reactor.pulse(\.$shouldScrollToBottom)
+            .compactMap { $0 }
+            .bind(with: self) { owner, _ in
+                let lastRowIndex = owner.rootView.tableView.numberOfRows(inSection: 0) - 1
+                guard lastRowIndex >= 0 else { return }
+                
+                let lastIndexPath = IndexPath(row: lastRowIndex, section: 0)
+                owner.rootView.tableView.scrollToRow(at: lastIndexPath, at: .bottom, animated: false)
+            }
+            .disposed(by: disposeBag)
     }
 }
