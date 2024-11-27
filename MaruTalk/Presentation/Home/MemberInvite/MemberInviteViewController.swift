@@ -28,7 +28,6 @@ final class MemberInviteViewController: BaseViewController<MemberInviteView>, Vi
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
     }
     
     //MARK: - Configurations
@@ -50,7 +49,10 @@ final class MemberInviteViewController: BaseViewController<MemberInviteView>, Vi
 
 extension MemberInviteViewController {
     private func bindAction(reactor: MemberInviteReactor) {
-        
+        rootView.emailFieldView.inputTextField.rx.text.orEmpty
+            .map { Reactor.Action.inputEmail($0) }
+            .bind(to: reactor.action)
+            .disposed(by: disposeBag)
     }
 }
 
@@ -58,7 +60,12 @@ extension MemberInviteViewController {
 
 extension MemberInviteViewController {
     private func bindState(reactor: MemberInviteReactor) {
-        
+        reactor.state.map { $0.isInviteButtonEnabled }
+            .distinctUntilChanged()
+            .bind(with: self) { owner, value in
+                owner.rootView.inviteButton.setButtonEnabled(isEnabled: value)
+            }
+            .disposed(by: disposeBag)
     }
 }
 

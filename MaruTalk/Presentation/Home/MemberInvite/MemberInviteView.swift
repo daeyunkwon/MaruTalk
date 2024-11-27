@@ -15,7 +15,7 @@ final class MemberInviteView: BaseView {
     
     let emailFieldView = TitleWithInputFieldView(title: "이메일", placeholderText: "초대할 팀원의 이메일을 입력하세요.")
 
-    let inviteButton = RoundedBrandButton(title: "초대 보내기")
+    let inviteButton = RoundedBrandButton(title: "초대하기")
     
     //MARK: - Configurations
     
