@@ -92,7 +92,7 @@ extension HomeViewController {
             .bind(with: self) { owner, value in
                 owner.showActionSheet(actions: [
                     ("채널 추가", { owner.coordinator?.showChannelAdd() }),
-                    ("채널 탐색", { print("탐색 선택됨") }),
+                    ("채널 탐색", { owner.coordinator?.showChannelSearch() }),
                 ])
             }
             .disposed(by: disposeBag)
