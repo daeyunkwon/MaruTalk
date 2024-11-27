@@ -78,6 +78,9 @@
 		441115662CF489DB000D1B2B /* RealmRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = 441115652CF489DB000D1B2B /* RealmRepository.swift */; };
 		441115692CF59694000D1B2B /* SocketIO in Frameworks */ = {isa = PBXBuildFile; productRef = 441115682CF59694000D1B2B /* SocketIO */; };
 		4411156B2CF596E9000D1B2B /* SocketIOManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4411156A2CF596E9000D1B2B /* SocketIOManager.swift */; };
+		4411156E2CF707D2000D1B2B /* MemberInviteReactor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4411156D2CF707D2000D1B2B /* MemberInviteReactor.swift */; };
+		441115702CF7083A000D1B2B /* MemberInviteView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4411156F2CF7083A000D1B2B /* MemberInviteView.swift */; };
+		441115722CF70861000D1B2B /* MemberInviteViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 441115712CF70861000D1B2B /* MemberInviteViewController.swift */; };
 		444910DA2CD77315005AB2F7 /* SignUpReactor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 444910D92CD77315005AB2F7 /* SignUpReactor.swift */; };
 		444910DC2CD8AC5C005AB2F7 /* Router.swift in Sources */ = {isa = PBXBuildFile; fileRef = 444910DB2CD8AC5C005AB2F7 /* Router.swift */; };
 		444910DF2CD8AC9F005AB2F7 /* Alamofire in Frameworks */ = {isa = PBXBuildFile; productRef = 444910DE2CD8AC9F005AB2F7 /* Alamofire */; };
@@ -202,6 +205,9 @@
 		441115632CF483B9000D1B2B /* RealmUser.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RealmUser.swift; sourceTree = "<group>"; };
 		441115652CF489DB000D1B2B /* RealmRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RealmRepository.swift; sourceTree = "<group>"; };
 		4411156A2CF596E9000D1B2B /* SocketIOManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SocketIOManager.swift; sourceTree = "<group>"; };
+		4411156D2CF707D2000D1B2B /* MemberInviteReactor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MemberInviteReactor.swift; sourceTree = "<group>"; };
+		4411156F2CF7083A000D1B2B /* MemberInviteView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MemberInviteView.swift; sourceTree = "<group>"; };
+		441115712CF70861000D1B2B /* MemberInviteViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MemberInviteViewController.swift; sourceTree = "<group>"; };
 		444910D92CD77315005AB2F7 /* SignUpReactor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignUpReactor.swift; sourceTree = "<group>"; };
 		444910DB2CD8AC5C005AB2F7 /* Router.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Router.swift; sourceTree = "<group>"; };
 		444910E02CD8B072005AB2F7 /* BodyKey.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BodyKey.swift; sourceTree = "<group>"; };
@@ -281,6 +287,7 @@
 				441114E32CE5EEF8000D1B2B /* HomeView.swift */,
 				441114FD2CE73CD3000D1B2B /* HomeEmptyView.swift */,
 				441114E52CE5EF03000D1B2B /* HomeViewController.swift */,
+				4411156C2CF70798000D1B2B /* MemberInvite */,
 				4411153F2CF217C6000D1B2B /* ChannelAdd */,
 				441115442CF3243B000D1B2B /* ChannelChatting */,
 			);
@@ -391,6 +398,16 @@
 				441115492CF32477000D1B2B /* ChannelChattingViewController.swift */,
 			);
 			path = ChannelChatting;
+			sourceTree = "<group>";
+		};
+		4411156C2CF70798000D1B2B /* MemberInvite */ = {
+			isa = PBXGroup;
+			children = (
+				4411156D2CF707D2000D1B2B /* MemberInviteReactor.swift */,
+				4411156F2CF7083A000D1B2B /* MemberInviteView.swift */,
+				441115712CF70861000D1B2B /* MemberInviteViewController.swift */,
+			);
+			path = MemberInvite;
 			sourceTree = "<group>";
 		};
 		444DE6A92CD0FC9D00821269 = {
@@ -727,6 +744,7 @@
 				444910DA2CD77315005AB2F7 /* SignUpReactor.swift in Sources */,
 				444DE6E92CD24E4100821269 /* BaseTableViewCell.swift in Sources */,
 				441115242CECABB6000D1B2B /* LoginReactor.swift in Sources */,
+				441115722CF70861000D1B2B /* MemberInviteViewController.swift in Sources */,
 				444DE6F42CD27B1600821269 /* UIButton+Extension.swift in Sources */,
 				4411154C2CF441E5000D1B2B /* MessageSelectedImageCollectionViewCell.swift in Sources */,
 				441114D42CE34EBD000D1B2B /* WorkspaceAddView.swift in Sources */,
@@ -739,6 +757,7 @@
 				441115322CEF7FB4000D1B2B /* Workspace.swift in Sources */,
 				441115042CE75C4C000D1B2B /* ImageTitleCountTableViewCell.swift in Sources */,
 				441115062CE86F70000D1B2B /* HashTitleCountTableViewCell.swift in Sources */,
+				4411156E2CF707D2000D1B2B /* MemberInviteReactor.swift in Sources */,
 				4411152E2CEEE309000D1B2B /* AuthInterceptor.swift in Sources */,
 				444DE7022CD4D2A700821269 /* Coordinator.swift in Sources */,
 				444DE7172CD6251100821269 /* TitleWithInputFieldView.swift in Sources */,
@@ -778,6 +797,7 @@
 				444DE7042CD6093000821269 /* AppCoordinator.swift in Sources */,
 				4411156B2CF596E9000D1B2B /* SocketIOManager.swift in Sources */,
 				441114FA2CE60CCC000D1B2B /* SettingViewController.swift in Sources */,
+				441115702CF7083A000D1B2B /* MemberInviteView.swift in Sources */,
 				441115622CF48397000D1B2B /* RealmChat.swift in Sources */,
 				4411154E2CF447FE000D1B2B /* MessageOnePhotoTextTableViewCell.swift in Sources */,
 				441114F22CE60C76000D1B2B /* SearchView.swift in Sources */,

@@ -179,6 +179,13 @@ extension HomeViewController {
                 owner.showToastMessage(message: value)
             }
             .disposed(by: disposeBag)
+        
+        reactor.pulse(\.$shouldNavigateToMemberInvite)
+            .compactMap { $0 }
+            .bind(with: self) { owner, _ in
+                owner.coordinator?.showMemberInvite()
+            }
+            .disposed(by: disposeBag)
     }
 }
 

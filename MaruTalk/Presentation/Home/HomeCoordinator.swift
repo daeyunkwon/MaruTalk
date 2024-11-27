@@ -89,3 +89,24 @@ extension HomeCoordinator {
         navigationController.popViewController(animated: true)
     }
 }
+
+extension HomeCoordinator {
+    func showMemberInvite() {
+        let reactor = MemberInviteReactor()
+        let memberInviteVC = MemberInviteViewController(reactor: reactor)
+        memberInviteVC.coordinator = self
+
+        let navController = UINavigationController(rootViewController: memberInviteVC)
+        navController.modalPresentationStyle = .pageSheet
+
+        if let sheet = navController.sheetPresentationController {
+            sheet.detents = [.large()]
+            sheet.prefersGrabberVisible = true
+        }
+        navigationController.present(navController, animated: true)
+    }
+    
+    func didFinishMemberInvite() {
+        navigationController.dismiss(animated: true)
+    }
+}

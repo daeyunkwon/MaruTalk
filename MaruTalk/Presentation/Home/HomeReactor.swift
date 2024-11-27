@@ -27,6 +27,7 @@ final class HomeReactor: Reactor {
         case setChannelSection([Channel])
         case setDMSection([DMS])
         case setToastMessage(String)
+        case setNavigateToMemberInvite
     }
     
     struct State {
@@ -41,6 +42,7 @@ final class HomeReactor: Reactor {
         
         @Pulse var isShowEmpty: Bool = false
         @Pulse var shouldNavigateToWorkspaceAdd: Void = ()
+        @Pulse var shouldNavigateToMemberInvite: Void?
         @Pulse var workspace: Workspace?
         @Pulse var user: User?
         @Pulse var toastMessage: String?
@@ -85,7 +87,7 @@ extension HomeReactor {
                   let userID = UserDefaultsManager.shared.userID else { return .empty() }
             
             if workspaceOwnerID == userID {
-                return .just(.setToastMessage("관리자가 맞습니다."))
+                return .just(.setNavigateToMemberInvite)
             } else {
                 return .just(.setToastMessage("워크스페이스 관리자만 팀원을 초대할 수 있어요. 관리자에게 요청을 해보세요."))
             }
@@ -149,6 +151,9 @@ extension HomeReactor {
         
         case .setToastMessage(let value):
             newState.toastMessage = value
+        
+        case .setNavigateToMemberInvite:
+            newState.shouldNavigateToMemberInvite = ()
         }
         return newState
     }
