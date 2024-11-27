@@ -16,6 +16,9 @@ final class ChannelChattingReactor: Reactor {
         case inputContent(String)
         case sendButtonTapped
         case newMessageReceived([Chat])
+        case messagePlusButtonTapped
+        case selectPhotoImage([Data])
+        case deselectPhotoImage(Int)
     }
     
     enum Mutation {
@@ -25,6 +28,8 @@ final class ChannelChattingReactor: Reactor {
         case setContent(String)
         case setMessageSendSuccess(Void)
         case setScrollToBottom(Void)
+        case setShowPhotoAlbum(Void)
+        case setPhotoImageDatas([Data])
     }
     
     struct State {
@@ -39,6 +44,9 @@ final class ChannelChattingReactor: Reactor {
         var content: String = ""
         @Pulse var messageSendSuccess: Void?
         @Pulse var shouldScrollToBottom: Void?
+        @Pulse var shouldShowPhotoAlbum: Void?
+        
+        @Pulse var photoImageDatas: [Data] = []
     }
     
     let initialState: State
@@ -125,6 +133,17 @@ extension ChannelChattingReactor {
             } else {
                 return .empty()
             }
+        
+        case .messagePlusButtonTapped:
+            return .just(.setShowPhotoAlbum(()))
+        
+        case .selectPhotoImage(let imageDataList):
+            return .just(.setPhotoImageDatas(imageDataList))
+        
+        case .deselectPhotoImage(let value):
+            var list = currentState.photoImageDatas
+            list.remove(at: value)
+            return .just(.setPhotoImageDatas(list))
         }
     }
 }
@@ -157,6 +176,12 @@ extension ChannelChattingReactor {
         
         case .setScrollToBottom(let value):
             newState.shouldScrollToBottom = value
+        
+        case .setShowPhotoAlbum(let value):
+            newState.shouldShowPhotoAlbum = value
+        
+        case .setPhotoImageDatas(let value):
+            newState.photoImageDatas = value
         }
         return newState
     }

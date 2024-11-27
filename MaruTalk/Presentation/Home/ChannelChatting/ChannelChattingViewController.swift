@@ -6,6 +6,7 @@
 //
 
 import UIKit
+import PhotosUI
 
 import ReactorKit
 import RxCocoa
@@ -61,6 +62,11 @@ extension ChannelChattingViewController {
             .map { Reactor.Action.sendButtonTapped }
             .bind(to: reactor.action)
             .disposed(by: disposeBag)
+        
+        rootView.messagePlusButton.rx.tap
+            .map { Reactor.Action.messagePlusButtonTapped }
+            .bind(to: reactor.action)
+            .disposed(by: disposeBag)
     }
 }
 
@@ -111,7 +117,7 @@ extension ChannelChattingViewController {
                     guard let cell = tableView.dequeueReusableCell(withIdentifier: MessageOnePhotoTextTableViewCell.reuseIdentifier) as? MessageOnePhotoTextTableViewCell else { return UITableViewCell() }
                     cell.configureCell(data: element)
                     return cell
-                
+                    
                 case 2:
                     //파일이 2개인 경우
                     guard let cell = tableView.dequeueReusableCell(withIdentifier: MessageTwoPhotoTextTableViewCell.reuseIdentifier) as? MessageTwoPhotoTextTableViewCell else { return UITableViewCell() }
@@ -150,5 +156,81 @@ extension ChannelChattingViewController {
                 owner.rootView.tableView.scrollToRow(at: lastIndexPath, at: .bottom, animated: false)
             }
             .disposed(by: disposeBag)
+        
+        reactor.pulse(\.$shouldShowPhotoAlbum)
+            .compactMap { $0 }
+            .bind(with: self) { owner, _ in
+                owner.openPhotoPicker()
+            }
+            .disposed(by: disposeBag)
+        
+        reactor.pulse(\.$photoImageDatas)
+            .bind(with: self) { owner, value in
+                if value.isEmpty {
+                    owner.rootView.collectionView.isHidden = true
+                } else {
+                    owner.rootView.collectionView.isHidden = false
+                }
+            }
+            .disposed(by: disposeBag)
+        
+        reactor.pulse(\.$photoImageDatas)
+            .bind(to: rootView.collectionView.rx.items) { (collectionView, row, element) in
+                guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: MessageSelectedImageCollectionViewCell.reuseIdentifier, for: IndexPath(row: row, section: 0)) as? MessageSelectedImageCollectionViewCell else {
+                    return UICollectionViewCell()
+                }
+                cell.photoImageView.image = UIImage(data: element)
+                
+                cell.xSquareButton.rx.tap
+                    .bind(with: self) { owner, _ in
+                        owner.reactor?.action.onNext(.deselectPhotoImage(row))
+                    }
+                    .disposed(by: cell.disposeBag)
+                
+                return cell
+            }
+            .disposed(by: disposeBag)
+    }
+}
+
+//MARK: - PHPickerViewControllerDelegate
+
+extension ChannelChattingViewController: PHPickerViewControllerDelegate {
+    func picker(_ picker: PHPickerViewController, didFinishPicking results: [PHPickerResult]) {
+        picker.dismiss(animated: true, completion: nil)
+        
+        var selectedImageDataList: [Data] = []
+        let dispatchGroup = DispatchGroup()
+        
+        for (index, result) in results.enumerated() {
+            guard index < 5 else { break }
+            
+            dispatchGroup.enter()
+            result.itemProvider.loadObject(ofClass: UIImage.self) { (object, error) in
+                if let image = object as? UIImage {
+                    if let data = image.jpegData(compressionQuality: 0.5) {
+                        selectedImageDataList.append(data)
+                        dispatchGroup.leave()
+                    }
+                }
+            }
+        }
+        
+        dispatchGroup.notify(queue: .main) { [weak self] in
+            if !selectedImageDataList.isEmpty {
+                self?.reactor?.action.onNext(.selectPhotoImage(selectedImageDataList))
+            }
+        }
+    }
+    
+    private func openPhotoPicker() {
+        var configuration = PHPickerConfiguration()
+        configuration.selectionLimit = 5 // 최대 선택 가능 수
+        configuration.filter = .images
+        
+        let picker = PHPickerViewController(configuration: configuration)
+        picker.delegate = self
+        
+        present(picker, animated: true, completion: nil)
     }
 }

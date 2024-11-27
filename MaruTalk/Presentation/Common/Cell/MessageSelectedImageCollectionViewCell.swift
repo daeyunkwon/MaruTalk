@@ -7,9 +7,14 @@
 
 import UIKit
 
+import RxSwift
 import SnapKit
 
 final class MessageSelectedImageCollectionViewCell: BaseCollectionViewCell {
+    
+    //MARK: - Properties
+    
+    var disposeBag = DisposeBag()
     
     //MARK: - UI Components
     
@@ -24,12 +29,16 @@ final class MessageSelectedImageCollectionViewCell: BaseCollectionViewCell {
     
     let xSquareButton: UIButton = {
         let btn = UIButton(type: .system)
-        btn.setImage(UIImage(systemName: "x.square"), for: .normal)
-        btn.tintColor = Constant.Color.brandBlack
+        btn.setImage(UIImage(named: "x_circle")?.withRenderingMode(.alwaysOriginal), for: .normal)
         return btn
     }()
     
     //MARK: - Configurations
+    
+    override func prepareForReuse() {
+        super.prepareForReuse()
+        disposeBag = DisposeBag()
+    }
     
     override func configureHierarchy() {
         contentView.addSubviews(

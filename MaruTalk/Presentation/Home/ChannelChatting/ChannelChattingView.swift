@@ -13,7 +13,7 @@ final class ChannelChattingView: BaseView {
     
     //MARK: - UI Components
     
-    lazy var tableView: UITableView = {
+    let tableView: UITableView = {
         let tv = UITableView()
         tv.backgroundColor = Constant.Color.brandColor.withAlphaComponent(0.4)
         tv.register(MessageOnePhotoTextTableViewCell.self, forCellReuseIdentifier: MessageOnePhotoTextTableViewCell.reuseIdentifier)
@@ -68,18 +68,26 @@ final class ChannelChattingView: BaseView {
         return btn
     }()
     
-    lazy var collectionView: UICollectionView = {
+    let collectionView: UICollectionView = {
         let layout = UICollectionViewFlowLayout()
         layout.scrollDirection = .horizontal
         layout.itemSize = .init(width: 50, height: 50)
-        layout.minimumLineSpacing = 6
+        layout.minimumLineSpacing = 3
+        layout.sectionInset = .init(top: 0, left: 5, bottom: 0, right: 5)
         
         let cv = UICollectionView(frame: .zero, collectionViewLayout: layout)
         cv.backgroundColor = Constant.Color.brandWhite
         cv.layer.cornerRadius = 8
-        cv.layer.maskedCorners = [.layerMinXMaxYCorner, .layerMinXMaxYCorner]
+        cv.layer.maskedCorners = [.layerMinXMaxYCorner, .layerMaxXMaxYCorner]
         cv.register(MessageSelectedImageCollectionViewCell.self, forCellWithReuseIdentifier: MessageSelectedImageCollectionViewCell.reuseIdentifier)
         return cv
+    }()
+    
+    private let stackView: UIStackView = {
+        let sv = UIStackView()
+        sv.axis = .vertical
+        sv.spacing = -5
+        return sv
     }()
     
     //MARK: - Configurations
@@ -89,11 +97,13 @@ final class ChannelChattingView: BaseView {
             tableView,
             bottomContainerView,
             messageInputBackView,
-            messageInputTextView,
+            stackView,
             messagePlusButton,
-            messageSendButton,
-            collectionView
+            messageSendButton
         )
+        
+        stackView.addArrangedSubview(messageInputTextView)
+        stackView.addArrangedSubview(collectionView)
     }
     
     override func configureLayout() {
@@ -106,11 +116,15 @@ final class ChannelChattingView: BaseView {
         messageInputBackView.snp.makeConstraints { make in
             make.horizontalEdges.equalToSuperview().inset(16)
             make.bottom.equalTo(keyboardLayoutGuide.snp.top).offset(-5)
-            make.top.equalTo(messageInputTextView.snp.top).offset(-5)
+        }
+        
+        stackView.snp.makeConstraints { make in
+            make.centerX.equalTo(messageInputBackView)
+            make.top.equalTo(messageInputBackView).offset(5)
+            make.bottom.equalTo(messageInputBackView).offset(-5)
         }
         
         messageInputTextView.snp.makeConstraints { make in
-            make.centerX.equalTo(messageInputBackView)
             make.width.equalTo(275)
             make.height.equalTo(30)
         }
@@ -134,9 +148,8 @@ final class ChannelChattingView: BaseView {
         }
         
         collectionView.snp.makeConstraints { make in
-            make.top.equalTo(messageInputTextView.snp.bottom)
-            make.bottom.equalTo(messageInputBackView.snp.bottom).offset(-8)
             make.width.equalTo(messageInputTextView)
+            make.height.equalTo(60)
         }
     }
     
@@ -179,7 +192,6 @@ extension ChannelChattingView: UITextViewDelegate {
         //height 제약조건 업데이트(최소: 30, 최대: 60)
         let adjustedHeight = min(max(estimatedSize.height, 30), 60)
         textView.snp.updateConstraints { make in
-            make.centerX.equalTo(messageInputBackView)
             make.width.equalTo(275)
             make.height.equalTo(adjustedHeight)
         }
