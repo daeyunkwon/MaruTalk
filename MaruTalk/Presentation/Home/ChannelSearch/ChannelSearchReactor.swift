@@ -13,6 +13,7 @@ final class ChannelSearchReactor: Reactor {
     enum Action {
         case xMarkButtonTapped
         case fetch
+        case selectChannel(Channel)
     }
     
     enum Mutation {
@@ -20,6 +21,7 @@ final class ChannelSearchReactor: Reactor {
         case setNetworkError((Router.APIType, String?))
         case setChannelList([Channel])
         case setMyChannelDictionary([String: Bool])
+        case setShowJoinAlert(String)
     }
     
     struct State {
@@ -27,6 +29,7 @@ final class ChannelSearchReactor: Reactor {
         @Pulse var networkError: (Router.APIType, String?)?
         @Pulse var channelList: [Channel]?
         var myChannelDictionary: [String: Bool] = [:]
+        @Pulse var shouldShowJoinAlert: String?
     }
     
     let initialState: State = State()
@@ -45,6 +48,15 @@ extension ChannelSearchReactor {
                 fetchMyChannels(),
                 fetchAllChannels()
             ])
+        
+        case .selectChannel(let value):
+            if let _ = currentState.myChannelDictionary[value.id] {
+                //이미 참여중인 채널인 경우
+                return .empty()
+            } else {
+                //미참여 채널인 경우
+                return .just(.setShowJoinAlert(value.name))
+            }
         }
     }
 }
@@ -66,6 +78,9 @@ extension ChannelSearchReactor {
         
         case .setMyChannelDictionary(let value):
             newState.myChannelDictionary = value
+        
+        case .setShowJoinAlert(let value):
+            newState.shouldShowJoinAlert = value
         }
         return newState
     }

@@ -65,6 +65,11 @@ extension ChannelSearchViewController {
             .bind(to: reactor.action)
             .disposed(by: disposeBag)
         
+        rootView.tableView.rx.modelSelected(Channel.self)
+            .map { Reactor.Action.selectChannel($0) }
+            .bind(to: reactor.action)
+            .disposed(by: disposeBag)
+        
     }
 }
 
@@ -90,6 +95,16 @@ extension ChannelSearchViewController {
             .compactMap { $0 }
             .bind(to: rootView.tableView.rx.items(cellIdentifier: HashTitleCountTableViewCell.reuseIdentifier, cellType: HashTitleCountTableViewCell.self)) { row, element, cell in
                 cell.configure(channel: element)
+            }
+            .disposed(by: disposeBag)
+        
+        reactor.pulse(\.$shouldShowJoinAlert)
+            .compactMap { $0 }
+            .bind(with: self) { owner, value in
+                let message = "[\(value)] 채널에 참여하시겠습니까?"
+                owner.showAlert(title: "채널 참여", message: message, actions: [
+                    ("확인", { print("확인 버튼 선택됨!") })
+                ])
             }
             .disposed(by: disposeBag)
     }

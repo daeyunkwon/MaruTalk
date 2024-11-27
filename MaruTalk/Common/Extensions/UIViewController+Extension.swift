@@ -128,4 +128,20 @@ extension UIViewController {
         
         self.present(alert, animated: true)
     }
+    
+    //얼럿
+    func showAlert(title: String, message: String, actions: [(String, (() -> Void)?)]) {
+        let alert = UIAlertController(title: title, message: message, preferredStyle: .alert)
+        
+        for (title, handler) in actions {
+            let action = UIAlertAction(title: title, style: .default) { _ in
+                handler?()
+            }
+            alert.addAction(action)
+        }
+        
+        alert.addAction(UIAlertAction(title: "취소", style: .cancel))
+        
+        self.present(alert, animated: true)
+    }
 }
