@@ -61,6 +61,11 @@ extension ChannelSettingViewController {
             .map { Reactor.Action.arrowButtonTapped }
             .bind(to: reactor.action)
             .disposed(by: disposeBag)
+        
+        rootView.editButton.rx.tap
+            .map { Reactor.Action.editButtonTapped }
+            .bind(to: reactor.action)
+            .disposed(by: disposeBag)
     }
 }
 
@@ -75,20 +80,25 @@ extension ChannelSettingViewController {
             }
             .disposed(by: disposeBag)
         
-        reactor.state.map { $0.channelName }
-            .distinctUntilChanged()
-            .bind(to: rootView.channelNameLabel.rx.text)
+        reactor.pulse(\.$channel)
+            .compactMap { $0 }
+            .map { $0.name }
+            .bind(with: self, onNext: { owner, value in
+                owner.rootView.channelNameLabel.text = "☕️\(value)"
+            })
             .disposed(by: disposeBag)
         
-        reactor.state.map { $0.description }
-            .distinctUntilChanged()
+        reactor.pulse(\.$channel)
+            .compactMap { $0 }
+            .map { $0.description }
             .bind(to: rootView.channelDescriptionLabel.rx.text)
             .disposed(by: disposeBag)
         
-        reactor.state.map { $0.memberCount }
-            .distinctUntilChanged()
+        reactor.pulse(\.$channel)
+            .compactMap { $0 }
+            .map { $0.channelMembers?.count }
             .bind(with: self) { owner, value in
-                owner.rootView.channelMemberCountLabel.text = "멤버 (\(value))"
+                owner.rootView.channelMemberCountLabel.text = "멤버 (\(value ?? 0))"
             }
             .disposed(by: disposeBag)
         
@@ -101,8 +111,9 @@ extension ChannelSettingViewController {
             }
             .disposed(by: disposeBag)
         
-        reactor.pulse(\.$memberList)
+        reactor.pulse(\.$channel)
             .compactMap { $0 }
+            .map { $0.channelMembers ?? [] }
             .bind(to: rootView.collectionView.rx.items(cellIdentifier: ProfileImageTitleCollectionViewCell.reuseIdentifier, cellType: ProfileImageTitleCollectionViewCell.self)) { row, element, cell in
                 cell.configureCell(data: element)
             }
@@ -115,6 +126,12 @@ extension ChannelSettingViewController {
             }
             .disposed(by: disposeBag)
         
+        reactor.pulse(\.$shouldNavigateToChannelEdit)
+            .compactMap { $0 }
+            .bind(with: self) { owner, value in
+                owner.coordinator?.showChannelEdit(channel: value)
+            }
+            .disposed(by: disposeBag)
     }
 }
 

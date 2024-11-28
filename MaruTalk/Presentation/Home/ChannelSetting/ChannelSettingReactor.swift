@@ -13,26 +13,24 @@ final class ChannelSettingReactor: Reactor {
     enum Action {
         case fetch
         case arrowButtonTapped
+        case editButtonTapped
     }
     
     enum Mutation {
         case setNetworkError((Router.APIType, String?))
-        case setChannelName(String)
-        case setDescription(String)
-        case setMemberCount(Int)
-        case setMemberList([User])
+        case setChannel(Channel)
         case setExpand(Bool)
+        case setNavigateToChannelEdit(Channel)
     }
     
     struct State {
         var channelID: String
         @Pulse var networkError: (Router.APIType, String?)?
         
-        var channelName: String = ""
-        var description: String = ""
-        var memberCount: Int = 0
-        @Pulse var memberList: [User]?
+        @Pulse var channel: Channel?
         var isExpand: Bool = true
+        
+        @Pulse var shouldNavigateToChannelEdit: Channel?
     }
     
     var initialState: State
@@ -54,6 +52,10 @@ extension ChannelSettingReactor {
             var newValue = currentState.isExpand
             newValue.toggle()
             return .just(.setExpand(newValue))
+        
+        case .editButtonTapped:
+            guard let channel = currentState.channel else { return .empty() }
+            return .just(.setNavigateToChannelEdit(channel))
         }
     }
 }
@@ -66,21 +68,15 @@ extension ChannelSettingReactor {
         switch mutation {
         case .setNetworkError(let value):
             newState.networkError = value
-        
-        case .setChannelName(let value):
-            newState.channelName = value
-        
-        case .setDescription(let value):
-            newState.description = value
-        
-        case .setMemberCount(let value):
-            newState.memberCount = value
-        
-        case .setMemberList(let value):
-            newState.memberList = value
+            
+        case .setChannel(let value):
+            newState.channel = value
         
         case .setExpand(let value):
             newState.isExpand = value
+        
+        case .setNavigateToChannelEdit(let value):
+            newState.shouldNavigateToChannelEdit = value
         }
         return newState
     }
@@ -98,12 +94,7 @@ extension ChannelSettingReactor {
             .flatMap { result -> Observable<Mutation> in
                 switch result {
                 case .success(let value):
-                    return .concat([
-                        .just(.setChannelName(value.name)),
-                        .just(.setDescription(value.description ?? "")),
-                        .just(.setMemberCount(value.channelMembers?.count ?? 0)),
-                        .just(.setMemberList(value.channelMembers ?? []))
-                    ])
+                    return .just(.setChannel(value))
                 
                 case .failure(let error):
                     return .just(.setNetworkError((Router.APIType.channel, error.errorCode)))
