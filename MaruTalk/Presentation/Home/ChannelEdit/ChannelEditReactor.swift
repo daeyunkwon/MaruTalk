@@ -19,14 +19,14 @@ final class ChannelEditReactor: Reactor {
     }
     
     struct State {
-        var channelID: String
+        var channel: Channel
         @Pulse var shouldNavigateToChannelSetting: Void?
     }
     
     var initialState: State
     
-    init(channelID: String) {
-        self.initialState = State(channelID: channelID)
+    init(channel: Channel) {
+        self.initialState = State(channel: channel)
     }
 }
 

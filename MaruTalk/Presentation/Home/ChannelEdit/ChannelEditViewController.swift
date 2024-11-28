@@ -60,6 +60,23 @@ extension ChannelEditViewController {
 
 extension ChannelEditViewController {
     private func bindState(reactor: ChannelEditReactor) {
+        reactor.pulse(\.$shouldNavigateToChannelSetting)
+            .compactMap { $0 }
+            .bind(with: self) { owner, _ in
+                owner.coordinator?.didFinishChannelEdit()
+            }
+            .disposed(by: disposeBag)
         
+        reactor.state.map { $0.channel }
+            .distinctUntilChanged()
+            .map { $0.name }
+            .bind(to: rootView.channelNameFieldView.inputTextField.rx.text)
+            .disposed(by: disposeBag)
+        
+        reactor.state.map { $0.channel }
+            .distinctUntilChanged()
+            .compactMap { $0.description }
+            .bind(to: rootView.channelDescriptionFieldView.inputTextField.rx.text)
+            .disposed(by: disposeBag)
     }
 }
