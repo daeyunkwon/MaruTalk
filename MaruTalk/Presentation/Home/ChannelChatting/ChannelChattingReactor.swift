@@ -89,8 +89,8 @@ extension ChannelChattingReactor {
             //채널 채팅 화면인 경우
             case .channel:
                 return .concat([
-                    fetchChannel(), //채널 정보
                     fetchChatsFromRealm(), //저장된 채팅 내역 가져오기
+                    fetchChannel(), //채널 정보
                     connectChannelSocket() //소켓 연결
                 ])
             
@@ -232,6 +232,8 @@ extension ChannelChattingReactor {
         }
     }
     
+    //채널 채팅 내역 조회
+    ///해당 api를 호출하면 자동으로 해당 채널의 멤버가 된다.
     private func fetchChats(cursorDate: String?) -> Observable<Mutation> {
         guard let workspaceID = UserDefaultsManager.shared.recentWorkspaceID else { return .empty() }
         guard let channelID = currentState.channelID else { return .empty() }

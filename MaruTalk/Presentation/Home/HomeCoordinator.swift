@@ -119,7 +119,16 @@ extension HomeCoordinator {
         navigationController.pushViewController(channelChattingVC, animated: true)
     }
     
-    func didFinishChannelSearch() {
-        navigationController.popViewController(animated: true)
+    func didFinishChannelSearch(isNavigateToChannelChatting: Bool = false) {
+        if isNavigateToChannelChatting {
+            //채널 채팅 화면으로 가는 경우
+            ///네비게이션 스택에서 ChannelSearchVC의 인스턴스 제거
+            var viewControllers = navigationController.viewControllers
+            viewControllers.removeAll(where: { $0 is ChannelSearchViewController })
+            navigationController.setViewControllers(viewControllers, animated: false)
+        } else {
+            //홈 화면으로 가는 경우
+            navigationController.popViewController(animated: true)
+        }
     }
 }

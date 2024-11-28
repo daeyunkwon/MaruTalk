@@ -39,6 +39,7 @@ final class ChannelSearchViewController: BaseViewController<ChannelSearchView>, 
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
         self.tabBarController?.tabBar.isHidden = false
+        self.navigationItem.title = ""
     }
     
     //MARK: - Configurations
@@ -68,6 +69,14 @@ extension ChannelSearchViewController {
         rootView.tableView.rx.modelSelected(Channel.self)
             .map { Reactor.Action.selectChannel($0) }
             .bind(to: reactor.action)
+            .disposed(by: disposeBag)
+        
+        rootView.tableView.rx.itemSelected
+            .subscribe(onNext: { [weak self] indexPath in
+                guard let self = self else { return }
+                //선택 마크 해제하기
+                self.rootView.tableView.deselectRow(at: indexPath, animated: true)
+            })
             .disposed(by: disposeBag)
         
     }
@@ -101,10 +110,24 @@ extension ChannelSearchViewController {
         reactor.pulse(\.$shouldShowJoinAlert)
             .compactMap { $0 }
             .bind(with: self) { owner, value in
-                let message = "[\(value)] 채널에 참여하시겠습니까?"
+                let message = "[\(value.name)] 채널에 참여하시겠습니까?"
+                //수락할 경우 채팅 화면으로 진입
+                let okAction = {
+                    owner.coordinator?.showChannelChatting(channelID: value.id) //먼저 화면 이동
+                    owner.coordinator?.didFinishChannelSearch(isNavigateToChannelChatting: true) //네비게이션 스택 제거 작업
+                }
+                
                 owner.showAlert(title: "채널 참여", message: message, actions: [
-                    ("확인", { print("확인 버튼 선택됨!") })
+                    ("확인", okAction)
                 ])
+            }
+            .disposed(by: disposeBag)
+        
+        reactor.pulse(\.$shouldNavigateToCannelChatting)
+            .compactMap { $0 }
+            .bind(with: self) { owner, value in
+                owner.coordinator?.showChannelChatting(channelID: value.id) //먼저 화면 이동
+                owner.coordinator?.didFinishChannelSearch(isNavigateToChannelChatting: true) //네비게이션 스택 제거 작업
             }
             .disposed(by: disposeBag)
     }
