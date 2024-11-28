@@ -58,9 +58,8 @@ final class ChannelSettingViewController: BaseViewController<ChannelSettingView>
 extension ChannelSettingViewController {
     private func bindAction(reactor: ChannelSettingReactor) {
         rootView.arrowIconButton.rx.tap
-            .bind(with: self) { owner, _ in
-                
-            }
+            .map { Reactor.Action.arrowButtonTapped }
+            .bind(to: reactor.action)
             .disposed(by: disposeBag)
     }
 }
@@ -112,11 +111,7 @@ extension ChannelSettingViewController {
         reactor.state.map { $0.isExpand }
             .distinctUntilChanged()
             .bind(with: self) { owner, value in
-                if value {
-                    owner.rootView.collectionView.isHidden = false
-                } else {
-                    owner.rootView.collectionView.isHidden = true
-                }
+                owner.rootView.updateDisplayMemberCollection(isExpand: value)
             }
             .disposed(by: disposeBag)
         

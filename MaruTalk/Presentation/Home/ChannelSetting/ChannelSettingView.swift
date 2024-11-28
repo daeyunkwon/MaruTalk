@@ -145,13 +145,23 @@ final class ChannelSettingView: BaseView {
         super.configureUI()
     }
     
-    func updateArrowIcon(isExpand: Bool) {
+    func updateDisplayMemberCollection(isExpand: Bool) {
         if isExpand {
-            let image = UIImage(named: "chevron_down")?.withRenderingMode(.alwaysOriginal)
-            self.arrowIconButton.setImage(image, for: .normal)
+            self.collectionView.alpha = 0.0
+            UIView.animate(withDuration: 0.3) { [weak self] in
+                guard let self else { return }
+                self.arrowIconButton.transform = CGAffineTransform.identity
+                self.collectionView.alpha = 1.0
+                self.collectionView.isHidden = false
+            }
         } else {
-            let image = UIImage(named: "chevron_right")?.withRenderingMode(.alwaysOriginal)
-            self.arrowIconButton.setImage(image, for: .normal)
+            self.collectionView.alpha = 1.0
+            UIView.animate(withDuration: 0.3) { [weak self] in
+                guard let self else { return }
+                self.arrowIconButton.transform = CGAffineTransform(rotationAngle: 17.25)
+                self.collectionView.alpha = 0.0
+                self.collectionView.isHidden = true
+            }
         }
     }
 }

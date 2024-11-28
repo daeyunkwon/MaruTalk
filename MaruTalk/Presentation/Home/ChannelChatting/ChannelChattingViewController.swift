@@ -23,7 +23,7 @@ final class ChannelChattingViewController: BaseViewController<ChannelChattingVie
         self.reactor = reactor
     }
     
-    private let settingButton: UIBarButtonItem = UIBarButtonItem(image: UIImage(systemName: "gearshape")?.applyingSymbolConfiguration(.init(pointSize: 14)), style: .plain, target: nil, action: nil)
+    private let settingButton: UIBarButtonItem = UIBarButtonItem(image: UIImage(systemName: "gearshape.fill")?.applyingSymbolConfiguration(.init(pointSize: 14)), style: .plain, target: nil, action: nil)
     
     //MARK: - Life Cycle
     

@@ -12,7 +12,7 @@ import ReactorKit
 final class ChannelSettingReactor: Reactor {
     enum Action {
         case fetch
-//        case arrowButtonTapped
+        case arrowButtonTapped
     }
     
     enum Mutation {
@@ -49,6 +49,11 @@ extension ChannelSettingReactor {
         switch action {
         case .fetch:
             return fetchChannel()
+            
+        case .arrowButtonTapped:
+            var newValue = currentState.isExpand
+            newValue.toggle()
+            return .just(.setExpand(newValue))
         }
     }
 }
