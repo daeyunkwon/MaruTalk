@@ -27,12 +27,12 @@ final class ChannelChattingViewController: BaseViewController<ChannelChattingVie
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        reactor?.action.onNext(.fetch)
     }
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         self.tabBarController?.tabBar.isHidden = true
+        reactor?.action.onNext(.fetch)
     }
     
     override func viewWillDisappear(_ animated: Bool) {
