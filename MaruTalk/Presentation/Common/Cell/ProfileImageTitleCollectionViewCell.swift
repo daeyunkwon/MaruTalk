@@ -18,14 +18,15 @@ final class ProfileImageTitleCollectionViewCell: BaseCollectionViewCell {
         iv.contentMode = .scaleAspectFill
         iv.clipsToBounds = true
         iv.layer.cornerRadius = 8
+        iv.backgroundColor = .lightGray
         return iv
     }()
     
     private let nicknameLabel: UILabel = {
         let label = UILabel()
         label.textColor = Constant.Color.textPrimary
-        label.font = Constant.Font.body
-        label.numberOfLines = 2
+        label.font = Constant.Font.captionSemiBold
+        label.numberOfLines = 0
         label.textAlignment = .center
         return label
     }()
@@ -44,17 +45,19 @@ final class ProfileImageTitleCollectionViewCell: BaseCollectionViewCell {
             make.top.equalToSuperview()
             make.size.equalTo(44)
             make.centerX.equalToSuperview()
+            make.horizontalEdges.equalToSuperview().inset(10) //간격 조정
         }
         
         nicknameLabel.snp.makeConstraints { make in
             make.top.equalTo(profileImageView.snp.bottom).offset(4)
-            make.horizontalEdges.equalToSuperview().inset(4)
-            make.bottom.equalToSuperview()
+            make.centerX.equalToSuperview()
+            make.width.equalTo(70)
+            make.bottom.equalToSuperview().inset(20) //간격 조정
         }
     }
     
     func configureCell(data: User) {
-        if let imagePath = data.profileImage {
+        if data.profileImage != nil {
             profileImageView.setImage(imagePath: data.profileImage)
         } else {
             let placeholderImages: [UIImage] = [UIImage(named: "noPhotoA") ?? UIImage(), UIImage(named: "noPhotoB") ?? UIImage(), UIImage(named: "noPhotoC") ?? UIImage()]

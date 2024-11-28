@@ -23,6 +23,8 @@ final class ChannelChattingViewController: BaseViewController<ChannelChattingVie
         self.reactor = reactor
     }
     
+    private let settingButton: UIBarButtonItem = UIBarButtonItem(image: UIImage(systemName: "gearshape")?.applyingSymbolConfiguration(.init(pointSize: 14)), style: .plain, target: nil, action: nil)
+    
     //MARK: - Life Cycle
     
     override func viewDidLoad() {
@@ -39,6 +41,13 @@ final class ChannelChattingViewController: BaseViewController<ChannelChattingVie
         super.viewWillDisappear(animated)
         self.tabBarController?.tabBar.isHidden = false
         reactor?.action.onNext(.viewDisappear)
+        navigationItem.title = ""
+    }
+    
+    //MARK: - Configurations
+    
+    override func setupNavi() {
+        self.navigationItem.rightBarButtonItem = settingButton
     }
     
     //MARK: - Methods
@@ -73,6 +82,11 @@ extension ChannelChattingViewController {
         
         rootView.messagePlusButton.rx.tap
             .map { Reactor.Action.messagePlusButtonTapped }
+            .bind(to: reactor.action)
+            .disposed(by: disposeBag)
+        
+        settingButton.rx.tap
+            .map { Reactor.Action.settingButtonTapped }
             .bind(to: reactor.action)
             .disposed(by: disposeBag)
     }
@@ -197,6 +211,13 @@ extension ChannelChattingViewController {
                     .disposed(by: cell.disposeBag)
                 
                 return cell
+            }
+            .disposed(by: disposeBag)
+        
+        reactor.pulse(\.$shouldNavigateToSetting)
+            .compactMap { $0 }
+            .bind(with: self) { owner, value in
+                owner.coordinator?.showChannelSetting(channelID: value)
             }
             .disposed(by: disposeBag)
     }

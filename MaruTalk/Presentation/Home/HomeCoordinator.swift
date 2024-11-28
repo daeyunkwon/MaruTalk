@@ -132,3 +132,16 @@ extension HomeCoordinator {
         }
     }
 }
+
+extension HomeCoordinator {
+    func showChannelSetting(channelID: String) {
+        let reactor = ChannelSettingReactor(channelID: channelID)
+        let channelSettingVC = ChannelSettingViewController(reactor: reactor)
+        channelSettingVC.coordinator = self
+        navigationController.pushViewController(channelSettingVC, animated: true)
+    }
+    
+    func didFinishChannelSetting() {
+        navigationController.popViewController(animated: true)
+    }
+}

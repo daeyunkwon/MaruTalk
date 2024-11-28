@@ -49,15 +49,12 @@ final class ChannelSettingView: BaseView {
     let collectionView: UICollectionView = {
         let layout = UICollectionViewFlowLayout()
         layout.scrollDirection = .vertical
-        layout.itemSize = .init(width: 70, height: 90)
-        layout.minimumLineSpacing = 0
-        layout.minimumInteritemSpacing = 0
-        layout.sectionInset = .init(top: 0, left: 6, bottom: 0, right: 6)
-        
+        layout.estimatedItemSize = UICollectionViewFlowLayout.automaticSize
+
         let cv = UICollectionView(frame: .zero, collectionViewLayout: layout)
         cv.register(ProfileImageTitleCollectionViewCell.self, forCellWithReuseIdentifier: ProfileImageTitleCollectionViewCell.reuseIdentifier)
-        cv.backgroundColor = .red
         cv.isScrollEnabled = false
+        cv.backgroundColor = .clear
         return cv
     }()
     
@@ -102,7 +99,6 @@ final class ChannelSettingView: BaseView {
         stackView.addArrangedSubview(channelDescriptionLabel)
         stackView.addArrangedSubview(memberCountStackView)
         stackView.addArrangedSubview(collectionView)
-//        stackView.addArrangedSubview(roundedButtonStackView)
         
         memberCountStackView.addArrangedSubview(channelMemberCountLabel)
         memberCountStackView.addArrangedSubview(arrowIconButton)
@@ -147,7 +143,15 @@ final class ChannelSettingView: BaseView {
     
     override func configureUI() {
         super.configureUI()
-        channelNameLabel.text = "그냥 떠들고 싶을 때"
-        channelMemberCountLabel.text = "멤버 13"
+    }
+    
+    func updateArrowIcon(isExpand: Bool) {
+        if isExpand {
+            let image = UIImage(named: "chevron_down")?.withRenderingMode(.alwaysOriginal)
+            self.arrowIconButton.setImage(image, for: .normal)
+        } else {
+            let image = UIImage(named: "chevron_right")?.withRenderingMode(.alwaysOriginal)
+            self.arrowIconButton.setImage(image, for: .normal)
+        }
     }
 }
