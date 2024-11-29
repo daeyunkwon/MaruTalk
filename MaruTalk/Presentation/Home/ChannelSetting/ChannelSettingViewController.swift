@@ -52,6 +52,7 @@ final class ChannelSettingViewController: BaseViewController<ChannelSettingView>
     
     private func setupNotification() {
         NotificationCenter.default.addObserver(self, selector: #selector(handleModalDismissed), name: .channelEditComplete, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(handleModalDismissed), name: .channelChangeAdminComplete, object: nil)
     }
     
     //MARK: - Methods
@@ -67,6 +68,8 @@ final class ChannelSettingViewController: BaseViewController<ChannelSettingView>
         switch notification.name {
         case .channelEditComplete:
             showToastMessage(message: "채널이 편집되었습니다.")
+        case .channelChangeAdminComplete:
+            showToastMessage(message: "채널 관리자가 변경되었습니다.")
         default: break
         }
     }

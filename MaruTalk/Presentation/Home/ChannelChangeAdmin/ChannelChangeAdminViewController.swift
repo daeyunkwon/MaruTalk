@@ -54,6 +54,13 @@ extension ChannelChangeAdminViewController {
             .map { Reactor.Action.xMarkButtonTapped }
             .bind(to: reactor.action)
             .disposed(by: disposeBag)
+        
+        rootView.tableView.rx.itemSelected
+            .bind(with: self) { owner, indexPath in
+                owner.rootView.tableView.deselectRow(at: indexPath, animated: true)
+                owner.reactor?.action.onNext(.selectRow(indexPath.row))
+            }
+            .disposed(by: disposeBag)
     }
 }
 

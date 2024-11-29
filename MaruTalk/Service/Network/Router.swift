@@ -34,6 +34,7 @@ enum Router {
     case sendChannelChat(workspaceID: String, channelID: String, content: String, files: [Data])
     case channelEdit(workspaceID: String, channelID: String, name: String, description: String?)
     case channelMembers(workspaceID: String, channelID: String)
+    case channelChangeAdmin(workspaceID: String, channelID: String, memberID: String)
     //DMS
     case dms(workspaceID: String)
     
@@ -62,6 +63,7 @@ enum Router {
         case sendChannelChat
         case channelEdit
         case channelMembers
+        case channelChangeAdmin
         //DMS
         case dms
     }
@@ -95,6 +97,7 @@ extension Router: URLRequestConvertible {
         case .sendChannelChat(let workspaceID, let channelID, _, _): return APIURL.sendChannelChat(workspaceID: workspaceID, channelID: channelID)
         case .channelEdit(let workspaceID, let channelID, _, _): return APIURL.channel(workspaceID: workspaceID, channelID: channelID)
         case .channelMembers(let workspaceID, let channelID): return APIURL.channelMembers(workspaceID: workspaceID, channelID: channelID)
+        case .channelChangeAdmin(let workspaceID, let channelID, _): return APIURL.channelChangeAdmin(workspaceID: workspaceID, channelID: channelID)
             
         case .dms(let workspaceID): return APIURL.dms(workspaceID: workspaceID)
         }
@@ -108,7 +111,7 @@ extension Router: URLRequestConvertible {
         case .emailValidation(_), .join, .login, .loginWithApple, .loginWithKakao, .createWorkspace, .createChannel, .sendChannelChat, .workspaceMemberInvite:
             return .post
             
-        case .channelEdit:
+        case .channelEdit, .channelChangeAdmin:
             return .put
         }
     }
@@ -129,7 +132,7 @@ extension Router: URLRequestConvertible {
                 "SesacKey": APIKey.apiKey
             ]
             
-        case .workspaces, .workspace, .userMe, .myChannels, .dms, .chats, .channel, .workspaceMemberInvite, .channels, .channelMembers:
+        case .workspaces, .workspace, .userMe, .myChannels, .dms, .chats, .channel, .workspaceMemberInvite, .channels, .channelMembers, .channelChangeAdmin:
             return [
                 "Content-Type": "application/json",
                 "Authorization": KeychainManager.shared.getItem(forKey: .accessToken) ?? "",
@@ -190,6 +193,11 @@ extension Router: URLRequestConvertible {
         case .workspaceMemberInvite(_, let email):
             return try? JSONEncoder().encode([
                 BodyKey.email: email
+            ])
+            
+        case .channelChangeAdmin(_, _, let memberID):
+            return try? JSONEncoder().encode([
+                BodyKey.owner_id: memberID
             ])
             
         default: return nil

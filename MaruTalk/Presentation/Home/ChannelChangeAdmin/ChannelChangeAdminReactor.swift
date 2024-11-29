@@ -13,6 +13,7 @@ final class ChannelChangeAdminReactor: Reactor {
     enum Action {
         case xMarkButtonTapped
         case fetch
+        case selectRow(Int)
     }
     
     enum Mutation {
@@ -46,6 +47,10 @@ extension ChannelChangeAdminReactor {
         
         case .fetch:
             return fetchMembers()
+        
+        case .selectRow(let value):
+            guard let selectMemberID = currentState.memberList?[value] else { return .empty() }
+            return executeChangeAdmin(memberID: selectMemberID.userID)
         }
     }
 }
@@ -86,6 +91,24 @@ extension ChannelChangeAdminReactor {
                 
                 case .failure(let error):
                     return .just(.setNetworkError((Router.APIType.channelMembers, error.errorCode)))
+                }
+            }
+    }
+    
+    private func executeChangeAdmin(memberID: String) -> Observable<Mutation> {
+        guard let workspaceID = UserDefaultsManager.shared.recentWorkspaceID else { return .empty() }
+        let channelID = currentState.channelID
+        
+        return NetworkManager.shared.performRequest(api: .channelChangeAdmin(workspaceID: workspaceID, channelID: channelID, memberID: memberID), model: Channel.self)
+            .asObservable()
+            .flatMap { result -> Observable<Mutation> in
+                switch result {
+                case .success(_):
+                    NotificationCenter.default.post(name: .channelChangeAdminComplete, object: nil)
+                    return .just(.setNavigateToChannelSetting)
+                
+                case .failure(let error):
+                    return .just(.setNetworkError((Router.APIType.channelChangeAdmin, error.errorCode)))
                 }
             }
     }
