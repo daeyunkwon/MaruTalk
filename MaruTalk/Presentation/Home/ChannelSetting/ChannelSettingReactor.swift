@@ -14,6 +14,7 @@ final class ChannelSettingReactor: Reactor {
         case fetch
         case arrowButtonTapped
         case editButtonTapped
+        case changeAdminButtonTapped
     }
     
     enum Mutation {
@@ -21,6 +22,7 @@ final class ChannelSettingReactor: Reactor {
         case setChannel(Channel)
         case setExpand(Bool)
         case setNavigateToChannelEdit(Channel)
+        case setNavigateToChannelChangeAdmin(String)
     }
     
     struct State {
@@ -31,6 +33,7 @@ final class ChannelSettingReactor: Reactor {
         var isExpand: Bool = true
         
         @Pulse var shouldNavigateToChannelEdit: Channel?
+        @Pulse var shouldNavigateToChannelChangeAdmin: String?
     }
     
     var initialState: State
@@ -56,6 +59,10 @@ extension ChannelSettingReactor {
         case .editButtonTapped:
             guard let channel = currentState.channel else { return .empty() }
             return .just(.setNavigateToChannelEdit(channel))
+        
+        case .changeAdminButtonTapped:
+            let channelID = currentState.channelID
+            return .just(.setNavigateToChannelChangeAdmin(channelID))
         }
     }
 }
@@ -77,6 +84,9 @@ extension ChannelSettingReactor {
         
         case .setNavigateToChannelEdit(let value):
             newState.shouldNavigateToChannelEdit = value
+            
+        case .setNavigateToChannelChangeAdmin(let value):
+            newState.shouldNavigateToChannelChangeAdmin = value
         }
         return newState
     }

@@ -49,7 +49,10 @@ final class ChannelChangeAdminViewController: BaseViewController<ChannelChangeAd
 
 extension ChannelChangeAdminViewController {
     private func bindAction(reactor: ChannelChangeAdminReactor) {
-        
+        xMarkButton.rx.tap
+            .map { Reactor.Action.xMarkButtonTapped }
+            .bind(to: reactor.action)
+            .disposed(by: disposeBag)
     }
 }
 
@@ -57,6 +60,11 @@ extension ChannelChangeAdminViewController {
 
 extension ChannelChangeAdminViewController {
     private func bindState(reactor: ChannelChangeAdminReactor) {
-        
+        reactor.pulse(\.$shouldNavigateToChannelSetting)
+            .compactMap { $0 }
+            .bind(with: self) { owner, _ in
+                owner.coordinator?.didFinishChannelChangeAdmin()
+            }
+            .disposed(by: disposeBag)
     }
 }

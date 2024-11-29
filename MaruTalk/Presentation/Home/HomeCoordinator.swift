@@ -166,3 +166,24 @@ extension HomeCoordinator {
         navigationController.dismiss(animated: true)
     }
 }
+
+extension HomeCoordinator {
+    func showChannelChangeAdmin(channelID: String) {
+        let reactor = ChannelChangeAdminReactor(channelID: channelID)
+        let channelChangeAdminVC = ChannelChangeAdminViewController(reactor: reactor)
+        channelChangeAdminVC.coordinator = self
+
+        let navController = UINavigationController(rootViewController: channelChangeAdminVC)
+        navController.modalPresentationStyle = .pageSheet
+
+        if let sheet = navController.sheetPresentationController {
+            sheet.detents = [.large()]
+            sheet.prefersGrabberVisible = true
+        }
+        navigationController.present(navController, animated: true)
+    }
+    
+    func didFinishChannelChangeAdmin() {
+        navigationController.dismiss(animated: true)
+    }
+}

@@ -85,6 +85,11 @@ extension ChannelSettingViewController {
             .map { Reactor.Action.editButtonTapped }
             .bind(to: reactor.action)
             .disposed(by: disposeBag)
+        
+        rootView.changeAdminButton.rx.tap
+            .map { Reactor.Action.changeAdminButtonTapped }
+            .bind(to: reactor.action)
+            .disposed(by: disposeBag)
     }
 }
 
@@ -167,6 +172,13 @@ extension ChannelSettingViewController {
             .compactMap { $0 }
             .bind(with: self) { owner, value in
                 owner.coordinator?.showChannelEdit(channel: value)
+            }
+            .disposed(by: disposeBag)
+        
+        reactor.pulse(\.$shouldNavigateToChannelChangeAdmin)
+            .compactMap { $0 }
+            .bind(with: self) { owner, value in
+                owner.coordinator?.showChannelChangeAdmin(channelID: value)
             }
             .disposed(by: disposeBag)
     }

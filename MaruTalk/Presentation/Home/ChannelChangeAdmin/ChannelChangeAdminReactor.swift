@@ -11,21 +11,22 @@ import ReactorKit
 
 final class ChannelChangeAdminReactor: Reactor {
     enum Action {
-        
+        case xMarkButtonTapped
     }
     
     enum Mutation {
-        
+        case setNavigateToChannelSetting
     }
     
     struct State {
-        
+        var channelID: String
+        @Pulse var shouldNavigateToChannelSetting: Void?
     }
     
     var initialState: State
     
-    init(initialState: State) {
-        self.initialState = initialState
+    init(channelID: String) {
+        self.initialState = State(channelID: channelID)
     }
 }
 
@@ -33,7 +34,10 @@ final class ChannelChangeAdminReactor: Reactor {
 
 extension ChannelChangeAdminReactor {
     func mutate(action: Action) -> Observable<Mutation> {
-        
+        switch action {
+        case .xMarkButtonTapped:
+            return .just(.setNavigateToChannelSetting)
+        }
     }
 }
 
@@ -41,6 +45,11 @@ extension ChannelChangeAdminReactor {
 
 extension ChannelChangeAdminReactor {
     func reduce(state: State, mutation: Mutation) -> State {
-        
+        var newState = state
+        switch mutation {
+        case .setNavigateToChannelSetting:
+            newState.shouldNavigateToChannelSetting = ()
+        }
+        return newState
     }
 }
