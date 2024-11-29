@@ -75,6 +75,13 @@ extension UIViewController {
             default: break
             }
             
+        case .channelExit:
+            switch errorCode {
+            case "E11": message = "기본 채널은 퇴장이 불가합니다.(일반 채널)"
+            case "E15": message = "채널 관리자는 채널에 대한 권한을 양도한 후 퇴장할수 있습니다."
+            default: break
+            }
+            
         default: break
         }
         

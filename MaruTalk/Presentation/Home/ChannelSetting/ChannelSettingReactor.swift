@@ -15,6 +15,7 @@ final class ChannelSettingReactor: Reactor {
         case arrowButtonTapped
         case editButtonTapped
         case changeAdminButtonTapped
+        case exitTapped
     }
     
     enum Mutation {
@@ -23,6 +24,7 @@ final class ChannelSettingReactor: Reactor {
         case setExpand(Bool)
         case setNavigateToChannelEdit(Channel)
         case setNavigateToChannelChangeAdmin(String)
+        case setNavigateToHome(Void)
     }
     
     struct State {
@@ -34,6 +36,7 @@ final class ChannelSettingReactor: Reactor {
         
         @Pulse var shouldNavigateToChannelEdit: Channel?
         @Pulse var shouldNavigateToChannelChangeAdmin: String?
+        @Pulse var shouldNaviageToHome: Void?
     }
     
     var initialState: State
@@ -63,6 +66,9 @@ extension ChannelSettingReactor {
         case .changeAdminButtonTapped:
             let channelID = currentState.channelID
             return .just(.setNavigateToChannelChangeAdmin(channelID))
+        
+        case .exitTapped:
+            return executeChannelExit()
         }
     }
 }
@@ -87,6 +93,9 @@ extension ChannelSettingReactor {
             
         case .setNavigateToChannelChangeAdmin(let value):
             newState.shouldNavigateToChannelChangeAdmin = value
+        
+        case .setNavigateToHome():
+            newState.shouldNaviageToHome = ()
         }
         return newState
     }
@@ -108,6 +117,36 @@ extension ChannelSettingReactor {
                 
                 case .failure(let error):
                     return .just(.setNetworkError((Router.APIType.channel, error.errorCode)))
+                }
+            }
+    }
+    
+    private func executeChannelExit() -> Observable<Mutation> {
+        guard let workspaceID = UserDefaultsManager.shared.recentWorkspaceID else { return .empty() }
+        let channelID = currentState.channelID
+        
+        return NetworkManager.shared.performRequest(api: .channelExit(workspaceID: workspaceID, channelID: channelID), model: [Channel].self)
+            .asObservable()
+            .flatMap { result -> Observable<Mutation> in
+                switch result {
+                case .success(_):
+                    //DB에서 관련 채팅 데이터 삭제 진행
+                    return Observable.create { observer in
+                        RealmRepository.shared.deleteChatList(channelID: channelID) { isSuccess in
+                            if isSuccess {
+                                //성공
+                                observer.onNext(.setNavigateToHome(()))
+                            } else {
+                                //실패
+                                print("ERROR: 채널 나가기로 인해 Realm에서 관련 채널 모든 채팅 삭제 실패")
+                            }
+                            observer.onCompleted()
+                        }
+                        return Disposables.create()
+                    }
+                
+                case .failure(let error):
+                    return .just(.setNetworkError((Router.APIType.channelExit, error.errorCode)))
                 }
             }
     }

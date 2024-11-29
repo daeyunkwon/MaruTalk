@@ -93,6 +93,16 @@ extension ChannelSettingViewController {
             .map { Reactor.Action.changeAdminButtonTapped }
             .bind(to: reactor.action)
             .disposed(by: disposeBag)
+        
+        rootView.exitButton.rx.tap
+            .bind(with: self) { owner, _ in
+                owner.showAlert(title: "채널 나가기", message: "정말 채널을 나가시겠습니까?", actions: [
+                    ("확인", { [weak self] in
+                        guard let self else { return }
+                        self.reactor?.action.onNext(.exitTapped) })
+                ])
+            }
+            .disposed(by: disposeBag)
     }
 }
 
@@ -131,7 +141,11 @@ extension ChannelSettingViewController {
         
         reactor.pulse(\.$channel)
             .compactMap { $0 }
-            .map { $0.ownerID }
+            .map {
+                print("DEBUG: 채널 멤버 -> \(String(describing: $0.channelMembers))")
+                print("DEBUG: 채널 관리자 -> \($0.ownerID)")
+                return $0.ownerID
+            }
             .bind(with: self) { owner, value in
                 guard let loginUserID = UserDefaultsManager.shared.userID else { return }
                 //관리자가 아닌 경우는 채널 나가기 메뉴만 제공
@@ -182,6 +196,13 @@ extension ChannelSettingViewController {
             .compactMap { $0 }
             .bind(with: self) { owner, value in
                 owner.coordinator?.showChannelChangeAdmin(channelID: value)
+            }
+            .disposed(by: disposeBag)
+        
+        reactor.pulse(\.$shouldNaviageToHome)
+            .compactMap { $0 }
+            .bind(with: self) { owner, _ in
+                owner.coordinator?.didFinishChannelSetting(isNaviageToHome: true)
             }
             .disposed(by: disposeBag)
     }

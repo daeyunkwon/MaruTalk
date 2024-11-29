@@ -112,9 +112,10 @@ extension ChannelSearchViewController {
             .bind(with: self) { owner, value in
                 let message = "[\(value.name)] 채널에 참여하시겠습니까?"
                 //수락할 경우 채팅 화면으로 진입
-                let okAction = {
-                    owner.coordinator?.showChannelChatting(channelID: value.id) //먼저 화면 이동
-                    owner.coordinator?.didFinishChannelSearch(isNavigateToChannelChatting: true) //네비게이션 스택 제거 작업
+                let okAction = { [weak self] in
+                    guard let self else { return }
+                    self.coordinator?.showChannelChatting(channelID: value.id) //먼저 화면 이동
+                    self.coordinator?.didFinishChannelSearch(isNavigateToChannelChatting: true) //네비게이션 스택 제거 작업
                 }
                 
                 owner.showAlert(title: "채널 참여", message: message, actions: [

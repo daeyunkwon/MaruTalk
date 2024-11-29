@@ -52,18 +52,25 @@ extension RealmRepository {
         }
     }
     
-    func deleteChatList(channelID: String) {
+    func deleteChatList(channelID: String, completion: @escaping (Bool) -> Void) {
         do {
             let realm = try getRealm()
             let targetChatList = realm.objects(RealmChat.self).filter("channelID == %@", channelID)
             
+            print("삭제 타겟---------------------")
+            print("채널 아이디: \(channelID)")
+            print(targetChatList)
+            print("삭제 타겟---------------------")
+            
             try realm.write {
                 realm.delete(targetChatList)
                 print("DEBUG: RealmChat Delete Success")
+                completion(true)
             }
         } catch {
             print("ERROR: RealmChat Delete Failed")
             print(error)
+            completion(false)
         }
     }
 }

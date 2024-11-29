@@ -35,6 +35,7 @@ enum Router {
     case channelEdit(workspaceID: String, channelID: String, name: String, description: String?)
     case channelMembers(workspaceID: String, channelID: String)
     case channelChangeAdmin(workspaceID: String, channelID: String, memberID: String)
+    case channelExit(workspaceID: String, channelID: String)
     //DMS
     case dms(workspaceID: String)
     
@@ -64,6 +65,7 @@ enum Router {
         case channelEdit
         case channelMembers
         case channelChangeAdmin
+        case channelExit
         //DMS
         case dms
     }
@@ -98,6 +100,7 @@ extension Router: URLRequestConvertible {
         case .channelEdit(let workspaceID, let channelID, _, _): return APIURL.channel(workspaceID: workspaceID, channelID: channelID)
         case .channelMembers(let workspaceID, let channelID): return APIURL.channelMembers(workspaceID: workspaceID, channelID: channelID)
         case .channelChangeAdmin(let workspaceID, let channelID, _): return APIURL.channelChangeAdmin(workspaceID: workspaceID, channelID: channelID)
+        case .channelExit(let workspaceID, let channelID): return APIURL.channelExit(workspaceID: workspaceID, channelID: channelID)
             
         case .dms(let workspaceID): return APIURL.dms(workspaceID: workspaceID)
         }
@@ -105,7 +108,7 @@ extension Router: URLRequestConvertible {
     
     var method: HTTPMethod {
         switch self {
-        case .refresh, .fetchImage, .workspaces, .workspace, .userMe, .myChannels, .dms, .chats, .channel, .channels, .channelMembers:
+        case .refresh, .fetchImage, .workspaces, .workspace, .userMe, .myChannels, .dms, .chats, .channel, .channels, .channelMembers, .channelExit:
             return .get
             
         case .emailValidation(_), .join, .login, .loginWithApple, .loginWithKakao, .createWorkspace, .createChannel, .sendChannelChat, .workspaceMemberInvite:
@@ -132,7 +135,7 @@ extension Router: URLRequestConvertible {
                 "SesacKey": APIKey.apiKey
             ]
             
-        case .workspaces, .workspace, .userMe, .myChannels, .dms, .chats, .channel, .workspaceMemberInvite, .channels, .channelMembers, .channelChangeAdmin:
+        case .workspaces, .workspace, .userMe, .myChannels, .dms, .chats, .channel, .workspaceMemberInvite, .channels, .channelMembers, .channelChangeAdmin, .channelExit:
             return [
                 "Content-Type": "application/json",
                 "Authorization": KeychainManager.shared.getItem(forKey: .accessToken) ?? "",

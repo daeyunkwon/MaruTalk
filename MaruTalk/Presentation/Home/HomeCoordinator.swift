@@ -141,8 +141,14 @@ extension HomeCoordinator {
         navigationController.pushViewController(channelSettingVC, animated: true)
     }
     
-    func didFinishChannelSetting() {
-        navigationController.popViewController(animated: true)
+    func didFinishChannelSetting(isNaviageToHome: Bool = false) {
+        if isNaviageToHome {
+            if let homeVC = navigationController.viewControllers.first(where: { $0 is HomeViewController }) as? HomeViewController {
+                navigationController.popToViewController(homeVC, animated: true)
+            }
+        } else {
+            navigationController.popViewController(animated: true)
+        }
     }
 }
 
