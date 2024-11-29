@@ -132,7 +132,7 @@ final class ChannelSettingView: BaseView {
             make.horizontalEdges.equalTo(stackView).inset(24)
         }
         
-        editButton.snp.makeConstraints { make in
+        exitButton.snp.makeConstraints { make in
             make.height.equalTo(44)
         }
         

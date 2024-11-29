@@ -121,6 +121,24 @@ extension ChannelSettingViewController {
             }
             .disposed(by: disposeBag)
         
+        reactor.pulse(\.$channel)
+            .compactMap { $0 }
+            .map { $0.ownerID }
+            .bind(with: self) { owner, value in
+                guard let loginUserID = UserDefaultsManager.shared.userID else { return }
+                //관리자가 아닌 경우는 채널 나가기 메뉴만 제공
+                if value == loginUserID {
+                    owner.rootView.editButton.isHidden = false
+                    owner.rootView.changeAdminButton.isHidden = false
+                    owner.rootView.deleteButton.isHidden = false
+                } else {
+                    owner.rootView.editButton.isHidden = true
+                    owner.rootView.changeAdminButton.isHidden = true
+                    owner.rootView.deleteButton.isHidden = true
+                }
+            }
+            .disposed(by: disposeBag)
+        
         rootView.collectionView.rx.observe(CGSize.self, "contentSize")
             .compactMap { $0 }
             .bind(with: self) { owner, size in
