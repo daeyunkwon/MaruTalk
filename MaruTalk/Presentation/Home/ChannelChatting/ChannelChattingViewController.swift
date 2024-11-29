@@ -198,7 +198,8 @@ extension ChannelChattingViewController {
             .disposed(by: disposeBag)
         
         reactor.pulse(\.$photoImageDatas)
-            .bind(to: rootView.collectionView.rx.items) { (collectionView, row, element) in
+            .bind(to: rootView.collectionView.rx.items) { [weak self] (collectionView, row, element) in
+                guard let self else { return UICollectionViewCell() }
                 guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: MessageSelectedImageCollectionViewCell.reuseIdentifier, for: IndexPath(row: row, section: 0)) as? MessageSelectedImageCollectionViewCell else {
                     return UICollectionViewCell()
                 }

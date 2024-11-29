@@ -36,6 +36,7 @@ enum Router {
     case channelMembers(workspaceID: String, channelID: String)
     case channelChangeAdmin(workspaceID: String, channelID: String, memberID: String)
     case channelExit(workspaceID: String, channelID: String)
+    case channelDelete(workspaceID: String, channelID: String)
     //DMS
     case dms(workspaceID: String)
     
@@ -66,6 +67,7 @@ enum Router {
         case channelMembers
         case channelChangeAdmin
         case channelExit
+        case channelDelete
         //DMS
         case dms
     }
@@ -101,6 +103,7 @@ extension Router: URLRequestConvertible {
         case .channelMembers(let workspaceID, let channelID): return APIURL.channelMembers(workspaceID: workspaceID, channelID: channelID)
         case .channelChangeAdmin(let workspaceID, let channelID, _): return APIURL.channelChangeAdmin(workspaceID: workspaceID, channelID: channelID)
         case .channelExit(let workspaceID, let channelID): return APIURL.channelExit(workspaceID: workspaceID, channelID: channelID)
+        case .channelDelete(let workspaceID, let channelID): return APIURL.channel(workspaceID: workspaceID, channelID: channelID)
             
         case .dms(let workspaceID): return APIURL.dms(workspaceID: workspaceID)
         }
@@ -116,6 +119,9 @@ extension Router: URLRequestConvertible {
             
         case .channelEdit, .channelChangeAdmin:
             return .put
+            
+        case .channelDelete:
+            return .delete
         }
     }
     
@@ -135,7 +141,7 @@ extension Router: URLRequestConvertible {
                 "SesacKey": APIKey.apiKey
             ]
             
-        case .workspaces, .workspace, .userMe, .myChannels, .dms, .chats, .channel, .workspaceMemberInvite, .channels, .channelMembers, .channelChangeAdmin, .channelExit:
+        case .workspaces, .workspace, .userMe, .myChannels, .dms, .chats, .channel, .workspaceMemberInvite, .channels, .channelMembers, .channelChangeAdmin, .channelExit, .channelDelete:
             return [
                 "Content-Type": "application/json",
                 "Authorization": KeychainManager.shared.getItem(forKey: .accessToken) ?? "",

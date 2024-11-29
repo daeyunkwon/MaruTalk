@@ -82,6 +82,13 @@ extension UIViewController {
             default: break
             }
             
+        case .channelDelete:
+            switch errorCode {
+            case "E11": message = "기본 채널은 삭제가 불가합니다.(일반 채널)"
+            case "E14": message = "채널 관리자만 채널을 삭제할 수 있습니다."
+            default: break
+            }
+            
         default: break
         }
         
@@ -143,7 +150,7 @@ extension UIViewController {
     }
     
     //얼럿
-    func showAlert(title: String, message: String, actions: [(String, (() -> Void)?)]) {
+    func showAlert(title: String, message: String, actions: [(String, (() -> Void)?)], cancelHandler: (() -> Void)? = nil) {
         let alert = UIAlertController(title: title, message: message, preferredStyle: .alert)
         
         for (title, handler) in actions {
@@ -153,7 +160,9 @@ extension UIViewController {
             alert.addAction(action)
         }
         
-        alert.addAction(UIAlertAction(title: "취소", style: .cancel))
+        alert.addAction(UIAlertAction(title: "취소", style: .cancel, handler: { _ in
+            cancelHandler?()
+        }))
         
         self.present(alert, animated: true)
     }

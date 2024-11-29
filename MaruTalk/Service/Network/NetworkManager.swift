@@ -106,6 +106,7 @@ final class NetworkManager {
         }
     }
     
+    //이메일 중복 확인
     func checkEmailDuplication(email: String) -> Single<Result<Void, NetworkError>> {
         return Single.create { single -> Disposable in
             
@@ -144,45 +145,45 @@ final class NetworkManager {
     }
     
     //서버로부터 이미지 데이터 요청(사용안할듯?)
-    func fetchImageData(imagePath: String) -> Single<Result<Data, NetworkError>> {
-        return Single.create { single -> Disposable in
-            
-            do {
-                let request = try Router.fetchImage(imagePath: imagePath).asURLRequest()
-                
-                AF.request(request, interceptor: AuthInterceptor.shared).validate(statusCode: 200..<300).responseData { response in
-                    switch response.result {
-                    case .success(let value):
-                        single(.success(.success(value)))
-                        
-                    case .failure(let error):
-                        if let refreshError = error.asAFError?.underlyingError as? NetworkError {
-                            //리프레시 만료 에러의 경우
-                            single(.success(.failure(.responseCode(errorCode: refreshError.errorCode))))
-                        }
-                        
-                        if let data = response.data {
-                            //에러 코드 디코딩 작업
-                            if let result = try? JSONDecoder().decode(SLPErrorResponse.self, from: data) {
-                                print("Error response: \(result)")
-                                single(.success(.failure(.responseCode(errorCode: result.errorCode))))
-                            } else {
-                                //디코딩 작업 실패
-                                single(.success(.failure(.responseCode(errorCode: nil))))
-                            }
-                        } else {
-                            //서버에서 주는 에러 코드 데이터가 없는 경우
-                            single(.success(.failure(.responseCode(errorCode: nil))))
-                        }
-                    }
-                }
-            } catch {
-                print("Error: request 생성 실패")
-                single(.success(.failure(.invalidURL)))
-            }
-            return Disposables.create()
-        }
-    }
+//    func fetchImageData(imagePath: String) -> Single<Result<Data, NetworkError>> {
+//        return Single.create { single -> Disposable in
+//            
+//            do {
+//                let request = try Router.fetchImage(imagePath: imagePath).asURLRequest()
+//                
+//                AF.request(request, interceptor: AuthInterceptor.shared).validate(statusCode: 200..<300).responseData { response in
+//                    switch response.result {
+//                    case .success(let value):
+//                        single(.success(.success(value)))
+//                        
+//                    case .failure(let error):
+//                        if let refreshError = error.asAFError?.underlyingError as? NetworkError {
+//                            //리프레시 만료 에러의 경우
+//                            single(.success(.failure(.responseCode(errorCode: refreshError.errorCode))))
+//                        }
+//                        
+//                        if let data = response.data {
+//                            //에러 코드 디코딩 작업
+//                            if let result = try? JSONDecoder().decode(SLPErrorResponse.self, from: data) {
+//                                print("Error response: \(result)")
+//                                single(.success(.failure(.responseCode(errorCode: result.errorCode))))
+//                            } else {
+//                                //디코딩 작업 실패
+//                                single(.success(.failure(.responseCode(errorCode: nil))))
+//                            }
+//                        } else {
+//                            //서버에서 주는 에러 코드 데이터가 없는 경우
+//                            single(.success(.failure(.responseCode(errorCode: nil))))
+//                        }
+//                    }
+//                }
+//            } catch {
+//                print("Error: request 생성 실패")
+//                single(.success(.failure(.invalidURL)))
+//            }
+//            return Disposables.create()
+//        }
+//    }
     
     //서버로부터 이미지 요청
     func downloadImageData(imagePath: String?, completion: @escaping (Data) -> Void) {
@@ -231,6 +232,44 @@ final class NetworkManager {
             }
         } catch {
             print("Error: request 만들기 실패: \(error)")
+        }
+    }
+    
+    //채널 삭제
+    func deleteChannel(workspaceID: String, channelID: String) -> Single<Result<Void, NetworkError>> {
+        return Single.create { single -> Disposable in
+            
+            do {
+                let request = try Router.channelDelete(workspaceID: workspaceID, channelID: channelID).asURLRequest()
+                
+                AF.request(request).validate(statusCode: 200...299).responseData(emptyResponseCodes: [200]) { response in
+                    switch response.result {
+                    case .success(_):
+                        single(.success(.success(())))
+                        
+                    case .failure(let error):
+                        print(error)
+                        
+                        if let data = response.data {
+                            //에러 코드 디코딩 작업
+                            if let result = try? JSONDecoder().decode(SLPErrorResponse.self, from: data) {
+                                print("Error response: \(result)")
+                                single(.success(.failure(.responseCode(errorCode: result.errorCode))))
+                            } else {
+                                //디코딩 작업 실패
+                                single(.success(.failure(.responseCode(errorCode: nil))))
+                            }
+                        } else {
+                            //서버에서 주는 에러 코드 데이터가 없는 경우
+                            single(.success(.failure(.responseCode(errorCode: nil))))
+                        }
+                    }
+                }
+            } catch {
+                single(.success(.failure(.invalidURL)))
+            }
+            
+            return Disposables.create()
         }
     }
 }

@@ -16,6 +16,9 @@ final class ChannelSettingReactor: Reactor {
         case editButtonTapped
         case changeAdminButtonTapped
         case exitTapped
+        case deleteTapped
+        case retryDeleteFromDB //재시도 얼럿에서 재시도 선택
+        case cancelRetryDeleteFromDB //재시도 얼럿에서 취소 선택
     }
     
     enum Mutation {
@@ -25,6 +28,7 @@ final class ChannelSettingReactor: Reactor {
         case setNavigateToChannelEdit(Channel)
         case setNavigateToChannelChangeAdmin(String)
         case setNavigateToHome(Void)
+        case setShowRetryDeleteFromDBAlert
     }
     
     struct State {
@@ -37,6 +41,7 @@ final class ChannelSettingReactor: Reactor {
         @Pulse var shouldNavigateToChannelEdit: Channel?
         @Pulse var shouldNavigateToChannelChangeAdmin: String?
         @Pulse var shouldNaviageToHome: Void?
+        @Pulse var shouldShowRetryDeleteFromDBAlert: Void?
     }
     
     var initialState: State
@@ -71,6 +76,15 @@ extension ChannelSettingReactor {
         
         case .exitTapped:
             return executeChannelExit()
+        
+        case .deleteTapped:
+            return executeChannelDelete()
+        
+        case .retryDeleteFromDB:
+            return deleteChatFromRealmDB()
+        
+        case .cancelRetryDeleteFromDB:
+            return .just(.setNavigateToHome(()))
         }
     }
 }
@@ -98,6 +112,9 @@ extension ChannelSettingReactor {
         
         case .setNavigateToHome():
             newState.shouldNaviageToHome = ()
+        
+        case .setShowRetryDeleteFromDBAlert:
+            newState.shouldShowRetryDeleteFromDBAlert = ()
         }
         return newState
     }
@@ -133,8 +150,7 @@ extension ChannelSettingReactor {
                 switch result {
                 case .success(_):
                     //DB에서 관련 채팅 데이터 삭제 진행
-                    return Observable.create { [weak self] observer in
-                        guard let self else { return Disposables.create() }
+                    return Observable.create { observer in
                         
                         let compositeDisposable = CompositeDisposable()
                         
@@ -180,5 +196,43 @@ extension ChannelSettingReactor {
                     return .just(.setNetworkError((Router.APIType.channelExit, error.errorCode)))
                 }
             }
+    }
+    
+    private func executeChannelDelete() -> Observable<Mutation> {
+        guard let workspaceID = UserDefaultsManager.shared.recentWorkspaceID else { return .empty() }
+        let channelID = currentState.channelID
+        
+        return NetworkManager.shared.deleteChannel(workspaceID: workspaceID, channelID: channelID)
+            .asObservable()
+            .flatMap { [weak self] result -> Observable<Mutation> in
+                guard let self else { return .empty() }
+                switch result {
+                case .success():
+                    return self.deleteChatFromRealmDB()
+                
+                case .failure(let error):
+                    return .just(.setNetworkError((Router.APIType.channelDelete, error.errorCode)))
+                }
+            }
+    }
+    
+    //Realm DB에서 관련 채팅 데이터 삭제 수행
+    private func deleteChatFromRealmDB() -> Observable<Mutation> {
+        let channelID = currentState.channelID
+        
+        return Observable.create { observer in
+            RealmRepository.shared.deleteChatList(channelID: channelID) { isSuccess in
+                if isSuccess {
+                    // 성공 시 홈 화면으로 전환
+                    observer.onNext(.setNavigateToHome(()))
+                } else {
+                    //실패 시 재시도 얼럿 출력
+                    observer.onNext(.setShowRetryDeleteFromDBAlert)
+                }
+                
+                observer.onCompleted()
+            }
+            return Disposables.create()
+        }
     }
 }

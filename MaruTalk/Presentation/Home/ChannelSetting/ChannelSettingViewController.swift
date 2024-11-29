@@ -95,11 +95,19 @@ extension ChannelSettingViewController {
             .disposed(by: disposeBag)
         
         rootView.exitButton.rx.tap
-            .bind(with: self) { owner, _ in
+            .bind(with: self) { [weak self] owner, _ in
                 owner.showAlert(title: "채널 나가기", message: "정말 채널을 나가시겠습니까?", actions: [
                     ("확인", { [weak self] in
-                        guard let self else { return }
-                        self.reactor?.action.onNext(.exitTapped) })
+                        self?.reactor?.action.onNext(.exitTapped) })
+                ])
+            }
+            .disposed(by: disposeBag)
+        
+        rootView.deleteButton.rx.tap
+            .bind(with: self) { [weak self] owner, _ in
+                owner.showAlert(title: "채널 삭제", message: "정말 채널 삭제하시겠습니까? 삭제 시 멤버/채팅 등 채널 내의 모든 정보가 삭제되고 복구가 불가능합니다.", actions: [
+                    ("확인", { [weak self] in
+                        self?.reactor?.action.onNext(.deleteTapped) })
                 ])
             }
             .disposed(by: disposeBag)
@@ -203,6 +211,16 @@ extension ChannelSettingViewController {
             .compactMap { $0 }
             .bind(with: self) { owner, _ in
                 owner.coordinator?.didFinishChannelSetting(isNaviageToHome: true)
+            }
+            .disposed(by: disposeBag)
+        
+        reactor.pulse(\.$shouldShowRetryDeleteFromDBAlert)
+            .compactMap { $0 }
+            .bind(with: self) { [weak self] owner, _ in
+                guard let self else { return }
+                owner.showAlert(title: "데이터 정리 실패", message: "채팅 관련 데이터 정리에 실패했습니다. 재시도 해주세요.", actions: [
+                    ("확인", { self.reactor?.action.onNext(.retryDeleteFromDB) })
+                ], cancelHandler: { self.reactor?.action.onNext(.cancelRetryDeleteFromDB)  })
             }
             .disposed(by: disposeBag)
     }
