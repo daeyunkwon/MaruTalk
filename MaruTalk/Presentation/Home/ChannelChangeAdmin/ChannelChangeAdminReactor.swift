@@ -12,15 +12,21 @@ import ReactorKit
 final class ChannelChangeAdminReactor: Reactor {
     enum Action {
         case xMarkButtonTapped
+        case fetch
     }
     
     enum Mutation {
         case setNavigateToChannelSetting
+        case setNetworkError((Router.APIType, String?))
+        case setMemberList([User])
     }
     
     struct State {
         var channelID: String
         @Pulse var shouldNavigateToChannelSetting: Void?
+        @Pulse var networkError: (Router.APIType, String?)?
+        
+        @Pulse var memberList: [User]?
     }
     
     var initialState: State
@@ -37,6 +43,9 @@ extension ChannelChangeAdminReactor {
         switch action {
         case .xMarkButtonTapped:
             return .just(.setNavigateToChannelSetting)
+        
+        case .fetch:
+            return fetchMembers()
         }
     }
 }
@@ -49,7 +58,35 @@ extension ChannelChangeAdminReactor {
         switch mutation {
         case .setNavigateToChannelSetting:
             newState.shouldNavigateToChannelSetting = ()
+        
+        case .setNetworkError(let value):
+            newState.networkError = value
+        
+        case .setMemberList(let value):
+            newState.memberList = value
         }
         return newState
+    }
+}
+
+//MARK: - Logic
+
+extension ChannelChangeAdminReactor {
+    private func fetchMembers() -> Observable<Mutation> {
+        guard let workspaceID = UserDefaultsManager.shared.recentWorkspaceID else { return .empty() }
+        let channelID = currentState.channelID
+        return NetworkManager.shared.performRequest(api: .channelMembers(workspaceID: workspaceID, channelID: channelID), model: [User].self)
+            .asObservable()
+            .flatMap { result -> Observable<Mutation> in
+                switch result {
+                case .success(let value):
+                    let loginUser = UserDefaultsManager.shared.userID ?? ""
+                    let filteredMembers = value.filter { $0.userID != loginUser}
+                    return .just(.setMemberList(filteredMembers))
+                
+                case .failure(let error):
+                    return .just(.setNetworkError((Router.APIType.channelMembers, error.errorCode)))
+                }
+            }
     }
 }

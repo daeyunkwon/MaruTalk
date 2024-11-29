@@ -52,13 +52,13 @@ final class ProfileNameEmailTableViewCell: BaseTableViewCell {
     
     override func configureLayout() {
         profileImageView.snp.makeConstraints { make in
-            make.top.equalToSuperview().inset(8)
+            make.top.equalToSuperview().inset(18)
             make.leading.equalToSuperview().inset(14)
             make.size.equalTo(44)
         }
         
         nicknameLabel.snp.makeConstraints { make in
-            make.top.equalToSuperview().inset(8)
+            make.top.equalTo(profileImageView)
             make.leading.equalTo(profileImageView.snp.trailing).offset(11)
             make.trailing.equalToSuperview().inset(14)
         }
@@ -67,11 +67,22 @@ final class ProfileNameEmailTableViewCell: BaseTableViewCell {
             make.top.equalTo(nicknameLabel.snp.bottom).offset(1)
             make.leading.equalTo(nicknameLabel)
             make.trailing.equalTo(nicknameLabel)
-            make.bottom.equalToSuperview().inset(8)
+            make.bottom.equalToSuperview().inset(18)
         }
     }
     
     override func configureUI() {
         backgroundColor = .clear
+    }
+    
+    func configureCell(data: User) {
+        if let imagePath = data.profileImage {
+            profileImageView.setImage(imagePath: imagePath)
+        } else {
+            profileImageView.image = [UIImage(named: "noPhotoA") ?? UIImage(), UIImage(named: "noPhotoB") ?? UIImage(), UIImage(named: "noPhotoC") ?? UIImage()].randomElement()
+        }
+        
+        nicknameLabel.text = data.nickname
+        emailLabel.text = data.email
     }
 }

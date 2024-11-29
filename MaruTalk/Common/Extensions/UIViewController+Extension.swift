@@ -150,4 +150,14 @@ extension UIViewController {
         
         self.present(alert, animated: true)
     }
+    
+    func showOnlyCloseActionAlert(title: String, message: String, action: (String, (() -> Void)?)) {
+        let alert = UIAlertController(title: title, message: message, preferredStyle: .alert)
+        
+        alert.addAction(UIAlertAction(title: action.0, style: .cancel, handler: { _ in
+            action.1?()
+        }))
+        
+        self.present(alert, animated: true)
+    }
 }

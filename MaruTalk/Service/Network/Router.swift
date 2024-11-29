@@ -33,6 +33,7 @@ enum Router {
     case chats(workspaceID: String, channelID: String, cursorDate: String?)
     case sendChannelChat(workspaceID: String, channelID: String, content: String, files: [Data])
     case channelEdit(workspaceID: String, channelID: String, name: String, description: String?)
+    case channelMembers(workspaceID: String, channelID: String)
     //DMS
     case dms(workspaceID: String)
     
@@ -60,6 +61,7 @@ enum Router {
         case chats
         case sendChannelChat
         case channelEdit
+        case channelMembers
         //DMS
         case dms
     }
@@ -74,14 +76,17 @@ extension Router: URLRequestConvertible {
         switch self {
         case .refresh: return APIURL.refresh
         case .fetchImage(let imagePath): return "v1\(imagePath)"
+            
         case .emailValidation: return APIURL.validEmail
         case .join: return APIURL.join
         case .login: return APIURL.login
         case .loginWithApple: return APIURL.loginWithApple
         case .loginWithKakao: return APIURL.loginWithKakao
+            
         case .workspaces, .createWorkspace, .workspace: return APIURL.workspaces
         case .workspaceMemberInvite(let workspaceID, _): return APIURL.workspaceMemberInvite(workspaceID: workspaceID)
         case .userMe: return APIURL.userMe
+            
         case .channels(let workspaceID): return APIURL.channels(workspaceID: workspaceID)
         case .myChannels(let workspaceID): return APIURL.myChannels(workspaceID: workspaceID)
         case .channel(let workspaceID, let channelID): return APIURL.channel(workspaceID: workspaceID, channelID: channelID)
@@ -89,13 +94,15 @@ extension Router: URLRequestConvertible {
         case .chats(let workspaceID, let channelID, _): return APIURL.chats(workspaceID: workspaceID, channelID: channelID)
         case .sendChannelChat(let workspaceID, let channelID, _, _): return APIURL.sendChannelChat(workspaceID: workspaceID, channelID: channelID)
         case .channelEdit(let workspaceID, let channelID, _, _): return APIURL.channel(workspaceID: workspaceID, channelID: channelID)
+        case .channelMembers(let workspaceID, let channelID): return APIURL.channelMembers(workspaceID: workspaceID, channelID: channelID)
+            
         case .dms(let workspaceID): return APIURL.dms(workspaceID: workspaceID)
         }
     }
     
     var method: HTTPMethod {
         switch self {
-        case .refresh, .fetchImage, .workspaces, .workspace, .userMe, .myChannels, .dms, .chats, .channel, .channels:
+        case .refresh, .fetchImage, .workspaces, .workspace, .userMe, .myChannels, .dms, .chats, .channel, .channels, .channelMembers:
             return .get
             
         case .emailValidation(_), .join, .login, .loginWithApple, .loginWithKakao, .createWorkspace, .createChannel, .sendChannelChat, .workspaceMemberInvite:
@@ -122,7 +129,7 @@ extension Router: URLRequestConvertible {
                 "SesacKey": APIKey.apiKey
             ]
             
-        case .workspaces, .workspace, .userMe, .myChannels, .dms, .chats, .channel, .workspaceMemberInvite, .channels:
+        case .workspaces, .workspace, .userMe, .myChannels, .dms, .chats, .channel, .workspaceMemberInvite, .channels, .channelMembers:
             return [
                 "Content-Type": "application/json",
                 "Authorization": KeychainManager.shared.getItem(forKey: .accessToken) ?? "",
