@@ -65,6 +65,11 @@ extension ChannelEditViewController {
             .map { Reactor.Action.inputDescription($0) }
             .bind(to: reactor.action)
             .disposed(by: disposeBag)
+        
+        rootView.doneButton.rx.tap
+            .map { Reactor.Action.doneButtonTapped }
+            .bind(to: reactor.action)
+            .disposed(by: disposeBag)
     }
 }
 

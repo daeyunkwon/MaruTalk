@@ -32,6 +32,7 @@ enum Router {
     case createChannel(workspaceID: String, name: String, description: String?, imageData: Data?)
     case chats(workspaceID: String, channelID: String, cursorDate: String?)
     case sendChannelChat(workspaceID: String, channelID: String, content: String, files: [Data])
+    case channelEdit(workspaceID: String, channelID: String, name: String, description: String?)
     //DMS
     case dms(workspaceID: String)
     
@@ -58,6 +59,7 @@ enum Router {
         case createChannel
         case chats
         case sendChannelChat
+        case channelEdit
         //DMS
         case dms
     }
@@ -86,17 +88,21 @@ extension Router: URLRequestConvertible {
         case .createChannel(let workspaceID, _, _, _): return APIURL.createChannel(workspaceID: workspaceID)
         case .chats(let workspaceID, let channelID, _): return APIURL.chats(workspaceID: workspaceID, channelID: channelID)
         case .sendChannelChat(let workspaceID, let channelID, _, _): return APIURL.sendChannelChat(workspaceID: workspaceID, channelID: channelID)
+        case .channelEdit(let workspaceID, let channelID, _, _): return APIURL.channel(workspaceID: workspaceID, channelID: channelID)
         case .dms(let workspaceID): return APIURL.dms(workspaceID: workspaceID)
         }
     }
     
     var method: HTTPMethod {
         switch self {
+        case .refresh, .fetchImage, .workspaces, .workspace, .userMe, .myChannels, .dms, .chats, .channel, .channels:
+            return .get
+            
         case .emailValidation(_), .join, .login, .loginWithApple, .loginWithKakao, .createWorkspace, .createChannel, .sendChannelChat, .workspaceMemberInvite:
             return .post
             
-        case .refresh, .fetchImage, .workspaces, .workspace, .userMe, .myChannels, .dms, .chats, .channel, .channels:
-            return .get
+        case .channelEdit:
+            return .put
         }
     }
     
@@ -123,7 +129,7 @@ extension Router: URLRequestConvertible {
                 "SesacKey": APIKey.apiKey
             ]
             
-        case .createWorkspace, .createChannel, .sendChannelChat:
+        case .createWorkspace, .createChannel, .sendChannelChat, .channelEdit:
             return [
                 "Content-Type": "multipart/form-data",
                 "Authorization": KeychainManager.shared.getItem(forKey: .accessToken) ?? "",
@@ -208,6 +214,14 @@ extension Router: URLRequestConvertible {
             multipartFormData.append(Data(content.utf8), withName: "content")
             for item in files {
                 multipartFormData.append(item, withName: "files", fileName: UUID().uuidString, mimeType: "image/jpeg")
+            }
+            return multipartFormData
+            
+        case .channelEdit(_, _, let name, let description):
+            let multipartFormData = MultipartFormData()
+            multipartFormData.append(Data(name.utf8), withName: "name")
+            if let description = description {
+                multipartFormData.append(Data(description.utf8), withName: "description")
             }
             return multipartFormData
             

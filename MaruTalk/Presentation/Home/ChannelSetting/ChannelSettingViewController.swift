@@ -22,15 +22,20 @@ final class ChannelSettingViewController: BaseViewController<ChannelSettingView>
         self.reactor = reactor
     }
     
+    deinit {
+        NotificationCenter.default.removeObserver(self)
+    }
+    
     //MARK: - Life Cycle
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        setupNotification()
+        reactor?.action.onNext(.fetch)
     }
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        reactor?.action.onNext(.fetch)
         self.tabBarController?.tabBar.isHidden = true
     }
     
@@ -45,11 +50,25 @@ final class ChannelSettingViewController: BaseViewController<ChannelSettingView>
         navigationItem.title = "채널 설정"
     }
     
+    private func setupNotification() {
+        NotificationCenter.default.addObserver(self, selector: #selector(handleModalDismissed), name: .channelEditComplete, object: nil)
+    }
+    
     //MARK: - Methods
     
     func bind(reactor: ChannelSettingReactor) {
         bindAction(reactor: reactor)
         bindState(reactor: reactor)
+    }
+    
+    @objc private func handleModalDismissed(notification: Notification) {
+        reactor?.action.onNext(.fetch)
+        
+        switch notification.name {
+        case .channelEditComplete:
+            showToastMessage(message: "채널이 편집되었습니다.")
+        default: break
+        }
     }
 }
 
