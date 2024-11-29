@@ -133,6 +133,10 @@
 		44B476672CF8AB5A00617126 /* ChannelEditReactor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 44B476662CF8AB5A00617126 /* ChannelEditReactor.swift */; };
 		44B476692CF8AC0900617126 /* ChannelEditView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 44B476682CF8AC0900617126 /* ChannelEditView.swift */; };
 		44B4766B2CF8AC1800617126 /* ChannelEditViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 44B4766A2CF8AC1800617126 /* ChannelEditViewController.swift */; };
+		44B4766D2CF9899F00617126 /* ProfileNameEmailTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 44B4766C2CF9899F00617126 /* ProfileNameEmailTableViewCell.swift */; };
+		44B476702CF98B8700617126 /* ChannelChangeAdminReactor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 44B4766F2CF98B8700617126 /* ChannelChangeAdminReactor.swift */; };
+		44B476722CF98BE800617126 /* ChannelChangeAdminView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 44B476712CF98BE800617126 /* ChannelChangeAdminView.swift */; };
+		44B476742CF98C0800617126 /* ChannelChangeAdminViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 44B476732CF98C0800617126 /* ChannelChangeAdminViewController.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -266,6 +270,10 @@
 		44B476662CF8AB5A00617126 /* ChannelEditReactor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChannelEditReactor.swift; sourceTree = "<group>"; };
 		44B476682CF8AC0900617126 /* ChannelEditView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChannelEditView.swift; sourceTree = "<group>"; };
 		44B4766A2CF8AC1800617126 /* ChannelEditViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChannelEditViewController.swift; sourceTree = "<group>"; };
+		44B4766C2CF9899F00617126 /* ProfileNameEmailTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileNameEmailTableViewCell.swift; sourceTree = "<group>"; };
+		44B4766F2CF98B8700617126 /* ChannelChangeAdminReactor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChannelChangeAdminReactor.swift; sourceTree = "<group>"; };
+		44B476712CF98BE800617126 /* ChannelChangeAdminView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChannelChangeAdminView.swift; sourceTree = "<group>"; };
+		44B476732CF98C0800617126 /* ChannelChangeAdminViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChannelChangeAdminViewController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -315,6 +323,7 @@
 				441115442CF3243B000D1B2B /* ChannelChatting */,
 				4411157A2CF82E9F000D1B2B /* ChannelSetting */,
 				44B476612CF8AB0A00617126 /* ChannelEdit */,
+				44B4766E2CF98B5F00617126 /* ChannelChangeAdmin */,
 			);
 			path = Home;
 			sourceTree = "<group>";
@@ -382,6 +391,7 @@
 				441115532CF45DE0000D1B2B /* MessageFourPhotoTextTableViewCell.swift */,
 				441115552CF45F56000D1B2B /* MessageFivePhotoTextTableViewCell.swift */,
 				441115812CF8372A000D1B2B /* ProfileImageTitleCollectionViewCell.swift */,
+				44B4766C2CF9899F00617126 /* ProfileNameEmailTableViewCell.swift */,
 			);
 			path = Cell;
 			sourceTree = "<group>";
@@ -677,6 +687,16 @@
 			path = ChannelEdit;
 			sourceTree = "<group>";
 		};
+		44B4766E2CF98B5F00617126 /* ChannelChangeAdmin */ = {
+			isa = PBXGroup;
+			children = (
+				44B4766F2CF98B8700617126 /* ChannelChangeAdminReactor.swift */,
+				44B476712CF98BE800617126 /* ChannelChangeAdminView.swift */,
+				44B476732CF98C0800617126 /* ChannelChangeAdminViewController.swift */,
+			);
+			path = ChannelChangeAdmin;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -805,14 +825,17 @@
 				441115752CF73AE2000D1B2B /* ChannelSearchReactor.swift in Sources */,
 				444DE6F42CD27B1600821269 /* UIButton+Extension.swift in Sources */,
 				4411154C2CF441E5000D1B2B /* MessageSelectedImageCollectionViewCell.swift in Sources */,
+				44B476722CF98BE800617126 /* ChannelChangeAdminView.swift in Sources */,
 				441114D42CE34EBD000D1B2B /* WorkspaceAddView.swift in Sources */,
 				441114C72CE08B03000D1B2B /* User.swift in Sources */,
 				441114E42CE5EEF8000D1B2B /* HomeView.swift in Sources */,
+				44B476702CF98B8700617126 /* ChannelChangeAdminReactor.swift in Sources */,
 				441114F02CE60C48000D1B2B /* DMView.swift in Sources */,
 				441115002CE75290000D1B2B /* DropdownArrowTableViewCell.swift in Sources */,
 				444910E72CD8E734005AB2F7 /* UIViewController+Extension.swift in Sources */,
 				4411151B2CEB3190000D1B2B /* UserDefaultsManager.swift in Sources */,
 				441115322CEF7FB4000D1B2B /* Workspace.swift in Sources */,
+				44B4766D2CF9899F00617126 /* ProfileNameEmailTableViewCell.swift in Sources */,
 				441115042CE75C4C000D1B2B /* ImageTitleCountTableViewCell.swift in Sources */,
 				441115062CE86F70000D1B2B /* HashTitleCountTableViewCell.swift in Sources */,
 				4411156E2CF707D2000D1B2B /* MemberInviteReactor.swift in Sources */,
@@ -875,6 +898,7 @@
 				444DE6EB2CD24F1D00821269 /* BaseCollectionViewCell.swift in Sources */,
 				444DE6D72CD102DD00821269 /* Constant.swift in Sources */,
 				4411150F2CE87C92000D1B2B /* HomeReactor.swift in Sources */,
+				44B476742CF98C0800617126 /* ChannelChangeAdminViewController.swift in Sources */,
 				441114C92CE1BDA5000D1B2B /* KeychainManager.swift in Sources */,
 				444DE6F72CD366DB00821269 /* AuthView.swift in Sources */,
 				441115152CE9E7F6000D1B2B /* PlusTitleHeaderTableViewCellDelegate.swift in Sources */,
