@@ -53,6 +53,18 @@ extension ChannelEditViewController {
             .map { Reactor.Action.xMarkButtonTapped }
             .bind(to: reactor.action)
             .disposed(by: disposeBag)
+        
+        rootView.channelNameFieldView.inputTextField.rx.text.orEmpty
+            .skip(1)
+            .map { Reactor.Action.inputName($0) }
+            .bind(to: reactor.action)
+            .disposed(by: disposeBag)
+        
+        rootView.channelDescriptionFieldView.inputTextField.rx.text
+            .skip(1)
+            .map { Reactor.Action.inputDescription($0) }
+            .bind(to: reactor.action)
+            .disposed(by: disposeBag)
     }
 }
 
@@ -67,16 +79,21 @@ extension ChannelEditViewController {
             }
             .disposed(by: disposeBag)
         
-        reactor.state.map { $0.channel }
+        reactor.state.map { $0.channelName }
             .distinctUntilChanged()
-            .map { $0.name }
             .bind(to: rootView.channelNameFieldView.inputTextField.rx.text)
             .disposed(by: disposeBag)
         
-        reactor.state.map { $0.channel }
+        reactor.state.map { $0.channelDescription }
             .distinctUntilChanged()
-            .compactMap { $0.description }
             .bind(to: rootView.channelDescriptionFieldView.inputTextField.rx.text)
+            .disposed(by: disposeBag)
+        
+        reactor.state.map { $0.isDoneButtonEnabled }
+            .distinctUntilChanged()
+            .bind(with: self) { owner, value in
+                owner.rootView.doneButton.setButtonEnabled(isEnabled: value)
+            }
             .disposed(by: disposeBag)
     }
 }

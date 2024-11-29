@@ -12,21 +12,28 @@ import ReactorKit
 final class ChannelEditReactor: Reactor {
     enum Action {
         case xMarkButtonTapped
+        case inputName(String)
+        case inputDescription(String?)
     }
     
     enum Mutation {
         case setNavigateToChannelSetting
+        case setChannelName(String)
+        case setChannelDescription(String?)
+        case setDoneButtonEnabled(Bool)
     }
     
     struct State {
-        var channel: Channel
         @Pulse var shouldNavigateToChannelSetting: Void?
+        var channelName: String
+        var channelDescription: String?
+        var isDoneButtonEnabled: Bool = true
     }
     
     var initialState: State
     
     init(channel: Channel) {
-        self.initialState = State(channel: channel)
+        self.initialState = State(channelName: channel.name, channelDescription: channel.description)
     }
 }
 
@@ -37,6 +44,17 @@ extension ChannelEditReactor {
         switch action {
         case .xMarkButtonTapped:
             return .just(.setNavigateToChannelSetting)
+        
+        case .inputName(let value):
+            let isValid: Bool = !value.trimmingCharacters(in: .whitespaces).isEmpty ? true : false
+            
+            return .concat([
+                .just(.setChannelName(value)),
+                .just(.setDoneButtonEnabled(isValid))
+            ])
+            
+        case .inputDescription(let value):
+            return .just(.setChannelDescription(value))
         }
     }
 }
@@ -49,6 +67,15 @@ extension ChannelEditReactor {
         switch mutation {
         case .setNavigateToChannelSetting:
             newState.shouldNavigateToChannelSetting = ()
+        
+        case .setChannelName(let value):
+            newState.channelName = value
+        
+        case .setChannelDescription(let value):
+            newState.channelDescription = value
+        
+        case .setDoneButtonEnabled(let value):
+            newState.isDoneButtonEnabled = value
         }
         return newState
     }
