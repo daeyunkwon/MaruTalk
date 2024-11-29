@@ -41,6 +41,8 @@ final class ChannelSettingReactor: Reactor {
     
     var initialState: State
     
+    private let disposeBag = DisposeBag()
+    
     init(channelID: String) {
         self.initialState = State(channelID: channelID)
     }
@@ -131,7 +133,11 @@ extension ChannelSettingReactor {
                 switch result {
                 case .success(_):
                     //DB에서 관련 채팅 데이터 삭제 진행
-                    return Observable.create { observer in
+                    return Observable.create { [weak self] observer in
+                        guard let self else { return Disposables.create() }
+                        
+                        let compositeDisposable = CompositeDisposable()
+                        
                         RealmRepository.shared.deleteChatList(channelID: channelID) { isSuccess in
                             if isSuccess {
                                 //성공
@@ -139,10 +145,35 @@ extension ChannelSettingReactor {
                             } else {
                                 //실패
                                 print("ERROR: 채널 나가기로 인해 Realm에서 관련 채널 모든 채팅 삭제 실패")
+                                //다시 채널 가입 처리
+                                let fallbackDisposable = NetworkManager.shared
+                                    .performRequest(api: .chats(workspaceID: workspaceID, channelID: channelID, cursorDate: nil), model: [Chat].self)
+                                    .asObservable()
+                                    .subscribe(onNext: { result in
+                                        switch result {
+                                        case .success(_):
+                                            print("DEBUG: 재 가입 성공")
+                                            //채널 나가기는 취소된 상태, 우선 에러 보내기
+                                            observer.onNext(.setNetworkError((Router.APIType.channelExit, nil)))
+                                            
+                                        case .failure(let error):
+                                            print("Error: 재 가입 실패: \(error)")
+                                            observer.onNext(.setNetworkError((Router.APIType.channelExit, nil)))
+                                        }
+                                        
+                                    }, onError: { error in
+                                        print("Error: 재 가입 실패: \(error)")
+                                        //재가입 마저 실패 시 우선 채널 나가기는 처리되었으므로 홈 화면 전환
+                                        observer.onNext(.setNavigateToHome(()))
+                                    })
+                                
+                               let _ = compositeDisposable.insert(fallbackDisposable)
                             }
                             observer.onCompleted()
                         }
-                        return Disposables.create()
+                        return Disposables.create {
+                            compositeDisposable.dispose()
+                        }
                     }
                 
                 case .failure(let error):
