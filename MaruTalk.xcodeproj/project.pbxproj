@@ -140,6 +140,7 @@
 		44B476762CFAF35F00617126 /* ProfileNameMessageTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 44B476752CFAF35F00617126 /* ProfileNameMessageTableViewCell.swift */; };
 		44B476782CFAF82200617126 /* DMListReactor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 44B476772CFAF82200617126 /* DMListReactor.swift */; };
 		44B4767A2CFAFF9200617126 /* DMListEmptyView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 44B476792CFAFF9200617126 /* DMListEmptyView.swift */; };
+		44B4767C2CFB0A4000617126 /* ProfileCircleImageTitleCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 44B4767B2CFB0A4000617126 /* ProfileCircleImageTitleCollectionViewCell.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -280,6 +281,7 @@
 		44B476752CFAF35F00617126 /* ProfileNameMessageTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileNameMessageTableViewCell.swift; sourceTree = "<group>"; };
 		44B476772CFAF82200617126 /* DMListReactor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DMListReactor.swift; sourceTree = "<group>"; };
 		44B476792CFAFF9200617126 /* DMListEmptyView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DMListEmptyView.swift; sourceTree = "<group>"; };
+		44B4767B2CFB0A4000617126 /* ProfileCircleImageTitleCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileCircleImageTitleCollectionViewCell.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -399,6 +401,7 @@
 				441115532CF45DE0000D1B2B /* MessageFourPhotoTextTableViewCell.swift */,
 				441115552CF45F56000D1B2B /* MessageFivePhotoTextTableViewCell.swift */,
 				441115812CF8372A000D1B2B /* ProfileImageTitleCollectionViewCell.swift */,
+				44B4767B2CFB0A4000617126 /* ProfileCircleImageTitleCollectionViewCell.swift */,
 				44B4766C2CF9899F00617126 /* ProfileNameEmailTableViewCell.swift */,
 				44B476752CFAF35F00617126 /* ProfileNameMessageTableViewCell.swift */,
 			);
@@ -838,6 +841,7 @@
 				44B476722CF98BE800617126 /* ChannelChangeAdminView.swift in Sources */,
 				441114D42CE34EBD000D1B2B /* WorkspaceAddView.swift in Sources */,
 				441114C72CE08B03000D1B2B /* User.swift in Sources */,
+				44B4767C2CFB0A4000617126 /* ProfileCircleImageTitleCollectionViewCell.swift in Sources */,
 				441114E42CE5EEF8000D1B2B /* HomeView.swift in Sources */,
 				44B476702CF98B8700617126 /* ChannelChangeAdminReactor.swift in Sources */,
 				441114F02CE60C48000D1B2B /* DMListView.swift in Sources */,

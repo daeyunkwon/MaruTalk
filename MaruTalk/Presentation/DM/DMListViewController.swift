@@ -55,7 +55,10 @@ final class DMListViewController: BaseViewController<DMListView>, View {
 
 extension DMListViewController {
     private func bindAction(reactor: DMListReactor) {
-        
+        rx.methodInvoked(#selector(viewWillAppear(_:)))
+            .map { _ in Reactor.Action.fetch }
+            .bind(to: reactor.action)
+            .disposed(by: disposeBag)
     }
 }
 
@@ -63,6 +66,24 @@ extension DMListViewController {
 
 extension DMListViewController {
     private func bindState(reactor: DMListReactor) {
+        reactor.pulse(\.$networkError)
+            .compactMap { $0 }
+            .bind(with: self) { owner, value in
+                owner.showToastForNetworkError(api: value.0, errorCode: value.1)
+            }
+            .disposed(by: disposeBag)
         
+        reactor.pulse(\.$memberList)
+            .compactMap { $0 }
+            .map { !$0.isEmpty }
+            .bind(to: rootView.emptyView.rx.isHidden)
+            .disposed(by: disposeBag)
+        
+        reactor.pulse(\.$memberList)
+            .compactMap { $0 }
+            .bind(to: rootView.collectionView.rx.items(cellIdentifier: ProfileCircleImageTitleCollectionViewCell.reuseIdentifier, cellType: ProfileCircleImageTitleCollectionViewCell.self)) { row, element, cell in
+                cell.configureCell(data: element)
+            }
+            .disposed(by: disposeBag)
     }
 }

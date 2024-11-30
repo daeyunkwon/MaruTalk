@@ -23,6 +23,7 @@ enum Router {
     case createWorkspace(name: String, description: String, imageData: Data)
     case workspace(id: String) //특정 워크스페이스
     case workspaceMemberInvite(workspaceID: String, email: String)
+    case workspaceMembers(workspaceID: String)
     //User
     case userMe //내 프로필 정보 조회
     //Channel
@@ -54,6 +55,7 @@ enum Router {
         case createWorkspace
         case workspace
         case workspaceMemberInvite
+        case workspaceMembers
         //User
         case userMe
         //Channel
@@ -88,10 +90,11 @@ extension Router: URLRequestConvertible {
         case .login: return APIURL.login
         case .loginWithApple: return APIURL.loginWithApple
         case .loginWithKakao: return APIURL.loginWithKakao
+        case .userMe: return APIURL.userMe
             
         case .workspaces, .createWorkspace, .workspace: return APIURL.workspaces
         case .workspaceMemberInvite(let workspaceID, _): return APIURL.workspaceMemberInvite(workspaceID: workspaceID)
-        case .userMe: return APIURL.userMe
+        case .workspaceMembers(let workspaceID): return APIURL.workspaceMembers(workspaceID: workspaceID)
             
         case .channels(let workspaceID): return APIURL.channels(workspaceID: workspaceID)
         case .myChannels(let workspaceID): return APIURL.myChannels(workspaceID: workspaceID)
@@ -111,7 +114,7 @@ extension Router: URLRequestConvertible {
     
     var method: HTTPMethod {
         switch self {
-        case .refresh, .fetchImage, .workspaces, .workspace, .userMe, .myChannels, .dms, .chats, .channel, .channels, .channelMembers, .channelExit:
+        case .refresh, .fetchImage, .workspaces, .workspace, .workspaceMembers, .userMe, .myChannels, .dms, .chats, .channel, .channels, .channelMembers, .channelExit:
             return .get
             
         case .emailValidation(_), .join, .login, .loginWithApple, .loginWithKakao, .createWorkspace, .createChannel, .sendChannelChat, .workspaceMemberInvite:
@@ -141,7 +144,7 @@ extension Router: URLRequestConvertible {
                 "SesacKey": APIKey.apiKey
             ]
             
-        case .workspaces, .workspace, .userMe, .myChannels, .dms, .chats, .channel, .workspaceMemberInvite, .channels, .channelMembers, .channelChangeAdmin, .channelExit, .channelDelete:
+        case .workspaces, .workspace, .workspaceMembers, .userMe, .myChannels, .dms, .chats, .channel, .workspaceMemberInvite, .channels, .channelMembers, .channelChangeAdmin, .channelExit, .channelDelete:
             return [
                 "Content-Type": "application/json",
                 "Authorization": KeychainManager.shared.getItem(forKey: .accessToken) ?? "",

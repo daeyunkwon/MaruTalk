@@ -16,13 +16,14 @@ final class DMListView: BaseView {
     let collectionView: UICollectionView = {
         let layout = UICollectionViewFlowLayout()
         layout.scrollDirection = .horizontal
-        layout.itemSize = .init(width: 76, height: 98)
+        layout.itemSize = .init(width: 76, height: 90)
         layout.minimumLineSpacing = 0
-        layout.sectionInset = .init(top: 0, left: 0, bottom: 0, right: 0)
+        layout.sectionInset = .init(top: 16, left: 0, bottom: 0, right: 0)
         
         let cv = UICollectionView(frame: .zero, collectionViewLayout: layout)
-        cv.register(ProfileImageTitleCollectionViewCell.self, forCellWithReuseIdentifier: ProfileImageTitleCollectionViewCell.reuseIdentifier)
+        cv.register(ProfileCircleImageTitleCollectionViewCell.self, forCellWithReuseIdentifier: ProfileCircleImageTitleCollectionViewCell.reuseIdentifier)
         cv.backgroundColor = Constant.Color.brandWhite
+        cv.showsHorizontalScrollIndicator = false
         return cv
     }()
     
@@ -57,13 +58,13 @@ final class DMListView: BaseView {
         collectionView.snp.makeConstraints { make in
             make.top.equalTo(safeAreaLayoutGuide)
             make.horizontalEdges.equalToSuperview()
-            make.height.equalTo(100)
+            make.height.equalTo(90)
         }
         
         separatorLineView.snp.makeConstraints { make in
             make.top.equalTo(collectionView.snp.bottom)
             make.horizontalEdges.equalToSuperview()
-            make.height.equalTo(0.4)
+            make.height.equalTo(1)
         }
         
         tableView.snp.makeConstraints { make in
