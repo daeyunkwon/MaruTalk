@@ -85,5 +85,16 @@ extension DMListViewController {
                 cell.configureCell(data: element)
             }
             .disposed(by: disposeBag)
+        
+        reactor.pulse(\.$user)
+            .compactMap { $0 }
+            .bind(with: self) { owner, value in
+                if value.profileImage != nil {
+                    owner.profileCircleView.profileImageView.setImage(imagePath: value.profileImage)
+                } else {
+                    owner.profileCircleView.profileImageView.image = UIImage(named: "noPhotoA")
+                }
+            }
+            .disposed(by: disposeBag)
     }
 }

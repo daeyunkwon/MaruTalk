@@ -173,7 +173,7 @@ extension HomeViewController {
                 if user.profileImage != nil {
                     owner.profileCircleView.profileImageView.setImage(imagePath: user.profileImage)
                 } else {
-                    owner.profileCircleView.profileImageView.image = UIImage(named: "noPhotoB")
+                    owner.profileCircleView.profileImageView.image = UIImage(named: "noPhotoA")
                 }
             }
             .disposed(by: disposeBag)

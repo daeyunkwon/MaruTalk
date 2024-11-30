@@ -17,11 +17,13 @@ final class DMListReactor: Reactor {
     enum Mutation {
         case setNetworkError((Router.APIType, String?))
         case setMemberList([User])
+        case setUser(User)
     }
     
     struct State {
         @Pulse var networkError: (Router.APIType, String?)?
         @Pulse var memberList: [User]?
+        @Pulse var user: User?
     }
     
     var initialState: State = State()
@@ -33,7 +35,10 @@ extension DMListReactor {
     func mutate(action: Action) -> Observable<Mutation> {
         switch action {
         case .fetch:
-            return fetchMemberList()
+            return .concat([
+                fetchMemberList(),
+                fetchProfile()
+            ])
         }
     }
 }
@@ -49,6 +54,9 @@ extension DMListReactor {
             
         case .setMemberList(let value):
             newState.memberList = value
+        
+        case .setUser(let value):
+            newState.user = value
         }
         return newState
     }
@@ -72,6 +80,21 @@ extension DMListReactor {
                 
                 case .failure(let error):
                     return .just(.setNetworkError((Router.APIType.workspaceMembers, error.errorCode)))
+                }
+            }
+    }
+    
+    //내 프로필 조회
+    private func fetchProfile() -> Observable<Mutation> {
+        return NetworkManager.shared.performRequest(api: .userMe, model: User.self)
+            .asObservable()
+            .flatMap { result -> Observable<Mutation> in
+                switch result {
+                case .success(let value):
+                    return .just(.setUser(value))
+                
+                case .failure(let error):
+                    return .just(.setNetworkError((Router.APIType.userMe, error.errorCode)))
                 }
             }
     }
