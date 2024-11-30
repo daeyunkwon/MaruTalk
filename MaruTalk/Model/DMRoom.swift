@@ -9,12 +9,12 @@ import Foundation
 
 struct DMRoom: Decodable, Equatable {
     let roomID: String
-    let createAt: String
+    let createdAt: String
     let user: User
     
     enum CodingKeys: String, CodingKey {
         case roomID = "room_id"
-        case createAt
+        case createdAt
         case user
     }
     

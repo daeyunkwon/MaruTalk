@@ -36,7 +36,6 @@ final class ChannelChattingReactor: Reactor {
     
     struct State {
         var channelID: String? //채널
-        var roomID: String? //DM
         
         @Pulse var navigationTitle: String?
         @Pulse var networkError: (Router.APIType, String?)?
@@ -56,24 +55,10 @@ final class ChannelChattingReactor: Reactor {
     
     let initialState: State
     
-    enum ViewType {
-        case channel(channelID: String)
-        case dm(roomID: String)
-    }
-    private let viewType: ViewType
-    
     private let disposeBag = DisposeBag()
     
-    init(viewType: ViewType) {
-        switch viewType {
-        case .channel(let channelID):
-            //채널 채팅 화면인 경우
-            initialState = State(channelID: channelID, roomID: nil)
-        case .dm(let roomID):
-            //다이렉트 메시지 채팅 화면인 경우
-            initialState = State(channelID: nil, roomID: roomID)
-        }
-        self.viewType = viewType
+    init(channelID: String) {
+        initialState = State(channelID: channelID)
         
         SocketIOManager.shared.dataRelay
             .subscribe(onNext: { [weak self] dataArray in
@@ -89,21 +74,11 @@ extension ChannelChattingReactor {
     func mutate(action: Action) -> Observable<Mutation> {
         switch action {
         case .fetch:
-            switch viewType {
-            //채널 채팅 화면인 경우
-            case .channel:
-                return .concat([
-                    fetchChatsFromRealm(), //저장된 채팅 내역 가져오기
-                    fetchChannel(), //채널 정보
-                    connectChannelSocket() //소켓 연결
-                ])
-            
-            //다이렉트 메시지 채팅 화면인 경우
-            case .dm:
-                return .concat([
-                    .empty()
-                ])
-            }
+            return .concat([
+                fetchChatsFromRealm(), //저장된 채팅 내역 가져오기
+                fetchChannel(), //채널 정보
+                connectChannelSocket() //소켓 연결
+            ])
             
         case .viewDisappear:
             return disconnectSocket()

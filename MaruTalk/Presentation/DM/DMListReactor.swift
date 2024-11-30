@@ -12,20 +12,23 @@ import ReactorKit
 final class DMListReactor: Reactor {
     enum Action {
         case fetch
+        case selectMember(User)
     }
     
     enum Mutation {
         case setNetworkError((Router.APIType, String?))
         case setMemberList([User])
         case setUser(User)
-        case setDMRoomList([DMRoom])
+        case setDMRoomList([Chat])
+        case setNavigateToDMChatting(DMRoom)
     }
     
     struct State {
         @Pulse var networkError: (Router.APIType, String?)?
         @Pulse var memberList: [User]?
         @Pulse var user: User?
-        @Pulse var dmRoomList: [DMRoom]?
+        @Pulse var dmRoomList: [Chat]?
+        @Pulse var shouldNavigateToDMChatting: DMRoom?
     }
     
     var initialState: State = State()
@@ -42,6 +45,9 @@ extension DMListReactor {
                 fetchProfile(),
                 fetchDMS()
             ])
+        
+        case .selectMember(let value):
+            return createDMRoom(opponentID: value.userID)
         }
     }
 }
@@ -63,6 +69,9 @@ extension DMListReactor {
         
         case .setDMRoomList(let value):
             newState.dmRoomList = value
+        
+        case .setNavigateToDMChatting(let value):
+            newState.shouldNavigateToDMChatting = value
         }
         return newState
     }
@@ -113,10 +122,61 @@ extension DMListReactor {
                 guard let self else { return .empty() }
                 switch result {
                 case .success(let value):
-                    return .just(.setDMRoomList(value))
+                    let roomIDs = value.map { $0.roomID }
+                    return self.fetchDMRoomChat(roomIDs: roomIDs)
                 
                 case .failure(let error):
                     return .just(.setNetworkError((Router.APIType.userMe, error.errorCode)))
+                }
+            }
+    }
+    
+    //DM 방 채팅 내용 조회
+    private func fetchDMRoomChat(roomIDs: [String]) -> Observable<Mutation> {
+        guard let workspaceID = UserDefaultsManager.shared.recentWorkspaceID else { return .empty() }
+        
+        let requests = roomIDs.map { roomID -> Observable<Chat?> in
+            var cursorDate: String?
+            if let chat = RealmDMChatRepository.shared.fetchLastChat(roomID: roomID) {
+                cursorDate = Date.formatToISO8601String(date: chat.createdAt)
+            }
+            
+            return NetworkManager.shared
+                .performRequest(api: .dmChats(workspaceID: workspaceID, roomID: roomID, cursorDate: cursorDate), model: [Chat].self)
+                .asObservable()
+                .map { result -> Chat? in
+                    switch result {
+                    case .success(let chats):
+                        let sorted = chats.sorted { $0.createdAt > $1.createdAt }
+                        return sorted.first
+                    case .failure(let error):
+                        print("ERROR: \(error)")
+                        return nil
+                    }
+                }
+            }
+        
+        return Observable.zip(requests)
+                .map { allChats -> Mutation in
+                    let combinedChats = allChats.compactMap { $0 }
+                    print("DEBUG: Fetched all DM room chats: \(combinedChats)")
+                    return .setDMRoomList(combinedChats)
+                }
+    }
+    
+    //DM방 생성 또는 조회
+    private func createDMRoom(opponentID: String) -> Observable<Mutation> {
+        guard let workspaceID = UserDefaultsManager.shared.recentWorkspaceID else { return .empty() }
+        
+        return NetworkManager.shared.performRequest(api: .createDM(workspaceID: workspaceID, opponentID: opponentID), model: DMRoom.self)
+            .asObservable()
+            .flatMap { result -> Observable<Mutation> in
+                switch result {
+                case .success(let value):
+                    return .just(.setNavigateToDMChatting(value))
+                
+                case .failure(let error):
+                    return .just(.setNetworkError((Router.APIType.createDM, error.errorCode)))
                 }
             }
     }

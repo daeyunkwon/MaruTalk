@@ -55,6 +55,37 @@ final class SocketIOManager {
         socket?.connect() //소켓 연결
     }
     
+    func connect(roomID: String) {
+        guard let url = URL(string: APIURL.baseURL + "ws-dm-\(roomID)") else {
+            print("ERROR: URL 생성 실패 - \(#function)")
+            return
+        }
+        manager = SocketManager(socketURL: url, config: [.log(true), .compress]) //설정: 로그 출력 및 데이터 압축
+        socket = manager?.socket(forNamespace: "/ws-dm-\(roomID)")
+        
+        //소켓 연결
+        socket?.on(clientEvent: .connect) { data, ack in
+            print("DEBUG: 소켓 연결됨", data, ack)
+        }
+        
+        //이벤트 수신
+        socket?.on("dm") { [weak self] dataArray, ack in
+            guard let self else { return }
+            print("DEBUG: 데이터 수신됨 DM RECEIVED!!", dataArray, ack)
+            
+            self.decodeSocketData(dataArray) { chatList in
+                self.dataRelay.accept(chatList)
+            }
+        }
+        
+        //소켓 해제
+        socket?.on(clientEvent: .disconnect) { data, ack in
+            print("DEBUG: 소켓 연결 해제 됨", data, ack)
+        }
+        
+        socket?.connect() //소켓 연결
+    }
+    
     func disconnect() {
         socket?.disconnect() //소켓 연결 해제
         socket = nil

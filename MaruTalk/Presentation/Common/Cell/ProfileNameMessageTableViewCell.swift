@@ -119,7 +119,7 @@ final class ProfileNameMessageTableViewCell: BaseTableViewCell {
         backgroundColor = .clear
     }
     
-    func configureCell(data: DMRoom) {
+    func configureCell(data: Chat) {
         if data.user.profileImage != nil {
             profileImageView.setImage(imagePath: data.user.profileImage)
         } else {
@@ -127,5 +127,7 @@ final class ProfileNameMessageTableViewCell: BaseTableViewCell {
         }
         
         nicknameLabel.text = data.user.nickname
+        messageContentLabel.text = data.content
+        timeLabel.text = data.createdAt
     }
 }

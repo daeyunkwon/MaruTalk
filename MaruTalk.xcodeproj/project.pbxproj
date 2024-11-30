@@ -143,6 +143,8 @@
 		44B4767C2CFB0A4000617126 /* ProfileCircleImageTitleCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 44B4767B2CFB0A4000617126 /* ProfileCircleImageTitleCollectionViewCell.swift */; };
 		44B4767E2CFB1F5700617126 /* RealmDMChat.swift in Sources */ = {isa = PBXBuildFile; fileRef = 44B4767D2CFB1F5700617126 /* RealmDMChat.swift */; };
 		44B476802CFB20BB00617126 /* RealmDMChatRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = 44B4767F2CFB20BB00617126 /* RealmDMChatRepository.swift */; };
+		44B476832CFB30D500617126 /* DMChattingReactor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 44B476822CFB30D500617126 /* DMChattingReactor.swift */; };
+		44B476852CFB30EE00617126 /* DMChattingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 44B476842CFB30EE00617126 /* DMChattingViewController.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -286,6 +288,8 @@
 		44B4767B2CFB0A4000617126 /* ProfileCircleImageTitleCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileCircleImageTitleCollectionViewCell.swift; sourceTree = "<group>"; };
 		44B4767D2CFB1F5700617126 /* RealmDMChat.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RealmDMChat.swift; sourceTree = "<group>"; };
 		44B4767F2CFB20BB00617126 /* RealmDMChatRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RealmDMChatRepository.swift; sourceTree = "<group>"; };
+		44B476822CFB30D500617126 /* DMChattingReactor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DMChattingReactor.swift; sourceTree = "<group>"; };
+		44B476842CFB30EE00617126 /* DMChattingViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DMChattingViewController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -366,6 +370,7 @@
 				441114EF2CE60C48000D1B2B /* DMListView.swift */,
 				44B476792CFAFF9200617126 /* DMListEmptyView.swift */,
 				441114F52CE60C99000D1B2B /* DMListViewController.swift */,
+				44B476812CFB30BA00617126 /* DMChatting */,
 			);
 			path = DM;
 			sourceTree = "<group>";
@@ -715,6 +720,15 @@
 			path = ChannelChangeAdmin;
 			sourceTree = "<group>";
 		};
+		44B476812CFB30BA00617126 /* DMChatting */ = {
+			isa = PBXGroup;
+			children = (
+				44B476822CFB30D500617126 /* DMChattingReactor.swift */,
+				44B476842CFB30EE00617126 /* DMChattingViewController.swift */,
+			);
+			path = DMChatting;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -820,6 +834,7 @@
 				441115522CF4552D000D1B2B /* MessageThreePhotoTextTableViewCell.swift in Sources */,
 				441114E82CE5EF51000D1B2B /* HomeCoordinator.swift in Sources */,
 				444910E52CD8E0B1005AB2F7 /* NetworkError.swift in Sources */,
+				44B476832CFB30D500617126 /* DMChattingReactor.swift in Sources */,
 				444DE6B62CD0FC9D00821269 /* AppDelegate.swift in Sources */,
 				4411150D2CE876C1000D1B2B /* SectionModel.swift in Sources */,
 				444DE6E72CD24C1F00821269 /* BaseViewController.swift in Sources */,
@@ -912,6 +927,7 @@
 				4411154E2CF447FE000D1B2B /* MessageOnePhotoTextTableViewCell.swift in Sources */,
 				4411157E2CF82F2D000D1B2B /* ChannelSettingView.swift in Sources */,
 				441114F22CE60C76000D1B2B /* SearchView.swift in Sources */,
+				44B476852CFB30EE00617126 /* DMChattingViewController.swift in Sources */,
 				4411157C2CF82ECD000D1B2B /* ChannelSettingReactor.swift in Sources */,
 				441114FE2CE73CD3000D1B2B /* HomeEmptyView.swift in Sources */,
 				444910DC2CD8AC5C005AB2F7 /* Router.swift in Sources */,

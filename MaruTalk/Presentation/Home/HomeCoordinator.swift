@@ -79,7 +79,7 @@ extension HomeCoordinator {
 
 extension HomeCoordinator {
     func showChannelChatting(channelID: String) {
-        let reactor = ChannelChattingReactor(viewType: .channel(channelID: channelID))
+        let reactor = ChannelChattingReactor(channelID: channelID)
         let channelChattingVC = ChannelChattingViewController(reactor: reactor)
         channelChattingVC.coordinator = self
         navigationController.pushViewController(channelChattingVC, animated: true)

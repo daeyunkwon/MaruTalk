@@ -17,4 +17,5 @@ enum BodyKey {
     static let oauthToken = "oauthToken"
     static let accessToken = "accessToken"
     static let owner_id = "owner_id"
+    static let opponent_id = "opponent_id"
 }

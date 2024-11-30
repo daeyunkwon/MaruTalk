@@ -39,6 +39,7 @@ final class DMListViewController: BaseViewController<DMListView>, View {
     //MARK: - Configurations
  
     override func setupNavi() {
+        navigationItem.title = ""
         navigationItem.leftBarButtonItem = UIBarButtonItem(customView: navigationTitleView)
         navigationItem.rightBarButtonItem = UIBarButtonItem(customView: profileCircleView)
     }
@@ -57,6 +58,11 @@ extension DMListViewController {
     private func bindAction(reactor: DMListReactor) {
         rx.methodInvoked(#selector(viewWillAppear(_:)))
             .map { _ in Reactor.Action.fetch }
+            .bind(to: reactor.action)
+            .disposed(by: disposeBag)
+        
+        rootView.collectionView.rx.modelSelected(User.self)
+            .map { Reactor.Action.selectMember($0) }
             .bind(to: reactor.action)
             .disposed(by: disposeBag)
     }
@@ -101,6 +107,13 @@ extension DMListViewController {
             .compactMap { $0 }
             .bind(to: rootView.tableView.rx.items(cellIdentifier: ProfileNameMessageTableViewCell.reuseIdentifier, cellType: ProfileNameMessageTableViewCell.self)) { row, element, cell in
                 cell.configureCell(data: element)
+            }
+            .disposed(by: disposeBag)
+        
+        reactor.pulse(\.$shouldNavigateToDMChatting)
+            .compactMap { $0 }
+            .bind(with: self) { owner, value in
+                owner.coordinator?.showDMChatting(roomID: value.roomID, otherUserID: value.user.userID)
             }
             .disposed(by: disposeBag)
     }

@@ -39,6 +39,20 @@ extension RealmDMChatRepository {
         }
     }
     
+    func fetchLastChat(roomID: String) -> RealmDMChat? {
+        do {
+            let realm = try getRealm()
+            
+            let result = realm.objects(RealmDMChat.self).filter("roomID == %@", roomID).sorted(byKeyPath: RealmDMChat.Key.createdAt.rawValue, ascending: false)
+            
+            return result.first
+        } catch {
+            print("ERROR: RealmChat Last Chat Fetch Failed")
+            print(error)
+            return nil
+        }
+    }
+    
     func saveChat(chat: RealmDMChat) {
         do {
             let realm = try getRealm()

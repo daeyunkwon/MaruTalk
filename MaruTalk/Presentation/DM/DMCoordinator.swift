@@ -30,3 +30,16 @@ final class DMCoordinator: Coordinator {
         }
     }
 }
+
+extension DMCoordinator {
+    func showDMChatting(roomID: String, otherUserID: String) {
+        let reactor = DMChattingReactor(roomID: roomID, otherUserID: otherUserID)
+        let dmChattingVC = DMChattingViewController(reactor: reactor)
+        dmChattingVC.coordinator = self
+        navigationController.pushViewController(dmChattingVC, animated: true)
+    }
+    
+    func didFinishDMChatting() {
+        navigationController.popViewController(animated: true)
+    }
+}

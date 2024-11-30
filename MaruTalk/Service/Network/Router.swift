@@ -26,6 +26,7 @@ enum Router {
     case workspaceMembers(workspaceID: String)
     //User
     case userMe //내 프로필 정보 조회
+    case user(userID: String) //다른 유저 정보 조회
     //Channel
     case channels(workspaceID: String) //워크 스페이스에 속하는 모든 채널들
     case myChannels(workspaceID: String) //워크 스페이스에 속하는 사용자가 속한 채널들
@@ -40,6 +41,8 @@ enum Router {
     case channelDelete(workspaceID: String, channelID: String)
     //DMS
     case dms(workspaceID: String)
+    case dmChats(workspaceID: String, roomID: String, cursorDate: String?)
+    case createDM(workspaceID: String, opponentID: String) //DM방 생성 또는 조회 수행
     
     enum APIType {
         case empty //초기화용 빈 값
@@ -58,6 +61,7 @@ enum Router {
         case workspaceMembers
         //User
         case userMe
+        case user
         //Channel
         case channels
         case myChannels
@@ -72,6 +76,8 @@ enum Router {
         case channelDelete
         //DMS
         case dms
+        case dmChats
+        case createDM
     }
 }
 
@@ -91,6 +97,7 @@ extension Router: URLRequestConvertible {
         case .loginWithApple: return APIURL.loginWithApple
         case .loginWithKakao: return APIURL.loginWithKakao
         case .userMe: return APIURL.userMe
+        case .user(let userID): return APIURL.user(userID: userID)
             
         case .workspaces, .createWorkspace, .workspace: return APIURL.workspaces
         case .workspaceMemberInvite(let workspaceID, _): return APIURL.workspaceMemberInvite(workspaceID: workspaceID)
@@ -109,15 +116,17 @@ extension Router: URLRequestConvertible {
         case .channelDelete(let workspaceID, let channelID): return APIURL.channel(workspaceID: workspaceID, channelID: channelID)
             
         case .dms(let workspaceID): return APIURL.dms(workspaceID: workspaceID)
+        case .dmChats(let workspaceID, let roomID, _): return APIURL.dmChats(workspaceID: workspaceID, roomID: roomID)
+        case .createDM(let workspaceID, _): return APIURL.dms(workspaceID: workspaceID)
         }
     }
     
     var method: HTTPMethod {
         switch self {
-        case .refresh, .fetchImage, .workspaces, .workspace, .workspaceMembers, .userMe, .myChannels, .dms, .chats, .channel, .channels, .channelMembers, .channelExit:
+        case .refresh, .fetchImage, .workspaces, .workspace, .workspaceMembers, .userMe, .user, .myChannels, .dms, .chats, .channel, .channels, .channelMembers, .channelExit, .dmChats:
             return .get
             
-        case .emailValidation(_), .join, .login, .loginWithApple, .loginWithKakao, .createWorkspace, .createChannel, .sendChannelChat, .workspaceMemberInvite:
+        case .emailValidation(_), .join, .login, .loginWithApple, .loginWithKakao, .createWorkspace, .createChannel, .sendChannelChat, .workspaceMemberInvite, .createDM:
             return .post
             
         case .channelEdit, .channelChangeAdmin:
@@ -144,7 +153,7 @@ extension Router: URLRequestConvertible {
                 "SesacKey": APIKey.apiKey
             ]
             
-        case .workspaces, .workspace, .workspaceMembers, .userMe, .myChannels, .dms, .chats, .channel, .workspaceMemberInvite, .channels, .channelMembers, .channelChangeAdmin, .channelExit, .channelDelete:
+        case .workspaces, .workspace, .workspaceMembers, .userMe, .user, .myChannels, .dms, .chats, .channel, .workspaceMemberInvite, .channels, .channelMembers, .channelChangeAdmin, .channelExit, .channelDelete, .dmChats, .createDM:
             return [
                 "Content-Type": "application/json",
                 "Authorization": KeychainManager.shared.getItem(forKey: .accessToken) ?? "",
@@ -212,6 +221,11 @@ extension Router: URLRequestConvertible {
                 BodyKey.owner_id: memberID
             ])
             
+        case .createDM(_, let opponentID):
+            return try? JSONEncoder().encode([
+                BodyKey.opponent_id: opponentID
+            ])
+            
         default: return nil
         }
     }
@@ -269,6 +283,11 @@ extension Router: URLRequestConvertible {
             ]
             
         case .chats(_, _, let cursorDate):
+            return [
+                URLQueryItem(name: "cursor_date", value: cursorDate)
+            ]
+            
+        case .dmChats(_, _, let cursorDate):
             return [
                 URLQueryItem(name: "cursor_date", value: cursorDate)
             ]
