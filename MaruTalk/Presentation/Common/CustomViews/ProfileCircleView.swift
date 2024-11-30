@@ -32,7 +32,7 @@ final class ProfileCircleView: BaseView {
         return iv
     }()
     
-    let button = UIButton(type: .custom)
+    private let button = UIButton(type: .custom)
     
     //MARK: - Configurations
     

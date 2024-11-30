@@ -23,10 +23,10 @@
 		441114EA2CE60BAD000D1B2B /* DMCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 441114E92CE60BAD000D1B2B /* DMCoordinator.swift */; };
 		441114EC2CE60BF5000D1B2B /* SearchCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 441114EB2CE60BF5000D1B2B /* SearchCoordinator.swift */; };
 		441114EE2CE60C21000D1B2B /* SettingCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 441114ED2CE60C21000D1B2B /* SettingCoordinator.swift */; };
-		441114F02CE60C48000D1B2B /* DMView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 441114EF2CE60C48000D1B2B /* DMView.swift */; };
+		441114F02CE60C48000D1B2B /* DMListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 441114EF2CE60C48000D1B2B /* DMListView.swift */; };
 		441114F22CE60C76000D1B2B /* SearchView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 441114F12CE60C76000D1B2B /* SearchView.swift */; };
 		441114F42CE60C82000D1B2B /* SettingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 441114F32CE60C82000D1B2B /* SettingView.swift */; };
-		441114F62CE60C99000D1B2B /* DMViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 441114F52CE60C99000D1B2B /* DMViewController.swift */; };
+		441114F62CE60C99000D1B2B /* DMListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 441114F52CE60C99000D1B2B /* DMListViewController.swift */; };
 		441114F82CE60CB5000D1B2B /* SearchViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 441114F72CE60CB5000D1B2B /* SearchViewController.swift */; };
 		441114FA2CE60CCC000D1B2B /* SettingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 441114F92CE60CCC000D1B2B /* SettingViewController.swift */; };
 		441114FE2CE73CD3000D1B2B /* HomeEmptyView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 441114FD2CE73CD3000D1B2B /* HomeEmptyView.swift */; };
@@ -137,6 +137,9 @@
 		44B476702CF98B8700617126 /* ChannelChangeAdminReactor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 44B4766F2CF98B8700617126 /* ChannelChangeAdminReactor.swift */; };
 		44B476722CF98BE800617126 /* ChannelChangeAdminView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 44B476712CF98BE800617126 /* ChannelChangeAdminView.swift */; };
 		44B476742CF98C0800617126 /* ChannelChangeAdminViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 44B476732CF98C0800617126 /* ChannelChangeAdminViewController.swift */; };
+		44B476762CFAF35F00617126 /* ProfileNameMessageTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 44B476752CFAF35F00617126 /* ProfileNameMessageTableViewCell.swift */; };
+		44B476782CFAF82200617126 /* DMListReactor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 44B476772CFAF82200617126 /* DMListReactor.swift */; };
+		44B4767A2CFAFF9200617126 /* DMListEmptyView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 44B476792CFAFF9200617126 /* DMListEmptyView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -170,10 +173,10 @@
 		441114E92CE60BAD000D1B2B /* DMCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DMCoordinator.swift; sourceTree = "<group>"; };
 		441114EB2CE60BF5000D1B2B /* SearchCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchCoordinator.swift; sourceTree = "<group>"; };
 		441114ED2CE60C21000D1B2B /* SettingCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingCoordinator.swift; sourceTree = "<group>"; };
-		441114EF2CE60C48000D1B2B /* DMView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DMView.swift; sourceTree = "<group>"; };
+		441114EF2CE60C48000D1B2B /* DMListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DMListView.swift; sourceTree = "<group>"; };
 		441114F12CE60C76000D1B2B /* SearchView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchView.swift; sourceTree = "<group>"; };
 		441114F32CE60C82000D1B2B /* SettingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingView.swift; sourceTree = "<group>"; };
-		441114F52CE60C99000D1B2B /* DMViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DMViewController.swift; sourceTree = "<group>"; };
+		441114F52CE60C99000D1B2B /* DMListViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DMListViewController.swift; sourceTree = "<group>"; };
 		441114F72CE60CB5000D1B2B /* SearchViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchViewController.swift; sourceTree = "<group>"; };
 		441114F92CE60CCC000D1B2B /* SettingViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingViewController.swift; sourceTree = "<group>"; };
 		441114FD2CE73CD3000D1B2B /* HomeEmptyView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeEmptyView.swift; sourceTree = "<group>"; };
@@ -274,6 +277,9 @@
 		44B4766F2CF98B8700617126 /* ChannelChangeAdminReactor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChannelChangeAdminReactor.swift; sourceTree = "<group>"; };
 		44B476712CF98BE800617126 /* ChannelChangeAdminView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChannelChangeAdminView.swift; sourceTree = "<group>"; };
 		44B476732CF98C0800617126 /* ChannelChangeAdminViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChannelChangeAdminViewController.swift; sourceTree = "<group>"; };
+		44B476752CFAF35F00617126 /* ProfileNameMessageTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileNameMessageTableViewCell.swift; sourceTree = "<group>"; };
+		44B476772CFAF82200617126 /* DMListReactor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DMListReactor.swift; sourceTree = "<group>"; };
+		44B476792CFAFF9200617126 /* DMListEmptyView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DMListEmptyView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -350,8 +356,10 @@
 			isa = PBXGroup;
 			children = (
 				441114E92CE60BAD000D1B2B /* DMCoordinator.swift */,
-				441114EF2CE60C48000D1B2B /* DMView.swift */,
-				441114F52CE60C99000D1B2B /* DMViewController.swift */,
+				44B476772CFAF82200617126 /* DMListReactor.swift */,
+				441114EF2CE60C48000D1B2B /* DMListView.swift */,
+				44B476792CFAFF9200617126 /* DMListEmptyView.swift */,
+				441114F52CE60C99000D1B2B /* DMListViewController.swift */,
 			);
 			path = DM;
 			sourceTree = "<group>";
@@ -392,6 +400,7 @@
 				441115552CF45F56000D1B2B /* MessageFivePhotoTextTableViewCell.swift */,
 				441115812CF8372A000D1B2B /* ProfileImageTitleCollectionViewCell.swift */,
 				44B4766C2CF9899F00617126 /* ProfileNameEmailTableViewCell.swift */,
+				44B476752CFAF35F00617126 /* ProfileNameMessageTableViewCell.swift */,
 			);
 			path = Cell;
 			sourceTree = "<group>";
@@ -797,6 +806,7 @@
 				441115192CE9FEAE000D1B2B /* ProfileCircleView.swift in Sources */,
 				444DE7192CD74D7E00821269 /* CustomHandleNavigationBar.swift in Sources */,
 				441114CC2CE1DDD8000D1B2B /* WorkspaceInitialView.swift in Sources */,
+				44B4767A2CFAFF9200617126 /* DMListEmptyView.swift in Sources */,
 				441115222CECA501000D1B2B /* LoginViewController.swift in Sources */,
 				441115522CF4552D000D1B2B /* MessageThreePhotoTextTableViewCell.swift in Sources */,
 				441114E82CE5EF51000D1B2B /* HomeCoordinator.swift in Sources */,
@@ -815,7 +825,7 @@
 				441114E62CE5EF03000D1B2B /* HomeViewController.swift in Sources */,
 				444910E92CD8F04B005AB2F7 /* SLPErrorResponse.swift in Sources */,
 				444DE7132CD6222400821269 /* SignUpView.swift in Sources */,
-				441114F62CE60C99000D1B2B /* DMViewController.swift in Sources */,
+				441114F62CE60C99000D1B2B /* DMListViewController.swift in Sources */,
 				441114D62CE34ECA000D1B2B /* WorkspaceAddViewController.swift in Sources */,
 				444DE6D22CD1012700821269 /* APIKey.swift in Sources */,
 				444910DA2CD77315005AB2F7 /* SignUpReactor.swift in Sources */,
@@ -830,7 +840,7 @@
 				441114C72CE08B03000D1B2B /* User.swift in Sources */,
 				441114E42CE5EEF8000D1B2B /* HomeView.swift in Sources */,
 				44B476702CF98B8700617126 /* ChannelChangeAdminReactor.swift in Sources */,
-				441114F02CE60C48000D1B2B /* DMView.swift in Sources */,
+				441114F02CE60C48000D1B2B /* DMListView.swift in Sources */,
 				441115002CE75290000D1B2B /* DropdownArrowTableViewCell.swift in Sources */,
 				444910E72CD8E734005AB2F7 /* UIViewController+Extension.swift in Sources */,
 				4411151B2CEB3190000D1B2B /* UserDefaultsManager.swift in Sources */,
@@ -845,6 +855,7 @@
 				441114EC2CE60BF5000D1B2B /* SearchCoordinator.swift in Sources */,
 				441115562CF45F56000D1B2B /* MessageFivePhotoTextTableViewCell.swift in Sources */,
 				444DE6E22CD1207300821269 /* UIView+Extension.swift in Sources */,
+				44B476782CFAF82200617126 /* DMListReactor.swift in Sources */,
 				444910E12CD8B072005AB2F7 /* BodyKey.swift in Sources */,
 				441115502CF453D8000D1B2B /* MessageTwoPhotoTextTableViewCell.swift in Sources */,
 				444DE6E02CD11FC100821269 /* OnboardingViewController.swift in Sources */,
@@ -903,6 +914,7 @@
 				444DE6F72CD366DB00821269 /* AuthView.swift in Sources */,
 				441115152CE9E7F6000D1B2B /* PlusTitleHeaderTableViewCellDelegate.swift in Sources */,
 				441114DF2CE5EA34000D1B2B /* MainTabBarCoordinator.swift in Sources */,
+				44B476762CFAF35F00617126 /* ProfileNameMessageTableViewCell.swift in Sources */,
 				441115302CEF2430000D1B2B /* NotificationName+Extension.swift in Sources */,
 				444DE6EF2CD2529D00821269 /* OnboardingView.swift in Sources */,
 				444DE6F92CD366E600821269 /* AuthViewController.swift in Sources */,

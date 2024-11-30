@@ -38,29 +38,33 @@ final class RoundedImageTitleView: BaseView {
         return label
     }()
     
-    let button = UIButton(type: .custom)
+    private let stackView: UIStackView = {
+        let sv = UIStackView()
+        sv.axis = .horizontal
+        sv.spacing = 4
+        return sv
+    }()
+    
+    private let button = UIButton(type: .custom)
     
     //MARK: - Configurations
     
     override func configureHierarchy() {
         addSubviews(
-            photoImageView,
-            titleLabel,
+            stackView,
             button
         )
+        stackView.addArrangedSubview(photoImageView)
+        stackView.addArrangedSubview(titleLabel)
     }
     
     override func configureLayout() {
-        photoImageView.snp.makeConstraints { make in
-            make.size.equalTo(32)
-            make.leading.equalToSuperview()
-            make.centerY.equalToSuperview()
+        stackView.snp.makeConstraints { make in
+            make.edges.equalToSuperview()
         }
         
-        titleLabel.snp.makeConstraints { make in
-            make.centerY.equalToSuperview()
-            make.leading.equalTo(photoImageView.snp.trailing).offset(8)
-            make.trailing.equalToSuperview()
+        photoImageView.snp.makeConstraints { make in
+            make.size.equalTo(32)
         }
         
         button.snp.makeConstraints { make in

@@ -17,8 +17,16 @@ final class DMCoordinator: Coordinator {
     }
     
     func start() {
-        let dmVC = DMViewController()
+        let reactor = DMListReactor()
+        let dmVC = DMListViewController(reactor: reactor)
         dmVC.coordinator = self
         navigationController.setViewControllers([dmVC], animated: true)
+    }
+    
+    func didFinish() {
+        parentCoordinator?.removeCoordinator(child: self)
+        if let mainTabBarCoordinator = parentCoordinator as? MainTabBarCoordinator {
+            mainTabBarCoordinator.didFinish()
+        }
     }
 }
