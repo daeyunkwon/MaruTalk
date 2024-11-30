@@ -188,7 +188,7 @@ final class MessageFourPhotoTextTableViewCell: BaseTableViewCell {
         selectionStyle = .none
     }
     
-    func configureCell(data: RealmChannelChat) {
+    func configureCell(data: ChatDataProtocol) {
         if let profileImagePath = data.user?.profileImage {
             profileImageView.setImage(imagePath: profileImagePath)
         } else {

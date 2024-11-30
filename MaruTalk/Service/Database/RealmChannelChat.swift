@@ -9,7 +9,7 @@ import Foundation
 
 import RealmSwift
 
-final class RealmChannelChat: Object {
+final class RealmChannelChat: Object, ChatDataProtocol {
     @Persisted(primaryKey: true) var chatID: String
     @Persisted var channelID: String
     @Persisted var channelName: String

@@ -13,12 +13,14 @@ final class DMChattingReactor: Reactor {
     enum Action {
         case fetch
         case newMessageReceived([Chat])
+        case viewDisappear
     }
     
     enum Mutation {
         case setChatList([RealmDMChat])
         case setNavigationTitle(String)
         case setNetworkError((Router.APIType, String?))
+        case setScrollToBottom
     }
     
     struct State {
@@ -27,6 +29,7 @@ final class DMChattingReactor: Reactor {
         @Pulse var chatList: [RealmDMChat]?
         @Pulse var navigationTitle: String?
         @Pulse var networkError: (Router.APIType, String?)?
+        @Pulse var shouldScrollToBottom: Void?
     }
     
     var initialState: State
@@ -51,7 +54,9 @@ extension DMChattingReactor {
         switch action {
         case .fetch:
             return .concat([
-                fetchOtherUser()
+                fetchOtherUser(),
+                fetchDMChatListFromRealmDB(), //DB에서 채팅 내역 가져오기
+                connectDMSocket()
             ])
         
         case .newMessageReceived(let values):
@@ -73,6 +78,9 @@ extension DMChattingReactor {
             } else {
                 return .empty()
             }
+        
+        case .viewDisappear:
+            return disconnectSocket()
         }
     }
 }
@@ -84,7 +92,7 @@ extension DMChattingReactor {
         var newState = state
         switch mutation {
         case .setChatList(let value):
-            //현재 데이터가 있다면 추가
+            //현재 데이터가 있다면 끝에 추가
             if newState.chatList == nil {
                 newState.chatList = value
             } else {
@@ -96,6 +104,9 @@ extension DMChattingReactor {
         
         case .setNetworkError(let value):
             newState.networkError = value
+        
+        case .setScrollToBottom:
+            newState.shouldScrollToBottom = ()
         }
         return newState
     }
@@ -126,6 +137,63 @@ extension DMChattingReactor {
                 
                 case .failure(let error):
                     return .just(.setNetworkError((Router.APIType.user, error.errorCode)))
+                }
+            }
+    }
+    
+    private func fetchDMChatListFromRealmDB() -> Observable<Mutation> {
+        let roomID = currentState.roomID
+        let result = RealmDMChatRepository.shared.fetchChatList(roomID: roomID)
+        
+        if result.isEmpty {
+            return fetchChats(cursorDate: nil)
+        } else {
+            return .concat([
+                .just(.setChatList(result)),
+                fetchChats(cursorDate: Date.formatToISO8601String(date: result.last?.createdAt ?? Date())),
+                .just(.setScrollToBottom)
+            ])
+        }
+    }
+    
+    //채팅 내역 조회
+    ///해당 api를 호출하면 자동으로 해당 채널의 멤버가 된다.
+    private func fetchChats(cursorDate: String?) -> Observable<Mutation> {
+        guard let workspaceID = UserDefaultsManager.shared.recentWorkspaceID else { return .empty() }
+        let roomID = currentState.roomID
+        print("실행 전 커서----------------")
+        print(cursorDate ?? "없음")
+        //cursorDate -> 채팅 내용 중 가장 마지막 날짜에 해당하는 값, 이 값이 없을 경우 모든 채팅 내용을 불러옴
+        //cursorDate를 기준으로 새로운 체팅 내용들을 서버로부터 가져오고, DB에 저장해둔다.
+        return NetworkManager.shared.performRequest(api: .dmChats(workspaceID: workspaceID, roomID: roomID, cursorDate: cursorDate), model: [Chat].self)
+            .asObservable()
+            .flatMap { [weak self] result -> Observable<Mutation> in
+                guard let self else { return .empty() }
+                switch result {
+                case .success(let value):
+                    print("룸 아이디: \(String(describing: self.currentState.roomID))")
+                    
+                    if !value.isEmpty {
+                        //새로운 채팅 내역들을 DB에 저장 및 테이블뷰에 전달 수행
+                        var chatList: [RealmDMChat] = []
+                        for chat in value {
+                            RealmDMChatRepository.shared.saveChat(chat: RealmDMChat(chat: chat))
+                            chatList.append(RealmDMChat(chat: chat))
+                        }
+                        //과거순 정렬
+                        chatList.sort {
+                            $0.createdAt < $1.createdAt
+                        }
+                        return .concat([
+                            .just(.setChatList(chatList)),
+                            .just(.setScrollToBottom)
+                        ])
+                    } else {
+                        return .empty()
+                    }
+                    
+                case .failure(let error):
+                    return .just(.setNetworkError((Router.APIType.chats, error.errorCode)))
                 }
             }
     }

@@ -209,7 +209,6 @@ extension ChannelChattingReactor {
                 fetchChats(cursorDate: nil)
             ])
         } else {
-            
             return .concat([
                 .just(.setChatList(result)),
                 fetchChats(cursorDate: Date.formatToISO8601String(date: result.last?.createdAt ?? Date())),
@@ -229,7 +228,8 @@ extension ChannelChattingReactor {
         //cursorDate를 기준으로 새로운 체팅 내용들을 서버로부터 가져오고, DB에 저장해둔다.
         return NetworkManager.shared.performRequest(api: .chats(workspaceID: workspaceID, channelID: channelID, cursorDate: cursorDate), model: [Chat].self)
             .asObservable()
-            .flatMap { result -> Observable<Mutation> in
+            .flatMap { [weak self] result -> Observable<Mutation> in
+                guard let self else { return .empty() }
                 switch result {
                 case .success(let value):
                     print("실행결과")
