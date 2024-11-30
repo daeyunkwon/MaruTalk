@@ -154,7 +154,7 @@ extension ChannelSettingReactor {
                         
                         let compositeDisposable = CompositeDisposable()
                         
-                        RealmRepository.shared.deleteChatList(channelID: channelID) { isSuccess in
+                        RealmChannelChatRepository.shared.deleteChatList(channelID: channelID) { isSuccess in
                             if isSuccess {
                                 //성공
                                 observer.onNext(.setNavigateToHome(()))
@@ -221,7 +221,7 @@ extension ChannelSettingReactor {
         let channelID = currentState.channelID
         
         return Observable.create { observer in
-            RealmRepository.shared.deleteChatList(channelID: channelID) { isSuccess in
+            RealmChannelChatRepository.shared.deleteChatList(channelID: channelID) { isSuccess in
                 if isSuccess {
                     // 성공 시 홈 화면으로 전환
                     observer.onNext(.setNavigateToHome(()))

@@ -25,7 +25,7 @@ final class ChannelChattingReactor: Reactor {
     enum Mutation {
         case setNavigationTitle(String)
         case setNetworkError((Router.APIType, String?))
-        case setChatList([RealmChat])
+        case setChatList([RealmChannelChat])
         case setContent(String)
         case setMessageSendSuccess(Void)
         case setScrollToBottom(Void)
@@ -41,7 +41,7 @@ final class ChannelChattingReactor: Reactor {
         @Pulse var navigationTitle: String?
         @Pulse var networkError: (Router.APIType, String?)?
         
-        @Pulse var chatList: [RealmChat]?
+        @Pulse var chatList: [RealmChannelChat]?
         
         var content: String = ""
         
@@ -124,15 +124,15 @@ extension ChannelChattingReactor {
         
         case .newMessageReceived(let values):
             //소켓 통신으로 수신 메시지 DB에 저장하기
-            var chatList: [RealmChat] = []
+            var chatList: [RealmChannelChat] = []
             for chat in values {
                 
                 if chat.user.userID == UserDefaultsManager.shared.userID { //사용자가 방금 보낸 채팅의 경우 DB 저장 생략하기
                     continue
                 }
                 
-                let realmChat = RealmChat(chat: chat)
-                RealmRepository.shared.saveChat(chat: realmChat)
+                let realmChat = RealmChannelChat(chat: chat)
+                RealmChannelChatRepository.shared.saveChat(chat: realmChat)
                 chatList.append(realmChat)
             }
             
@@ -226,7 +226,7 @@ extension ChannelChattingReactor {
     
     private func fetchChatsFromRealm() -> Observable<Mutation> {
         guard let channelID = currentState.channelID else { return .empty() }
-        let result = RealmRepository.shared.fetchChatList(channelID: channelID)
+        let result = RealmChannelChatRepository.shared.fetchChatList(channelID: channelID)
         
         if result.isEmpty {
             print("DEBUG: 데이터 없음 \(#function)")
@@ -263,10 +263,10 @@ extension ChannelChattingReactor {
                     
                     if !value.isEmpty {
                         //새로운 채팅 내역들을 DB에 저장 및 테이블뷰에 전달 수행
-                        var chatList: [RealmChat] = []
+                        var chatList: [RealmChannelChat] = []
                         for chat in value {
-                            RealmRepository.shared.saveChat(chat: RealmChat(chat: chat))
-                            chatList.append(RealmChat(chat: chat))
+                            RealmChannelChatRepository.shared.saveChat(chat: RealmChannelChat(chat: chat))
+                            chatList.append(RealmChannelChat(chat: chat))
                         }
                         //과거순 정렬
                         chatList.sort {
@@ -308,10 +308,10 @@ extension ChannelChattingReactor {
                 switch result {
                 case .success(let value):
                     //보낸 메시지 DB에 저장
-                    RealmRepository.shared.saveChat(chat: RealmChat(chat: value))
+                    RealmChannelChatRepository.shared.saveChat(chat: RealmChannelChat(chat: value))
                     return .concat([
                         .just(.setMessageSendSuccess(())),
-                        .just(.setChatList([RealmChat(chat: value)])),
+                        .just(.setChatList([RealmChannelChat(chat: value)])),
                         .just(.setPhotoImageDatas([])),
                         .just(.setScrollToBottom(()))
                     ])

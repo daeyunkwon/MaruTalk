@@ -89,7 +89,7 @@ final class ImageTitleCountTableViewCell: BaseTableViewCell {
         backgroundColor = Constant.Color.brandWhite.withAlphaComponent(0.8)
     }
     
-    func configure(dm: DMS) {
+    func configure(dm: DMRoom) {
         self.titleLabel.text = dm.user.nickname
         
         if let path = dm.user.profileImage {

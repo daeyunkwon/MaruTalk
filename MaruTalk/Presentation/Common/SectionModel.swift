@@ -51,7 +51,7 @@ import RxDataSources
 
 enum SectionItem: Equatable, IdentifiableType {
     case channel(Channel)
-    case dm(DMS)
+    case dm(DMRoom)
     case add(String)
     
     // IdentifiableType의 요구사항

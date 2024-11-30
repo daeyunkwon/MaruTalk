@@ -96,5 +96,12 @@ extension DMListViewController {
                 }
             }
             .disposed(by: disposeBag)
+        
+        reactor.pulse(\.$dmRoomList)
+            .compactMap { $0 }
+            .bind(to: rootView.tableView.rx.items(cellIdentifier: ProfileNameMessageTableViewCell.reuseIdentifier, cellType: ProfileNameMessageTableViewCell.self)) { row, element, cell in
+                cell.configureCell(data: element)
+            }
+            .disposed(by: disposeBag)
     }
 }

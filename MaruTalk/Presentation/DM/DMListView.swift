@@ -33,7 +33,7 @@ final class DMListView: BaseView {
         return view
     }()
     
-    private let tableView: UITableView = {
+    let tableView: UITableView = {
         let tv = UITableView()
         tv.separatorStyle = .none
         tv.backgroundColor = Constant.Color.brandWhite

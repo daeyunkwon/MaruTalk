@@ -18,12 +18,14 @@ final class DMListReactor: Reactor {
         case setNetworkError((Router.APIType, String?))
         case setMemberList([User])
         case setUser(User)
+        case setDMRoomList([DMRoom])
     }
     
     struct State {
         @Pulse var networkError: (Router.APIType, String?)?
         @Pulse var memberList: [User]?
         @Pulse var user: User?
+        @Pulse var dmRoomList: [DMRoom]?
     }
     
     var initialState: State = State()
@@ -37,7 +39,8 @@ extension DMListReactor {
         case .fetch:
             return .concat([
                 fetchMemberList(),
-                fetchProfile()
+                fetchProfile(),
+                fetchDMS()
             ])
         }
     }
@@ -57,6 +60,9 @@ extension DMListReactor {
         
         case .setUser(let value):
             newState.user = value
+        
+        case .setDMRoomList(let value):
+            newState.dmRoomList = value
         }
         return newState
     }
@@ -75,7 +81,6 @@ extension DMListReactor {
                 switch result {
                 case .success(let value):
                     let filteredList = value.filter { $0.userID != UserDefaultsManager.shared.userID ?? ""}
-                    print("@@@@@@@", filteredList.count)
                     return .just(.setMemberList(filteredList))
                 
                 case .failure(let error):
@@ -92,6 +97,23 @@ extension DMListReactor {
                 switch result {
                 case .success(let value):
                     return .just(.setUser(value))
+                
+                case .failure(let error):
+                    return .just(.setNetworkError((Router.APIType.userMe, error.errorCode)))
+                }
+            }
+    }
+    
+    //DM 방 리스트 조회
+    private func fetchDMS() -> Observable<Mutation> {
+        guard let workspaceID = UserDefaultsManager.shared.recentWorkspaceID else { return .empty() }
+        return NetworkManager.shared.performRequest(api: .dms(workspaceID: workspaceID), model: [DMRoom].self)
+            .asObservable()
+            .flatMap { [weak self] result -> Observable<Mutation> in
+                guard let self else { return .empty() }
+                switch result {
+                case .success(let value):
+                    return .just(.setDMRoomList(value))
                 
                 case .failure(let error):
                     return .just(.setNetworkError((Router.APIType.userMe, error.errorCode)))

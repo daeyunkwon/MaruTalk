@@ -25,7 +25,7 @@ final class HomeReactor: Reactor {
         case setWorkspace(Workspace)
         case setUser(User)
         case setChannelSection([Channel])
-        case setDMSection([DMS])
+        case setDMSection([DMRoom])
         case setToastMessage(String)
         case setNavigateToMemberInvite
     }
@@ -227,7 +227,7 @@ extension HomeReactor {
     //DM 방 리스트 조회
     private func fetchDMS() -> Observable<Mutation> {
         guard let workspaceID = UserDefaultsManager.shared.recentWorkspaceID else { return .empty() }
-        return NetworkManager.shared.performRequest(api: .dms(workspaceID: workspaceID), model: [DMS].self)
+        return NetworkManager.shared.performRequest(api: .dms(workspaceID: workspaceID), model: [DMRoom].self)
             .asObservable()
             .flatMap { [weak self] result -> Observable<Mutation> in
                 guard let self else { return .empty() }

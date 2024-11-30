@@ -9,7 +9,7 @@ import Foundation
 
 import RealmSwift
 
-final class RealmChat: Object {
+final class RealmChannelChat: Object {
     @Persisted(primaryKey: true) var chatID: String
     @Persisted var channelID: String
     @Persisted var channelName: String
@@ -20,11 +20,11 @@ final class RealmChat: Object {
     
     convenience init(chat: Chat) {
         self.init()
-        self.chatID = chat.chatID
-        self.channelID = chat.channelID
+        self.chatID = chat.chatID ?? ""
+        self.channelID = chat.channelID ?? ""
         self.content = chat.content
         self.createdAt = Date.createdDate(dateString: chat.createdAt)
-        self.channelName = chat.channelName
+        self.channelName = chat.channelName ?? ""
         
         if let files = chat.files {
             self.files.append(objectsIn: files)

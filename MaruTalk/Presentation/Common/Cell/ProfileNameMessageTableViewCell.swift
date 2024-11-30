@@ -118,4 +118,14 @@ final class ProfileNameMessageTableViewCell: BaseTableViewCell {
     override func configureUI() {
         backgroundColor = .clear
     }
+    
+    func configureCell(data: DMRoom) {
+        if data.user.profileImage != nil {
+            profileImageView.setImage(imagePath: data.user.profileImage)
+        } else {
+            profileImageView.image = UIImage(named: "noPhotoA")
+        }
+        
+        nicknameLabel.text = data.user.nickname
+    }
 }

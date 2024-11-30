@@ -57,7 +57,7 @@
 		441115362CEF8FBE000D1B2B /* UIImageView+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 441115352CEF8FBE000D1B2B /* UIImageView+Extension.swift */; };
 		441115382CEF9637000D1B2B /* ImageCacheManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 441115372CEF9636000D1B2B /* ImageCacheManager.swift */; };
 		4411153A2CF07D70000D1B2B /* Channel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 441115392CF07D70000D1B2B /* Channel.swift */; };
-		4411153C2CF1DE41000D1B2B /* DMS.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4411153B2CF1DE41000D1B2B /* DMS.swift */; };
+		4411153C2CF1DE41000D1B2B /* DMRoom.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4411153B2CF1DE41000D1B2B /* DMRoom.swift */; };
 		4411153E2CF217C2000D1B2B /* ChannelAddView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4411153D2CF217C2000D1B2B /* ChannelAddView.swift */; };
 		441115412CF217FF000D1B2B /* ChannelAddViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 441115402CF217FF000D1B2B /* ChannelAddViewController.swift */; };
 		441115432CF2191E000D1B2B /* ChannelAddReactor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 441115422CF2191E000D1B2B /* ChannelAddReactor.swift */; };
@@ -73,9 +73,9 @@
 		441115582CF46C6D000D1B2B /* Chat.swift in Sources */ = {isa = PBXBuildFile; fileRef = 441115572CF46C6D000D1B2B /* Chat.swift */; };
 		4411155E2CF46DD8000D1B2B /* RealmSwift in Frameworks */ = {isa = PBXBuildFile; productRef = 4411155D2CF46DD8000D1B2B /* RealmSwift */; };
 		4411155F2CF46EED000D1B2B /* RealmSwift in Embed Frameworks */ = {isa = PBXBuildFile; productRef = 4411155D2CF46DD8000D1B2B /* RealmSwift */; settings = {ATTRIBUTES = (CodeSignOnCopy, ); }; };
-		441115622CF48397000D1B2B /* RealmChat.swift in Sources */ = {isa = PBXBuildFile; fileRef = 441115612CF48397000D1B2B /* RealmChat.swift */; };
+		441115622CF48397000D1B2B /* RealmChannelChat.swift in Sources */ = {isa = PBXBuildFile; fileRef = 441115612CF48397000D1B2B /* RealmChannelChat.swift */; };
 		441115642CF483B9000D1B2B /* RealmUser.swift in Sources */ = {isa = PBXBuildFile; fileRef = 441115632CF483B9000D1B2B /* RealmUser.swift */; };
-		441115662CF489DB000D1B2B /* RealmRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = 441115652CF489DB000D1B2B /* RealmRepository.swift */; };
+		441115662CF489DB000D1B2B /* RealmChannelChatRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = 441115652CF489DB000D1B2B /* RealmChannelChatRepository.swift */; };
 		441115692CF59694000D1B2B /* SocketIO in Frameworks */ = {isa = PBXBuildFile; productRef = 441115682CF59694000D1B2B /* SocketIO */; };
 		4411156B2CF596E9000D1B2B /* SocketIOManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4411156A2CF596E9000D1B2B /* SocketIOManager.swift */; };
 		4411156E2CF707D2000D1B2B /* MemberInviteReactor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4411156D2CF707D2000D1B2B /* MemberInviteReactor.swift */; };
@@ -141,6 +141,8 @@
 		44B476782CFAF82200617126 /* DMListReactor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 44B476772CFAF82200617126 /* DMListReactor.swift */; };
 		44B4767A2CFAFF9200617126 /* DMListEmptyView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 44B476792CFAFF9200617126 /* DMListEmptyView.swift */; };
 		44B4767C2CFB0A4000617126 /* ProfileCircleImageTitleCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 44B4767B2CFB0A4000617126 /* ProfileCircleImageTitleCollectionViewCell.swift */; };
+		44B4767E2CFB1F5700617126 /* RealmDMChat.swift in Sources */ = {isa = PBXBuildFile; fileRef = 44B4767D2CFB1F5700617126 /* RealmDMChat.swift */; };
+		44B476802CFB20BB00617126 /* RealmDMChatRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = 44B4767F2CFB20BB00617126 /* RealmDMChatRepository.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -206,7 +208,7 @@
 		441115352CEF8FBE000D1B2B /* UIImageView+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIImageView+Extension.swift"; sourceTree = "<group>"; };
 		441115372CEF9636000D1B2B /* ImageCacheManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageCacheManager.swift; sourceTree = "<group>"; };
 		441115392CF07D70000D1B2B /* Channel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Channel.swift; sourceTree = "<group>"; };
-		4411153B2CF1DE41000D1B2B /* DMS.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DMS.swift; sourceTree = "<group>"; };
+		4411153B2CF1DE41000D1B2B /* DMRoom.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DMRoom.swift; sourceTree = "<group>"; };
 		4411153D2CF217C2000D1B2B /* ChannelAddView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChannelAddView.swift; sourceTree = "<group>"; };
 		441115402CF217FF000D1B2B /* ChannelAddViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChannelAddViewController.swift; sourceTree = "<group>"; };
 		441115422CF2191E000D1B2B /* ChannelAddReactor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChannelAddReactor.swift; sourceTree = "<group>"; };
@@ -220,9 +222,9 @@
 		441115532CF45DE0000D1B2B /* MessageFourPhotoTextTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MessageFourPhotoTextTableViewCell.swift; sourceTree = "<group>"; };
 		441115552CF45F56000D1B2B /* MessageFivePhotoTextTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MessageFivePhotoTextTableViewCell.swift; sourceTree = "<group>"; };
 		441115572CF46C6D000D1B2B /* Chat.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Chat.swift; sourceTree = "<group>"; };
-		441115612CF48397000D1B2B /* RealmChat.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RealmChat.swift; sourceTree = "<group>"; };
+		441115612CF48397000D1B2B /* RealmChannelChat.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RealmChannelChat.swift; sourceTree = "<group>"; };
 		441115632CF483B9000D1B2B /* RealmUser.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RealmUser.swift; sourceTree = "<group>"; };
-		441115652CF489DB000D1B2B /* RealmRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RealmRepository.swift; sourceTree = "<group>"; };
+		441115652CF489DB000D1B2B /* RealmChannelChatRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RealmChannelChatRepository.swift; sourceTree = "<group>"; };
 		4411156A2CF596E9000D1B2B /* SocketIOManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SocketIOManager.swift; sourceTree = "<group>"; };
 		4411156D2CF707D2000D1B2B /* MemberInviteReactor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MemberInviteReactor.swift; sourceTree = "<group>"; };
 		4411156F2CF7083A000D1B2B /* MemberInviteView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MemberInviteView.swift; sourceTree = "<group>"; };
@@ -282,6 +284,8 @@
 		44B476772CFAF82200617126 /* DMListReactor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DMListReactor.swift; sourceTree = "<group>"; };
 		44B476792CFAFF9200617126 /* DMListEmptyView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DMListEmptyView.swift; sourceTree = "<group>"; };
 		44B4767B2CFB0A4000617126 /* ProfileCircleImageTitleCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileCircleImageTitleCollectionViewCell.swift; sourceTree = "<group>"; };
+		44B4767D2CFB1F5700617126 /* RealmDMChat.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RealmDMChat.swift; sourceTree = "<group>"; };
+		44B4767F2CFB20BB00617126 /* RealmDMChatRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RealmDMChatRepository.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -571,7 +575,7 @@
 				4411151C2CEB4430000D1B2B /* WorkspaceList.swift */,
 				441115312CEF7FB4000D1B2B /* Workspace.swift */,
 				441115392CF07D70000D1B2B /* Channel.swift */,
-				4411153B2CF1DE41000D1B2B /* DMS.swift */,
+				4411153B2CF1DE41000D1B2B /* DMRoom.swift */,
 				441115572CF46C6D000D1B2B /* Chat.swift */,
 			);
 			path = Model;
@@ -649,9 +653,11 @@
 			children = (
 				441114C82CE1BDA5000D1B2B /* KeychainManager.swift */,
 				4411151A2CEB3190000D1B2B /* UserDefaultsManager.swift */,
-				441115612CF48397000D1B2B /* RealmChat.swift */,
+				441115612CF48397000D1B2B /* RealmChannelChat.swift */,
+				44B4767D2CFB1F5700617126 /* RealmDMChat.swift */,
 				441115632CF483B9000D1B2B /* RealmUser.swift */,
-				441115652CF489DB000D1B2B /* RealmRepository.swift */,
+				441115652CF489DB000D1B2B /* RealmChannelChatRepository.swift */,
+				44B4767F2CFB20BB00617126 /* RealmDMChatRepository.swift */,
 			);
 			path = Database;
 			sourceTree = "<group>";
@@ -867,7 +873,7 @@
 				441114D02CE1F942000D1B2B /* WorkspaceInitialReactor.swift in Sources */,
 				441115432CF2191E000D1B2B /* ChannelAddReactor.swift in Sources */,
 				44B476672CF8AB5A00617126 /* ChannelEditReactor.swift in Sources */,
-				4411153C2CF1DE41000D1B2B /* DMS.swift in Sources */,
+				4411153C2CF1DE41000D1B2B /* DMRoom.swift in Sources */,
 				441115802CF82F50000D1B2B /* ChannelSettingViewController.swift in Sources */,
 				441115542CF45DE0000D1B2B /* MessageFourPhotoTextTableViewCell.swift in Sources */,
 				4411153E2CF217C2000D1B2B /* ChannelAddView.swift in Sources */,
@@ -879,6 +885,7 @@
 				441115272CEE1C46000D1B2B /* AuthReactor.swift in Sources */,
 				441114EA2CE60BAD000D1B2B /* DMCoordinator.swift in Sources */,
 				441114F42CE60C82000D1B2B /* SettingView.swift in Sources */,
+				44B4767E2CFB1F5700617126 /* RealmDMChat.swift in Sources */,
 				441114EE2CE60C21000D1B2B /* SettingCoordinator.swift in Sources */,
 				441114F82CE60CB5000D1B2B /* SearchViewController.swift in Sources */,
 				441115482CF3246C000D1B2B /* ChannelChattingView.swift in Sources */,
@@ -890,7 +897,7 @@
 				441115362CEF8FBE000D1B2B /* UIImageView+Extension.swift in Sources */,
 				441115462CF32461000D1B2B /* ChannelChattingReactor.swift in Sources */,
 				4411153A2CF07D70000D1B2B /* Channel.swift in Sources */,
-				441115662CF489DB000D1B2B /* RealmRepository.swift in Sources */,
+				441115662CF489DB000D1B2B /* RealmChannelChatRepository.swift in Sources */,
 				441114D82CE3515D000D1B2B /* WorkspaceAddReactor.swift in Sources */,
 				441115112CE8A871000D1B2B /* DropdownArrowTableViewCellDelegate.swift in Sources */,
 				441114DA2CE363B3000D1B2B /* UIImage+Extension.swift in Sources */,
@@ -900,7 +907,7 @@
 				441114FA2CE60CCC000D1B2B /* SettingViewController.swift in Sources */,
 				44B4766B2CF8AC1800617126 /* ChannelEditViewController.swift in Sources */,
 				441115702CF7083A000D1B2B /* MemberInviteView.swift in Sources */,
-				441115622CF48397000D1B2B /* RealmChat.swift in Sources */,
+				441115622CF48397000D1B2B /* RealmChannelChat.swift in Sources */,
 				441115822CF8372A000D1B2B /* ProfileImageTitleCollectionViewCell.swift in Sources */,
 				4411154E2CF447FE000D1B2B /* MessageOnePhotoTextTableViewCell.swift in Sources */,
 				4411157E2CF82F2D000D1B2B /* ChannelSettingView.swift in Sources */,
@@ -917,6 +924,7 @@
 				441114C92CE1BDA5000D1B2B /* KeychainManager.swift in Sources */,
 				444DE6F72CD366DB00821269 /* AuthView.swift in Sources */,
 				441115152CE9E7F6000D1B2B /* PlusTitleHeaderTableViewCellDelegate.swift in Sources */,
+				44B476802CFB20BB00617126 /* RealmDMChatRepository.swift in Sources */,
 				441114DF2CE5EA34000D1B2B /* MainTabBarCoordinator.swift in Sources */,
 				44B476762CFAF35F00617126 /* ProfileNameMessageTableViewCell.swift in Sources */,
 				441115302CEF2430000D1B2B /* NotificationName+Extension.swift in Sources */,

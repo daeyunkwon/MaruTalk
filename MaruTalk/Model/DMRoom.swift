@@ -1,5 +1,5 @@
 //
-//  DMS.swift
+//  DMRoom.swift
 //  MaruTalk
 //
 //  Created by 권대윤 on 11/23/24.
@@ -7,7 +7,7 @@
 
 import Foundation
 
-struct DMS: Decodable, Equatable {
+struct DMRoom: Decodable, Equatable {
     let roomID: String
     let createAt: String
     let user: User
@@ -18,7 +18,7 @@ struct DMS: Decodable, Equatable {
         case user
     }
     
-    static func == (lhs: DMS, rhs: DMS) -> Bool {
+    static func == (lhs: DMRoom, rhs: DMRoom) -> Bool {
         lhs.roomID == rhs.roomID
     }
 }

@@ -8,9 +8,13 @@
 import Foundation
 
 struct Chat: Decodable {
-    let channelID: String
-    let channelName: String
-    let chatID: String
+    let channelID: String?
+    let channelName: String?
+    let chatID: String?
+    
+    let dmID: String?
+    let roomID: String?
+    
     let content: String
     let createdAt: String
     let files: [String]?
@@ -20,6 +24,8 @@ struct Chat: Decodable {
         case channelID = "channel_id"
         case channelName
         case chatID = "chat_id"
+        case dmID = "dm_id"
+        case roomID = "room_id"
         case content
         case createdAt
         case files

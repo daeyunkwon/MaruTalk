@@ -9,9 +9,9 @@ import Foundation
 
 import RealmSwift
 
-final class RealmRepository {
+final class RealmChannelChatRepository {
     
-    static let shared = RealmRepository()
+    static let shared = RealmChannelChatRepository()
     private init() { }
      
     private func getRealm() throws -> Realm {
@@ -24,12 +24,12 @@ final class RealmRepository {
     }
 }
 
-extension RealmRepository {
-    func fetchChatList(channelID: String) -> [RealmChat] {
+extension RealmChannelChatRepository {
+    func fetchChatList(channelID: String) -> [RealmChannelChat] {
         do {
             let realm = try getRealm()
             
-            let result = realm.objects(RealmChat.self).filter("channelID == %@", channelID).sorted(byKeyPath: RealmChat.Key.createdAt.rawValue, ascending: true)
+            let result = realm.objects(RealmChannelChat.self).filter("channelID == %@", channelID).sorted(byKeyPath: RealmChannelChat.Key.createdAt.rawValue, ascending: true)
             
             return Array(result)
         } catch {
@@ -39,7 +39,7 @@ extension RealmRepository {
         }
     }
     
-    func saveChat(chat: RealmChat) {
+    func saveChat(chat: RealmChannelChat) {
         do {
             let realm = try getRealm()
             try realm.write {
@@ -55,7 +55,7 @@ extension RealmRepository {
     func deleteChatList(channelID: String, completion: @escaping (Bool) -> Void) {
         do {
             let realm = try getRealm()
-            let targetChatList = realm.objects(RealmChat.self).filter("channelID == %@", channelID)
+            let targetChatList = realm.objects(RealmChannelChat.self).filter("channelID == %@", channelID)
             
             print("삭제 타겟---------------------")
             print("채널 아이디: \(channelID)")
