@@ -14,6 +14,7 @@ final class DMChattingReactor: Reactor {
         case fetch
         case newMessageReceived([Chat])
         case viewDisappear
+        
     }
     
     enum Mutation {
