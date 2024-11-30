@@ -43,6 +43,7 @@ enum Router {
     case dms(workspaceID: String)
     case dmChats(workspaceID: String, roomID: String, cursorDate: String?)
     case createDM(workspaceID: String, opponentID: String) //DM방 생성 또는 조회 수행
+    case sendDMChat(workspaceID: String, roomID: String, content: String, files: [Data])
     
     enum APIType {
         case empty //초기화용 빈 값
@@ -78,6 +79,7 @@ enum Router {
         case dms
         case dmChats
         case createDM
+        case sendDMChat
     }
 }
 
@@ -118,6 +120,7 @@ extension Router: URLRequestConvertible {
         case .dms(let workspaceID): return APIURL.dms(workspaceID: workspaceID)
         case .dmChats(let workspaceID, let roomID, _): return APIURL.dmChats(workspaceID: workspaceID, roomID: roomID)
         case .createDM(let workspaceID, _): return APIURL.dms(workspaceID: workspaceID)
+        case .sendDMChat(let workspaceID, let roomID, _, _): return APIURL.dmChats(workspaceID: workspaceID, roomID: roomID)
         }
     }
     
@@ -126,7 +129,7 @@ extension Router: URLRequestConvertible {
         case .refresh, .fetchImage, .workspaces, .workspace, .workspaceMembers, .userMe, .user, .myChannels, .dms, .chats, .channel, .channels, .channelMembers, .channelExit, .dmChats:
             return .get
             
-        case .emailValidation(_), .join, .login, .loginWithApple, .loginWithKakao, .createWorkspace, .createChannel, .sendChannelChat, .workspaceMemberInvite, .createDM:
+        case .emailValidation(_), .join, .login, .loginWithApple, .loginWithKakao, .createWorkspace, .createChannel, .sendChannelChat, .workspaceMemberInvite, .createDM, .sendDMChat:
             return .post
             
         case .channelEdit, .channelChangeAdmin:
@@ -160,7 +163,7 @@ extension Router: URLRequestConvertible {
                 "SesacKey": APIKey.apiKey
             ]
             
-        case .createWorkspace, .createChannel, .sendChannelChat, .channelEdit:
+        case .createWorkspace, .createChannel, .sendChannelChat, .channelEdit, .sendDMChat:
             return [
                 "Content-Type": "multipart/form-data",
                 "Authorization": KeychainManager.shared.getItem(forKey: .accessToken) ?? "",
@@ -263,6 +266,14 @@ extension Router: URLRequestConvertible {
             multipartFormData.append(Data(name.utf8), withName: "name")
             if let description = description {
                 multipartFormData.append(Data(description.utf8), withName: "description")
+            }
+            return multipartFormData
+            
+        case .sendDMChat(_, _, let content, let files):
+            let multipartFormData = MultipartFormData()
+            multipartFormData.append(Data(content.utf8), withName: "content")
+            for item in files {
+                multipartFormData.append(item, withName: "files", fileName: UUID().uuidString, mimeType: "image/jpeg")
             }
             return multipartFormData
             

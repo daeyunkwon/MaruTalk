@@ -58,6 +58,23 @@ extension DMChattingViewController {
             .map { _ in Reactor.Action.viewDisappear }
             .bind(to: reactor.action)
             .disposed(by: disposeBag)
+        
+        rootView.messageInputTextView.rx.text.orEmpty
+            .bind(with: self) { owner, value in
+                
+                var isPlaceholderText: Bool = false
+                
+                if owner.rootView.messageInputTextView.textColor == Constant.Color.textSecondary {
+                    isPlaceholderText = true
+                }
+                owner.reactor?.action.onNext(.inputContent((value, isPlaceholderText)))
+            }
+            .disposed(by: disposeBag)
+        
+        rootView.messageSendButton.rx.tap
+            .map { Reactor.Action.sendButtonTapped }
+            .bind(to: reactor.action)
+            .disposed(by: disposeBag)
     }
 }
 
@@ -124,6 +141,13 @@ extension DMChattingViewController {
                     return cell
                 default: return UITableViewCell()
                 }
+            }
+            .disposed(by: disposeBag)
+        
+        reactor.pulse(\.$messageSendSuccess)
+            .compactMap { $0 }
+            .bind(with: self) { owner, _ in
+                owner.rootView.messageInputTextView.text = nil
             }
             .disposed(by: disposeBag)
     }

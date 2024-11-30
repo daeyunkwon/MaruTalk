@@ -14,7 +14,8 @@ final class DMChattingReactor: Reactor {
         case fetch
         case newMessageReceived([Chat])
         case viewDisappear
-        
+        case inputContent((String, Bool))
+        case sendButtonTapped
     }
     
     enum Mutation {
@@ -22,6 +23,8 @@ final class DMChattingReactor: Reactor {
         case setNavigationTitle(String)
         case setNetworkError((Router.APIType, String?))
         case setScrollToBottom
+        case setContent(String)
+        case setMessageSendSuccess
     }
     
     struct State {
@@ -31,6 +34,8 @@ final class DMChattingReactor: Reactor {
         @Pulse var navigationTitle: String?
         @Pulse var networkError: (Router.APIType, String?)?
         @Pulse var shouldScrollToBottom: Void?
+        var content: String = ""
+        @Pulse var messageSendSuccess: Void?
     }
     
     var initialState: State
@@ -82,6 +87,20 @@ extension DMChattingReactor {
         
         case .viewDisappear:
             return disconnectSocket()
+        
+        case .inputContent(let value):
+            let content = value.0
+            let isPlaceholderText = value.1
+            
+            //공백 체크
+            if !content.trimmingCharacters(in: .whitespaces).isEmpty, !isPlaceholderText {
+                return .just(.setContent(content))
+            } else {
+                return .just(.setContent(""))
+            }
+        
+        case .sendButtonTapped:
+            return executeSendDMChat()
         }
     }
 }
@@ -108,6 +127,12 @@ extension DMChattingReactor {
         
         case .setScrollToBottom:
             newState.shouldScrollToBottom = ()
+        
+        case .setContent(let value):
+            newState.content = value
+        
+        case .setMessageSendSuccess:
+            newState.messageSendSuccess = ()
         }
         return newState
     }
@@ -195,6 +220,32 @@ extension DMChattingReactor {
                     
                 case .failure(let error):
                     return .just(.setNetworkError((Router.APIType.chats, error.errorCode)))
+                }
+            }
+    }
+    
+    //채팅 보내기
+    private func executeSendDMChat() -> Observable<Mutation> {
+        guard let workspaceID = UserDefaultsManager.shared.recentWorkspaceID else { return .empty() }
+        let roomID = currentState.roomID
+        let content = currentState.content
+        let files: [Data] = []
+        
+        return NetworkManager.shared.performRequestMultipartFormData(api: .sendDMChat(workspaceID: workspaceID, roomID: roomID, content: content, files: files), model: Chat.self)
+            .asObservable()
+            .flatMap { result -> Observable<Mutation> in
+                switch result {
+                case .success(let value):
+                    //보낸 메시지 DB에 저장
+                    RealmDMChatRepository.shared.saveChat(chat: RealmDMChat(chat: value))
+                    return .concat([
+                        .just(.setMessageSendSuccess),
+                        .just(.setChatList([RealmDMChat(chat: value)])),
+                        .just(.setScrollToBottom)
+                    ])
+                    
+                case .failure(let error):
+                    return .just(.setNetworkError((Router.APIType.sendDMChat, error.errorCode)))
                 }
             }
     }
