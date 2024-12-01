@@ -16,6 +16,9 @@ final class DMChattingReactor: Reactor {
         case viewDisappear
         case inputContent((String, Bool))
         case sendButtonTapped
+        case selectPhotoDatas([Data])
+        case deselectPhotoImage(Int)
+        case plusButtonTapped
     }
     
     enum Mutation {
@@ -25,6 +28,8 @@ final class DMChattingReactor: Reactor {
         case setScrollToBottom
         case setContent(String)
         case setMessageSendSuccess
+        case setPhotoImageDatas([Data])
+        case setShowPhotoAlbum
     }
     
     struct State {
@@ -35,7 +40,9 @@ final class DMChattingReactor: Reactor {
         @Pulse var networkError: (Router.APIType, String?)?
         @Pulse var shouldScrollToBottom: Void?
         var content: String = ""
+        @Pulse var photoImageDatas: [Data] = []
         @Pulse var messageSendSuccess: Void?
+        @Pulse var shouldShowPhotoAlbum: Void?
     }
     
     var initialState: State
@@ -64,7 +71,7 @@ extension DMChattingReactor {
                 fetchDMChatListFromRealmDB(), //DB에서 채팅 내역 가져오기
                 connectDMSocket()
             ])
-        
+            
         case .newMessageReceived(let values):
             //소켓 통신으로 수신 메시지 DB에 저장하기
             var chatList: [RealmDMChat] = []
@@ -84,10 +91,10 @@ extension DMChattingReactor {
             } else {
                 return .empty()
             }
-        
+            
         case .viewDisappear:
             return disconnectSocket()
-        
+            
         case .inputContent(let value):
             let content = value.0
             let isPlaceholderText = value.1
@@ -98,9 +105,20 @@ extension DMChattingReactor {
             } else {
                 return .just(.setContent(""))
             }
-        
+            
         case .sendButtonTapped:
             return executeSendDMChat()
+            
+        case .selectPhotoDatas(let value):
+            return .just(.setPhotoImageDatas(value))
+            
+        case .deselectPhotoImage(let value):
+            var newList = currentState.photoImageDatas
+            newList.remove(at: value)
+            return .just(.setPhotoImageDatas(newList))
+        
+        case .plusButtonTapped:
+            return .just(.setShowPhotoAlbum)
         }
     }
 }
@@ -133,6 +151,12 @@ extension DMChattingReactor {
         
         case .setMessageSendSuccess:
             newState.messageSendSuccess = ()
+        
+        case .setPhotoImageDatas(let value):
+            newState.photoImageDatas = value
+        
+        case .setShowPhotoAlbum:
+            newState.shouldShowPhotoAlbum = ()
         }
         return newState
     }
@@ -229,7 +253,7 @@ extension DMChattingReactor {
         guard let workspaceID = UserDefaultsManager.shared.recentWorkspaceID else { return .empty() }
         let roomID = currentState.roomID
         let content = currentState.content
-        let files: [Data] = []
+        let files: [Data] = currentState.photoImageDatas
         
         return NetworkManager.shared.performRequestMultipartFormData(api: .sendDMChat(workspaceID: workspaceID, roomID: roomID, content: content, files: files), model: Chat.self)
             .asObservable()
@@ -240,6 +264,7 @@ extension DMChattingReactor {
                     RealmDMChatRepository.shared.saveChat(chat: RealmDMChat(chat: value))
                     return .concat([
                         .just(.setMessageSendSuccess),
+                        .just(.setPhotoImageDatas([])),
                         .just(.setChatList([RealmDMChat(chat: value)])),
                         .just(.setScrollToBottom)
                     ])

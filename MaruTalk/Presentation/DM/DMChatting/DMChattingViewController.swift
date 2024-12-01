@@ -6,8 +6,10 @@
 //
 
 import UIKit
+import PhotosUI
 
 import ReactorKit
+import RxCocoa
 
 final class DMChattingViewController: BaseViewController<ChannelChattingView>, View {
     
@@ -73,6 +75,11 @@ extension DMChattingViewController {
         
         rootView.messageSendButton.rx.tap
             .map { Reactor.Action.sendButtonTapped }
+            .bind(to: reactor.action)
+            .disposed(by: disposeBag)
+        
+        rootView.messagePlusButton.rx.tap
+            .map { Reactor.Action.plusButtonTapped }
             .bind(to: reactor.action)
             .disposed(by: disposeBag)
     }
@@ -150,5 +157,75 @@ extension DMChattingViewController {
                 owner.rootView.messageInputTextView.text = nil
             }
             .disposed(by: disposeBag)
+        
+        reactor.pulse(\.$photoImageDatas)
+            .map { $0.isEmpty }
+            .bind(with: self, onNext: { owner, value in
+                owner.rootView.collectionView.isHidden = value
+                owner.rootView.updateMessageSendButtonActiveState()
+            })
+            .disposed(by: disposeBag)
+        
+        reactor.pulse(\.$photoImageDatas)
+            .bind(to: rootView.collectionView.rx.items(cellIdentifier: MessageSelectedImageCollectionViewCell.reuseIdentifier, cellType: MessageSelectedImageCollectionViewCell.self)) { [weak self] row, element, cell in
+                guard let self else { return }
+                cell.photoImageView.image = UIImage(data: element)
+                
+                cell.xSquareButton.rx.tap
+                    .bind(with: self) { owner, _ in
+                        self.reactor?.action.onNext(.deselectPhotoImage(row))
+                    }
+                    .disposed(by: cell.disposeBag)
+            }
+            .disposed(by: disposeBag)
+        
+        reactor.pulse(\.$shouldShowPhotoAlbum)
+            .compactMap { $0 }
+            .bind(with: self) { owner, _ in
+                owner.openPhotoPicker()
+            }
+            .disposed(by: disposeBag)
+    }
+}
+
+//MARK: - PHPickerViewControllerDelegate
+
+extension DMChattingViewController: PHPickerViewControllerDelegate {
+    func picker(_ picker: PHPickerViewController, didFinishPicking results: [PHPickerResult]) {
+        picker.dismiss(animated: true, completion: nil)
+        
+        var selectedImageDataList: [Data] = []
+        let dispatchGroup = DispatchGroup()
+        
+        for (index, result) in results.enumerated() {
+            guard index < 5 else { break }
+            
+            dispatchGroup.enter()
+            result.itemProvider.loadObject(ofClass: UIImage.self) { (object, error) in
+                if let image = object as? UIImage {
+                    if let data = image.jpegData(compressionQuality: 0.5) {
+                        selectedImageDataList.append(data)
+                        dispatchGroup.leave()
+                    }
+                }
+            }
+        }
+        
+        dispatchGroup.notify(queue: .main) { [weak self] in
+            if !selectedImageDataList.isEmpty {
+                self?.reactor?.action.onNext(.selectPhotoDatas(selectedImageDataList))
+            }
+        }
+    }
+    
+    private func openPhotoPicker() {
+        var configuration = PHPickerConfiguration()
+        configuration.selectionLimit = 5 // 최대 선택 가능 수
+        configuration.filter = .images
+        
+        let picker = PHPickerViewController(configuration: configuration)
+        picker.delegate = self
+        
+        present(picker, animated: true, completion: nil)
     }
 }

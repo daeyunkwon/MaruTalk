@@ -105,13 +105,14 @@ final class ProfileNameMessageTableViewCell: BaseTableViewCell {
         }
         
         countLabel.snp.makeConstraints { make in
-            make.top.equalTo(timeLabel.snp.bottom).offset(2)
+            make.top.equalTo(timeLabel.snp.bottom).offset(6)
             make.trailing.equalTo(timeLabel.snp.trailing).offset(-5)
         }
         
         messageContentLabel.snp.makeConstraints { make in
-            make.top.equalTo(nicknameLabel.snp.bottom).offset(8)
+            make.top.equalTo(nicknameLabel.snp.bottom).offset(6)
             make.leading.equalTo(nicknameLabel)
+            make.trailing.equalToSuperview().inset(40)
             make.bottom.equalToSuperview().offset(-16)
         }
     }
@@ -128,7 +129,13 @@ final class ProfileNameMessageTableViewCell: BaseTableViewCell {
         }
         
         nicknameLabel.text = data.user.nickname
-        messageContentLabel.text = data.content
+        
         timeLabel.setTimeString(date: Date.createdDate(dateString: data.createdAt), shouldShowYear: true)
+        
+        if !data.content.isEmpty {
+            messageContentLabel.text = data.content
+        } else {
+            messageContentLabel.text = "사진"
+        }
     }
 }
