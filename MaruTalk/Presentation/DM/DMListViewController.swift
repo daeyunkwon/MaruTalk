@@ -65,6 +65,11 @@ extension DMListViewController {
             .map { Reactor.Action.selectMember($0) }
             .bind(to: reactor.action)
             .disposed(by: disposeBag)
+        
+        rootView.tableView.rx.modelSelected(Chat.self)
+            .map { Reactor.Action.selectChat($0) }
+            .bind(to: reactor.action)
+            .disposed(by: disposeBag)
     }
 }
 

@@ -13,6 +13,7 @@ final class DMListReactor: Reactor {
     enum Action {
         case fetch
         case selectMember(User)
+        case selectChat(Chat)
     }
     
     enum Mutation {
@@ -48,6 +49,9 @@ extension DMListReactor {
         
         case .selectMember(let value):
             return createDMRoom(opponentID: value.userID)
+        
+        case .selectChat(let value):
+            return createDMRoom(opponentID: value.user.userID)
         }
     }
 }

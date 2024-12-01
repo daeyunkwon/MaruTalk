@@ -81,7 +81,7 @@ final class ProfileNameMessageTableViewCell: BaseTableViewCell {
     
     override func configureLayout() {
         profileImageView.snp.makeConstraints { make in
-            make.top.equalToSuperview().offset(20)
+            make.top.equalToSuperview().offset(16)
             make.leading.equalToSuperview().offset(16)
             make.size.equalTo(36)
         }
@@ -112,7 +112,7 @@ final class ProfileNameMessageTableViewCell: BaseTableViewCell {
         messageContentLabel.snp.makeConstraints { make in
             make.top.equalTo(nicknameLabel.snp.bottom).offset(8)
             make.leading.equalTo(nicknameLabel)
-            make.bottom.equalToSuperview().offset(-6)
+            make.bottom.equalToSuperview().offset(-16)
         }
     }
     
