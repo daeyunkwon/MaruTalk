@@ -25,7 +25,7 @@ extension  UILabel {
         }
     }
     
-    func setTimeString(date: Date) {
+    func setTimeString(date: Date, shouldShowYear: Bool = false) {
         let formatter = DateFormatter()
         formatter.locale = Locale(identifier: "ko_KR")
         formatter.amSymbol = "오전"
@@ -35,7 +35,11 @@ extension  UILabel {
         if Calendar.current.isDateInToday(date) {
             formatter.dateFormat = "a hh:mm" // "오전 08:33"
         } else {
-            formatter.dateFormat = "M/d a hh:mm" // "1/12 오전 08:32"
+            if shouldShowYear {
+                formatter.dateFormat = "yyyy년 MM월 dd일 a hh:mm" // "1/12 오전 08:32"
+            } else {
+                formatter.dateFormat = "M/d a hh:mm" // "1/12 오전 08:32"
+            }
         }
         
         self.text = formatter.string(from: date)

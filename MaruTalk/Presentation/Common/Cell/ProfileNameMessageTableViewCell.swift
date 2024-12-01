@@ -43,6 +43,7 @@ final class ProfileNameMessageTableViewCell: BaseTableViewCell {
     private let timeLabel: UILabel = {
         let label = UILabel()
         label.textColor = Constant.Color.textSecondary
+        label.font = Constant.Font.caption
         label.textAlignment = .right
         return label
     }()
@@ -80,14 +81,14 @@ final class ProfileNameMessageTableViewCell: BaseTableViewCell {
     
     override func configureLayout() {
         profileImageView.snp.makeConstraints { make in
-            make.top.equalToSuperview().offset(8)
-            make.leading.equalToSuperview()
-            make.size.equalTo(34)
+            make.top.equalToSuperview().offset(20)
+            make.leading.equalToSuperview().offset(16)
+            make.size.equalTo(36)
         }
         
         timeLabel.snp.makeConstraints { make in
             make.top.equalTo(profileImageView)
-            make.trailing.equalToSuperview()
+            make.trailing.equalToSuperview().offset(-16)
         }
         
         nicknameLabel.snp.makeConstraints { make in
@@ -128,6 +129,6 @@ final class ProfileNameMessageTableViewCell: BaseTableViewCell {
         
         nicknameLabel.text = data.user.nickname
         messageContentLabel.text = data.content
-        timeLabel.text = data.createdAt
+        timeLabel.setTimeString(date: Date.createdDate(dateString: data.createdAt), shouldShowYear: true)
     }
 }

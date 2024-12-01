@@ -123,7 +123,11 @@ extension DMListReactor {
                 switch result {
                 case .success(let value):
                     let roomIDs = value.map { $0.roomID }
-                    return self.fetchDMRoomChat(roomIDs: roomIDs)
+                    
+                    //상대방 유저 정보
+                    let otherUser = Dictionary(uniqueKeysWithValues: value.map { ($0.roomID, $0.user)})
+                    
+                    return self.fetchDMRoomChat(roomIDs: roomIDs, otherUser: otherUser)
                 
                 case .failure(let error):
                     return .just(.setNetworkError((Router.APIType.userMe, error.errorCode)))
@@ -132,22 +136,30 @@ extension DMListReactor {
     }
     
     //DM 방 채팅 내용 조회
-    private func fetchDMRoomChat(roomIDs: [String]) -> Observable<Mutation> {
+    private func fetchDMRoomChat(roomIDs: [String], otherUser: [String: User]) -> Observable<Mutation> {
         guard let workspaceID = UserDefaultsManager.shared.recentWorkspaceID else { return .empty() }
         
         let requests = roomIDs.map { roomID -> Observable<Chat?> in
-            var cursorDate: String?
-            if let chat = RealmDMChatRepository.shared.fetchLastChat(roomID: roomID) {
-                cursorDate = Date.formatToISO8601String(date: chat.createdAt)
-            }
+//            var cursorDate: String?
+//            if let chat = RealmDMChatRepository.shared.fetchLastChat(roomID: roomID) {
+//                cursorDate = Date.formatToISO8601String(date: chat.createdAt)
+//            }
             
             return NetworkManager.shared
-                .performRequest(api: .dmChats(workspaceID: workspaceID, roomID: roomID, cursorDate: cursorDate), model: [Chat].self)
+                .performRequest(api: .dmChats(workspaceID: workspaceID, roomID: roomID, cursorDate: nil), model: [Chat].self)
                 .asObservable()
                 .map { result -> Chat? in
                     switch result {
                     case .success(let chats):
-                        let sorted = chats.sorted { $0.createdAt > $1.createdAt }
+                        
+                        var sorted = chats.sorted { $0.createdAt > $1.createdAt }
+                        
+                        if sorted.count > 1 {
+                            if let otherUser = otherUser[roomID] {
+                                sorted[0].user = otherUser //마지막 채팅 유저 정보를 본인이 아닌 상대방 유저 정보로 변경하기(테이블셀에서 상대방 유저 정보로 표현하기 위함)
+                            }
+                        }
+                        
                         return sorted.first
                     case .failure(let error):
                         print("ERROR: \(error)")
