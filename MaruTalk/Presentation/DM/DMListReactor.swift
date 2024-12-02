@@ -174,13 +174,12 @@ extension DMListReactor {
                             after = Date.formatToISO8601String(date: tempDate)
                         }
                         
-//                        return sorted.first
                         return NetworkManager.shared.performRequest(api: .dmUnreadCount(workspaceID: workspaceID, roomID: roomID, after: after), model: Unread.self)
                             .asObservable()
                             .map { result -> Chat? in
                                 switch result {
                                 case .success(let value):
-                                    //읽지 않은 채팅 갯수
+                                    //읽지 않은 채팅 개수 업데이트
                                     if sorted.count > 1 {
                                         sorted[0].unreadCount = value.count
                                     }

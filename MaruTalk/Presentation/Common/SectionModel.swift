@@ -9,46 +9,6 @@ import Foundation
 
 import RxDataSources
 
-//enum SectionItem: Equatable {
-//    case channel(String)
-//    case dm(String)
-//    
-//    static func == (lhs: SectionItem, rhs: SectionItem) -> Bool {
-//        switch (lhs, rhs) {
-//        case let (.channel(lhsValue), .channel(rhsValue)):
-//            return lhsValue == rhsValue
-//        case let (.dm(lhsValue), .dm(rhsValue)):
-//            return lhsValue == rhsValue
-//        default:
-//            return false
-//        }
-//    }
-//}
-
-//struct SectionModel: Equatable, Identifiable {
-//    var id = UUID().uuidString
-//    var headerTitle: String
-//    var items: [SectionItem]
-//    var isExpanded: Bool = false
-//    var index: Int
-//    
-//    static func == (lhs: SectionModel, rhs: SectionModel) -> Bool {
-//        return lhs.id == rhs.id &&
-//               lhs.headerTitle == rhs.headerTitle &&
-//               lhs.items == rhs.items
-//    }
-//}
-//
-//extension SectionModel: SectionModelType {
-//    typealias Item = SectionItem
-//    
-//    init(original: SectionModel, items: [SectionItem]) {
-//        self = original
-//        self.items = items
-//    }
-//}
-
-
 enum SectionItem: Equatable, IdentifiableType {
     case channel(Channel)
     case dm(DMRoom)

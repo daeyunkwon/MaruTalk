@@ -147,6 +147,11 @@
 		44B476852CFB30EE00617126 /* DMChattingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 44B476842CFB30EE00617126 /* DMChattingViewController.swift */; };
 		44B476872CFB50A000617126 /* ChatDataProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 44B476862CFB50A000617126 /* ChatDataProtocol.swift */; };
 		44B476892CFD968500617126 /* Unread.swift in Sources */ = {isa = PBXBuildFile; fileRef = 44B476882CFD968500617126 /* Unread.swift */; };
+		44B4768C2CFDCFC100617126 /* ProfileReactor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 44B4768B2CFDCFC100617126 /* ProfileReactor.swift */; };
+		44B4768E2CFDD03C00617126 /* ProfileView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 44B4768D2CFDD03C00617126 /* ProfileView.swift */; };
+		44B476902CFDD06200617126 /* ProfileViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 44B4768F2CFDD06200617126 /* ProfileViewController.swift */; };
+		44B476922CFDD4C700617126 /* ProfileSectionModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 44B476912CFDD4C700617126 /* ProfileSectionModel.swift */; };
+		44B476942CFDDA5400617126 /* ProfileSettingTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 44B476932CFDDA5400617126 /* ProfileSettingTableViewCell.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -294,6 +299,11 @@
 		44B476842CFB30EE00617126 /* DMChattingViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DMChattingViewController.swift; sourceTree = "<group>"; };
 		44B476862CFB50A000617126 /* ChatDataProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatDataProtocol.swift; sourceTree = "<group>"; };
 		44B476882CFD968500617126 /* Unread.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Unread.swift; sourceTree = "<group>"; };
+		44B4768B2CFDCFC100617126 /* ProfileReactor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileReactor.swift; sourceTree = "<group>"; };
+		44B4768D2CFDD03C00617126 /* ProfileView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileView.swift; sourceTree = "<group>"; };
+		44B4768F2CFDD06200617126 /* ProfileViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileViewController.swift; sourceTree = "<group>"; };
+		44B476912CFDD4C700617126 /* ProfileSectionModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileSectionModel.swift; sourceTree = "<group>"; };
+		44B476932CFDDA5400617126 /* ProfileSettingTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileSettingTableViewCell.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -344,6 +354,7 @@
 				4411157A2CF82E9F000D1B2B /* ChannelSetting */,
 				44B476612CF8AB0A00617126 /* ChannelEdit */,
 				44B4766E2CF98B5F00617126 /* ChannelChangeAdmin */,
+				44B4768A2CFDCFA900617126 /* Profile */,
 			);
 			path = Home;
 			sourceTree = "<group>";
@@ -417,6 +428,7 @@
 				44B4767B2CFB0A4000617126 /* ProfileCircleImageTitleCollectionViewCell.swift */,
 				44B4766C2CF9899F00617126 /* ProfileNameEmailTableViewCell.swift */,
 				44B476752CFAF35F00617126 /* ProfileNameMessageTableViewCell.swift */,
+				44B476932CFDDA5400617126 /* ProfileSettingTableViewCell.swift */,
 			);
 			path = Cell;
 			sourceTree = "<group>";
@@ -425,6 +437,7 @@
 			isa = PBXGroup;
 			children = (
 				4411150C2CE876C1000D1B2B /* SectionModel.swift */,
+				44B476912CFDD4C700617126 /* ProfileSectionModel.swift */,
 				444DE6F02CD276FB00821269 /* CustomViews */,
 				441114FB2CE73B50000D1B2B /* Cell */,
 			);
@@ -735,6 +748,16 @@
 			path = DMChatting;
 			sourceTree = "<group>";
 		};
+		44B4768A2CFDCFA900617126 /* Profile */ = {
+			isa = PBXGroup;
+			children = (
+				44B4768B2CFDCFC100617126 /* ProfileReactor.swift */,
+				44B4768D2CFDD03C00617126 /* ProfileView.swift */,
+				44B4768F2CFDD06200617126 /* ProfileViewController.swift */,
+			);
+			path = Profile;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -843,9 +866,11 @@
 				44B476832CFB30D500617126 /* DMChattingReactor.swift in Sources */,
 				444DE6B62CD0FC9D00821269 /* AppDelegate.swift in Sources */,
 				4411150D2CE876C1000D1B2B /* SectionModel.swift in Sources */,
+				44B476922CFDD4C700617126 /* ProfileSectionModel.swift in Sources */,
 				444DE6E72CD24C1F00821269 /* BaseViewController.swift in Sources */,
 				441115172CE9FC18000D1B2B /* RoundedImageTitleView.swift in Sources */,
 				4411151D2CEB4430000D1B2B /* WorkspaceList.swift in Sources */,
+				44B476942CFDDA5400617126 /* ProfileSettingTableViewCell.swift in Sources */,
 				441115202CECA4F3000D1B2B /* LoginView.swift in Sources */,
 				441115582CF46C6D000D1B2B /* Chat.swift in Sources */,
 				441115412CF217FF000D1B2B /* ChannelAddViewController.swift in Sources */,
@@ -865,11 +890,13 @@
 				441115752CF73AE2000D1B2B /* ChannelSearchReactor.swift in Sources */,
 				444DE6F42CD27B1600821269 /* UIButton+Extension.swift in Sources */,
 				4411154C2CF441E5000D1B2B /* MessageSelectedImageCollectionViewCell.swift in Sources */,
+				44B4768C2CFDCFC100617126 /* ProfileReactor.swift in Sources */,
 				44B476722CF98BE800617126 /* ChannelChangeAdminView.swift in Sources */,
 				441114D42CE34EBD000D1B2B /* WorkspaceAddView.swift in Sources */,
 				441114C72CE08B03000D1B2B /* User.swift in Sources */,
 				44B4767C2CFB0A4000617126 /* ProfileCircleImageTitleCollectionViewCell.swift in Sources */,
 				441114E42CE5EEF8000D1B2B /* HomeView.swift in Sources */,
+				44B476902CFDD06200617126 /* ProfileViewController.swift in Sources */,
 				44B476702CF98B8700617126 /* ChannelChangeAdminReactor.swift in Sources */,
 				441114F02CE60C48000D1B2B /* DMListView.swift in Sources */,
 				441115002CE75290000D1B2B /* DropdownArrowTableViewCell.swift in Sources */,
@@ -913,6 +940,7 @@
 				4411154A2CF32477000D1B2B /* ChannelChattingViewController.swift in Sources */,
 				441115342CEF8123000D1B2B /* Date+Extension.swift in Sources */,
 				444DE7062CD609FC00821269 /* OnboardingCoordinator.swift in Sources */,
+				44B4768E2CFDD03C00617126 /* ProfileView.swift in Sources */,
 				441115132CE9E2F4000D1B2B /* PlusTitleHeaderTableViewCell.swift in Sources */,
 				444DE6B82CD0FC9D00821269 /* SceneDelegate.swift in Sources */,
 				441115362CEF8FBE000D1B2B /* UIImageView+Extension.swift in Sources */,
