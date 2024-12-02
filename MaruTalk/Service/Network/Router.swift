@@ -27,6 +27,7 @@ enum Router {
     //User
     case userMe //내 프로필 정보 조회
     case user(userID: String) //다른 유저 정보 조회
+    case userMeImage(imageData: Data) //프로필 이미지 수정
     //Channel
     case channels(workspaceID: String) //워크 스페이스에 속하는 모든 채널들
     case myChannels(workspaceID: String) //워크 스페이스에 속하는 사용자가 속한 채널들
@@ -64,6 +65,7 @@ enum Router {
         //User
         case userMe
         case user
+        case userMeImage
         //Channel
         case channels
         case myChannels
@@ -102,6 +104,7 @@ extension Router: URLRequestConvertible {
         case .loginWithKakao: return APIURL.loginWithKakao
         case .userMe: return APIURL.userMe
         case .user(let userID): return APIURL.user(userID: userID)
+        case .userMeImage: return APIURL.userMeImage
             
         case .workspaces, .createWorkspace, .workspace: return APIURL.workspaces
         case .workspaceMemberInvite(let workspaceID, _): return APIURL.workspaceMemberInvite(workspaceID: workspaceID)
@@ -135,7 +138,7 @@ extension Router: URLRequestConvertible {
         case .emailValidation(_), .join, .login, .loginWithApple, .loginWithKakao, .createWorkspace, .createChannel, .sendChannelChat, .workspaceMemberInvite, .createDM, .sendDMChat:
             return .post
             
-        case .channelEdit, .channelChangeAdmin:
+        case .channelEdit, .channelChangeAdmin, .userMeImage:
             return .put
             
         case .channelDelete:
@@ -166,7 +169,7 @@ extension Router: URLRequestConvertible {
                 "SesacKey": APIKey.apiKey
             ]
             
-        case .createWorkspace, .createChannel, .sendChannelChat, .channelEdit, .sendDMChat:
+        case .createWorkspace, .createChannel, .sendChannelChat, .channelEdit, .sendDMChat, .userMeImage:
             return [
                 "Content-Type": "multipart/form-data",
                 "Authorization": KeychainManager.shared.getItem(forKey: .accessToken) ?? "",
@@ -242,6 +245,11 @@ extension Router: URLRequestConvertible {
             let multipartFormData = MultipartFormData()
             multipartFormData.append(Data(name.utf8), withName: "name")
             multipartFormData.append(Data(description.utf8), withName: "description")
+            multipartFormData.append(imageData, withName: "image", fileName: UUID().uuidString, mimeType: "image/jpeg")
+            return multipartFormData
+            
+        case .userMeImage(let imageData):
+            let multipartFormData = MultipartFormData()
             multipartFormData.append(imageData, withName: "image", fileName: UUID().uuidString, mimeType: "image/jpeg")
             return multipartFormData
             

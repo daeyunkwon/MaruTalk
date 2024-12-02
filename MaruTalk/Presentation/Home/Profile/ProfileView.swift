@@ -15,15 +15,22 @@ final class ProfileView: BaseView {
     
     let profileImageSettingButton: UIButton = {
         let btn = UIButton(type: .custom)
-        btn.setImage(UIImage(named: "noPhotoA"), for: .normal)
-        btn.imageView?.contentMode = .scaleAspectFill
-        btn.backgroundColor = .red
+        btn.backgroundColor = .lightGray
         btn.clipsToBounds = true
         btn.layer.cornerRadius = 8
         btn.tintColor = .clear
-        btn.contentHorizontalAlignment = .fill
-        btn.contentVerticalAlignment = .fill
         return btn
+    }()
+    
+    let profileImageView: UIImageView = {
+        let iv = UIImageView()
+        iv.contentMode = .scaleAspectFill
+        iv.clipsToBounds = true
+        iv.layer.cornerRadius = 8
+        iv.backgroundColor = .clear
+        iv.image = UIImage(named: "noPhotoA")
+        iv.isUserInteractionEnabled = false
+        return iv
     }()
     
     private let cameraIconButton: UIButton = {
@@ -53,6 +60,7 @@ final class ProfileView: BaseView {
     override func configureHierarchy() {
         addSubviews(
             profileImageSettingButton,
+            profileImageView,
             cameraIconButton,
             tableView
         )
@@ -60,6 +68,12 @@ final class ProfileView: BaseView {
     
     override func configureLayout() {
         profileImageSettingButton.snp.makeConstraints { make in
+            make.top.equalTo(safeAreaLayoutGuide).offset(24)
+            make.centerX.equalToSuperview()
+            make.size.equalTo(80)
+        }
+        
+        profileImageView.snp.makeConstraints { make in
             make.top.equalTo(safeAreaLayoutGuide).offset(24)
             make.centerX.equalToSuperview()
             make.size.equalTo(80)
