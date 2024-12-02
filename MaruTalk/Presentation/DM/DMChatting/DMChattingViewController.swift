@@ -23,6 +23,10 @@ final class DMChattingViewController: BaseViewController<ChannelChattingView>, V
         self.reactor = reactor
     }
     
+    deinit {
+        print("DEBUG: \(String(describing: self)) deinit")
+    }
+    
     //MARK: - Life Cycle
     
     override func viewDidLoad() {

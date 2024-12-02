@@ -152,7 +152,7 @@ extension DMListReactor {
             return NetworkManager.shared
                 .performRequest(api: .dmChats(workspaceID: workspaceID, roomID: roomID, cursorDate: nil), model: [Chat].self)
                 .asObservable()
-                .map { result -> Chat? in
+                .flatMap { result -> Observable<Chat?> in
                     switch result {
                     case .success(let chats):
                         
@@ -164,10 +164,37 @@ extension DMListReactor {
                             }
                         }
                         
-                        return sorted.first
+                        var after: String? //마지막 채팅 날짜
+                        //DB에서 마지막 채팅 날짜 가져오기
+                        if let lastChatDate = RealmDMChatRepository.shared.fetchLastChat(roomID: roomID)?.createdAt {
+                            after = Date.formatToISO8601String(date: lastChatDate)
+                        } else {
+                            //신규 메시지의 경우 DB에 아직 저장된 내용이 없기 때문에 임의 날짜로 지정: (서버에서 공백을 포함하여 빈 값으로 보낼 시 응답값의 count가 0으로 리턴됩니다.)
+                            var tempDate = Date(timeIntervalSince1970: TimeInterval())
+                            after = Date.formatToISO8601String(date: tempDate)
+                        }
+                        
+//                        return sorted.first
+                        return NetworkManager.shared.performRequest(api: .dmUnreadCount(workspaceID: workspaceID, roomID: roomID, after: after), model: Unread.self)
+                            .asObservable()
+                            .map { result -> Chat? in
+                                switch result {
+                                case .success(let value):
+                                    //읽지 않은 채팅 갯수
+                                    if sorted.count > 1 {
+                                        sorted[0].unreadCount = value.count
+                                    }
+                                    print("count: \(value.count)")
+                                    return sorted.first
+                                case .failure(let error):
+                                    print("ERROR: \(error)")
+                                    return sorted.first
+                                }
+                            }
+                        
                     case .failure(let error):
                         print("ERROR: \(error)")
-                        return nil
+                        return .just(nil)
                     }
                 }
             }

@@ -30,6 +30,10 @@ final class DMListViewController: BaseViewController<DMListView>, View {
         return view
     }()
     
+    deinit {
+        print("DEBUG: \(String(describing: self)) deinit")
+    }
+    
     //MARK: - Life Cycle
     
     override func viewDidLoad() {

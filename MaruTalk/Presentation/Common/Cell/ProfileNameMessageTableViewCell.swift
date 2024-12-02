@@ -100,8 +100,8 @@ final class ProfileNameMessageTableViewCell: BaseTableViewCell {
         countBackView.snp.makeConstraints { make in
             make.top.equalTo(countLabel).offset(-2)
             make.bottom.equalTo(countLabel).offset(2)
-            make.leading.equalTo(countLabel).offset(-4)
-            make.trailing.equalTo(countLabel).offset(4)
+            make.leading.equalTo(countLabel).offset(-6)
+            make.trailing.equalTo(countLabel).offset(6)
         }
         
         countLabel.snp.makeConstraints { make in
@@ -136,6 +136,15 @@ final class ProfileNameMessageTableViewCell: BaseTableViewCell {
             messageContentLabel.text = data.content
         } else {
             messageContentLabel.text = "사진"
+        }
+        
+        if let unreadCount = data.unreadCount, unreadCount != 0 {
+            countLabel.text = "\(unreadCount)"
+            countLabel.isHidden = false
+            countBackView.isHidden = false
+        } else {
+            countLabel.isHidden = true
+            countBackView.isHidden = true
         }
     }
 }

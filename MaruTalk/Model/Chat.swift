@@ -18,7 +18,9 @@ struct Chat: Decodable {
     let content: String
     let createdAt: String
     let files: [String]?
+    
     var user: User
+    var unreadCount: Int?
     
     enum CodingKeys: String, CodingKey {
         case channelID = "channel_id"
@@ -30,5 +32,6 @@ struct Chat: Decodable {
         case createdAt
         case files
         case user
+        case unreadCount
     }
 }

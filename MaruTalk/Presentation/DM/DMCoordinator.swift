@@ -16,6 +16,10 @@ final class DMCoordinator: Coordinator {
         self.navigationController = navigationController
     }
     
+    deinit {
+        print("DEBUG: \(String(describing: self)) deinit")
+    }
+    
     func start() {
         let reactor = DMListReactor()
         let dmVC = DMListViewController(reactor: reactor)

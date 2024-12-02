@@ -146,6 +146,7 @@
 		44B476832CFB30D500617126 /* DMChattingReactor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 44B476822CFB30D500617126 /* DMChattingReactor.swift */; };
 		44B476852CFB30EE00617126 /* DMChattingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 44B476842CFB30EE00617126 /* DMChattingViewController.swift */; };
 		44B476872CFB50A000617126 /* ChatDataProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 44B476862CFB50A000617126 /* ChatDataProtocol.swift */; };
+		44B476892CFD968500617126 /* Unread.swift in Sources */ = {isa = PBXBuildFile; fileRef = 44B476882CFD968500617126 /* Unread.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -292,6 +293,7 @@
 		44B476822CFB30D500617126 /* DMChattingReactor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DMChattingReactor.swift; sourceTree = "<group>"; };
 		44B476842CFB30EE00617126 /* DMChattingViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DMChattingViewController.swift; sourceTree = "<group>"; };
 		44B476862CFB50A000617126 /* ChatDataProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatDataProtocol.swift; sourceTree = "<group>"; };
+		44B476882CFD968500617126 /* Unread.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Unread.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -584,6 +586,7 @@
 				441115392CF07D70000D1B2B /* Channel.swift */,
 				4411153B2CF1DE41000D1B2B /* DMRoom.swift */,
 				441115572CF46C6D000D1B2B /* Chat.swift */,
+				44B476882CFD968500617126 /* Unread.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -951,6 +954,7 @@
 				444DE6EF2CD2529D00821269 /* OnboardingView.swift in Sources */,
 				444DE6F92CD366E600821269 /* AuthViewController.swift in Sources */,
 				441115792CF73B6E000D1B2B /* ChannelSearchViewController.swift in Sources */,
+				44B476892CFD968500617126 /* Unread.swift in Sources */,
 				444DE6F22CD2777800821269 /* RoundedBrandButton.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

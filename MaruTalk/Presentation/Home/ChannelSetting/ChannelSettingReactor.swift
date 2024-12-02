@@ -169,12 +169,13 @@ extension ChannelSettingReactor {
                                         switch result {
                                         case .success(_):
                                             print("DEBUG: 재 가입 성공")
-                                            //채널 나가기는 취소된 상태, 우선 에러 보내기
+                                            //채널 나가기는 취소 및 재가입한 상태, 우선 에러 보내기(사용자가 다시 나가기 시도하도록 유도)
                                             observer.onNext(.setNetworkError((Router.APIType.channelExit, nil)))
                                             
                                         case .failure(let error):
                                             print("Error: 재 가입 실패: \(error)")
-                                            observer.onNext(.setNetworkError((Router.APIType.channelExit, nil)))
+                                            //재가입 실패 시 우선 채널 나가기는 처리되었으므로 홈 화면 전환
+                                            observer.onNext(.setNavigateToHome(()))
                                         }
                                         
                                     }, onError: { error in
@@ -183,7 +184,7 @@ extension ChannelSettingReactor {
                                         observer.onNext(.setNavigateToHome(()))
                                     })
                                 
-                               let _ = compositeDisposable.insert(fallbackDisposable)
+                                let _ = compositeDisposable.insert(fallbackDisposable)
                             }
                             observer.onCompleted()
                         }

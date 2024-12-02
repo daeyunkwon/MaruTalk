@@ -33,12 +33,12 @@ extension  UILabel {
         
         // 날짜가 오늘이면 시간만 표시, 아니면 날짜와 시간 모두 표시
         if Calendar.current.isDateInToday(date) {
-            formatter.dateFormat = "a hh:mm" // "오전 08:33"
+            formatter.dateFormat = "a h:mm" // "오전 8:03"
         } else {
             if shouldShowYear {
-                formatter.dateFormat = "yyyy년 MM월 dd일 a hh:mm" // "1/12 오전 08:32"
+                formatter.dateFormat = "yyyy년 M월 d일 a h:mm"
             } else {
-                formatter.dateFormat = "M/d a hh:mm" // "1/12 오전 08:32"
+                formatter.dateFormat = "M/d a h:mm"
             }
         }
         
