@@ -193,3 +193,16 @@ extension HomeCoordinator {
         navigationController.dismiss(animated: true)
     }
 }
+
+extension HomeCoordinator {
+    func showProfile() {
+        let reactor = ProfileReactor()
+        let profileVC = ProfileViewController(reactor: reactor)
+        profileVC.coordinator = self
+        navigationController.pushViewController(profileVC, animated: true)
+    }
+    
+    func didFinishProfile() {
+        navigationController.popViewController(animated: true)
+    }
+}

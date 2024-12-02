@@ -109,17 +109,11 @@ extension HomeViewController {
             }
             .disposed(by: disposeBag)
         
-        
-        
-        
-        
-//        profileCircleView.rxTap
-//            .bind(with: self) { owner, _ in
-//                print(11111)
-////                owner.coordinator?.didFinish()
-//                owner.showToastForNetworkError(api: .refresh, errorCode: "Refresh token expiration")
-//            }
-//            .disposed(by: disposeBag)
+        profileCircleView.rxTap
+            .bind(with: self) { owner, _ in
+                owner.coordinator?.showProfile()
+            }
+            .disposed(by: disposeBag)
 //        
 //        workspaceNameView.rxTap
 //            .bind(with: self) { owner, _ in
