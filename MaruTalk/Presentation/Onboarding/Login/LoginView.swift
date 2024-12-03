@@ -59,7 +59,7 @@ final class LoginView: BaseView {
     override func configureUI() {
         super.configureUI()
         
-        self.emailFieldView.inputTextField.text = "t1@t.com"
+        self.emailFieldView.inputTextField.text = "p1@naver.com"
         self.passwordFieldView.inputTextField.text = "1111aA@@"
     }
 }
