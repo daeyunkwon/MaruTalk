@@ -103,11 +103,17 @@ extension ChannelChattingViewController {
                 titleLabel.font = .boldSystemFont(ofSize: 16)
                 titleLabel.textColor = Constant.Color.textPrimary
                 
-                //숫자 부분만 색상 변경
                 let attributedText = NSMutableAttributedString(string: value)
-                if let range = value.rangeOfCharacter(from: .decimalDigits) {
-                    let nsRange = NSRange(range, in: value)
-                    attributedText.addAttribute(.foregroundColor, value: UIColor.systemOrange, range: nsRange)
+                //숫자 부분만 색상 변경
+                do {
+                    let regex = try NSRegularExpression(pattern: "\\d+")
+                    let matches = regex.matches(in: value, options: [], range: NSRange(location: 0, length: value.utf16.count))
+                    
+                    for match in matches {
+                        attributedText.addAttribute(.foregroundColor, value: UIColor.systemOrange, range: match.range)
+                    }
+                } catch {
+                    print("DEBUG: Invalid regex pattern - \(error)")
                 }
                 
                 titleLabel.attributedText = attributedText
@@ -239,7 +245,7 @@ extension ChannelChattingViewController: PHPickerViewControllerDelegate {
             dispatchGroup.enter()
             result.itemProvider.loadObject(ofClass: UIImage.self) { (object, error) in
                 if let image = object as? UIImage {
-                    if let data = image.jpegData(compressionQuality: 0.5) {
+                    if let data = image.jpegData(compressionQuality: 0.3) {
                         selectedImageDataList.append(data)
                         dispatchGroup.leave()
                     }

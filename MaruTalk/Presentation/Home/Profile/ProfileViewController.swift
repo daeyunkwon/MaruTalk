@@ -118,7 +118,7 @@ extension ProfileViewController: PHPickerViewControllerDelegate {
         if let itemProvider = results.first?.itemProvider, itemProvider.canLoadObject(ofClass: UIImage.self) {
             itemProvider.loadObject(ofClass: UIImage.self) {[weak self] object, error in
                 if let image = object as? UIImage {
-                    if let imageData = image.jpegData(compressionQuality: 0.3) {
+                    if let imageData = image.jpegData(compressionQuality: 0.1) {
                         self?.reactor?.action.onNext(.profileImageChange(imageData))
                     }
                 }

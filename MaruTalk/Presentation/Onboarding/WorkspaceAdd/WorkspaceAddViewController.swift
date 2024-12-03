@@ -272,11 +272,11 @@ extension WorkspaceAddViewController: PHPickerViewControllerDelegate {
         
         if let itemProvider = results.first?.itemProvider, itemProvider.canLoadObject(ofClass: UIImage.self) {
                 itemProvider.loadObject(ofClass: UIImage.self) {[weak self] object, error in
-                    if let image = object as? UIImage {
+                    if var image = object as? UIImage {
                         DispatchQueue.main.async {
                             self?.rootView.imageSettingButton.setImage(image, for: .normal)
                             
-                            if let imageData = image.jpegData(compressionQuality: 0.7) {
+                            if let imageData = image.jpegData(compressionQuality: 0.3) {
                                 self?.reactor?.action.onNext(.selectPhotoImage(imageData))
                             }
                         }

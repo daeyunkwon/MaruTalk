@@ -207,7 +207,7 @@ extension DMChattingViewController: PHPickerViewControllerDelegate {
             dispatchGroup.enter()
             result.itemProvider.loadObject(ofClass: UIImage.self) { (object, error) in
                 if let image = object as? UIImage {
-                    if let data = image.jpegData(compressionQuality: 0.5) {
+                    if let data = image.jpegData(compressionQuality: 0.3) {
                         selectedImageDataList.append(data)
                         dispatchGroup.leave()
                     }

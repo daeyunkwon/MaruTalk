@@ -75,7 +75,8 @@ extension HomeReactor {
                     .just(.setShowEmpty(false)),
                     fetchWorkspace(),
                     fetchProfile(),
-                    fetchMyChannels()
+                    fetchMyChannels(),
+                    fetchDMS()
                 ])
             }
         

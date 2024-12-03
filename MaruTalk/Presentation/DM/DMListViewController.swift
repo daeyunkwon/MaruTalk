@@ -74,6 +74,11 @@ extension DMListViewController {
             .map { Reactor.Action.selectChat($0) }
             .bind(to: reactor.action)
             .disposed(by: disposeBag)
+        
+        profileCircleView.rxTap
+            .map { Reactor.Action.selectProfile }
+            .bind(to: reactor.action)
+            .disposed(by: disposeBag)
     }
 }
 
@@ -123,6 +128,13 @@ extension DMListViewController {
             .compactMap { $0 }
             .bind(with: self) { owner, value in
                 owner.coordinator?.showDMChatting(roomID: value.roomID, otherUserID: value.user.userID)
+            }
+            .disposed(by: disposeBag)
+        
+        reactor.pulse(\.$shouldNavigateToProfile)
+            .compactMap { $0 }
+            .bind(with: self) { owner, _ in
+                owner.coordinator?.showProfile()
             }
             .disposed(by: disposeBag)
     }

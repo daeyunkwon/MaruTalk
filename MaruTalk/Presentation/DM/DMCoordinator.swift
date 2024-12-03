@@ -47,3 +47,16 @@ extension DMCoordinator {
         navigationController.popViewController(animated: true)
     }
 }
+
+extension DMCoordinator {
+    func showProfile() {
+        let reactor = ProfileReactor()
+        let profileVC = ProfileViewController(reactor: reactor)
+        profileVC.coordinator = self
+        navigationController.pushViewController(profileVC, animated: true)
+    }
+    
+    func didFinishProfile() {
+        navigationController.popViewController(animated: true)
+    }
+}

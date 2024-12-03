@@ -51,7 +51,7 @@ final class ProfileImageTitleCollectionViewCell: BaseCollectionViewCell {
         nicknameLabel.snp.makeConstraints { make in
             make.top.equalTo(profileImageView.snp.bottom).offset(4)
             make.centerX.equalToSuperview()
-            make.width.equalTo(70)
+            make.width.equalTo(76)
             make.bottom.equalToSuperview().inset(20) //간격 조정
         }
     }

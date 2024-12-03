@@ -14,6 +14,7 @@ final class DMListReactor: Reactor {
         case fetch
         case selectMember(User)
         case selectChat(Chat)
+        case selectProfile
     }
     
     enum Mutation {
@@ -22,6 +23,7 @@ final class DMListReactor: Reactor {
         case setUser(User)
         case setDMRoomList([Chat])
         case setNavigateToDMChatting(DMRoom)
+        case setNavigateToProfile
     }
     
     struct State {
@@ -30,6 +32,7 @@ final class DMListReactor: Reactor {
         @Pulse var user: User?
         @Pulse var dmRoomList: [Chat]?
         @Pulse var shouldNavigateToDMChatting: DMRoom?
+        @Pulse var shouldNavigateToProfile: Void?
     }
     
     var initialState: State = State()
@@ -52,6 +55,9 @@ extension DMListReactor {
         
         case .selectChat(let value):
             return createDMRoom(opponentID: value.user.userID)
+            
+        case .selectProfile:
+            return .just(.setNavigateToProfile)
         }
     }
 }
@@ -76,6 +82,9 @@ extension DMListReactor {
         
         case .setNavigateToDMChatting(let value):
             newState.shouldNavigateToDMChatting = value
+        
+        case .setNavigateToProfile:
+            newState.shouldNavigateToProfile = ()
         }
         return newState
     }

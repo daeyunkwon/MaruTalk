@@ -27,7 +27,7 @@ final class ProfileCircleView: BaseView {
         iv.layer.borderColor = Constant.Color.brandBlack.cgColor
         iv.image = UIImage(named: "noPhotoB")
         iv.clipsToBounds = true
-        iv.contentMode = .scaleAspectFit
+        iv.contentMode = .scaleAspectFill
         iv.layer.cornerRadius = 16
         return iv
     }()
