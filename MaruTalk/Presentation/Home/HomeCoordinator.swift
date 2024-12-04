@@ -36,8 +36,19 @@ final class HomeCoordinator: Coordinator {
 }
 
 extension HomeCoordinator {
-    func showWorkspaceAdd() {
-        let reactor = WorkspaceAddReactor(previousScreen: .workspaceInitial)
+    enum PreviousScreen {
+        case workspaceInitial
+        case workspaceList
+    }
+    
+    func showWorkspaceAdd(previousScreen: PreviousScreen) {
+        var reactor: WorkspaceAddReactor
+        if previousScreen == .workspaceInitial {
+            reactor = WorkspaceAddReactor(previousScreen: .workspaceInitial)
+        } else {
+            reactor = WorkspaceAddReactor(previousScreen: .workspaceList)
+        }
+        
         let workspaceAddVC = WorkspaceAddViewController(reactor: reactor)
         workspaceAddVC.coordinator = self
 

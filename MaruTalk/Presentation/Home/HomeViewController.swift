@@ -161,7 +161,7 @@ extension HomeViewController {
         
         reactor.pulse(\.$shouldNavigateToWorkspaceAdd)
             .bind(with: self) { owner, _ in
-                owner.coordinator?.showWorkspaceAdd()
+                owner.coordinator?.showWorkspaceAdd(previousScreen: .workspaceInitial)
             }
             .disposed(by: disposeBag)
         

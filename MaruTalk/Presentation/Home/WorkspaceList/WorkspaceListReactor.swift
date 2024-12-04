@@ -12,16 +12,19 @@ import ReactorKit
 final class WorkspaceListReactor: Reactor {
     enum Action {
         case fetch
+        case createButtonTapped
     }
     
     enum Mutation {
         case setNetworkError((Router.APIType, String?))
         case setWorkspaceList([Workspace])
+        case setNavigateToWorkspaceAdd
     }
     
     struct State {
         @Pulse var networkError: (Router.APIType, String?)?
         @Pulse var workspaceList: [Workspace]?
+        @Pulse var shouldNavigateToWorkspaceAdd: Void?
     }
     
     let initialState: State = State()
@@ -34,6 +37,9 @@ extension WorkspaceListReactor {
         switch action {
         case .fetch:
             return fetchWorkspaceList()
+        
+        case .createButtonTapped:
+            return .just(.setNavigateToWorkspaceAdd)
         }
     }
 }
@@ -49,6 +55,9 @@ extension WorkspaceListReactor {
             
         case .setWorkspaceList(let value):
             newState.workspaceList = value
+        
+        case .setNavigateToWorkspaceAdd:
+            newState.shouldNavigateToWorkspaceAdd = ()
         }
         return newState
     }

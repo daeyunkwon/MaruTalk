@@ -116,6 +116,11 @@ extension WorkspaceListViewController {
             .map { _ in Reactor.Action.fetch }
             .bind(to: reactor.action)
             .disposed(by: disposeBag)
+        
+        rootView.workspaceAddButton.rx.tap
+            .map { Reactor.Action.createButtonTapped }
+            .bind(to: reactor.action)
+            .disposed(by: disposeBag)
     }
 }
 
@@ -141,6 +146,14 @@ extension WorkspaceListViewController {
             .bind(to: rootView.tableView.rx.items(cellIdentifier: WorkspaceListTableViewCell.reuseIdentifier, cellType: WorkspaceListTableViewCell.self)) { row, element, cell in
                 cell.configureCell(data: element)
                 cell.selectionStyle = .none
+            }
+            .disposed(by: disposeBag)
+        
+        reactor.pulse(\.$shouldNavigateToWorkspaceAdd)
+            .compactMap { $0 }
+            .bind(with: self) { owner, _ in
+                owner.coordinator?.didFinishWorkspaceList()
+                owner.coordinator?.showWorkspaceAdd(previousScreen: .workspaceList)
             }
             .disposed(by: disposeBag)
     }
