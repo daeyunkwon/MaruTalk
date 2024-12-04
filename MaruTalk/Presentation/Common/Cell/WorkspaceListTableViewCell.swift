@@ -13,13 +13,13 @@ final class WorkspaceListTableViewCell: BaseTableViewCell {
     
     //MARK: - UI Components
     
-//    private let containerView: UIView = {
-//        let view = UIView()
-//        view.backgroundColor = Constant.Color.brandWhite
-//        view.layer.cornerRadius = 5
-//        view.clipsToBounds = true
-//        return view
-//    }()
+    private let containerView: UIView = {
+        let view = UIView()
+        view.backgroundColor = Constant.Color.brandWhite
+        view.layer.cornerRadius = 10
+        view.clipsToBounds = true
+        return view
+    }()
     
     private let workspaceImageView: UIImageView = {
         let iv = UIImageView()
@@ -57,15 +57,8 @@ final class WorkspaceListTableViewCell: BaseTableViewCell {
     //MARK: - Configurations
     
     override func configureHierarchy() {
-//        contentView.addSubview(containerView)
-//        containerView.addSubviews(
-//            workspaceImageView,
-//            workspaceNameLabel,
-//            createLabel,
-//            menuButton
-//        )
-        
-        contentView.addSubviews(
+        contentView.addSubview(containerView)
+        containerView.addSubviews(
             workspaceImageView,
             workspaceNameLabel,
             createLabel,
@@ -74,7 +67,7 @@ final class WorkspaceListTableViewCell: BaseTableViewCell {
     }
     
     override func configureLayout() {
-        contentView.snp.makeConstraints { make in
+        containerView.snp.makeConstraints { make in
             make.edges.equalToSuperview().inset(5)
         }
         
@@ -105,7 +98,6 @@ final class WorkspaceListTableViewCell: BaseTableViewCell {
     
     override func configureUI() {
         backgroundColor = .clear
-        contentView.layer.cornerRadius = 10
     }
     
     func configureCell(data: Workspace) {
@@ -113,11 +105,11 @@ final class WorkspaceListTableViewCell: BaseTableViewCell {
         
         if data.id == workspaceID {
             //선택한 워크스페이스인 경우
-            contentView.backgroundColor = Constant.Color.brandGray
+            containerView.backgroundColor = Constant.Color.brandGray
             menuButton.isHidden = false
         } else {
             //미선택 워크스페이스인 경우
-            contentView.backgroundColor = Constant.Color.brandWhite
+            containerView.backgroundColor = Constant.Color.brandWhite
             menuButton.isHidden = true
         }
         
