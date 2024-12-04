@@ -206,3 +206,17 @@ extension HomeCoordinator {
         navigationController.popViewController(animated: true)
     }
 }
+
+extension HomeCoordinator {
+    func showWorkspaceList() {
+        let reactor = WorkspaceListReactor()
+        let workspaceListVC = WorkspaceListViewController(reactor: reactor)
+        workspaceListVC.coordinator = self
+        workspaceListVC.modalPresentationStyle = .overFullScreen
+        navigationController.present(workspaceListVC, animated: false)
+    }
+    
+    func didFinishWorkspaceList() {
+        navigationController.dismiss(animated: false)
+    }
+}

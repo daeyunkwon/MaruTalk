@@ -18,6 +18,7 @@ final class HomeViewController: BaseViewController<HomeView>, View {
     weak var coordinator: HomeCoordinator?
     var disposeBag = DisposeBag()
     private var sections: [SectionModel] = []
+    private var screenEdgeGestureFlag = false
     
     init(reactor: HomeReactor) {
         super.init()
@@ -36,6 +37,7 @@ final class HomeViewController: BaseViewController<HomeView>, View {
     override func viewDidLoad() {
         super.viewDidLoad()
         setupNotificationCenter()
+        setupEdgePenGesture()
     }
     
     //MARK: - Configurations
@@ -50,6 +52,13 @@ final class HomeViewController: BaseViewController<HomeView>, View {
         NotificationCenter.default.addObserver(self, selector: #selector(handleModalDismissed), name: .workspaceAddComplete, object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(handleModalDismissed), name: .channelAddComplete, object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(handleModalDismissed), name: .memberInviteComplete, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(handleScreenEdgeGestureFlag), name: .workspaceListViewFadeInComplete, object: nil)
+    }
+    
+    private func setupEdgePenGesture() {
+        let edgePanGesture = UIScreenEdgePanGestureRecognizer(target: self, action: #selector(handleEdgePan))
+        edgePanGesture.edges = .left
+        rootView.addGestureRecognizer(edgePanGesture)
     }
     
     //MARK: - Methods
@@ -69,6 +78,17 @@ final class HomeViewController: BaseViewController<HomeView>, View {
         case .memberInviteComplete:
             showToastMessage(message: "멤버를 성공적으로 초대했습니다.")
         default: break
+        }
+    }
+    
+    @objc private func handleScreenEdgeGestureFlag() {
+        self.screenEdgeGestureFlag = false
+    }
+    
+    @objc private func handleEdgePan() {
+        if screenEdgeGestureFlag == false {
+            self.screenEdgeGestureFlag = true
+            self.coordinator?.showWorkspaceList()
         }
     }
 }
@@ -114,14 +134,12 @@ extension HomeViewController {
                 owner.coordinator?.showProfile()
             }
             .disposed(by: disposeBag)
-//        
-//        workspaceNameView.rxTap
-//            .bind(with: self) { owner, _ in
-//                print(22222)
-//                owner.tabBarController?.tabBar.isHidden = false
-//                owner.rootView.emptyView.isHidden = true
-//            }
-//            .disposed(by: disposeBag)
+        
+        workspaceNameView.rxTap
+            .bind(with: self) { owner, _ in
+                owner.coordinator?.showWorkspaceList()
+            }
+            .disposed(by: disposeBag)
     }
 }
 

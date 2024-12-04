@@ -152,6 +152,9 @@
 		44B476902CFDD06200617126 /* ProfileViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 44B4768F2CFDD06200617126 /* ProfileViewController.swift */; };
 		44B476922CFDD4C700617126 /* ProfileSectionModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 44B476912CFDD4C700617126 /* ProfileSectionModel.swift */; };
 		44B476942CFDDA5400617126 /* ProfileSettingTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 44B476932CFDDA5400617126 /* ProfileSettingTableViewCell.swift */; };
+		44B476972CFF201400617126 /* WorkspaceListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 44B476962CFF201400617126 /* WorkspaceListView.swift */; };
+		44B476992CFF21BC00617126 /* WorkspaceListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 44B476982CFF21BC00617126 /* WorkspaceListViewController.swift */; };
+		44B4769B2CFF43CF00617126 /* WorkspaceListReactor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 44B4769A2CFF43CF00617126 /* WorkspaceListReactor.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -304,6 +307,9 @@
 		44B4768F2CFDD06200617126 /* ProfileViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileViewController.swift; sourceTree = "<group>"; };
 		44B476912CFDD4C700617126 /* ProfileSectionModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileSectionModel.swift; sourceTree = "<group>"; };
 		44B476932CFDDA5400617126 /* ProfileSettingTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileSettingTableViewCell.swift; sourceTree = "<group>"; };
+		44B476962CFF201400617126 /* WorkspaceListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WorkspaceListView.swift; sourceTree = "<group>"; };
+		44B476982CFF21BC00617126 /* WorkspaceListViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WorkspaceListViewController.swift; sourceTree = "<group>"; };
+		44B4769A2CFF43CF00617126 /* WorkspaceListReactor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WorkspaceListReactor.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -347,6 +353,7 @@
 				441114E32CE5EEF8000D1B2B /* HomeView.swift */,
 				441114FD2CE73CD3000D1B2B /* HomeEmptyView.swift */,
 				441114E52CE5EF03000D1B2B /* HomeViewController.swift */,
+				44B476952CFF1FFE00617126 /* WorkspaceList */,
 				441115732CF73ABA000D1B2B /* ChannelSearch */,
 				4411156C2CF70798000D1B2B /* MemberInvite */,
 				4411153F2CF217C6000D1B2B /* ChannelAdd */,
@@ -758,6 +765,16 @@
 			path = Profile;
 			sourceTree = "<group>";
 		};
+		44B476952CFF1FFE00617126 /* WorkspaceList */ = {
+			isa = PBXGroup;
+			children = (
+				44B4769A2CFF43CF00617126 /* WorkspaceListReactor.swift */,
+				44B476962CFF201400617126 /* WorkspaceListView.swift */,
+				44B476982CFF21BC00617126 /* WorkspaceListViewController.swift */,
+			);
+			path = WorkspaceList;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -903,6 +920,7 @@
 				444910E72CD8E734005AB2F7 /* UIViewController+Extension.swift in Sources */,
 				4411151B2CEB3190000D1B2B /* UserDefaultsManager.swift in Sources */,
 				441115322CEF7FB4000D1B2B /* Workspace.swift in Sources */,
+				44B476972CFF201400617126 /* WorkspaceListView.swift in Sources */,
 				44B4766D2CF9899F00617126 /* ProfileNameEmailTableViewCell.swift in Sources */,
 				441115042CE75C4C000D1B2B /* ImageTitleCountTableViewCell.swift in Sources */,
 				441115062CE86F70000D1B2B /* HashTitleCountTableViewCell.swift in Sources */,
@@ -934,6 +952,7 @@
 				441114EA2CE60BAD000D1B2B /* DMCoordinator.swift in Sources */,
 				441114F42CE60C82000D1B2B /* SettingView.swift in Sources */,
 				44B4767E2CFB1F5700617126 /* RealmDMChat.swift in Sources */,
+				44B4769B2CFF43CF00617126 /* WorkspaceListReactor.swift in Sources */,
 				441114EE2CE60C21000D1B2B /* SettingCoordinator.swift in Sources */,
 				441114F82CE60CB5000D1B2B /* SearchViewController.swift in Sources */,
 				441115482CF3246C000D1B2B /* ChannelChattingView.swift in Sources */,
@@ -981,6 +1000,7 @@
 				441115302CEF2430000D1B2B /* NotificationName+Extension.swift in Sources */,
 				444DE6EF2CD2529D00821269 /* OnboardingView.swift in Sources */,
 				444DE6F92CD366E600821269 /* AuthViewController.swift in Sources */,
+				44B476992CFF21BC00617126 /* WorkspaceListViewController.swift in Sources */,
 				441115792CF73B6E000D1B2B /* ChannelSearchViewController.swift in Sources */,
 				44B476892CFD968500617126 /* Unread.swift in Sources */,
 				444DE6F22CD2777800821269 /* RoundedBrandButton.swift in Sources */,

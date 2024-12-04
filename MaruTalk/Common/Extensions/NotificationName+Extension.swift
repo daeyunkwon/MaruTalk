@@ -17,4 +17,6 @@ extension Notification.Name {
     static let channelEditComplete = Notification.Name("channelEditComplete")
     
     static let channelChangeAdminComplete = Notification.Name("channelChangeAdminComplete")
+    
+    static let workspaceListViewFadeInComplete = Notification.Name("workspaceListViewFadeInComplete")
 }
