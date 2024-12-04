@@ -44,4 +44,12 @@ extension  UILabel {
         
         self.text = formatter.string(from: date)
     }
+    
+    func setDateString(date: Date) {
+        let formatter = DateFormatter()
+        formatter.locale = Locale(identifier: "ko_KR")
+        formatter.dateFormat = "yy. MM. dd"
+        
+        self.text = formatter.string(from: date)
+    }
 }
