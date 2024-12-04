@@ -19,12 +19,14 @@ final class AuthInterceptor: RequestInterceptor {
     private let maxRetryCount = 3
     
     func adapt(_ urlRequest: URLRequest, for session: Session, completion: @escaping (Result<URLRequest, Error>) -> Void) {
-        guard let accessToken = KeychainManager.shared.getItem(forKey: .accessToken) else { return }
-
-        var urlRequest = urlRequest
-        urlRequest.setValue(accessToken, forHTTPHeaderField: "Authorization")
-        print("DEBUG: adapt 실행")
-        completion(.success(urlRequest))
+        if let accessToken = KeychainManager.shared.getItem(forKey: .accessToken) {
+            var urlRequest = urlRequest
+            urlRequest.setValue(accessToken, forHTTPHeaderField: "Authorization")
+            print("DEBUG: adapt 실행")
+            completion(.success(urlRequest))
+        } else {
+            completion(.success(urlRequest))
+        }
     }
     
     func retry(_ request: Request, for session: Session, dueTo error: Error, completion: @escaping (RetryResult) -> Void) {
