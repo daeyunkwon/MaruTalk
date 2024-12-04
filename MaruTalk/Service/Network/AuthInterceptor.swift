@@ -25,6 +25,7 @@ final class AuthInterceptor: RequestInterceptor {
             print("DEBUG: adapt 실행")
             completion(.success(urlRequest))
         } else {
+            //최초 설치 및 로그인 시도 시 키체인 정보가 없는 경우를 고려
             completion(.success(urlRequest))
         }
     }

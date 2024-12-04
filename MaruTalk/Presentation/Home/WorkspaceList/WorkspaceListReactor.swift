@@ -11,15 +11,17 @@ import ReactorKit
 
 final class WorkspaceListReactor: Reactor {
     enum Action {
-        
+        case fetch
     }
     
     enum Mutation {
-        
+        case setNetworkError((Router.APIType, String?))
+        case setWorkspaceList([Workspace])
     }
     
     struct State {
-        
+        @Pulse var networkError: (Router.APIType, String?)?
+        @Pulse var workspaceList: [Workspace]?
     }
     
     let initialState: State = State()
@@ -29,7 +31,10 @@ final class WorkspaceListReactor: Reactor {
 
 extension WorkspaceListReactor {
     func mutate(action: Action) -> Observable<Mutation> {
-        
+        switch action {
+        case .fetch:
+            return fetchWorkspaceList()
+        }
     }
 }
 
@@ -37,6 +42,32 @@ extension WorkspaceListReactor {
 
 extension WorkspaceListReactor {
     func reduce(state: State, mutation: Mutation) -> State {
-        
+        var newState = state
+        switch mutation {
+        case .setNetworkError(let value):
+            newState.networkError = value
+            
+        case .setWorkspaceList(let value):
+            newState.workspaceList = value
+        }
+        return newState
+    }
+}
+
+//MARK: - Logic
+
+extension WorkspaceListReactor {
+    private func fetchWorkspaceList() -> Observable<Mutation> {
+        return NetworkManager.shared.performRequest(api: .workspaces, model: [Workspace].self)
+            .asObservable()
+            .flatMap { result -> Observable<Mutation> in
+                switch result {
+                case .success(let value):
+                    return .just(.setWorkspaceList(value))
+                
+                case .failure(let error):
+                    return .just(.setNetworkError((Router.APIType.workspace, error.errorCode)))
+                }
+            }
     }
 }

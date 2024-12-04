@@ -26,7 +26,7 @@ final class ImageTitleCountTableViewCell: BaseTableViewCell {
         let label = UILabel()
         label.font = Constant.Font.body
         label.textAlignment = .left
-        
+        label.textColor = Constant.Color.textPrimary
         return label
     }()
     

@@ -54,6 +54,7 @@ final class WorkspaceListView: BaseView {
         tv.separatorStyle = .none
         tv.backgroundColor = Constant.Color.brandWhite
         tv.register(WorkspaceListTableViewCell.self, forCellReuseIdentifier: WorkspaceListTableViewCell.reuseIdentifier)
+        tv.rowHeight = 75
         return tv
     }()
     
