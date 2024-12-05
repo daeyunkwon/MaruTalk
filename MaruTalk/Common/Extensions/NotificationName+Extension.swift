@@ -23,4 +23,6 @@ extension Notification.Name {
     static let workspaceChangeComplete = Notification.Name("workspaceChangeComplete")
     
     static let workspaceEditComplete = Notification.Name("workspaceEditComplete")
+    
+    static let workspaceExitComplete = Notification.Name("workspaceExitComplete")
 }

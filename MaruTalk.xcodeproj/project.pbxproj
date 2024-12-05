@@ -359,8 +359,6 @@
 				441114E32CE5EEF8000D1B2B /* HomeView.swift */,
 				441114FD2CE73CD3000D1B2B /* HomeEmptyView.swift */,
 				441114E52CE5EF03000D1B2B /* HomeViewController.swift */,
-				44B476952CFF1FFE00617126 /* WorkspaceList */,
-				445C4B372D019A0700EB2473 /* WorkspaceEdit */,
 				441115732CF73ABA000D1B2B /* ChannelSearch */,
 				4411156C2CF70798000D1B2B /* MemberInvite */,
 				4411153F2CF217C6000D1B2B /* ChannelAdd */,
@@ -368,6 +366,8 @@
 				4411157A2CF82E9F000D1B2B /* ChannelSetting */,
 				44B476612CF8AB0A00617126 /* ChannelEdit */,
 				44B4766E2CF98B5F00617126 /* ChannelChangeAdmin */,
+				44B476952CFF1FFE00617126 /* WorkspaceList */,
+				445C4B372D019A0700EB2473 /* WorkspaceEdit */,
 				44B4768A2CFDCFA900617126 /* Profile */,
 			);
 			path = Home;

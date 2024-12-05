@@ -56,16 +56,29 @@ extension UIViewController {
             default: break
             }
             
-        case .createChannel:
-            switch errorCode {
-            case "E12": message = "워크스페이스에 이미 있는 채널 이름입니다. 다른 이름을 입력해주세요."
-            default: break
-            }
-            
         case .workspaceMemberInvite:
             switch errorCode {
             case "E12": message = "이미 워크스페이스에 소속된 팀원이에요."
             case "E03", "E13", "E11": message = "회원 정보를 찾을 수 없습니다."
+            default: break
+            }
+            
+        case .workspaceEdit:
+            switch errorCode {
+            case "E12": message = "워크스페이스 이름이 이미 사용중입니다."
+            case "E14": message = "워크스페이스 관리자만 워크스페이스를 수정할 수 있습니다."
+            default: break
+            }
+            
+        case .workspaceExit:
+            switch errorCode {
+            case "E15": message = "워크스페이스와 워크스페이스에 속한 채널의 관리자 권한이 있는 경우에는 퇴장을 할 수 없습니다."
+            default: break
+            }
+            
+        case .createChannel:
+            switch errorCode {
+            case "E12": message = "워크스페이스에 이미 있는 채널 이름입니다. 다른 이름을 입력해주세요."
             default: break
             }
             
@@ -88,14 +101,6 @@ extension UIViewController {
             case "E14": message = "채널 관리자만 채널을 삭제할 수 있습니다."
             default: break
             }
-            
-        case .workspaceEdit:
-            switch errorCode {
-            case "E12": message = "워크스페이스 이름이 이미 사용중입니다."
-            case "E14": message = "워크스페이스 관리자만 워크스페이스를 수정할 수 있습니다."
-            default: break
-            }
-            
         default: break
         }
         

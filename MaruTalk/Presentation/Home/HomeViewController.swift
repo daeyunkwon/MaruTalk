@@ -55,6 +55,7 @@ final class HomeViewController: BaseViewController<HomeView>, View {
         NotificationCenter.default.addObserver(self, selector: #selector(handleScreenEdgeGestureFlag), name: .workspaceListViewFadeInComplete, object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(handleModalDismissed), name: .workspaceChangeComplete, object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(handleModalDismissed), name: .workspaceEditComplete, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(handleModalDismissed), name: .workspaceExitComplete, object: nil)
     }
     
     private func setupEdgePenGesture() {
@@ -154,6 +155,9 @@ extension HomeViewController {
                 if value {
                     owner.rootView.emptyView.isHidden = false
                     owner.tabBarController?.tabBar.isHidden = true
+                    
+                    owner.workspaceNameView.titleLabel.text = "No Workspace"
+                    owner.workspaceNameView.photoImageView.image = nil
                 } else {
                     owner.rootView.emptyView.isHidden = true
                     owner.tabBarController?.tabBar.isHidden = false

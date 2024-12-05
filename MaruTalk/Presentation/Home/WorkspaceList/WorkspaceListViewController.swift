@@ -117,11 +117,8 @@ final class WorkspaceListViewController: BaseViewController<WorkspaceListView>, 
 extension WorkspaceListViewController {
     private func bindAction(reactor: WorkspaceListReactor) {
         rootView.shadowBackViewRxTap
-            .bind(with: self) { owner, _ in
-                owner.fadeOut {
-                    owner.coordinator?.didFinishWorkspaceList()
-                }
-            }
+            .map { Reactor.Action.shadowAreaTapped }
+            .bind(to: reactor.action)
             .disposed(by: disposeBag)
         
         rx.methodInvoked(#selector(viewWillAppear(_:)))
@@ -174,18 +171,41 @@ extension WorkspaceListViewController {
                                 ("워크스페이스 편집", UIAlertAction.Style.default, {
                                     owner.coordinator?.showWorkspaceEdit(viewController: self, workspace: element)
                                 }),
-                                ("워크스페이스 나가기", UIAlertAction.Style.default, { print(11111)}),
+                                ("워크스페이스 나가기", UIAlertAction.Style.default, {
+                                    //얼럿으로 사용자에게 재확인 요청
+                                    owner.showAlert(title: "채널 나가기", message: "정말 해당 채널을 나가시겠습니까?", actions: [
+                                        ("나가기", {
+                                            owner.reactor?.action.onNext(.selectWorkspaceExit)
+                                        })
+                                    ])
+                                }),
                                 ("워크스페이스 관리자 변경", UIAlertAction.Style.default, { print(11111)}),
                                 ("워크스페이스 삭제", UIAlertAction.Style.destructive, { print(11111)})
                             ])
                         } else {
                             //관리자아닌 경우
                             owner.showActionSheet(actions: [
-                                ("워크스페이스 나가기", UIAlertAction.Style.default, { print(11111)}),
+                                ("워크스페이스 나가기", UIAlertAction.Style.default, {
+                                    //얼럿으로 사용자에게 재확인 요청
+                                    owner.showAlert(title: "채널 나가기", message: "정말 해당 채널을 나가시겠습니까?", actions: [
+                                        ("나가기", {
+                                            owner.reactor?.action.onNext(.selectWorkspaceExit)
+                                        })
+                                    ])
+                                }),
                             ])
                         }
                     }
                     .disposed(by: cell.disposeBag)
+            }
+            .disposed(by: disposeBag)
+        
+        reactor.pulse(\.$shouldnavigateToHome)
+            .compactMap { $0 }
+            .bind(with: self) { owner, _ in
+                owner.fadeOut {
+                    owner.coordinator?.didFinishWorkspaceList()
+                }
             }
             .disposed(by: disposeBag)
         
