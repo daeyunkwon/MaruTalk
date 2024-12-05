@@ -33,8 +33,8 @@ final class HomeView: BaseView {
         tv.separatorStyle = .none
         //배경이미지 설정
         let backImageView = UIImageView()
-        backImageView.image = UIImage(named: "backImage")
-        backImageView.contentMode = .scaleAspectFit
+        backImageView.image = UIImage(named: "maru_spaceship")?.resizeImageTo(size: .init(width: 170, height: 170))
+        backImageView.contentMode = .bottom
         tv.backgroundView = backImageView
         return tv
     }()
