@@ -76,6 +76,12 @@ extension UIViewController {
             default: break
             }
             
+        case .workspaceTransferOwnership:
+            switch errorCode {
+            case "E14": message = "워크스페이스 관리자만 워크스페이스에 대한 권한을 양도할 수 있습니다."
+            default: break
+            }
+            
         case .createChannel:
             switch errorCode {
             case "E12": message = "워크스페이스에 이미 있는 채널 이름입니다. 다른 이름을 입력해주세요."

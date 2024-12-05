@@ -27,6 +27,13 @@ final class WorkspaceListView: BaseView {
         return view
     }()
     
+    private let maruIconImageView: UIImageView = {
+        let iv = UIImageView()
+        iv.image = UIImage(named: "maru_balloon")
+        iv.contentMode = .scaleAspectFit
+        return iv
+    }()
+    
     let containerView: UIView = {
         let view = UIView()
         view.backgroundColor = Constant.Color.backgroundPrimary
@@ -86,6 +93,7 @@ final class WorkspaceListView: BaseView {
         addSubview(shadowBackViewTapButton)
         shadowBackView.addSubview(containerView)
         containerView.addSubviews(
+            maruIconImageView,
             titleLabel,
             tableView,
             emptyLabel,
@@ -114,6 +122,12 @@ final class WorkspaceListView: BaseView {
             make.top.equalToSuperview().offset(64)
             make.leading.equalToSuperview().offset(16)
             make.trailing.equalToSuperview().offset(16)
+        }
+        
+        maruIconImageView.snp.makeConstraints { make in
+            make.top.equalTo(titleLabel).offset(-3)
+            make.trailing.equalToSuperview().offset(-16)
+            make.size.equalTo(70)
         }
         
         tableView.snp.makeConstraints { make in

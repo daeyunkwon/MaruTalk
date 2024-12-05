@@ -58,6 +58,14 @@ extension WorkspaceChangeAdminViewController {
             .map { Reactor.Action.xMarkButtonTapped }
             .bind(to: reactor.action)
             .disposed(by: disposeBag)
+        
+        rootView.tableView.rx.modelSelected(User.self)
+            .bind(with: self) { owner, value in
+                owner.showAlert(title: "워크스페이스 관리자 변경", message: "\(value.nickname)님에게 관리자 권한을 양도하시겠습니까?", actions: [
+                    ("확인", { owner.reactor?.action.onNext(.selectChangeAdmin(value)) })
+                ])
+            }
+            .disposed(by: disposeBag)
     }
 }
 
@@ -84,8 +92,7 @@ extension WorkspaceChangeAdminViewController {
                 }))
             }
             .disposed(by: disposeBag)
-        
-        
+                
         reactor.pulse(\.$networkError)
             .compactMap { $0 }
             .bind(with: self) { owner, value in

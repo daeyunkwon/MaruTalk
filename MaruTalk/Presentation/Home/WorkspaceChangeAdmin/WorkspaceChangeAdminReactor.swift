@@ -13,6 +13,7 @@ final class WorkspaceChangeAdminReactor: Reactor {
     enum Action {
         case fetch
         case xMarkButtonTapped
+        case selectChangeAdmin(User)
     }
     
     enum Mutation {
@@ -40,6 +41,9 @@ extension WorkspaceChangeAdminReactor {
         
         case .xMarkButtonTapped:
             return .just(.setNavigateToWorkspaceList)
+        
+        case .selectChangeAdmin(let value):
+            return executeTransferOwnership(userID: value.userID)
         }
     }
 }
@@ -79,6 +83,24 @@ extension WorkspaceChangeAdminReactor {
                     
                 case .failure(let error):
                     return .just(.setNetworkError((Router.APIType.workspaceMembers, error.errorCode)))
+                }
+            }
+    }
+    
+    private func executeTransferOwnership(userID: String) -> Observable<Mutation> {
+        guard let workspaceID = UserDefaultsManager.shared.recentWorkspaceID else { return .empty() }
+        
+        return NetworkManager.shared.performRequest(api: .workspaceTransferOwnership(workspaceID: workspaceID, userID: userID), model: Workspace.self)
+            .asObservable()
+            .flatMap { result -> Observable<Mutation> in
+                switch result {
+                case .success(_):
+                    UserDefaultsManager.shared.recentWorkspaceOwnerID = userID
+                    NotificationCenter.default.post(name: .workspaceChangeAdminComplete, object: nil)
+                    return .just(.setNavigateToWorkspaceList)
+                
+                case .failure(let error):
+                    return .just(.setNetworkError((Router.APIType.workspaceTransferOwnership, error.errorCode)))
                 }
             }
     }

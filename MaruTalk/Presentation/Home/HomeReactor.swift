@@ -176,6 +176,7 @@ extension HomeReactor {
                     print("----------------------------")
                     //현재 선택한 워크스페이스로 필터
                     let filtered = value.filter { $0.id == workspaceID }
+                    UserDefaultsManager.shared.recentWorkspaceOwnerID = filtered[0].ownerID //워크스페이스 관리자 정보
                     return filtered.isEmpty ? .empty() : .just(.setWorkspace(filtered[0]))
                 
                 case .failure(let error):

@@ -52,6 +52,7 @@ final class WorkspaceListViewController: BaseViewController<WorkspaceListView>, 
     
     private func setupNotification() {
         NotificationCenter.default.addObserver(self, selector: #selector(handleModalDismissed), name: .workspaceEditComplete, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(handleModalDismissed), name: .workspaceChangeAdminComplete, object: nil)
     }
     
     //MARK: - Methods
