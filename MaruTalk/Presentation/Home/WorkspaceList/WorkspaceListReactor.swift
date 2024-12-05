@@ -16,6 +16,7 @@ final class WorkspaceListReactor: Reactor {
         case shadowAreaTapped
         case selectWorkspace(Workspace)
         case selectWorkspaceExit
+        case selectWorkspaceChangeAdmin
     }
     
     enum Mutation {
@@ -23,6 +24,7 @@ final class WorkspaceListReactor: Reactor {
         case setWorkspaceList([Workspace]?)
         case setNavigateToHome
         case setNavigateToWorkspaceAdd
+        case setNavigateToWorkspaceChangeAdmin
     }
     
     struct State {
@@ -30,6 +32,7 @@ final class WorkspaceListReactor: Reactor {
         @Pulse var workspaceList: [Workspace]?
         @Pulse var shouldnavigateToHome: Void?
         @Pulse var shouldNavigateToWorkspaceAdd: Void?
+        @Pulse var shouldNavigateToWorkspaceChangeAdmin: Void?
     }
     
     let initialState: State = State()
@@ -62,6 +65,9 @@ extension WorkspaceListReactor {
         
         case .selectWorkspaceExit:
             return executeWorkspaceExit()
+        
+        case .selectWorkspaceChangeAdmin:
+            return .just(.setNavigateToWorkspaceChangeAdmin)
         }
     }
 }
@@ -83,6 +89,9 @@ extension WorkspaceListReactor {
         
         case .setNavigateToWorkspaceAdd:
             newState.shouldNavigateToWorkspaceAdd = ()
+        
+        case .setNavigateToWorkspaceChangeAdmin:
+            newState.shouldNavigateToWorkspaceChangeAdmin = ()
         }
         return newState
     }

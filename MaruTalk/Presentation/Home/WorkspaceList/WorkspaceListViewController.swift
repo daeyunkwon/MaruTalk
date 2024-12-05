@@ -179,7 +179,9 @@ extension WorkspaceListViewController {
                                         })
                                     ])
                                 }),
-                                ("워크스페이스 관리자 변경", UIAlertAction.Style.default, { print(11111)}),
+                                ("워크스페이스 관리자 변경", UIAlertAction.Style.default, {
+                                    owner.reactor?.action.onNext(.selectWorkspaceChangeAdmin)
+                                }),
                                 ("워크스페이스 삭제", UIAlertAction.Style.destructive, { print(11111)})
                             ])
                         } else {
@@ -214,6 +216,13 @@ extension WorkspaceListViewController {
             .bind(with: self) { owner, _ in
                 owner.coordinator?.didFinishWorkspaceList()
                 owner.coordinator?.showWorkspaceAdd(previousScreen: .workspaceList)
+            }
+            .disposed(by: disposeBag)
+        
+        reactor.pulse(\.$shouldNavigateToWorkspaceChangeAdmin)
+            .compactMap { $0 }
+            .bind(with: self) { owner, _ in
+                owner.coordinator?.showWorkspaceChangeAdmin(viewController: self)
             }
             .disposed(by: disposeBag)
     }

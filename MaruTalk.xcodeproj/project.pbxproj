@@ -133,6 +133,8 @@
 		445C4B362D0033D200EB2473 /* WorkspaceListTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 445C4B352D0033D200EB2473 /* WorkspaceListTableViewCell.swift */; };
 		445C4B392D019A1D00EB2473 /* WorkspaceEditReactor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 445C4B382D019A1D00EB2473 /* WorkspaceEditReactor.swift */; };
 		445C4B3D2D019AE300EB2473 /* WorkspaceEditViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 445C4B3C2D019AE300EB2473 /* WorkspaceEditViewController.swift */; };
+		445C4B402D01C6F700EB2473 /* WorkspaceChangeAdminReactor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 445C4B3F2D01C6F700EB2473 /* WorkspaceChangeAdminReactor.swift */; };
+		445C4B422D01C77B00EB2473 /* WorkspaceChangeAdminViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 445C4B412D01C77B00EB2473 /* WorkspaceChangeAdminViewController.swift */; };
 		44B476672CF8AB5A00617126 /* ChannelEditReactor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 44B476662CF8AB5A00617126 /* ChannelEditReactor.swift */; };
 		44B476692CF8AC0900617126 /* ChannelEditView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 44B476682CF8AC0900617126 /* ChannelEditView.swift */; };
 		44B4766B2CF8AC1800617126 /* ChannelEditViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 44B4766A2CF8AC1800617126 /* ChannelEditViewController.swift */; };
@@ -291,6 +293,8 @@
 		445C4B352D0033D200EB2473 /* WorkspaceListTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WorkspaceListTableViewCell.swift; sourceTree = "<group>"; };
 		445C4B382D019A1D00EB2473 /* WorkspaceEditReactor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WorkspaceEditReactor.swift; sourceTree = "<group>"; };
 		445C4B3C2D019AE300EB2473 /* WorkspaceEditViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WorkspaceEditViewController.swift; sourceTree = "<group>"; };
+		445C4B3F2D01C6F700EB2473 /* WorkspaceChangeAdminReactor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WorkspaceChangeAdminReactor.swift; sourceTree = "<group>"; };
+		445C4B412D01C77B00EB2473 /* WorkspaceChangeAdminViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WorkspaceChangeAdminViewController.swift; sourceTree = "<group>"; };
 		44B476662CF8AB5A00617126 /* ChannelEditReactor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChannelEditReactor.swift; sourceTree = "<group>"; };
 		44B476682CF8AC0900617126 /* ChannelEditView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChannelEditView.swift; sourceTree = "<group>"; };
 		44B4766A2CF8AC1800617126 /* ChannelEditViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChannelEditViewController.swift; sourceTree = "<group>"; };
@@ -368,6 +372,7 @@
 				44B4766E2CF98B5F00617126 /* ChannelChangeAdmin */,
 				44B476952CFF1FFE00617126 /* WorkspaceList */,
 				445C4B372D019A0700EB2473 /* WorkspaceEdit */,
+				445C4B3E2D01C6DA00EB2473 /* WorkspaceChangeAdmin */,
 				44B4768A2CFDCFA900617126 /* Profile */,
 			);
 			path = Home;
@@ -743,6 +748,15 @@
 			path = WorkspaceEdit;
 			sourceTree = "<group>";
 		};
+		445C4B3E2D01C6DA00EB2473 /* WorkspaceChangeAdmin */ = {
+			isa = PBXGroup;
+			children = (
+				445C4B3F2D01C6F700EB2473 /* WorkspaceChangeAdminReactor.swift */,
+				445C4B412D01C77B00EB2473 /* WorkspaceChangeAdminViewController.swift */,
+			);
+			path = WorkspaceChangeAdmin;
+			sourceTree = "<group>";
+		};
 		44B476612CF8AB0A00617126 /* ChannelEdit */ = {
 			isa = PBXGroup;
 			children = (
@@ -967,6 +981,7 @@
 				441115842CF83D80000D1B2B /* RoundedWhiteBackOutlineButton.swift in Sources */,
 				441115772CF73B4B000D1B2B /* ChannelSearchView.swift in Sources */,
 				44B476692CF8AC0900617126 /* ChannelEditView.swift in Sources */,
+				445C4B402D01C6F700EB2473 /* WorkspaceChangeAdminReactor.swift in Sources */,
 				441115022CE75A38000D1B2B /* PlusTitleTableViewCell.swift in Sources */,
 				441115272CEE1C46000D1B2B /* AuthReactor.swift in Sources */,
 				441114EA2CE60BAD000D1B2B /* DMCoordinator.swift in Sources */,
@@ -1011,6 +1026,7 @@
 				444DE6D72CD102DD00821269 /* Constant.swift in Sources */,
 				4411150F2CE87C92000D1B2B /* HomeReactor.swift in Sources */,
 				44B476742CF98C0800617126 /* ChannelChangeAdminViewController.swift in Sources */,
+				445C4B422D01C77B00EB2473 /* WorkspaceChangeAdminViewController.swift in Sources */,
 				441114C92CE1BDA5000D1B2B /* KeychainManager.swift in Sources */,
 				444DE6F72CD366DB00821269 /* AuthView.swift in Sources */,
 				441115152CE9E7F6000D1B2B /* PlusTitleHeaderTableViewCellDelegate.swift in Sources */,

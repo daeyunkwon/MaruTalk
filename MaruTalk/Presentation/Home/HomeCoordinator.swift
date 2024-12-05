@@ -254,3 +254,26 @@ extension HomeCoordinator {
         }
     }
 }
+
+extension HomeCoordinator {
+    func showWorkspaceChangeAdmin(viewController: UIViewController) {
+        let reactor = WorkspaceChangeAdminReactor()
+        let workspaceEditVC = WorkspaceChangeAdminViewController(reactor: reactor)
+        workspaceEditVC.coordinator = self
+        
+        let navController = UINavigationController(rootViewController: workspaceEditVC)
+        navController.modalPresentationStyle = .pageSheet
+
+        if let sheet = navController.sheetPresentationController {
+            sheet.detents = [.large()]
+            sheet.prefersGrabberVisible = true
+        }
+        viewController.present(navController, animated: true)
+    }
+    
+    func didFinishWorkspaceChangeAdmin() {
+        if let presentedVC = navigationController.presentedViewController {
+            presentedVC.dismiss(animated: true)
+        }
+    }
+}
