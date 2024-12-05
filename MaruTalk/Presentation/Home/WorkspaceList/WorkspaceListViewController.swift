@@ -55,6 +55,7 @@ final class WorkspaceListViewController: BaseViewController<WorkspaceListView>, 
         bindState(reactor: reactor)
     }
     
+    //워크스페이스 목록 화면(containerView)을 화면 밖에서부터 안쪽으로 이동시키기(이동방향: 왼쪽 -> 오른쪽)
     private func fadeIn(completion: (() -> Void)? = nil) {
         UIView.animate(withDuration: 0.3, delay: 0, animations: { [weak self] in
             guard let self else { return }
@@ -64,6 +65,7 @@ final class WorkspaceListViewController: BaseViewController<WorkspaceListView>, 
         })
     }
     
+    //워크스페이스 목록 화면(containerView)을 화면 왼쪽 밖으로 이동시키기(이동방향: 오른쪽 -> 왼쪽)
     private func fadeOut(completion: (() -> Void)? = nil) {
         UIView.animate(withDuration: 0.3) { [weak self] in
             guard let self else { return }
@@ -140,14 +142,16 @@ extension WorkspaceListViewController {
             }
             .disposed(by: disposeBag)
         
-        reactor.pulse(\.$workspaceList)
+        let workspaceListStream = reactor.pulse(\.$workspaceList)
             .compactMap { $0 }
+            .share()
+        
+        workspaceListStream
             .map { !$0.isEmpty }
             .bind(to: rootView.emptyLabel.rx.isHidden)
             .disposed(by: disposeBag)
         
-        reactor.pulse(\.$workspaceList)
-            .compactMap { $0 }
+        workspaceListStream
             .bind(to: rootView.tableView.rx.items(cellIdentifier: WorkspaceListTableViewCell.reuseIdentifier, cellType: WorkspaceListTableViewCell.self)) { row, element, cell in
                 cell.configureCell(data: element)
                 cell.selectionStyle = .none
