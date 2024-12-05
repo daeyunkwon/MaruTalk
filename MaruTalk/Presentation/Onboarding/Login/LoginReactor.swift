@@ -188,12 +188,17 @@ extension LoginReactor {
                 case .success(let value):
                     print(value)
                     if !value.isEmpty {
+                        //사용자가 속한 워크스페이스가 있는 경우
                         let sortedValue = value.sorted {
                             $0.createdDate > $1.createdDate
                         }
-                        UserDefaultsManager.shared.recentWorkspaceID = sortedValue.first?.id
-                        UserDefaultsManager.shared.recentWorkspaceOwnerID = sortedValue.first?.ownerID
+                        //최근에 조회한 워크스페이스가 없으면 임의 지정하기
+                        if UserDefaultsManager.shared.recentWorkspaceID == nil {
+                            UserDefaultsManager.shared.recentWorkspaceID = sortedValue.first?.id
+                            UserDefaultsManager.shared.recentWorkspaceOwnerID = sortedValue.first?.ownerID
+                        }
                     } else {
+                        //사용자가 속한 워크스페이스가 없는 경우
                         UserDefaultsManager.shared.removeItem(key: .recentWorkspaceID)
                         UserDefaultsManager.shared.removeItem(key: .recentWorkspaceOwnerID)
                     }
