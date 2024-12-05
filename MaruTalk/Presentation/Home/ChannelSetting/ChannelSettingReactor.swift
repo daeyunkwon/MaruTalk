@@ -149,55 +149,48 @@ extension ChannelSettingReactor {
             .flatMap { result -> Observable<Mutation> in
                 switch result {
                 case .success(_):
-                    //DB에서 관련 채팅 데이터 삭제 진행
-                    return Observable.create { observer in
-                        
-                        let compositeDisposable = CompositeDisposable()
-                        
-                        RealmChannelChatRepository.shared.deleteChatList(channelID: channelID) { isSuccess in
+                    // Realm 작업 클로저 처리
+                    return self.deleteChatList(channelID: channelID)
+                        .flatMap { isSuccess -> Observable<Mutation> in
                             if isSuccess {
-                                //성공
-                                observer.onNext(.setNavigateToHome(()))
+                                return .just(.setNavigateToHome(()))
                             } else {
-                                //실패
                                 print("ERROR: 채널 나가기로 인해 Realm에서 관련 채널 모든 채팅 삭제 실패")
-                                //다시 채널 가입 처리
-                                let fallbackDisposable = NetworkManager.shared
-                                    .performRequest(api: .chats(workspaceID: workspaceID, channelID: channelID, cursorDate: nil), model: [Chat].self)
+                                // 채널 재가입 처리
+                                return NetworkManager.shared.performRequest(api: .chats(workspaceID: workspaceID, channelID: channelID, cursorDate: nil), model: [Chat].self)
                                     .asObservable()
-                                    .subscribe(onNext: { result in
+                                    .map { result -> Mutation in
                                         switch result {
                                         case .success(_):
                                             print("DEBUG: 재 가입 성공")
                                             //채널 나가기는 취소 및 재가입한 상태, 우선 에러 보내기(사용자가 다시 나가기 시도하도록 유도)
-                                            observer.onNext(.setNetworkError((Router.APIType.channelExit, nil)))
-                                            
+                                            return .setNetworkError((Router.APIType.channelExit, nil))
                                         case .failure(let error):
                                             print("Error: 재 가입 실패: \(error)")
-                                            //재가입 실패 시 우선 채널 나가기는 처리되었으므로 홈 화면 전환
-                                            observer.onNext(.setNavigateToHome(()))
+                                            //재가입 마저 실패된 경우, 우선 채널 나가기는 처리되었으므로 홈 화면 전환
+                                            return .setNavigateToHome(())
                                         }
-                                        
-                                    }, onError: { error in
-                                        print("Error: 재 가입 실패: \(error)")
-                                        //재가입 마저 실패 시 우선 채널 나가기는 처리되었으므로 홈 화면 전환
-                                        observer.onNext(.setNavigateToHome(()))
-                                    })
-                                
-                                let _ = compositeDisposable.insert(fallbackDisposable)
+                                    }
                             }
-                            observer.onCompleted()
                         }
-                        return Disposables.create {
-                            compositeDisposable.dispose()
-                        }
-                    }
-                
+                    
                 case .failure(let error):
                     return .just(.setNetworkError((Router.APIType.channelExit, error.errorCode)))
                 }
             }
     }
+
+    //Realm 삭제 작업 처리 메서드
+    private func deleteChatList(channelID: String) -> Observable<Bool> {
+        return Observable<Bool>.create { observer in
+            RealmChannelChatRepository.shared.deleteChatList(channelID: channelID) { isSuccess in
+                observer.onNext(isSuccess)
+                observer.onCompleted()
+            }
+            return Disposables.create()
+        }
+    }
+
     
     private func executeChannelDelete() -> Observable<Mutation> {
         guard let workspaceID = UserDefaultsManager.shared.recentWorkspaceID else { return .empty() }
