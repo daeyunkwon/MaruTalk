@@ -210,6 +210,7 @@ extension WorkspaceAddReactor {
     private func removeRecentWorkspaceID() -> Observable<Mutation> {
         return .create { observer in
             UserDefaultsManager.shared.removeItem(key: .recentWorkspaceID)
+            UserDefaultsManager.shared.removeItem(key: .recentWorkspaceOwnerID)
             observer.onCompleted()
             return Disposables.create()
         }

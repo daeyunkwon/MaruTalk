@@ -174,7 +174,9 @@ extension HomeReactor {
                     print("워크스페이스 조회----------------")
                     print(value)
                     print("----------------------------")
-                    return value.isEmpty ? .empty() : .just(.setWorkspace(value[0]))
+                    //현재 선택한 워크스페이스로 필터
+                    let filtered = value.filter { $0.id == workspaceID }
+                    return filtered.isEmpty ? .empty() : .just(.setWorkspace(filtered[0]))
                 
                 case .failure(let error):
                     return .just(.setNetworkError((Router.APIType.workspace, error.errorCode)))

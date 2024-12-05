@@ -121,6 +121,11 @@ extension WorkspaceListViewController {
             .map { Reactor.Action.createButtonTapped }
             .bind(to: reactor.action)
             .disposed(by: disposeBag)
+        
+        rootView.tableView.rx.modelSelected(Workspace.self)
+            .map { Reactor.Action.selectWorkspace($0) }
+            .bind(to: reactor.action)
+            .disposed(by: disposeBag)
     }
 }
 

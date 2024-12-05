@@ -53,6 +53,7 @@ final class HomeViewController: BaseViewController<HomeView>, View {
         NotificationCenter.default.addObserver(self, selector: #selector(handleModalDismissed), name: .channelAddComplete, object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(handleModalDismissed), name: .memberInviteComplete, object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(handleScreenEdgeGestureFlag), name: .workspaceListViewFadeInComplete, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(handleModalDismissed), name: .workspaceChangeComplete, object: nil)
     }
     
     private func setupEdgePenGesture() {

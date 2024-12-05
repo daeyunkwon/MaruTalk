@@ -13,11 +13,12 @@ final class WorkspaceListReactor: Reactor {
     enum Action {
         case fetch
         case createButtonTapped
+        case selectWorkspace(Workspace)
     }
     
     enum Mutation {
         case setNetworkError((Router.APIType, String?))
-        case setWorkspaceList([Workspace])
+        case setWorkspaceList([Workspace]?)
         case setNavigateToWorkspaceAdd
     }
     
@@ -40,6 +41,12 @@ extension WorkspaceListReactor {
         
         case .createButtonTapped:
             return .just(.setNavigateToWorkspaceAdd)
+        
+        case .selectWorkspace(let value):
+            UserDefaultsManager.shared.recentWorkspaceID = value.id
+            UserDefaultsManager.shared.recentWorkspaceOwnerID = value.ownerID
+            NotificationCenter.default.post(name: .workspaceChangeComplete, object: nil)
+            return .just(.setWorkspaceList(currentState.workspaceList))
         }
     }
 }
