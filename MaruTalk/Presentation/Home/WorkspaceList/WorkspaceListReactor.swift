@@ -43,6 +43,11 @@ extension WorkspaceListReactor {
             return .just(.setNavigateToWorkspaceAdd)
         
         case .selectWorkspace(let value):
+            //이미 선택된 워크스페이스를 또 선택한 경우
+            if value.id == UserDefaultsManager.shared.recentWorkspaceID ?? "" {
+                return .empty()
+            }
+            
             UserDefaultsManager.shared.recentWorkspaceID = value.id
             UserDefaultsManager.shared.recentWorkspaceOwnerID = value.ownerID
             NotificationCenter.default.post(name: .workspaceChangeComplete, object: nil)
