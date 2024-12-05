@@ -89,6 +89,13 @@ extension UIViewController {
             default: break
             }
             
+        case .workspaceEdit:
+            switch errorCode {
+            case "E12": message = "워크스페이스 이름이 이미 사용중입니다."
+            case "E14": message = "워크스페이스 관리자만 워크스페이스를 수정할 수 있습니다."
+            default: break
+            }
+            
         default: break
         }
         

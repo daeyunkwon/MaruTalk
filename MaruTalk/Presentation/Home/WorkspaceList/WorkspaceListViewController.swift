@@ -25,6 +25,7 @@ final class WorkspaceListViewController: BaseViewController<WorkspaceListView>, 
     
     deinit {
         print("DEBUG: \(String(describing: self)) deinit")
+        NotificationCenter.default.removeObserver(self)
     }
     
     //MARK: - Life Cycle
@@ -32,6 +33,7 @@ final class WorkspaceListViewController: BaseViewController<WorkspaceListView>, 
     override func viewDidLoad() {
         super.viewDidLoad()
         setuPenGesture()
+        setupNotification()
     }
     
     override func viewDidAppear(_ animated: Bool) {
@@ -46,6 +48,10 @@ final class WorkspaceListViewController: BaseViewController<WorkspaceListView>, 
     private func setuPenGesture() {
         let panGesture = UIPanGestureRecognizer(target: self, action: #selector(handlePanGesture))
         rootView.containerView.addGestureRecognizer(panGesture)
+    }
+    
+    private func setupNotification() {
+        NotificationCenter.default.addObserver(self, selector: #selector(handleModalDismissed), name: .workspaceEditComplete, object: nil)
     }
     
     //MARK: - Methods
@@ -99,6 +105,10 @@ final class WorkspaceListViewController: BaseViewController<WorkspaceListView>, 
         default:
             break
         }
+    }
+    
+    @objc private func handleModalDismissed() {
+        reactor?.action.onNext(.fetch)
     }
 }
 

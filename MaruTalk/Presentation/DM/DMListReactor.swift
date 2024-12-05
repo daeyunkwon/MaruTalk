@@ -179,7 +179,7 @@ extension DMListReactor {
                             after = Date.formatToISO8601String(date: lastChatDate)
                         } else {
                             //신규 메시지의 경우 DB에 아직 저장된 내용이 없기 때문에 임의 날짜로 지정: (서버에서 공백을 포함하여 빈 값으로 보낼 시 응답값의 count가 0으로 리턴됩니다.)
-                            var tempDate = Date(timeIntervalSince1970: TimeInterval())
+                            let tempDate = Date(timeIntervalSince1970: TimeInterval())
                             after = Date.formatToISO8601String(date: tempDate)
                         }
                         

@@ -21,4 +21,6 @@ extension Notification.Name {
     static let workspaceListViewFadeInComplete = Notification.Name("workspaceListViewFadeInComplete")
     
     static let workspaceChangeComplete = Notification.Name("workspaceChangeComplete")
+    
+    static let workspaceEditComplete = Notification.Name("workspaceEditComplete")
 }

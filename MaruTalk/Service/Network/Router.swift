@@ -24,6 +24,7 @@ enum Router {
     case workspace(id: String) //특정 워크스페이스
     case workspaceMemberInvite(workspaceID: String, email: String)
     case workspaceMembers(workspaceID: String)
+    case workspaceEdit(workspaceID: String, name: String, description: String?, imageData: Data?) //워크스페이스 편집
     //User
     case userMe //내 프로필 정보 조회
     case user(userID: String) //다른 유저 정보 조회
@@ -62,6 +63,7 @@ enum Router {
         case workspace
         case workspaceMemberInvite
         case workspaceMembers
+        case workspaceEdit
         //User
         case userMe
         case user
@@ -109,6 +111,7 @@ extension Router: URLRequestConvertible {
         case .workspaces, .createWorkspace, .workspace: return APIURL.workspaces
         case .workspaceMemberInvite(let workspaceID, _): return APIURL.workspaceMemberInvite(workspaceID: workspaceID)
         case .workspaceMembers(let workspaceID): return APIURL.workspaceMembers(workspaceID: workspaceID)
+        case .workspaceEdit(let workspaceID, _, _, _): return APIURL.workspaceEdit(workspaceID: workspaceID)
             
         case .channels(let workspaceID): return APIURL.channels(workspaceID: workspaceID)
         case .myChannels(let workspaceID): return APIURL.myChannels(workspaceID: workspaceID)
@@ -138,7 +141,7 @@ extension Router: URLRequestConvertible {
         case .emailValidation(_), .join, .login, .loginWithApple, .loginWithKakao, .createWorkspace, .createChannel, .sendChannelChat, .workspaceMemberInvite, .createDM, .sendDMChat:
             return .post
             
-        case .channelEdit, .channelChangeAdmin, .userMeImage:
+        case .workspaceEdit, .channelEdit, .channelChangeAdmin, .userMeImage:
             return .put
             
         case .channelDelete:
@@ -169,7 +172,7 @@ extension Router: URLRequestConvertible {
                 "SesacKey": APIKey.apiKey
             ]
             
-        case .createWorkspace, .createChannel, .sendChannelChat, .channelEdit, .sendDMChat, .userMeImage:
+        case .createWorkspace, .createChannel, .sendChannelChat, .channelEdit, .sendDMChat, .userMeImage, .workspaceEdit:
             return [
                 "Content-Type": "multipart/form-data",
                 "Authorization": KeychainManager.shared.getItem(forKey: .accessToken) ?? "",
@@ -246,6 +249,17 @@ extension Router: URLRequestConvertible {
             multipartFormData.append(Data(name.utf8), withName: "name")
             multipartFormData.append(Data(description.utf8), withName: "description")
             multipartFormData.append(imageData, withName: "image", fileName: UUID().uuidString, mimeType: "image/jpeg")
+            return multipartFormData
+            
+        case .workspaceEdit(_, let name, let description, let imageData):
+            let multipartFormData = MultipartFormData()
+            multipartFormData.append(Data(name.utf8), withName: "name")
+            if let description = description {
+                multipartFormData.append(Data(description.utf8), withName: "description")
+            }
+            if let imageData = imageData {
+                multipartFormData.append(imageData, withName: "image", fileName: UUID().uuidString, mimeType: "image/jpeg")
+            }
             return multipartFormData
             
         case .userMeImage(let imageData):

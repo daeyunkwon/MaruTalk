@@ -249,6 +249,8 @@ extension HomeCoordinator {
     }
     
     func didFinishWorkspaceEdit() {
-        navigationController.dismiss(animated: true)
+        if let presentedVC = navigationController.presentedViewController {
+            presentedVC.dismiss(animated: true)
+        }
     }
 }
