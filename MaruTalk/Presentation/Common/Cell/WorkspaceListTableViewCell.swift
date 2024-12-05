@@ -7,9 +7,14 @@
 
 import UIKit
 
+import RxSwift
 import SnapKit
 
 final class WorkspaceListTableViewCell: BaseTableViewCell {
+    
+    //MARK: - Properties
+    
+    var disposeBag: DisposeBag = DisposeBag()
     
     //MARK: - UI Components
     
@@ -53,6 +58,13 @@ final class WorkspaceListTableViewCell: BaseTableViewCell {
         btn.isHidden = true
         return btn
     }()
+    
+    //MARK: - Life Cycle
+    
+    override func prepareForReuse() {
+        super.prepareForReuse()
+        self.disposeBag = DisposeBag()
+    }
     
     //MARK: - Configurations
     

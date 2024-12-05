@@ -231,3 +231,24 @@ extension HomeCoordinator {
         navigationController.dismiss(animated: false)
     }
 }
+
+extension HomeCoordinator {
+    func showWorkspaceEdit(viewController: UIViewController, workspace: Workspace) {
+        let reactor = WorkspaceEditReactor(workspace: workspace)
+        let workspaceEditVC = WorkspaceEditViewController(reactor: reactor)
+        workspaceEditVC.coordinator = self
+        
+        let navController = UINavigationController(rootViewController: workspaceEditVC)
+        navController.modalPresentationStyle = .pageSheet
+
+        if let sheet = navController.sheetPresentationController {
+            sheet.detents = [.large()]
+            sheet.prefersGrabberVisible = true
+        }
+        viewController.present(navController, animated: true)
+    }
+    
+    func didFinishWorkspaceEdit() {
+        navigationController.dismiss(animated: true)
+    }
+}

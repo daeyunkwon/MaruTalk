@@ -112,8 +112,8 @@ extension HomeViewController {
             .filter { $0 == .add("채널 추가") }
             .bind(with: self) { owner, value in
                 owner.showActionSheet(actions: [
-                    ("채널 추가", { owner.coordinator?.showChannelAdd() }),
-                    ("채널 탐색", { owner.coordinator?.showChannelSearch() }),
+                    ("채널 추가", UIAlertAction.Style.default, { owner.coordinator?.showChannelAdd() }),
+                    ("채널 탐색", UIAlertAction.Style.default, { owner.coordinator?.showChannelSearch() })
                 ])
             }
             .disposed(by: disposeBag)

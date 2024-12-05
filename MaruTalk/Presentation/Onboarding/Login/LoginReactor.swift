@@ -193,7 +193,10 @@ extension LoginReactor {
                             $0.createdDate > $1.createdDate
                         }
                         //조회된 워크스페이스 목록 중에 해당되는 최근에 조회한 워크스페이스가 없는 경우 임의 지정하기
-                        if UserDefaultsManager.shared.recentWorkspaceID == nil || value.contains(where: { $0.id == UserDefaultsManager.shared.recentWorkspaceID ?? ""}){
+                        if UserDefaultsManager.shared.recentWorkspaceID == nil {
+                            UserDefaultsManager.shared.recentWorkspaceID = sortedValue.first?.id
+                            UserDefaultsManager.shared.recentWorkspaceOwnerID = sortedValue.first?.ownerID
+                        } else if !value.contains(where: { $0.id == UserDefaultsManager.shared.recentWorkspaceID ?? ""}) {
                             UserDefaultsManager.shared.recentWorkspaceID = sortedValue.first?.id
                             UserDefaultsManager.shared.recentWorkspaceOwnerID = sortedValue.first?.ownerID
                         }

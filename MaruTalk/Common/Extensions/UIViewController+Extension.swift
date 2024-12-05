@@ -134,11 +134,11 @@ extension UIViewController {
     }
     
     //액션시트
-    func showActionSheet(actions: [(String, (() -> Void)?)]) {
+    func showActionSheet(actions: [(String, UIAlertAction.Style, (() -> Void)?)]) {
         let alert = UIAlertController(title: nil, message: nil, preferredStyle: .actionSheet)
         
-        for (title, handler) in actions {
-            let action = UIAlertAction(title: title, style: .default) { _ in
+        for (title, style, handler) in actions {
+            let action = UIAlertAction(title: title, style: style) { _ in
                 handler?()
             }
             alert.addAction(action)

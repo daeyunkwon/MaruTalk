@@ -155,6 +155,27 @@ extension WorkspaceListViewController {
             .bind(to: rootView.tableView.rx.items(cellIdentifier: WorkspaceListTableViewCell.reuseIdentifier, cellType: WorkspaceListTableViewCell.self)) { row, element, cell in
                 cell.configureCell(data: element)
                 cell.selectionStyle = .none
+                
+                cell.menuButton.rx.tap
+                    .bind(with: self) { owner, _ in
+                        if element.ownerID == UserDefaultsManager.shared.userID ?? "" {
+                            //관리자인 경우
+                            owner.showActionSheet(actions: [
+                                ("워크스페이스 편집", UIAlertAction.Style.default, {
+                                    owner.coordinator?.showWorkspaceEdit(viewController: self, workspace: element)
+                                }),
+                                ("워크스페이스 나가기", UIAlertAction.Style.default, { print(11111)}),
+                                ("워크스페이스 관리자 변경", UIAlertAction.Style.default, { print(11111)}),
+                                ("워크스페이스 삭제", UIAlertAction.Style.destructive, { print(11111)})
+                            ])
+                        } else {
+                            //관리자아닌 경우
+                            owner.showActionSheet(actions: [
+                                ("워크스페이스 나가기", UIAlertAction.Style.default, { print(11111)}),
+                            ])
+                        }
+                    }
+                    .disposed(by: cell.disposeBag)
             }
             .disposed(by: disposeBag)
         
