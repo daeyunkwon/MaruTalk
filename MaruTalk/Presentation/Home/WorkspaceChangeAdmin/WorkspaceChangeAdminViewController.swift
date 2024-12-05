@@ -49,7 +49,15 @@ final class WorkspaceChangeAdminViewController: BaseViewController<ChannelChange
 
 extension WorkspaceChangeAdminViewController {
     private func bindAction(reactor: WorkspaceChangeAdminReactor) {
+        rx.methodInvoked(#selector(viewWillAppear(_:)))
+            .map { _ in Reactor.Action.fetch }
+            .bind(to: reactor.action)
+            .disposed(by: disposeBag)
         
+        xMarkButton.rx.tap
+            .map { Reactor.Action.xMarkButtonTapped }
+            .bind(to: reactor.action)
+            .disposed(by: disposeBag)
     }
 }
 
@@ -57,6 +65,39 @@ extension WorkspaceChangeAdminViewController {
 
 extension WorkspaceChangeAdminViewController {
     private func bindState(reactor: WorkspaceChangeAdminReactor) {
+        let memberListStream = reactor.pulse(\.$memberList)
+            .compactMap { $0 }
+            .share()
         
+        memberListStream
+            .bind(to: rootView.tableView.rx.items(cellIdentifier: ProfileNameEmailTableViewCell.reuseIdentifier, cellType: ProfileNameEmailTableViewCell.self)) { row, element, cell in
+                cell.configureCell(data: element)
+            }
+            .disposed(by: disposeBag)
+        
+        memberListStream
+            .filter { $0.isEmpty }
+            .bind(with: self) { owner, _ in
+                owner.showOnlyCloseActionAlert(title: "워크스페이스 관리자 변경 불가", message: "멤버가 없어 관리자를 변경할 수 없습니다.", action: ("확인", { [weak self] in
+                    guard let self else { return }
+                    self.coordinator?.didFinishWorkspaceChangeAdmin()
+                }))
+            }
+            .disposed(by: disposeBag)
+        
+        
+        reactor.pulse(\.$networkError)
+            .compactMap { $0 }
+            .bind(with: self) { owner, value in
+                owner.showToastForNetworkError(api: value.0, errorCode: value.1)
+            }
+            .disposed(by: disposeBag)
+        
+        reactor.pulse(\.$shouldNavigateToWorkspaceList)
+            .compactMap { $0 }
+            .bind(with: self) { owner, _ in
+                owner.coordinator?.didFinishWorkspaceChangeAdmin()
+            }
+            .disposed(by: disposeBag)
     }
 }

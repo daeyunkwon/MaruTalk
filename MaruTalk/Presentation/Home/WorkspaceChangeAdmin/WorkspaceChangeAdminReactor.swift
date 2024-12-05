@@ -12,16 +12,19 @@ import ReactorKit
 final class WorkspaceChangeAdminReactor: Reactor {
     enum Action {
         case fetch
+        case xMarkButtonTapped
     }
     
     enum Mutation {
         case setMemberList([User])
         case setNetworkError((Router.APIType, String?))
+        case setNavigateToWorkspaceList
     }
     
     struct State {
         @Pulse var memberList: [User]?
         @Pulse var networkError: (Router.APIType, String?)?
+        @Pulse var shouldNavigateToWorkspaceList: Void?
     }
     
     let initialState: State = State()
@@ -33,7 +36,10 @@ extension WorkspaceChangeAdminReactor {
     func mutate(action: Action) -> Observable<Mutation> {
         switch action {
         case .fetch:
-            return .empty()
+            return fetchMembers()
+        
+        case .xMarkButtonTapped:
+            return .just(.setNavigateToWorkspaceList)
         }
     }
 }
@@ -49,8 +55,31 @@ extension WorkspaceChangeAdminReactor {
             
         case .setNetworkError(let value):
             newState.networkError = value
+        
+        case .setNavigateToWorkspaceList:
+            newState.shouldNavigateToWorkspaceList = ()
         }
         return newState
     }
 }
 
+//MARK: - Logic
+
+extension WorkspaceChangeAdminReactor {
+    private func fetchMembers() -> Observable<Mutation> {
+        guard let workspaceID = UserDefaultsManager.shared.recentWorkspaceID else { return .empty() }
+        
+        return NetworkManager.shared.performRequest(api: .workspaceMembers(workspaceID: workspaceID), model: [User].self)
+            .asObservable()
+            .flatMap { result -> Observable<Mutation> in
+                switch result {
+                case .success(let value):
+                    let filtered = value.filter { $0.userID != UserDefaultsManager.shared.userID ?? "" }
+                    return .just(.setMemberList(filtered))
+                    
+                case .failure(let error):
+                    return .just(.setNetworkError((Router.APIType.workspaceMembers, error.errorCode)))
+                }
+            }
+    }
+}
