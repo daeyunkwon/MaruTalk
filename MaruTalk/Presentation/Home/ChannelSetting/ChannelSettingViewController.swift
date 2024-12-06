@@ -125,30 +125,30 @@ extension ChannelSettingViewController {
             }
             .disposed(by: disposeBag)
         
-        reactor.pulse(\.$channel)
+        let channelStream = reactor.pulse(\.$channel)
             .compactMap { $0 }
+            .share()
+        
+        channelStream
             .map { $0.name }
             .bind(with: self, onNext: { owner, value in
                 owner.rootView.channelNameLabel.text = "☕️\(value)"
             })
             .disposed(by: disposeBag)
         
-        reactor.pulse(\.$channel)
-            .compactMap { $0 }
+        channelStream
             .map { $0.description }
             .bind(to: rootView.channelDescriptionLabel.rx.text)
             .disposed(by: disposeBag)
         
-        reactor.pulse(\.$channel)
-            .compactMap { $0 }
+        channelStream
             .map { $0.channelMembers?.count }
             .bind(with: self) { owner, value in
                 owner.rootView.channelMemberCountLabel.text = "멤버 (\(value ?? 0))"
             }
             .disposed(by: disposeBag)
         
-        reactor.pulse(\.$channel)
-            .compactMap { $0 }
+        channelStream
             .map {
                 print("DEBUG: 채널 멤버 -> \(String(describing: $0.channelMembers))")
                 print("DEBUG: 채널 관리자 -> \($0.ownerID)")
@@ -178,8 +178,7 @@ extension ChannelSettingViewController {
             }
             .disposed(by: disposeBag)
         
-        reactor.pulse(\.$channel)
-            .compactMap { $0 }
+        channelStream
             .map { $0.channelMembers ?? [] }
             .bind(to: rootView.collectionView.rx.items(cellIdentifier: ProfileImageTitleCollectionViewCell.reuseIdentifier, cellType: ProfileImageTitleCollectionViewCell.self)) { row, element, cell in
                 cell.configureCell(data: element)
