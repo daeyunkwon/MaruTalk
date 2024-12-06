@@ -81,7 +81,15 @@ extension ChannelSettingReactor {
             return executeChannelDelete()
         
         case .retryDeleteFromDB:
-            return deleteChatFromRealmDB()
+            let channelID = currentState.channelID
+            return deleteChatListFromRealmDB(channelID: channelID)
+                .map { isSuccess -> Mutation in
+                    if isSuccess {
+                        return .setNavigateToHome(())
+                    } else {
+                        return .setShowRetryDeleteFromDBAlert
+                    }
+                }
         
         case .cancelRetryDeleteFromDB:
             return .just(.setNavigateToHome(()))
@@ -129,13 +137,13 @@ extension ChannelSettingReactor {
         
         return NetworkManager.shared.performRequest(api: .channel(workspaceID: workspaceID, channelID: channelID), model: Channel.self)
             .asObservable()
-            .flatMap { result -> Observable<Mutation> in
+            .map { result -> Mutation in
                 switch result {
                 case .success(let value):
-                    return .just(.setChannel(value))
+                    return .setChannel(value)
                 
                 case .failure(let error):
-                    return .just(.setNetworkError((Router.APIType.channel, error.errorCode)))
+                    return .setNetworkError((Router.APIType.channel, error.errorCode))
                 }
             }
     }
@@ -150,7 +158,7 @@ extension ChannelSettingReactor {
                 switch result {
                 case .success(_):
                     // Realm 작업 클로저 처리
-                    return self.deleteChatList(channelID: channelID)
+                    return self.deleteChatListFromRealmDB(channelID: channelID)
                         .flatMap { isSuccess -> Observable<Mutation> in
                             if isSuccess {
                                 return .just(.setNavigateToHome(()))
@@ -181,7 +189,7 @@ extension ChannelSettingReactor {
     }
 
     //Realm 삭제 작업 처리 메서드
-    private func deleteChatList(channelID: String) -> Observable<Bool> {
+    private func deleteChatListFromRealmDB(channelID: String) -> Observable<Bool> {
         return Observable<Bool>.create { observer in
             RealmChannelChatRepository.shared.deleteChatList(channelID: channelID) { isSuccess in
                 observer.onNext(isSuccess)
@@ -202,31 +210,18 @@ extension ChannelSettingReactor {
                 guard let self else { return .empty() }
                 switch result {
                 case .success():
-                    return self.deleteChatFromRealmDB()
+                    return deleteChatListFromRealmDB(channelID: channelID)
+                        .map { isSuccess -> Mutation in
+                            if isSuccess {
+                                return .setNavigateToHome(())
+                            } else {
+                                return .setShowRetryDeleteFromDBAlert
+                            }
+                        }
                 
                 case .failure(let error):
                     return .just(.setNetworkError((Router.APIType.channelDelete, error.errorCode)))
                 }
             }
-    }
-    
-    //Realm DB에서 관련 채팅 데이터 삭제 수행
-    private func deleteChatFromRealmDB() -> Observable<Mutation> {
-        let channelID = currentState.channelID
-        
-        return Observable.create { observer in
-            RealmChannelChatRepository.shared.deleteChatList(channelID: channelID) { isSuccess in
-                if isSuccess {
-                    // 성공 시 홈 화면으로 전환
-                    observer.onNext(.setNavigateToHome(()))
-                } else {
-                    //실패 시 재시도 얼럿 출력
-                    observer.onNext(.setShowRetryDeleteFromDBAlert)
-                }
-                
-                observer.onCompleted()
-            }
-            return Disposables.create()
-        }
     }
 }
