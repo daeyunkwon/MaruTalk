@@ -235,12 +235,12 @@ final class NetworkManager {
         }
     }
     
-    //채널 삭제
-    func deleteChannel(workspaceID: String, channelID: String) -> Single<Result<Void, NetworkError>> {
+    //워크스페이스 & 채널 삭제용
+    func performDelete(api: Router) -> Single<Result<Void, NetworkError>> {
         return Single.create { single -> Disposable in
             
             do {
-                let request = try Router.channelDelete(workspaceID: workspaceID, channelID: channelID).asURLRequest()
+                let request = try api.asURLRequest()
                 
                 AF.request(request).validate(statusCode: 200...299).responseData(emptyResponseCodes: [200]) { response in
                     switch response.result {
