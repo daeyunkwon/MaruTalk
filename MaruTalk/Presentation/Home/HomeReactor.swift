@@ -28,6 +28,7 @@ final class HomeReactor: Reactor {
         case setDMSection([DMRoom])
         case setToastMessage(String)
         case setNavigateToMemberInvite
+        case setAlertMessage(String)
     }
     
     struct State {
@@ -47,6 +48,7 @@ final class HomeReactor: Reactor {
         @Pulse var user: User?
         @Pulse var toastMessage: String?
         @Pulse var networkError: (Router.APIType, String?) = (Router.APIType.empty, nil)
+        @Pulse var showAlertMessage: String?
     }
     
     let initialState: State = State()
@@ -155,6 +157,9 @@ extension HomeReactor {
         
         case .setNavigateToMemberInvite:
             newState.shouldNavigateToMemberInvite = ()
+        
+        case .setAlertMessage(let value):
+            newState.showAlertMessage = value
         }
         return newState
     }
@@ -176,7 +181,11 @@ extension HomeReactor {
                     print("----------------------------")
                     //현재 선택한 워크스페이스로 필터
                     let filtered = value.filter { $0.id == workspaceID }
-                    UserDefaultsManager.shared.recentWorkspaceOwnerID = filtered[0].ownerID //워크스페이스 관리자 정보
+                    if filtered.count > 0 {
+                        UserDefaultsManager.shared.recentWorkspaceOwnerID = filtered[0].ownerID //워크스페이스 관리자 정보
+                    } else {
+                        return .just(.setAlertMessage("해당 워크스페이스가 이미 삭제되어 존재하지 않습니다. 다른 워크스페이스를 선택해주세요."))
+                    }
                     return filtered.isEmpty ? .empty() : .just(.setWorkspace(filtered[0]))
                 
                 case .failure(let error):

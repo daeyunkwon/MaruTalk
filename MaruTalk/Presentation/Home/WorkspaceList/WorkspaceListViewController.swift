@@ -169,30 +169,40 @@ extension WorkspaceListViewController {
                         if element.ownerID == UserDefaultsManager.shared.userID ?? "" {
                             //관리자인 경우
                             owner.showActionSheet(actions: [
+                                //액션시트 편집
                                 ("워크스페이스 편집", UIAlertAction.Style.default, {
                                     owner.coordinator?.showWorkspaceEdit(viewController: self, workspace: element)
                                 }),
+                                //액션시트 나가기
                                 ("워크스페이스 나가기", UIAlertAction.Style.default, {
                                     //얼럿으로 사용자에게 재확인 요청
                                     owner.showAlert(title: "채널 나가기", message: "정말 해당 채널을 나가시겠습니까?", actions: [
                                         ("나가기", {
-                                            owner.reactor?.action.onNext(.selectWorkspaceExit)
+                                            owner.reactor?.action.onNext(.selectWorkspaceExitActionSheet)
                                         })
                                     ])
                                 }),
+                                //액션시트 관리자 변경
                                 ("워크스페이스 관리자 변경", UIAlertAction.Style.default, {
-                                    owner.reactor?.action.onNext(.selectWorkspaceChangeAdmin)
+                                    owner.reactor?.action.onNext(.selectWorkspaceChangeAdminActionSheet)
                                 }),
-                                ("워크스페이스 삭제", UIAlertAction.Style.destructive, { print(11111)})
+                                //액션시트 삭제
+                                ("워크스페이스 삭제", UIAlertAction.Style.destructive, {
+                                    //얼럿으로 사용자에게 재확인 요청
+                                    owner.showAlert(title: "워크스페이스 삭제", message: "정말 이 워크스페이스를 삭제하시겠습니까? 삭제 시 채널/멤버/채팅 등 워크스페이스 내의 모든 정보가 삭제되며 복구할 수 없습니다.", actions: [
+                                        ("삭제", { owner.reactor?.action.onNext(.selectWorkspaceDeleteActionSheet) })
+                                    ])
+                                })
                             ])
                         } else {
                             //관리자아닌 경우
+                            //액션시트 나가기
                             owner.showActionSheet(actions: [
                                 ("워크스페이스 나가기", UIAlertAction.Style.default, {
                                     //얼럿으로 사용자에게 재확인 요청
                                     owner.showAlert(title: "채널 나가기", message: "정말 해당 채널을 나가시겠습니까?", actions: [
                                         ("나가기", {
-                                            owner.reactor?.action.onNext(.selectWorkspaceExit)
+                                            owner.reactor?.action.onNext(.selectWorkspaceExitActionSheet)
                                         })
                                     ])
                                 }),
@@ -224,6 +234,17 @@ extension WorkspaceListViewController {
             .compactMap { $0 }
             .bind(with: self) { owner, _ in
                 owner.coordinator?.showWorkspaceChangeAdmin(viewController: self)
+            }
+            .disposed(by: disposeBag)
+        
+        reactor.pulse(\.$showRetryDeleteChannelChatRealmDBAlert)
+            .compactMap { $0 }
+            .bind(with: self) { owner, _ in
+                owner.showAlert(title: "데이터 정리 실패", message: "삭제한 워크스페이스 관련 데이터 제거가 실패되었습니다. 다시 시도하시겠습니까?", actions: [
+                    ("재시도", { owner.reactor?.action.onNext(.selectRetryAction) })
+                ]) {
+                    owner.reactor?.action.onNext(.selectRetryCancelAction)
+                }
             }
             .disposed(by: disposeBag)
     }

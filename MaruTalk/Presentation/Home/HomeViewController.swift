@@ -56,6 +56,7 @@ final class HomeViewController: BaseViewController<HomeView>, View {
         NotificationCenter.default.addObserver(self, selector: #selector(handleModalDismissed), name: .workspaceChangeComplete, object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(handleModalDismissed), name: .workspaceEditComplete, object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(handleModalDismissed), name: .workspaceExitComplete, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(handleModalDismissed), name: .workspaceDeleteComplete, object: nil)
     }
     
     private func setupEdgePenGesture() {
@@ -207,6 +208,13 @@ extension HomeViewController {
             .compactMap { $0 }
             .bind(with: self) { owner, _ in
                 owner.coordinator?.showMemberInvite()
+            }
+            .disposed(by: disposeBag)
+        
+        reactor.pulse(\.$showAlertMessage)
+            .compactMap { $0 }
+            .bind(with: self) { owner, value in
+                owner.showOnlyCloseActionAlert(title: "시스템 알림", message: value, action: ("닫기", nil))
             }
             .disposed(by: disposeBag)
     }

@@ -27,6 +27,7 @@ enum Router {
     case workspaceEdit(workspaceID: String, name: String, description: String?, imageData: Data?) //워크스페이스 편집
     case workspaceExit(workspaceID: String) //워크스페이스 나가기
     case workspaceTransferOwnership(workspaceID: String, userID: String)
+    case workspaceDelete(workspaceID: String)
     //User
     case userMe //내 프로필 정보 조회
     case user(userID: String) //다른 유저 정보 조회
@@ -68,6 +69,7 @@ enum Router {
         case workspaceEdit
         case workspaceExit
         case workspaceTransferOwnership
+        case workspaceDelete
         //User
         case userMe
         case user
@@ -118,6 +120,7 @@ extension Router: URLRequestConvertible {
         case .workspaceEdit(let workspaceID, _, _, _): return APIURL.workspaceEdit(workspaceID: workspaceID)
         case .workspaceExit(let workspaceID): return APIURL.workspaceExit(workspaceID: workspaceID)
         case .workspaceTransferOwnership(let workspaceID, _): return APIURL.workspaceTransferOwnership(workspaceID: workspaceID)
+        case .workspaceDelete(let workspaceID): return APIURL.workspaceDelete(workspaceID: workspaceID)
             
         case .channels(let workspaceID): return APIURL.channels(workspaceID: workspaceID)
         case .myChannels(let workspaceID): return APIURL.myChannels(workspaceID: workspaceID)
@@ -150,7 +153,7 @@ extension Router: URLRequestConvertible {
         case .workspaceEdit, .workspaceTransferOwnership, .channelEdit, .channelChangeAdmin, .userMeImage:
             return .put
             
-        case .channelDelete:
+        case .workspaceDelete, .channelDelete:
             return .delete
         }
     }
@@ -171,7 +174,7 @@ extension Router: URLRequestConvertible {
                 "SesacKey": APIKey.apiKey
             ]
             
-        case .workspaces, .workspace, .workspaceMembers, .workspaceExit, .workspaceTransferOwnership, .userMe, .user, .myChannels, .dms, .chats, .channel, .workspaceMemberInvite, .channels, .channelMembers, .channelChangeAdmin, .channelExit, .channelDelete, .dmChats, .createDM, .dmUnreadCount:
+        case .workspaces, .workspace, .workspaceMembers, .workspaceExit, .workspaceTransferOwnership, .workspaceDelete, .userMe, .user, .myChannels, .dms, .chats, .channel, .workspaceMemberInvite, .channels, .channelMembers, .channelChangeAdmin, .channelExit, .channelDelete, .dmChats, .createDM, .dmUnreadCount:
             return [
                 "Content-Type": "application/json",
                 "Authorization": KeychainManager.shared.getItem(forKey: .accessToken) ?? "",
