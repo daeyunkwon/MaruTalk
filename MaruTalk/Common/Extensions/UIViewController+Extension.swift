@@ -10,6 +10,9 @@ import UIKit
 import Toast
 
 extension UIViewController {
+    
+    private static var isNavigatingToLogin = false // 화면 이동 상태 플래그
+    
     //NetworkErrorToast
     func showToastForNetworkError(api: Router.APIType, errorCode: String?) {
         var style = ToastStyle()
@@ -122,15 +125,28 @@ extension UIViewController {
         
         view.makeToast(message, point: CGPoint(x: x, y: y), title: nil, image: nil, style: style) { [weak self] didTap in
             if errorCode == "Refresh token expiration" {
-                self?.shouldNavigateToLogin()
+                self?.navigateToLogin()
             }
         }
     }
     
-    func shouldNavigateToLogin() {
+    func navigateToLogin() {
+        guard !UIViewController.isNavigatingToLogin else {
+            print("DEBUG: 로그인 화면 중복 전환 방지됨")
+            return
+        }
+        print("DEBUG: 로그인 화면 전환 실행")
+        
+        UIViewController.isNavigatingToLogin = true
+        
         if let scene = UIApplication.shared.connectedScenes.first?.delegate as? SceneDelegate {
             scene.appCoordinator?.childCoordinators.removeAll()
             scene.appCoordinator?.start()
+        }
+        
+        //일정 시간 후에 상태를 리셋해 중복 호출 방지 해제
+        DispatchQueue.main.asyncAfter(deadline: .now() + 2.0) {
+            UIViewController.isNavigatingToLogin = false
         }
     }
     
