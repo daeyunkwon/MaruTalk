@@ -73,6 +73,7 @@ final class WorkspaceListView: BaseView {
         label.font = Constant.Font.bodyBold
         label.textColor = Constant.Color.textPrimary
         label.textAlignment = .center
+        label.isHidden = true
         return label
     }()
     
