@@ -22,8 +22,8 @@ final class WorkspaceInitialReactor: Reactor {
     
     struct State {
         var nickname = ""
-        var shouldNavigateToWorkspaceAdd = false
-        var shouldNavigateToHome = false
+        var navigateToWorkspaceAdd = false
+        var navigateToHome = false
     }
     
     let initialState: State
@@ -80,10 +80,10 @@ extension WorkspaceInitialReactor {
         
         switch mutation {
         case .setNavigateToWorkspaceAdd(let value):
-            newState.shouldNavigateToWorkspaceAdd = value
+            newState.navigateToWorkspaceAdd = value
             
         case .setNavigateToHome(let value):
-            newState.shouldNavigateToHome = value
+            newState.navigateToHome = value
         }
         return newState
     }

@@ -77,7 +77,7 @@ extension ChannelEditViewController {
 
 extension ChannelEditViewController {
     private func bindState(reactor: ChannelEditReactor) {
-        reactor.pulse(\.$shouldNavigateToChannelSetting)
+        reactor.pulse(\.$navigateToChannelSetting)
             .compactMap { $0 }
             .bind(with: self) { owner, _ in
                 owner.coordinator?.didFinishChannelEdit()

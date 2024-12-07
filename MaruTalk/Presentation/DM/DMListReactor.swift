@@ -31,8 +31,8 @@ final class DMListReactor: Reactor {
         @Pulse var memberList: [User]?
         @Pulse var user: User?
         @Pulse var dmRoomList: [Chat]?
-        @Pulse var shouldNavigateToDMChatting: DMRoom?
-        @Pulse var shouldNavigateToProfile: Void?
+        @Pulse var navigateToDMChatting: DMRoom?
+        @Pulse var navigateToProfile: Void?
     }
     
     var initialState: State = State()
@@ -81,10 +81,10 @@ extension DMListReactor {
             newState.dmRoomList = value
         
         case .setNavigateToDMChatting(let value):
-            newState.shouldNavigateToDMChatting = value
+            newState.navigateToDMChatting = value
         
         case .setNavigateToProfile:
-            newState.shouldNavigateToProfile = ()
+            newState.navigateToProfile = ()
         }
         return newState
     }

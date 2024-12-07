@@ -45,12 +45,12 @@ final class ChannelChattingReactor: Reactor {
         var content: String = ""
         
         @Pulse var messageSendSuccess: Void?
-        @Pulse var shouldScrollToBottom: Void?
-        @Pulse var shouldShowPhotoAlbum: Void?
+        @Pulse var scrollToBottom: Void?
+        @Pulse var showPhotoAlbum: Void?
         
         @Pulse var photoImageDatas: [Data] = []
         
-        @Pulse var shouldNavigateToSetting: String?
+        @Pulse var navigateToSetting: String?
     }
     
     let initialState: State
@@ -162,16 +162,16 @@ extension ChannelChattingReactor {
             newState.messageSendSuccess = value
         
         case .setScrollToBottom(let value):
-            newState.shouldScrollToBottom = value
+            newState.scrollToBottom = value
         
         case .setShowPhotoAlbum(let value):
-            newState.shouldShowPhotoAlbum = value
+            newState.showPhotoAlbum = value
         
         case .setPhotoImageDatas(let value):
             newState.photoImageDatas = value
         
         case .setNavigateToSetting(let value):
-            newState.shouldNavigateToSetting = value
+            newState.navigateToSetting = value
         }
         return newState
     }

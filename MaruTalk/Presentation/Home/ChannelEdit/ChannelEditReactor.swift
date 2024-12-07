@@ -26,7 +26,7 @@ final class ChannelEditReactor: Reactor {
     }
     
     struct State {
-        @Pulse var shouldNavigateToChannelSetting: Void?
+        @Pulse var navigateToChannelSetting: Void?
         var channelID: String
         var channelName: String
         var channelDescription: String?
@@ -77,7 +77,7 @@ extension ChannelEditReactor {
         var newState = state
         switch mutation {
         case .setNavigateToChannelSetting:
-            newState.shouldNavigateToChannelSetting = ()
+            newState.navigateToChannelSetting = ()
         
         case .setChannelName(let value):
             newState.channelName = value

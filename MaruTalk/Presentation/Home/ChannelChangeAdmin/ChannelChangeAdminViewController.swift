@@ -68,7 +68,7 @@ extension ChannelChangeAdminViewController {
 
 extension ChannelChangeAdminViewController {
     private func bindState(reactor: ChannelChangeAdminReactor) {
-        reactor.pulse(\.$shouldNavigateToChannelSetting)
+        reactor.pulse(\.$navigateToChannelSetting)
             .compactMap { $0 }
             .bind(with: self) { owner, _ in
                 owner.coordinator?.didFinishChannelChangeAdmin()

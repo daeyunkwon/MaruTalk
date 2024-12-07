@@ -38,11 +38,11 @@ final class DMChattingReactor: Reactor {
         @Pulse var chatList: [RealmDMChat]?
         @Pulse var navigationTitle: String?
         @Pulse var networkError: (Router.APIType, String?)?
-        @Pulse var shouldScrollToBottom: Void?
+        @Pulse var scrollToBottom: Void?
         var content: String = ""
         @Pulse var photoImageDatas: [Data] = []
         @Pulse var messageSendSuccess: Void?
-        @Pulse var shouldShowPhotoAlbum: Void?
+        @Pulse var showPhotoAlbum: Void?
     }
     
     var initialState: State
@@ -144,7 +144,7 @@ extension DMChattingReactor {
             newState.networkError = value
         
         case .setScrollToBottom:
-            newState.shouldScrollToBottom = ()
+            newState.scrollToBottom = ()
         
         case .setContent(let value):
             newState.content = value
@@ -156,7 +156,7 @@ extension DMChattingReactor {
             newState.photoImageDatas = value
         
         case .setShowPhotoAlbum:
-            newState.shouldShowPhotoAlbum = ()
+            newState.showPhotoAlbum = ()
         }
         return newState
     }

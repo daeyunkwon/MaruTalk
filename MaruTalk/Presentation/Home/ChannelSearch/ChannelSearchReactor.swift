@@ -26,12 +26,12 @@ final class ChannelSearchReactor: Reactor {
     }
     
     struct State {
-        @Pulse var shouldNavigateToHome: Void?
+        @Pulse var navigateToHome: Void?
         @Pulse var networkError: (Router.APIType, String?)?
         @Pulse var channelList: [Channel]?
         var myChannelDictionary: [String: Bool] = [:]
-        @Pulse var shouldShowJoinAlert: Channel?
-        @Pulse var shouldNavigateToCannelChatting: Channel?
+        @Pulse var showJoinAlert: Channel?
+        @Pulse var navigateToCannelChatting: Channel?
     }
     
     let initialState: State = State()
@@ -70,7 +70,7 @@ extension ChannelSearchReactor {
         var newState = state
         switch mutation {
         case .setNavigateToHome:
-            newState.shouldNavigateToHome = ()
+            newState.navigateToHome = ()
             
         case .setNetworkError(let value):
             newState.networkError = value
@@ -82,10 +82,10 @@ extension ChannelSearchReactor {
             newState.myChannelDictionary = value
         
         case .setShowJoinAlert(let value):
-            newState.shouldShowJoinAlert = value
+            newState.showJoinAlert = value
         
         case .setNavigateToCannelChatting(let value):
-            newState.shouldNavigateToCannelChatting = value
+            newState.navigateToCannelChatting = value
         }
         return newState
     }

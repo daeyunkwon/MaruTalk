@@ -75,7 +75,7 @@ extension ChannelAddViewController {
 
 extension ChannelAddViewController {
     private func bindState(reactor: ChannelAddReactor) {
-        reactor.pulse(\.$shouldDismiss)
+        reactor.pulse(\.$dismiss)
             .compactMap { $0 }
             .bind(with: self) { owner, _ in
                 owner.coordinator?.didFinishChannelAdd()

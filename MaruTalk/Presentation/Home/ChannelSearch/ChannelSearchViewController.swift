@@ -86,7 +86,7 @@ extension ChannelSearchViewController {
 
 extension ChannelSearchViewController {
     private func bindState(reactor: ChannelSearchReactor) {
-        reactor.pulse(\.$shouldNavigateToHome)
+        reactor.pulse(\.$navigateToHome)
             .compactMap { $0 }
             .bind(with: self) { owner, _ in
                 owner.coordinator?.didFinishChannelSearch()
@@ -107,7 +107,7 @@ extension ChannelSearchViewController {
             }
             .disposed(by: disposeBag)
         
-        reactor.pulse(\.$shouldShowJoinAlert)
+        reactor.pulse(\.$showJoinAlert)
             .compactMap { $0 }
             .bind(with: self) { owner, value in
                 let message = "[\(value.name)] 채널에 참여하시겠습니까?"
@@ -124,7 +124,7 @@ extension ChannelSearchViewController {
             }
             .disposed(by: disposeBag)
         
-        reactor.pulse(\.$shouldNavigateToCannelChatting)
+        reactor.pulse(\.$navigateToCannelChatting)
             .compactMap { $0 }
             .bind(with: self) { owner, value in
                 owner.coordinator?.showChannelChatting(channelID: value.id) //먼저 화면 이동

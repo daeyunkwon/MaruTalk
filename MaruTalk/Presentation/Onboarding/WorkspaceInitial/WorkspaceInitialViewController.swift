@@ -74,14 +74,14 @@ extension WorkspaceInitialViewController {
             }
             .disposed(by: disposeBag)
         
-        reactor.state.map { $0.shouldNavigateToWorkspaceAdd }
+        reactor.state.map { $0.navigateToWorkspaceAdd }
             .filter { $0 == true }
             .bind(with: self) { owner, _ in
                 owner.coordinator?.showWorkspaceAdd()
             }
             .disposed(by: disposeBag)
         
-        reactor.state.map { $0.shouldNavigateToHome }
+        reactor.state.map { $0.navigateToHome }
             .filter { $0 == true }
             .bind(with: self) { owner, _ in
                 owner.coordinator?.didFinish()

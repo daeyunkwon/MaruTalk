@@ -24,7 +24,7 @@ final class ChannelChangeAdminReactor: Reactor {
     
     struct State {
         var channelID: String
-        @Pulse var shouldNavigateToChannelSetting: Void?
+        @Pulse var navigateToChannelSetting: Void?
         @Pulse var networkError: (Router.APIType, String?)?
         
         @Pulse var memberList: [User]?
@@ -62,7 +62,7 @@ extension ChannelChangeAdminReactor {
         var newState = state
         switch mutation {
         case .setNavigateToChannelSetting:
-            newState.shouldNavigateToChannelSetting = ()
+            newState.navigateToChannelSetting = ()
         
         case .setNetworkError(let value):
             newState.networkError = value

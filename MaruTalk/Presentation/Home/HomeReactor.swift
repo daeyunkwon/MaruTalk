@@ -42,11 +42,11 @@ final class HomeReactor: Reactor {
         var dmSectionModel = SectionModel(headerTitle: "다이렉트 메시지", items: [], index: 1)
         
         @Pulse var isShowEmpty: Bool = false
-        @Pulse var shouldNavigateToWorkspaceAdd: Void = ()
-        @Pulse var shouldNavigateToMemberInvite: Void?
+        @Pulse var navigateToWorkspaceAdd: Void = ()
+        @Pulse var navigateToMemberInvite: Void?
         @Pulse var workspace: Workspace?
         @Pulse var user: User?
-        @Pulse var toastMessage: String?
+        @Pulse var showToastMessage: String?
         @Pulse var networkError: (Router.APIType, String?) = (Router.APIType.empty, nil)
         @Pulse var showAlertMessage: String?
     }
@@ -127,7 +127,7 @@ extension HomeReactor {
             newState.isShowEmpty = value
         
         case .setNavigateToWorkspaceAdd:
-            newState.shouldNavigateToWorkspaceAdd = ()
+            newState.navigateToWorkspaceAdd = ()
         
         case .setNetworkError(let value):
             newState.networkError = value
@@ -153,10 +153,10 @@ extension HomeReactor {
             newState.dmSectionModel.isExpanded = true
         
         case .setToastMessage(let value):
-            newState.toastMessage = value
+            newState.showToastMessage = value
         
         case .setNavigateToMemberInvite:
-            newState.shouldNavigateToMemberInvite = ()
+            newState.navigateToMemberInvite = ()
         
         case .setAlertMessage(let value):
             newState.showAlertMessage = value

@@ -192,28 +192,28 @@ extension ChannelSettingViewController {
             }
             .disposed(by: disposeBag)
         
-        reactor.pulse(\.$shouldNavigateToChannelEdit)
+        reactor.pulse(\.$navigateToChannelEdit)
             .compactMap { $0 }
             .bind(with: self) { owner, value in
                 owner.coordinator?.showChannelEdit(channel: value)
             }
             .disposed(by: disposeBag)
         
-        reactor.pulse(\.$shouldNavigateToChannelChangeAdmin)
+        reactor.pulse(\.$navigateToChannelChangeAdmin)
             .compactMap { $0 }
             .bind(with: self) { owner, value in
                 owner.coordinator?.showChannelChangeAdmin(channelID: value)
             }
             .disposed(by: disposeBag)
         
-        reactor.pulse(\.$shouldNaviageToHome)
+        reactor.pulse(\.$naviageToHome)
             .compactMap { $0 }
             .bind(with: self) { owner, _ in
                 owner.coordinator?.didFinishChannelSetting(isNaviageToHome: true)
             }
             .disposed(by: disposeBag)
         
-        reactor.pulse(\.$shouldShowRetryDeleteFromDBAlert)
+        reactor.pulse(\.$showRetryDeleteFromDBAlert)
             .compactMap { $0 }
             .bind(with: self) { [weak self] owner, _ in
                 guard let self else { return }

@@ -31,8 +31,8 @@ final class LoginReactor: Reactor {
     }
     
     struct State {
-        var shouldNavigateToAuth = false
-        var shouldNavigateToHome = false
+        var navigateToAuth = false
+        var navigateToHome = false
         var email = ""
         var password = ""
         var isValidEmail = false
@@ -92,10 +92,10 @@ extension LoginReactor {
         var newState = state
         switch mutation {
         case .setNavigateToAuth(let value):
-            newState.shouldNavigateToAuth = value
+            newState.navigateToAuth = value
         
         case .setNavigateToHome(let value):
-            newState.shouldNavigateToHome = value
+            newState.navigateToHome = value
             
         case .setEmail(let value):
             newState.email = value

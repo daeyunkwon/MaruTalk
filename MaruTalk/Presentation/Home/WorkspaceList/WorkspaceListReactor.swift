@@ -35,9 +35,9 @@ final class WorkspaceListReactor: Reactor {
     struct State {
         @Pulse var networkError: (Router.APIType, String?)?
         @Pulse var workspaceList: [Workspace]?
-        @Pulse var shouldnavigateToHome: Void?
-        @Pulse var shouldNavigateToWorkspaceAdd: Void?
-        @Pulse var shouldNavigateToWorkspaceChangeAdmin: Void?
+        @Pulse var navigateToHome: Void?
+        @Pulse var navigateToWorkspaceAdd: Void?
+        @Pulse var navigateToWorkspaceChangeAdmin: Void?
         @Pulse var showRetryDeleteChannelChatRealmDBAlert: Void?
         var deleteFailChannelIDList: [String] = []
     }
@@ -102,13 +102,13 @@ extension WorkspaceListReactor {
             newState.workspaceList = value
             
         case .setNavigateToHome:
-            newState.shouldnavigateToHome = ()
+            newState.navigateToHome = ()
         
         case .setNavigateToWorkspaceAdd:
-            newState.shouldNavigateToWorkspaceAdd = ()
+            newState.navigateToWorkspaceAdd = ()
         
         case .setNavigateToWorkspaceChangeAdmin:
-            newState.shouldNavigateToWorkspaceChangeAdmin = ()
+            newState.navigateToWorkspaceChangeAdmin = ()
         
         case .setRetryDeleteChannelChatRealmDBAlert:
             newState.showRetryDeleteChannelChatRealmDBAlert = ()

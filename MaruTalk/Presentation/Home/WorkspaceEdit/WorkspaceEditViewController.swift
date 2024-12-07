@@ -115,7 +115,7 @@ extension WorkspaceEditViewController {
             .bind(to: rootView.doneButton.rx.isEnabled)
             .disposed(by: disposeBag)
         
-        reactor.pulse(\.$shouldNavigateToWorkspaceLit)
+        reactor.pulse(\.$navigateToWorkspaceLit)
             .compactMap { $0 }
             .bind(with: self) { owner, _ in
                 owner.coordinator?.didFinishWorkspaceEdit()

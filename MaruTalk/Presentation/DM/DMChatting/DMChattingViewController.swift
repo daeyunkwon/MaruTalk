@@ -105,7 +105,7 @@ extension DMChattingViewController {
             }
             .disposed(by: disposeBag)
         
-        reactor.pulse(\.$shouldScrollToBottom)
+        reactor.pulse(\.$scrollToBottom)
             .compactMap { $0 }
             .bind(with: self) { owner, _ in
                 let lastRowIndex = owner.rootView.tableView.numberOfRows(inSection: 0) - 1
@@ -183,7 +183,7 @@ extension DMChattingViewController {
             }
             .disposed(by: disposeBag)
         
-        reactor.pulse(\.$shouldShowPhotoAlbum)
+        reactor.pulse(\.$showPhotoAlbum)
             .compactMap { $0 }
             .bind(with: self) { owner, _ in
                 owner.openPhotoPicker()

@@ -25,7 +25,7 @@ final class WorkspaceChangeAdminReactor: Reactor {
     struct State {
         @Pulse var memberList: [User]?
         @Pulse var networkError: (Router.APIType, String?)?
-        @Pulse var shouldNavigateToWorkspaceList: Void?
+        @Pulse var navigateToWorkspaceList: Void?
     }
     
     let initialState: State = State()
@@ -61,7 +61,7 @@ extension WorkspaceChangeAdminReactor {
             newState.networkError = value
         
         case .setNavigateToWorkspaceList:
-            newState.shouldNavigateToWorkspaceList = ()
+            newState.navigateToWorkspaceList = ()
         }
         return newState
     }

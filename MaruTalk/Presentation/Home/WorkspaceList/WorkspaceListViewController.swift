@@ -213,7 +213,7 @@ extension WorkspaceListViewController {
             }
             .disposed(by: disposeBag)
         
-        reactor.pulse(\.$shouldnavigateToHome)
+        reactor.pulse(\.$navigateToHome)
             .compactMap { $0 }
             .bind(with: self) { owner, _ in
                 owner.fadeOut {
@@ -222,7 +222,7 @@ extension WorkspaceListViewController {
             }
             .disposed(by: disposeBag)
         
-        reactor.pulse(\.$shouldNavigateToWorkspaceAdd)
+        reactor.pulse(\.$navigateToWorkspaceAdd)
             .compactMap { $0 }
             .bind(with: self) { owner, _ in
                 owner.coordinator?.didFinishWorkspaceList()
@@ -230,7 +230,7 @@ extension WorkspaceListViewController {
             }
             .disposed(by: disposeBag)
         
-        reactor.pulse(\.$shouldNavigateToWorkspaceChangeAdmin)
+        reactor.pulse(\.$navigateToWorkspaceChangeAdmin)
             .compactMap { $0 }
             .bind(with: self) { owner, _ in
                 owner.coordinator?.showWorkspaceChangeAdmin(viewController: self)

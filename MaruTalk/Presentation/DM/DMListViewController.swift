@@ -130,14 +130,14 @@ extension DMListViewController {
             }
             .disposed(by: disposeBag)
         
-        reactor.pulse(\.$shouldNavigateToDMChatting)
+        reactor.pulse(\.$navigateToDMChatting)
             .compactMap { $0 }
             .bind(with: self) { owner, value in
                 owner.coordinator?.showDMChatting(roomID: value.roomID, otherUserID: value.user.userID)
             }
             .disposed(by: disposeBag)
         
-        reactor.pulse(\.$shouldNavigateToProfile)
+        reactor.pulse(\.$navigateToProfile)
             .compactMap { $0 }
             .bind(with: self) { owner, _ in
                 owner.coordinator?.showProfile()

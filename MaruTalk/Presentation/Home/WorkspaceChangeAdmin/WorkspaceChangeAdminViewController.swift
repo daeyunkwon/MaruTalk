@@ -100,7 +100,7 @@ extension WorkspaceChangeAdminViewController {
             }
             .disposed(by: disposeBag)
         
-        reactor.pulse(\.$shouldNavigateToWorkspaceList)
+        reactor.pulse(\.$navigateToWorkspaceList)
             .compactMap { $0 }
             .bind(with: self) { owner, _ in
                 owner.coordinator?.didFinishWorkspaceChangeAdmin()

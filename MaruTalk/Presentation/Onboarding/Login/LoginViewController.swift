@@ -85,14 +85,14 @@ extension LoginViewController {
 
 extension LoginViewController {
     private func bindState(reactor: LoginReactor) {
-        reactor.state.map { $0.shouldNavigateToAuth }
+        reactor.state.map { $0.navigateToAuth }
             .filter { $0 == true }
             .bind(with: self) { owner, _ in
                 owner.coordinator?.didFinishLogin()
             }
             .disposed(by: disposeBag)
         
-        reactor.state.map { $0.shouldNavigateToHome }
+        reactor.state.map { $0.navigateToHome }
             .filter { $0 == true }
             .distinctUntilChanged()
             .bind(with: self) { owner, _ in

@@ -26,7 +26,7 @@ final class ChannelAddReactor: Reactor {
     }
     
     struct State {
-        @Pulse var shouldDismiss: Void?
+        @Pulse var dismiss: Void?
         var channelName = ""
         var channelDescription: String?
         var isCreateButtonEnabled = false
@@ -68,7 +68,7 @@ extension ChannelAddReactor {
         var newState = state
         switch mutation {
         case .setDismiss(let value):
-            newState.shouldDismiss = value
+            newState.dismiss = value
         
         case .setChannelName(let value):
             newState.channelName = value

@@ -166,7 +166,7 @@ extension HomeViewController {
             }
             .disposed(by: disposeBag)
         
-        reactor.pulse(\.$shouldNavigateToWorkspaceAdd)
+        reactor.pulse(\.$navigateToWorkspaceAdd)
             .bind(with: self) { owner, _ in
                 owner.coordinator?.showWorkspaceAdd(previousScreen: .workspaceInitial)
             }
@@ -197,14 +197,14 @@ extension HomeViewController {
             }
             .disposed(by: disposeBag)
         
-        reactor.pulse(\.$toastMessage)
+        reactor.pulse(\.$showToastMessage)
             .compactMap { $0 }
             .bind(with: self) { owner, value in
                 owner.showToastMessage(message: value)
             }
             .disposed(by: disposeBag)
         
-        reactor.pulse(\.$shouldNavigateToMemberInvite)
+        reactor.pulse(\.$navigateToMemberInvite)
             .compactMap { $0 }
             .bind(with: self) { owner, _ in
                 owner.coordinator?.showMemberInvite()

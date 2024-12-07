@@ -38,10 +38,10 @@ final class ChannelSettingReactor: Reactor {
         @Pulse var channel: Channel?
         var isExpand: Bool = true
         
-        @Pulse var shouldNavigateToChannelEdit: Channel?
-        @Pulse var shouldNavigateToChannelChangeAdmin: String?
-        @Pulse var shouldNaviageToHome: Void?
-        @Pulse var shouldShowRetryDeleteFromDBAlert: Void?
+        @Pulse var navigateToChannelEdit: Channel?
+        @Pulse var navigateToChannelChangeAdmin: String?
+        @Pulse var naviageToHome: Void?
+        @Pulse var showRetryDeleteFromDBAlert: Void?
     }
     
     var initialState: State
@@ -113,16 +113,16 @@ extension ChannelSettingReactor {
             newState.isExpand = value
         
         case .setNavigateToChannelEdit(let value):
-            newState.shouldNavigateToChannelEdit = value
+            newState.navigateToChannelEdit = value
             
         case .setNavigateToChannelChangeAdmin(let value):
-            newState.shouldNavigateToChannelChangeAdmin = value
+            newState.navigateToChannelChangeAdmin = value
         
         case .setNavigateToHome():
-            newState.shouldNaviageToHome = ()
+            newState.naviageToHome = ()
         
         case .setShowRetryDeleteFromDBAlert:
-            newState.shouldShowRetryDeleteFromDBAlert = ()
+            newState.showRetryDeleteFromDBAlert = ()
         }
         return newState
     }

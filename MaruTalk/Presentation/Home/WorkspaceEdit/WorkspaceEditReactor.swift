@@ -34,7 +34,7 @@ final class WorkspaceEditReactor: Reactor {
         @Pulse var workspaceImageData: Data?
         @Pulse var isDoneButtonEnabled: Bool?
         @Pulse var networkError: (Router.APIType, String?)?
-        @Pulse var shouldNavigateToWorkspaceLit: Void?
+        @Pulse var navigateToWorkspaceLit: Void?
     }
     
     let initialState: State
@@ -100,7 +100,7 @@ extension WorkspaceEditReactor {
             newState.workspaceImageData = value
             
         case .setNavigateToWorkspaceList:
-            newState.shouldNavigateToWorkspaceLit = ()
+            newState.navigateToWorkspaceLit = ()
         }
         return newState
     }

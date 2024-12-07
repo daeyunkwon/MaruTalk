@@ -53,7 +53,7 @@ final class WorkspaceAddReactor: Reactor {
         var isAlbumVisible = false
         var isCameraVisible = false
         
-        var shouldNavigateToHome = false
+        var navigateToHome = false
         
         var isValidName = false
         var isValidImage = false
@@ -179,7 +179,7 @@ extension WorkspaceAddReactor {
             newState.imageData = value
         
         case .setNavigateToHome(let value):
-            newState.shouldNavigateToHome = value
+            newState.navigateToHome = value
         
         case .setValidName(let value):
             newState.isValidName = value

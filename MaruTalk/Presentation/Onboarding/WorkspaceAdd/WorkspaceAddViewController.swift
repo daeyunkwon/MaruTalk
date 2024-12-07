@@ -200,7 +200,7 @@ extension WorkspaceAddViewController {
             }
             .disposed(by: disposeBag)
         
-        reactor.state.map { $0.shouldNavigateToHome }
+        reactor.state.map { $0.navigateToHome }
             .filter { $0 == true }
             .distinctUntilChanged()
             .bind(with: self) { owner, _ in

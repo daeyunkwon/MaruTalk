@@ -27,7 +27,7 @@ final class MemberInviteReactor: Reactor {
     struct State {
         var email: String = ""
         var isInviteButtonEnabled = false
-        var shouldNavigateToHome = false
+        var navigateToHome = false
         var inviteSuccess: Bool = false
         @Pulse var networkError: (Router.APIType, String?)?
     }
@@ -69,7 +69,7 @@ extension MemberInviteReactor {
             newState.isInviteButtonEnabled = value
         
         case .setNavigateToHome(let value):
-            newState.shouldNavigateToHome = value
+            newState.navigateToHome = value
         
         case .setInviteSuccess(let value):
             newState.inviteSuccess = value
