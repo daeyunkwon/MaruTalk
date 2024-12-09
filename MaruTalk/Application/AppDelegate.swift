@@ -7,6 +7,7 @@
 
 import UIKit
 
+import FirebaseCore
 import RealmSwift
 import RxKakaoSDKCommon
 
@@ -26,6 +27,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         print("RealmSwift 경로-----------------------------")
         print(String(describing: Realm.Configuration.defaultConfiguration.fileURL))
         print("-------------------------------------------")
+        
+        FirebaseApp.configure()
         
         return true
     }
