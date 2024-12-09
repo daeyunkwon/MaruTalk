@@ -41,7 +41,11 @@ final class DMListView: BaseView {
         return tv
     }()
     
-    let emptyView = DMListEmptyView()
+    let emptyView: DMListEmptyView = {
+        let view = DMListEmptyView()
+        view.isHidden = true
+        return view
+    }()
     
     //MARK: - Configurations
     
