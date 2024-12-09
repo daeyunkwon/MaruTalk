@@ -21,7 +21,6 @@ final class OnboardingViewController: BaseViewController<OnboardingView> {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
     }
     
     //MARK: - Configurations
@@ -36,7 +35,6 @@ final class OnboardingViewController: BaseViewController<OnboardingView> {
         rootView.startButton.rx.tap
             .bind(with: self) { owner, _ in
                 owner.coordinator?.showAuth()
-//                owner.coordinator?.didFinish()
             }
             .disposed(by: disposeBag)
     }
