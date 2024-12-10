@@ -32,7 +32,7 @@
 		441114FE2CE73CD3000D1B2B /* HomeEmptyView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 441114FD2CE73CD3000D1B2B /* HomeEmptyView.swift */; };
 		441115002CE75290000D1B2B /* DropdownArrowTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 441114FF2CE75290000D1B2B /* DropdownArrowTableViewCell.swift */; };
 		441115022CE75A38000D1B2B /* PlusTitleTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 441115012CE75A38000D1B2B /* PlusTitleTableViewCell.swift */; };
-		441115042CE75C4C000D1B2B /* ImageTitleCountTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 441115032CE75C4C000D1B2B /* ImageTitleCountTableViewCell.swift */; };
+		441115042CE75C4C000D1B2B /* DMRoomImageTitleCountTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 441115032CE75C4C000D1B2B /* DMRoomImageTitleCountTableViewCell.swift */; };
 		441115062CE86F70000D1B2B /* ChannelIconTitleCountTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 441115052CE86F70000D1B2B /* ChannelIconTitleCountTableViewCell.swift */; };
 		441115092CE87428000D1B2B /* Differentiator in Frameworks */ = {isa = PBXBuildFile; productRef = 441115082CE87428000D1B2B /* Differentiator */; };
 		4411150B2CE87428000D1B2B /* RxDataSources in Frameworks */ = {isa = PBXBuildFile; productRef = 4411150A2CE87428000D1B2B /* RxDataSources */; };
@@ -207,7 +207,7 @@
 		441114FD2CE73CD3000D1B2B /* HomeEmptyView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeEmptyView.swift; sourceTree = "<group>"; };
 		441114FF2CE75290000D1B2B /* DropdownArrowTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DropdownArrowTableViewCell.swift; sourceTree = "<group>"; };
 		441115012CE75A38000D1B2B /* PlusTitleTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlusTitleTableViewCell.swift; sourceTree = "<group>"; };
-		441115032CE75C4C000D1B2B /* ImageTitleCountTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageTitleCountTableViewCell.swift; sourceTree = "<group>"; };
+		441115032CE75C4C000D1B2B /* DMRoomImageTitleCountTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DMRoomImageTitleCountTableViewCell.swift; sourceTree = "<group>"; };
 		441115052CE86F70000D1B2B /* ChannelIconTitleCountTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChannelIconTitleCountTableViewCell.swift; sourceTree = "<group>"; };
 		4411150C2CE876C1000D1B2B /* SectionModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SectionModel.swift; sourceTree = "<group>"; };
 		4411150E2CE87C92000D1B2B /* HomeReactor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeReactor.swift; sourceTree = "<group>"; };
@@ -446,7 +446,7 @@
 				441115122CE9E2F4000D1B2B /* PlusTitleHeaderTableViewCell.swift */,
 				441115012CE75A38000D1B2B /* PlusTitleTableViewCell.swift */,
 				441115052CE86F70000D1B2B /* ChannelIconTitleCountTableViewCell.swift */,
-				441115032CE75C4C000D1B2B /* ImageTitleCountTableViewCell.swift */,
+				441115032CE75C4C000D1B2B /* DMRoomImageTitleCountTableViewCell.swift */,
 				4411154B2CF441E5000D1B2B /* MessageSelectedImageCollectionViewCell.swift */,
 				4411154D2CF447FE000D1B2B /* MessageOnePhotoTextTableViewCell.swift */,
 				4411154F2CF453D8000D1B2B /* MessageTwoPhotoTextTableViewCell.swift */,
@@ -999,7 +999,7 @@
 				441115322CEF7FB4000D1B2B /* Workspace.swift in Sources */,
 				44B476972CFF201400617126 /* WorkspaceListView.swift in Sources */,
 				44B4766D2CF9899F00617126 /* ProfileNameEmailTableViewCell.swift in Sources */,
-				441115042CE75C4C000D1B2B /* ImageTitleCountTableViewCell.swift in Sources */,
+				441115042CE75C4C000D1B2B /* DMRoomImageTitleCountTableViewCell.swift in Sources */,
 				441115062CE86F70000D1B2B /* ChannelIconTitleCountTableViewCell.swift in Sources */,
 				4411156E2CF707D2000D1B2B /* MemberInviteReactor.swift in Sources */,
 				4411152E2CEEE309000D1B2B /* AuthInterceptor.swift in Sources */,

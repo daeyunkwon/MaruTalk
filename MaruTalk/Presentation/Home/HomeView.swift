@@ -23,7 +23,7 @@ final class HomeView: BaseView {
         let tv = UITableView(frame: .zero, style: .grouped)
         tv.register(PlusTitleTableViewCell.self, forCellReuseIdentifier: PlusTitleTableViewCell.reuseIdentifier)
         tv.register(ChannelIconTitleCountTableViewCell.self, forCellReuseIdentifier: ChannelIconTitleCountTableViewCell.reuseIdentifier)
-        tv.register(ImageTitleCountTableViewCell.self, forCellReuseIdentifier: ImageTitleCountTableViewCell.reuseIdentifier)
+        tv.register(DMRoomImageTitleCountTableViewCell.self, forCellReuseIdentifier: DMRoomImageTitleCountTableViewCell.reuseIdentifier)
         tv.register(DropdownArrowTableViewCell.self, forHeaderFooterViewReuseIdentifier: DropdownArrowTableViewCell.reuseIdentifier)
         tv.register(PlusTitleHeaderTableViewCell.self, forHeaderFooterViewReuseIdentifier: PlusTitleHeaderTableViewCell.reuseIdentifier)
         tv.backgroundColor = Constant.Color.brandWhite

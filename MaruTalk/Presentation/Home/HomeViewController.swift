@@ -235,7 +235,7 @@ extension HomeViewController {
                     return cell
                 
                 case .dm(let dm):
-                    guard let cell = tableView.dequeueReusableCell(withIdentifier: ImageTitleCountTableViewCell.reuseIdentifier, for: indexPath) as? ImageTitleCountTableViewCell else {
+                    guard let cell = tableView.dequeueReusableCell(withIdentifier: DMRoomImageTitleCountTableViewCell.reuseIdentifier, for: indexPath) as? DMRoomImageTitleCountTableViewCell else {
                         return UITableViewCell()
                     }
                     cell.configure(dm: dm)

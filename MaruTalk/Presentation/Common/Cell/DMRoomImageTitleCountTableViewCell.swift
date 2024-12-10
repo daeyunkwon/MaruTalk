@@ -9,7 +9,7 @@ import UIKit
 
 import SnapKit
 
-final class ImageTitleCountTableViewCell: BaseTableViewCell {
+final class DMRoomImageTitleCountTableViewCell: BaseTableViewCell {
     
     //MARK: - UI Components
     
