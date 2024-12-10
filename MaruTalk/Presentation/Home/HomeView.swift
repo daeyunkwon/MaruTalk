@@ -22,7 +22,7 @@ final class HomeView: BaseView {
     let tableView: UITableView = {
         let tv = UITableView(frame: .zero, style: .grouped)
         tv.register(PlusTitleTableViewCell.self, forCellReuseIdentifier: PlusTitleTableViewCell.reuseIdentifier)
-        tv.register(HashTitleCountTableViewCell.self, forCellReuseIdentifier: HashTitleCountTableViewCell.reuseIdentifier)
+        tv.register(ChannelIconTitleCountTableViewCell.self, forCellReuseIdentifier: ChannelIconTitleCountTableViewCell.reuseIdentifier)
         tv.register(ImageTitleCountTableViewCell.self, forCellReuseIdentifier: ImageTitleCountTableViewCell.reuseIdentifier)
         tv.register(DropdownArrowTableViewCell.self, forHeaderFooterViewReuseIdentifier: DropdownArrowTableViewCell.reuseIdentifier)
         tv.register(PlusTitleHeaderTableViewCell.self, forHeaderFooterViewReuseIdentifier: PlusTitleHeaderTableViewCell.reuseIdentifier)

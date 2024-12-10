@@ -228,7 +228,7 @@ extension HomeViewController {
             configureCell: { _, tableView, indexPath, item in
                 switch item {
                 case .channel(let channel):
-                    guard let cell = tableView.dequeueReusableCell(withIdentifier: HashTitleCountTableViewCell.reuseIdentifier, for: indexPath) as? HashTitleCountTableViewCell else {
+                    guard let cell = tableView.dequeueReusableCell(withIdentifier: ChannelIconTitleCountTableViewCell.reuseIdentifier, for: indexPath) as? ChannelIconTitleCountTableViewCell else {
                         return UITableViewCell()
                     }
                     cell.configure(channel: channel)

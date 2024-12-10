@@ -9,14 +9,14 @@ import UIKit
 
 import SnapKit
 
-final class HashTitleCountTableViewCell: BaseTableViewCell {
+final class ChannelIconTitleCountTableViewCell: BaseTableViewCell {
     
     //MARK: - UI Components
     
-    private let hashImageView: UIImageView = {
+    private let iconImageView: UIImageView = {
         let iv = UIImageView()
         iv.contentMode = .scaleAspectFit
-        iv.image = UIImage(named: "hash_thin")
+        iv.image = UIImage(named: "satellite")
         return iv
     }()
     
@@ -50,7 +50,7 @@ final class HashTitleCountTableViewCell: BaseTableViewCell {
     
     override func configureHierarchy() {
         contentView.addSubviews(
-            hashImageView,
+            iconImageView,
             titleLabel,
             countBackView,
             countLabel
@@ -58,7 +58,7 @@ final class HashTitleCountTableViewCell: BaseTableViewCell {
     }
     
     override func configureLayout() {
-        hashImageView.snp.makeConstraints { make in
+        iconImageView.snp.makeConstraints { make in
             make.leading.equalToSuperview().inset(14)
             make.size.equalTo(18)
             make.centerY.equalToSuperview()
@@ -77,7 +77,7 @@ final class HashTitleCountTableViewCell: BaseTableViewCell {
         }
         
         titleLabel.snp.makeConstraints { make in
-            make.leading.equalTo(hashImageView.snp.trailing).offset(8)
+            make.leading.equalTo(iconImageView.snp.trailing).offset(8)
             make.centerY.equalToSuperview()
             make.trailing.equalTo(countBackView.snp.leading).offset(-8)
             make.width.greaterThanOrEqualTo(100)

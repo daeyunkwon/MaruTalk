@@ -102,7 +102,7 @@ extension ChannelSearchViewController {
         
         reactor.pulse(\.$channelList)
             .compactMap { $0 }
-            .bind(to: rootView.tableView.rx.items(cellIdentifier: HashTitleCountTableViewCell.reuseIdentifier, cellType: HashTitleCountTableViewCell.self)) { row, element, cell in
+            .bind(to: rootView.tableView.rx.items(cellIdentifier: ChannelIconTitleCountTableViewCell.reuseIdentifier, cellType: ChannelIconTitleCountTableViewCell.self)) { row, element, cell in
                 cell.configure(channel: element)
             }
             .disposed(by: disposeBag)
