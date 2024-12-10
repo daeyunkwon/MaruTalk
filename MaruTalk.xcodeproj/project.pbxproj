@@ -89,6 +89,7 @@
 		441115802CF82F50000D1B2B /* ChannelSettingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4411157F2CF82F50000D1B2B /* ChannelSettingViewController.swift */; };
 		441115822CF8372A000D1B2B /* ProfileImageTitleCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 441115812CF8372A000D1B2B /* ProfileImageTitleCollectionViewCell.swift */; };
 		441115842CF83D80000D1B2B /* RoundedWhiteBackOutlineButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 441115832CF83D80000D1B2B /* RoundedWhiteBackOutlineButton.swift */; };
+		4430E8172D0860C5008D025A /* PHPickerManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4430E8162D0860C5008D025A /* PHPickerManager.swift */; };
 		444910DA2CD77315005AB2F7 /* SignUpReactor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 444910D92CD77315005AB2F7 /* SignUpReactor.swift */; };
 		444910DC2CD8AC5C005AB2F7 /* Router.swift in Sources */ = {isa = PBXBuildFile; fileRef = 444910DB2CD8AC5C005AB2F7 /* Router.swift */; };
 		444910DF2CD8AC9F005AB2F7 /* Alamofire in Frameworks */ = {isa = PBXBuildFile; productRef = 444910DE2CD8AC9F005AB2F7 /* Alamofire */; };
@@ -259,6 +260,7 @@
 		4411157F2CF82F50000D1B2B /* ChannelSettingViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChannelSettingViewController.swift; sourceTree = "<group>"; };
 		441115812CF8372A000D1B2B /* ProfileImageTitleCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileImageTitleCollectionViewCell.swift; sourceTree = "<group>"; };
 		441115832CF83D80000D1B2B /* RoundedWhiteBackOutlineButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RoundedWhiteBackOutlineButton.swift; sourceTree = "<group>"; };
+		4430E8162D0860C5008D025A /* PHPickerManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PHPickerManager.swift; sourceTree = "<group>"; };
 		444910D92CD77315005AB2F7 /* SignUpReactor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignUpReactor.swift; sourceTree = "<group>"; };
 		444910DB2CD8AC5C005AB2F7 /* Router.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Router.swift; sourceTree = "<group>"; };
 		444910E02CD8B072005AB2F7 /* BodyKey.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BodyKey.swift; sourceTree = "<group>"; };
@@ -606,6 +608,7 @@
 				444DE6D62CD102DD00821269 /* Constant.swift */,
 				441115372CEF9636000D1B2B /* ImageCacheManager.swift */,
 				445C4B4D2D06D67D00EB2473 /* FCMManager.swift */,
+				4430E8162D0860C5008D025A /* PHPickerManager.swift */,
 				444DE6E32CD1219A00821269 /* Base */,
 				444DE6DB2CD112D300821269 /* Extensions */,
 				444DE6D32CD1021500821269 /* Protocols */,
@@ -1075,6 +1078,7 @@
 				441114C92CE1BDA5000D1B2B /* KeychainManager.swift in Sources */,
 				444DE6F72CD366DB00821269 /* AuthView.swift in Sources */,
 				441115152CE9E7F6000D1B2B /* PlusTitleHeaderTableViewCellDelegate.swift in Sources */,
+				4430E8172D0860C5008D025A /* PHPickerManager.swift in Sources */,
 				44B476802CFB20BB00617126 /* RealmDMChatRepository.swift in Sources */,
 				441114DF2CE5EA34000D1B2B /* MainTabBarCoordinator.swift in Sources */,
 				44B476762CFAF35F00617126 /* ProfileNameMessageTableViewCell.swift in Sources */,

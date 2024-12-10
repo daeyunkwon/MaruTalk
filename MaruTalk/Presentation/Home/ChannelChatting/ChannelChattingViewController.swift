@@ -6,7 +6,6 @@
 //
 
 import UIKit
-import PhotosUI
 
 import ReactorKit
 import RxCocoa
@@ -24,6 +23,8 @@ final class ChannelChattingViewController: BaseViewController<ChannelChattingVie
     }
     
     private let settingButton: UIBarButtonItem = UIBarButtonItem(image: UIImage(systemName: "gearshape.fill")?.applyingSymbolConfiguration(.init(pointSize: 14)), style: .plain, target: nil, action: nil)
+    
+    private let phpickerManager = PHPickerManager()
     
     //MARK: - Life Cycle
     
@@ -187,8 +188,11 @@ extension ChannelChattingViewController {
         
         reactor.pulse(\.$showPhotoAlbum)
             .compactMap { $0 }
-            .bind(with: self) { owner, _ in
-                owner.openPhotoPicker()
+            .bind(with: self) { [weak self] owner, _ in
+                guard let self else { return }
+                owner.phpickerManager.openPhotoPicker(in: owner, limit: 5) { dataList in
+                    self.reactor?.action.onNext(.selectPhotoImage(dataList))
+                }
             }
             .disposed(by: disposeBag)
         
@@ -227,47 +231,5 @@ extension ChannelChattingViewController {
                 owner.coordinator?.showChannelSetting(channelID: value)
             }
             .disposed(by: disposeBag)
-    }
-}
-
-//MARK: - PHPickerViewControllerDelegate
-
-extension ChannelChattingViewController: PHPickerViewControllerDelegate {
-    func picker(_ picker: PHPickerViewController, didFinishPicking results: [PHPickerResult]) {
-        picker.dismiss(animated: true, completion: nil)
-        
-        var selectedImageDataList: [Data] = []
-        let dispatchGroup = DispatchGroup()
-        
-        for (index, result) in results.enumerated() {
-            guard index < 5 else { break }
-            
-            dispatchGroup.enter()
-            result.itemProvider.loadObject(ofClass: UIImage.self) { (object, error) in
-                if let image = object as? UIImage {
-                    if let data = image.jpegData(compressionQuality: 0.3) {
-                        selectedImageDataList.append(data)
-                        dispatchGroup.leave()
-                    }
-                }
-            }
-        }
-        
-        dispatchGroup.notify(queue: .main) { [weak self] in
-            if !selectedImageDataList.isEmpty {
-                self?.reactor?.action.onNext(.selectPhotoImage(selectedImageDataList))
-            }
-        }
-    }
-    
-    private func openPhotoPicker() {
-        var configuration = PHPickerConfiguration()
-        configuration.selectionLimit = 5 // 최대 선택 가능 수
-        configuration.filter = .images
-        
-        let picker = PHPickerViewController(configuration: configuration)
-        picker.delegate = self
-        
-        present(picker, animated: true, completion: nil)
     }
 }

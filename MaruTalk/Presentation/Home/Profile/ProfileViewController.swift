@@ -6,7 +6,6 @@
 //
 
 import UIKit
-import PhotosUI
 
 import ReactorKit
 import RxCocoa
@@ -25,6 +24,8 @@ final class ProfileViewController: BaseViewController<ProfileView>, View {
     }
     
     private var dataSource: RxTableViewSectionedAnimatedDataSource<ProfileSectionModel>?
+    
+    private let phpickerManager = PHPickerManager()
     
     //MARK: - Life Cycle
     
@@ -66,8 +67,21 @@ extension ProfileViewController {
             .disposed(by: disposeBag)
         
         rootView.profileImageSettingButton.rx.tap
-            .bind(with: self) { owner, _ in
-                owner.requestPhotoLibraryPermission()
+            .bind(with: self) { [weak self] owner, _ in
+                guard let self else { return }
+                owner.phpickerManager.requestPhotoLibraryPermission { isGranted in
+                    if isGranted {
+                        //권한 허용된 경우
+                        self.phpickerManager.openPhotoPicker(in: self, limit: 1) { datas in
+                            if let imageData = datas.first {
+                                self.reactor?.action.onNext(.profileImageChange(imageData))
+                            }
+                        }
+                    } else {
+                        //권한 거부된 경우
+                        self.showToastMessage(message: "앨범 접근 권한이 거부되었습니다.", backgroundColor: Constant.Color.brandRed)
+                    }
+                }
             }
             .disposed(by: disposeBag)
     }
@@ -106,69 +120,5 @@ extension ProfileViewController {
                 owner.rootView.profileImageView.setImage(imagePath: value)
             }
             .disposed(by: disposeBag)
-    }
-}
-
-//MARK: - PHPickerViewControllerDelegate
-
-extension ProfileViewController: PHPickerViewControllerDelegate {
-    func picker(_ picker: PHPickerViewController, didFinishPicking results: [PHPickerResult]) {
-        picker.dismiss(animated: true, completion: nil)
-        
-        if let itemProvider = results.first?.itemProvider, itemProvider.canLoadObject(ofClass: UIImage.self) {
-            itemProvider.loadObject(ofClass: UIImage.self) {[weak self] object, error in
-                if let image = object as? UIImage {
-                    if let imageData = image.jpegData(compressionQuality: 0.1) {
-                        self?.reactor?.action.onNext(.profileImageChange(imageData))
-                    }
-                }
-            }
-        }
-    }
-    
-    private func openPhotoPicker() {
-        var configuration = PHPickerConfiguration()
-        configuration.selectionLimit = 1 // 최대 선택 가능 수
-        configuration.filter = .images
-        
-        let picker = PHPickerViewController(configuration: configuration)
-        picker.delegate = self
-        
-        present(picker, animated: true, completion: nil)
-    }
-    
-    private func requestPhotoLibraryPermission() {
-        let status = PHPhotoLibrary.authorizationStatus(for: .readWrite)
-        
-        switch status {
-        case .notDetermined:
-            //권한 요청
-            PHPhotoLibrary.requestAuthorization {[weak self] status in
-                guard let self else { return }
-                
-                DispatchQueue.main.async {
-                    self.handlePhotoLibraryAuthorizationStatus(status)
-                }
-            }
-        case .restricted, .denied:
-            self.showToastMessage(message: "앨범 접근 권한이 거부되었습니다.", backgroundColor: Constant.Color.brandRed)
-        case .authorized, .limited:
-            self.openPhotoPicker()
-        @unknown default:
-            break
-        }
-    }
-    
-    private func handlePhotoLibraryAuthorizationStatus(_ status: PHAuthorizationStatus) {
-        switch status {
-        case .authorized, .limited:
-            self.openPhotoPicker()
-        case .denied, .restricted:
-            self.showToastMessage(message: "앨범 접근 권한이 거부되었습니다.", backgroundColor: Constant.Color.brandRed)
-        case .notDetermined:
-            break
-        @unknown default:
-            break
-        }
     }
 }

@@ -6,7 +6,6 @@
 //
 
 import AVFoundation
-import PhotosUI
 import UIKit
 
 import ReactorKit
@@ -27,6 +26,8 @@ final class WorkspaceAddViewController: BaseViewController<WorkspaceAddView>, Vi
         super.init()
         self.reactor = reactor
     }
+    
+    private let phpickerManager = PHPickerManager()
     
     //MARK: - Life Cycle
     
@@ -90,41 +91,6 @@ final class WorkspaceAddViewController: BaseViewController<WorkspaceAddView>, Vi
             completion(false)
         }
     }
-    
-    private func requestPhotoLibraryPermission() {
-        let status = PHPhotoLibrary.authorizationStatus(for: .readWrite)
-        
-        switch status {
-        case .notDetermined:
-            //권한 요청
-            PHPhotoLibrary.requestAuthorization {[weak self] status in
-                guard let self else { return }
-                
-                DispatchQueue.main.async {
-                    self.handlePhotoLibraryAuthorizationStatus(status)
-                }
-            }
-        case .restricted, .denied:
-            self.showToastMessage(message: "앨범 접근 권한이 거부되었습니다.", backgroundColor: Constant.Color.brandRed)
-        case .authorized, .limited:
-            self.openPhotoPicker()
-        @unknown default:
-            break
-        }
-    }
-    
-    private func handlePhotoLibraryAuthorizationStatus(_ status: PHAuthorizationStatus) {
-        switch status {
-        case .authorized, .limited:
-            self.openPhotoPicker()
-        case .denied, .restricted:
-            self.showToastMessage(message: "앨범 접근 권한이 거부되었습니다.", backgroundColor: Constant.Color.brandRed)
-        case .notDetermined:
-            break
-        @unknown default:
-            break
-        }
-    }
 }
 
 //MARK: - Bind Action
@@ -178,8 +144,22 @@ extension WorkspaceAddViewController {
         
         reactor.state.map { $0.isAlbumVisible }
             .filter { $0 == true }
-            .bind(with: self) { owner, _ in
-                owner.requestPhotoLibraryPermission()
+            .bind(with: self) { [weak self] owner, _ in
+                guard let self else { return }
+                self.phpickerManager.requestPhotoLibraryPermission { isGranted in
+                    if isGranted {
+                        //권한 허용된 경우
+                        self.phpickerManager.openPhotoPicker(in: self, limit: 1) { datas in
+                            if let imageData = datas.first {
+                                self.rootView.imageSettingButton.setImage(UIImage(data: imageData), for: .normal)
+                                self.reactor?.action.onNext(.selectPhotoImage(imageData))
+                            }
+                        }
+                    } else {
+                        //권한 거부된 경우
+                        self.showToastMessage(message: "카메라 접근 권한이 거부되었습니다.", backgroundColor: Constant.Color.brandRed)
+                    }
+                }
             }
             .disposed(by: disposeBag)
         
@@ -256,62 +236,10 @@ extension WorkspaceAddViewController: UINavigationControllerDelegate, UIImagePic
         
         rootView.imageSettingButton.setImage(image, for: .normal)
         
-        if let imageData = image.jpegData(compressionQuality: 0.7) {
+        if let imageData = image.jpegData(compressionQuality: 0.1) {
             reactor?.action.onNext(.selectPhotoImage(imageData))
         }
         
         picker.dismiss(animated: true, completion: nil)
       }
-}
-
-//MARK: - PHPickerViewControllerDelegate
-
-extension WorkspaceAddViewController: PHPickerViewControllerDelegate {
-    func picker(_ picker: PHPickerViewController, didFinishPicking results: [PHPickerResult]) {
-        picker.dismiss(animated: true, completion: nil)
-        
-        if let itemProvider = results.first?.itemProvider, itemProvider.canLoadObject(ofClass: UIImage.self) {
-                itemProvider.loadObject(ofClass: UIImage.self) {[weak self] object, error in
-                    if let image = object as? UIImage {
-                        DispatchQueue.main.async {
-                            self?.rootView.imageSettingButton.setImage(image, for: .normal)
-                            
-                            if let imageData = image.jpegData(compressionQuality: 0.1) {
-                                self?.reactor?.action.onNext(.selectPhotoImage(imageData))
-                            }
-                        }
-                    }
-                }
-            }
-    }
-    
-    private func openPhotoPicker() {
-        var configuration = PHPickerConfiguration()
-        configuration.selectionLimit = 1 // 최대 선택 가능 수
-        configuration.filter = .images
-        
-        let picker = PHPickerViewController(configuration: configuration)
-        picker.delegate = self
-        
-        present(picker, animated: true, completion: nil)
-        
-//        var configuration = PHPickerConfiguration(photoLibrary: .shared())
-//        configuration.selectionLimit = 2
-//        if #available(iOS 17.0, *) {
-//            configuration.selection = .default
-//            configuration.mode = .default
-//            configuration.edgesWithoutContentMargins = .all
-//            configuration.disabledCapabilities = .selectionActions
-//            let picker = PHPickerViewController(configuration: configuration)
-//            self.addChild(picker)
-//            var update = PHPickerConfiguration.Update()
-//            update.edgesWithoutContentMargins = []
-//            picker.updatePicker(using: update)
-//            rootView.addSubview(picker.view)
-//            picker.view.snp.makeConstraints { make in
-//                make.edges.equalToSuperview()
-//            }
-//            picker.didMove(toParent: self)
-//        }
-    }
 }

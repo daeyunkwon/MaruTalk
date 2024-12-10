@@ -6,7 +6,6 @@
 //
 
 import UIKit
-import PhotosUI
 
 import ReactorKit
 import RxCocoa
@@ -24,6 +23,8 @@ final class WorkspaceEditViewController: BaseViewController<WorkspaceAddView>, V
     }
     
     private let xMarkButton: UIBarButtonItem = UIBarButtonItem(image: UIImage(systemName: "xmark")?.applyingSymbolConfiguration(.init(pointSize: 14)), style: .plain, target: nil, action: nil)
+    
+    private let phpickerManager = PHPickerManager()
     
     //MARK: - Life Cycle
     
@@ -73,8 +74,14 @@ extension WorkspaceEditViewController {
             .disposed(by: disposeBag)
         
         rootView.imageSettingButton.rx.tap
-            .bind(with: self) { owner, _ in
-                owner.openPhotoPicker()
+            .bind(with: self) { [weak self] owner, _ in
+                guard let self else { return }
+                owner.phpickerManager.openPhotoPicker(in: owner, limit: 1) { imageDatas in
+                    if let imageData = imageDatas.first {
+                        self.rootView.imageSettingButton.setImage(UIImage(data: imageData), for: .normal)
+                        self.reactor?.action.onNext(.selectPhotoImage(imageData))
+                    }
+                }
             }
             .disposed(by: disposeBag)
     }
@@ -128,38 +135,5 @@ extension WorkspaceEditViewController {
                 owner.showToastForNetworkError(api: value.0, errorCode: value.1)
             }
             .disposed(by: disposeBag)
-    }
-}
-
-//MARK: - PHPickerViewControllerDelegate
-
-extension WorkspaceEditViewController: PHPickerViewControllerDelegate {
-    func picker(_ picker: PHPickerViewController, didFinishPicking results: [PHPickerResult]) {
-        picker.dismiss(animated: true, completion: nil)
-        
-        if let itemProvider = results.first?.itemProvider, itemProvider.canLoadObject(ofClass: UIImage.self) {
-                itemProvider.loadObject(ofClass: UIImage.self) {[weak self] object, error in
-                    if let image = object as? UIImage {
-                        DispatchQueue.main.async {
-                            self?.rootView.imageSettingButton.setImage(image, for: .normal)
-                            
-                            if let imageData = image.jpegData(compressionQuality: 0.1) {
-                                self?.reactor?.action.onNext(.selectPhotoImage(imageData))
-                            }
-                        }
-                    }
-                }
-            }
-    }
-    
-    private func openPhotoPicker() {
-        var configuration = PHPickerConfiguration()
-        configuration.selectionLimit = 1 // 최대 선택 가능 수
-        configuration.filter = .images
-        
-        let picker = PHPickerViewController(configuration: configuration)
-        picker.delegate = self
-        
-        present(picker, animated: true, completion: nil)
     }
 }
