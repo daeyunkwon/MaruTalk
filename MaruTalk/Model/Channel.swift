@@ -15,6 +15,7 @@ struct Channel: Decodable, Equatable {
     let ownerID: String
     let createdAt: String
     let channelMembers: [User]?
+    var unreadCount: Int?
     
     enum CodingKeys: String, CodingKey {
         case id = "channel_id"
@@ -24,6 +25,7 @@ struct Channel: Decodable, Equatable {
         case ownerID = "owner_id"
         case createdAt
         case channelMembers
+        case unreadCount
     }
     
     static func == (lhs: Channel, rhs: Channel) -> Bool {

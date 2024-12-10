@@ -220,20 +220,60 @@ extension HomeReactor {
                 guard let self else { return .empty() }
                 switch result {
                 case .success(let value):
+                    //생성일 과거순 정렬
                     let sorted = value.sorted {
                         let item = Date.createdDate(dateString: $0.createdAt)
                         let nextItem = Date.createdDate(dateString: $1.createdAt)
                         return item < nextItem
                     }
                     
-                    return .concat([
-                        .just(.setChannelSection(sorted)),
-                        .just(.setExpanded(isExpanded: self.currentState.sections[0].isExpanded, sectionIndex: 0))
-                    ])
+                    return fetchChannelUnreadCount(channels: sorted)
                 
                 case .failure(let error):
                     return .just(.setNetworkError((Router.APIType.userMe, error.errorCode)))
                 }
+            }
+    }
+    
+    //각 채널에 안 읽은 채팅 개수 업데이트
+    private func fetchChannelUnreadCount(channels: [Channel]) -> Observable<Mutation> {
+        guard let workspaceID = UserDefaultsManager.shared.recentWorkspaceID else { return .empty() }
+        
+        let observables = channels.map { channel -> Observable<Channel> in
+            
+            var after: String? //마지막 채팅 날짜
+            //DB에서 마지막 채팅 날짜 가져오기
+            if let lastChatDate = RealmChannelChatRepository.shared.fetchLastChat(channelID: channel.id)?.createdAt {
+                after = Date.formatToISO8601String(date: lastChatDate)
+            } else {
+                //신규 메시지의 경우 DB에 아직 저장된 내용이 없기 때문에 임의 날짜로 지정: (서버에서 공백을 포함하여 빈 값으로 보낼 시 응답값의 count가 0으로 리턴됩니다.)
+                let tempDate = Date(timeIntervalSince1970: TimeInterval())
+                after = Date.formatToISO8601String(date: tempDate)
+            }
+            
+            return NetworkManager.shared.performRequest(api: .channelUnreadCount(workspaceID: workspaceID, channelID: channel.id, after: after), model: Unread.self)
+                .asObservable()
+                .map { result -> Channel in
+                    switch result {
+                    case .success(let value):
+                        var updateChannel = channel
+                        updateChannel.unreadCount = value.count //안읽은 채팅 개수
+                        return updateChannel
+                        
+                    case .failure(let error):
+                        print(error)
+                        print("ERROR: 채널에 안 읽은 채팅 개수 fetch 실패")
+                        return channel //실패 시 채팅 개수없이 채널 넘기기
+                    }
+                }
+        }
+        
+        return Observable.zip(observables)
+            .flatMap { channels -> Observable<Mutation> in
+                return .concat([
+                    .just(.setChannelSection(channels)),
+                    .just(.setExpanded(isExpanded: self.currentState.sections[0].isExpanded, sectionIndex: 0))
+                ])
             }
     }
     

@@ -45,6 +45,7 @@ enum Router {
     case channelChangeAdmin(workspaceID: String, channelID: String, memberID: String)
     case channelExit(workspaceID: String, channelID: String)
     case channelDelete(workspaceID: String, channelID: String)
+    case channelUnreadCount(workspaceID: String, channelID: String, after: String?)
     //DMS
     case dms(workspaceID: String)
     case dmChats(workspaceID: String, roomID: String, cursorDate: String?)
@@ -88,6 +89,7 @@ enum Router {
         case channelChangeAdmin
         case channelExit
         case channelDelete
+        case channelUnreadCount
         //DMS
         case dms
         case dmChats
@@ -136,6 +138,7 @@ extension Router: URLRequestConvertible {
         case .channelChangeAdmin(let workspaceID, let channelID, _): return APIURL.channelChangeAdmin(workspaceID: workspaceID, channelID: channelID)
         case .channelExit(let workspaceID, let channelID): return APIURL.channelExit(workspaceID: workspaceID, channelID: channelID)
         case .channelDelete(let workspaceID, let channelID): return APIURL.channel(workspaceID: workspaceID, channelID: channelID)
+        case .channelUnreadCount(let workspaceID, let channelID, _): return APIURL.channelUnreadCount(workspaceID: workspaceID, channelID: channelID)
             
         case .dms(let workspaceID): return APIURL.dms(workspaceID: workspaceID)
         case .dmChats(let workspaceID, let roomID, _): return APIURL.dmChats(workspaceID: workspaceID, roomID: roomID)
@@ -147,7 +150,7 @@ extension Router: URLRequestConvertible {
     
     var method: HTTPMethod {
         switch self {
-        case .refresh, .fetchImage, .workspaces, .workspace, .workspaceMembers, .workspaceExit, .userMe, .user, .myChannels, .dms, .chats, .channel, .channels, .channelMembers, .channelExit, .dmChats, .dmUnreadCount:
+        case .refresh, .fetchImage, .workspaces, .workspace, .workspaceMembers, .workspaceExit, .userMe, .user, .myChannels, .dms, .chats, .channel, .channels, .channelMembers, .channelExit, .channelUnreadCount, .dmChats, .dmUnreadCount:
             return .get
             
         case .emailValidation(_), .join, .login, .loginWithApple, .loginWithKakao, .userDeviceToken, .createWorkspace, .createChannel, .sendChannelChat, .workspaceMemberInvite, .createDM, .sendDMChat:
@@ -177,7 +180,7 @@ extension Router: URLRequestConvertible {
                 "SesacKey": APIKey.apiKey
             ]
             
-        case .workspaces, .workspace, .workspaceMembers, .workspaceExit, .workspaceTransferOwnership, .workspaceDelete, .userMe, .user, .userDeviceToken, .myChannels, .dms, .chats, .channel, .workspaceMemberInvite, .channels, .channelMembers, .channelChangeAdmin, .channelExit, .channelDelete, .dmChats, .createDM, .dmUnreadCount:
+        case .workspaces, .workspace, .workspaceMembers, .workspaceExit, .workspaceTransferOwnership, .workspaceDelete, .userMe, .user, .userDeviceToken, .myChannels, .dms, .chats, .channel, .workspaceMemberInvite, .channels, .channelMembers, .channelChangeAdmin, .channelExit, .channelDelete, .channelUnreadCount, .dmChats, .createDM, .dmUnreadCount:
             return [
                 "Content-Type": "application/json",
                 "Authorization": KeychainManager.shared.getItem(forKey: .accessToken) ?? "",
@@ -348,6 +351,11 @@ extension Router: URLRequestConvertible {
         case .dmChats(_, _, let cursorDate):
             return [
                 URLQueryItem(name: "cursor_date", value: cursorDate)
+            ]
+            
+        case .channelUnreadCount(_, _, let after):
+            return [
+                URLQueryItem(name: "after", value: after)
             ]
             
         case .dmUnreadCount(_, _, let after):

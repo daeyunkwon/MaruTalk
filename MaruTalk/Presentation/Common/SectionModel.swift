@@ -19,8 +19,10 @@ enum SectionItem: Equatable, IdentifiableType {
         switch self {
         case .channel(let channel):
             return "channel-\(channel.id)"
+        
         case .dm(let dm):
             return "dm-\(dm.roomID)"
+        
         case .add(let value):
             return "add-\(value)"
         }
@@ -29,9 +31,11 @@ enum SectionItem: Equatable, IdentifiableType {
     static func == (lhs: SectionItem, rhs: SectionItem) -> Bool {
         switch (lhs, rhs) {
         case let (.channel(lhsChannel), .channel(rhsChannel)):
-            return lhsChannel == rhsChannel
+            return lhsChannel.id == rhsChannel.id && lhsChannel.unreadCount == rhsChannel.unreadCount && lhsChannel.name == rhsChannel.name
+        
         case let (.dm(lhsDM), .dm(rhsDM)):
-            return lhsDM == rhsDM
+            return lhsDM.roomID == rhsDM.roomID && lhsDM.user.nickname == rhsDM.user.nickname && lhsDM.user.profileImage == rhsDM.user.profileImage
+        
         case let (.add(lhsValue), .add(rhsValue)):
             return lhsValue == rhsValue
         default:

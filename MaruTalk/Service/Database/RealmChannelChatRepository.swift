@@ -39,6 +39,20 @@ extension RealmChannelChatRepository {
         }
     }
     
+    func fetchLastChat(channelID: String) -> RealmChannelChat? {
+        do {
+            let realm = try getRealm()
+            
+            let result = realm.objects(RealmChannelChat.self).filter("channelID == %@", channelID).sorted(byKeyPath: RealmChannelChat.Key.createdAt.rawValue, ascending: false)
+            
+            return result.first
+        } catch {
+            print("ERROR: RealmChat Last Chat Fetch Failed")
+            print(error)
+            return nil
+        }
+    }
+    
     func saveChat(chat: RealmChannelChat) {
         do {
             let realm = try getRealm()

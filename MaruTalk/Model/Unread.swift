@@ -8,11 +8,15 @@
 import Foundation
 
 struct Unread: Decodable {
-    let roomID: String
+    let roomID: String?
+    let channelID: String?
+    let name: String?
     let count: Int
     
     enum CodingKeys: String, CodingKey {
         case roomID = "room_id"
+        case channelID = "channel_id"
+        case name
         case count
     }
 }

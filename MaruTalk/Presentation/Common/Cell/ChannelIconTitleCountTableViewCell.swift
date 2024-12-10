@@ -72,8 +72,8 @@ final class ChannelIconTitleCountTableViewCell: BaseTableViewCell {
         countBackView.snp.makeConstraints { make in
             make.top.equalTo(countLabel.snp.top).offset(-2)
             make.bottom.equalTo(countLabel.snp.bottom).offset(2)
-            make.leading.equalTo(countLabel.snp.leading).offset(-4)
-            make.trailing.equalTo(countLabel.snp.trailing).offset(4)
+            make.leading.equalTo(countLabel.snp.leading).offset(-6)
+            make.trailing.equalTo(countLabel.snp.trailing).offset(6)
         }
         
         titleLabel.snp.makeConstraints { make in
@@ -90,5 +90,14 @@ final class ChannelIconTitleCountTableViewCell: BaseTableViewCell {
     
     func configure(channel: Channel) {
         self.titleLabel.text = channel.name
+        
+        if let count = channel.unreadCount, count != 0 {
+            self.countLabel.text = "\(count)"
+            self.countLabel.isHidden = false
+            self.countBackView.isHidden = false
+        } else {
+            self.countLabel.isHidden = true
+            self.countBackView.isHidden = true
+        }
     }
 }
