@@ -53,7 +53,7 @@ final class WorkspaceListTableViewCell: BaseTableViewCell {
     
     let menuButton: UIButton = {
         let btn = UIButton(type: .system)
-        btn.setImage(UIImage(named: "three_dots"), for: .normal)
+        btn.setImage(UIImage(systemName: "gearshape")?.applyingSymbolConfiguration(.init(font: Constant.Font.captionSemiBold)), for: .normal)
         btn.tintColor = Constant.Color.brandBlack
         btn.isHidden = true
         return btn
