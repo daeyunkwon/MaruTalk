@@ -150,7 +150,7 @@ extension LoginReactor {
     private func executeLogin() -> Observable<Mutation> {
         let email: String = currentState.email
         let password: String = currentState.password
-        let deviceToken: String = ""
+        let deviceToken: String = FCMManager.shared.getFCMToken()
         
         return NetworkManager.shared.performRequest(api: .login(email: email, password: password, deviceToken: deviceToken), model: User.self)
             .asObservable()
@@ -158,6 +158,9 @@ extension LoginReactor {
                 guard let self else { return .empty()}
                 switch result {
                 case .success(let value):
+                    print("DEBUG: 로그인 유저 정보-------------")
+                    print(value)
+                    print("--------------------------------")
                     //유저 ID 저장
                     UserDefaultsManager.shared.userID = value.userID
                     print("유저ID: \(value.userID)")

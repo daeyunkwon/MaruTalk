@@ -18,6 +18,7 @@ enum Router {
     case login(email: String, password: String, deviceToken: String)
     case loginWithApple(idToken: String, nickname: String, deviceToken: String)
     case loginWithKakao(oauthToken: String, deviceToken: String)
+    case userDeviceToken(deviceToken: String)
     //Workspace
     case workspaces //사용자가 속한 워크스페이스 리스트
     case createWorkspace(name: String, description: String, imageData: Data)
@@ -60,6 +61,7 @@ enum Router {
         case login
         case loginWithApple
         case loginWithKakao
+        case userDeviceToken
         //Workspace
         case workspaces
         case createWorkspace
@@ -113,6 +115,7 @@ extension Router: URLRequestConvertible {
         case .userMe: return APIURL.userMe
         case .user(let userID): return APIURL.user(userID: userID)
         case .userMeImage: return APIURL.userMeImage
+        case .userDeviceToken: return APIURL.userDeviceToken
             
         case .workspaces, .createWorkspace, .workspace: return APIURL.workspaces
         case .workspaceMemberInvite(let workspaceID, _): return APIURL.workspaceMemberInvite(workspaceID: workspaceID)
@@ -147,7 +150,7 @@ extension Router: URLRequestConvertible {
         case .refresh, .fetchImage, .workspaces, .workspace, .workspaceMembers, .workspaceExit, .userMe, .user, .myChannels, .dms, .chats, .channel, .channels, .channelMembers, .channelExit, .dmChats, .dmUnreadCount:
             return .get
             
-        case .emailValidation(_), .join, .login, .loginWithApple, .loginWithKakao, .createWorkspace, .createChannel, .sendChannelChat, .workspaceMemberInvite, .createDM, .sendDMChat:
+        case .emailValidation(_), .join, .login, .loginWithApple, .loginWithKakao, .userDeviceToken, .createWorkspace, .createChannel, .sendChannelChat, .workspaceMemberInvite, .createDM, .sendDMChat:
             return .post
             
         case .workspaceEdit, .workspaceTransferOwnership, .channelEdit, .channelChangeAdmin, .userMeImage:
@@ -174,7 +177,7 @@ extension Router: URLRequestConvertible {
                 "SesacKey": APIKey.apiKey
             ]
             
-        case .workspaces, .workspace, .workspaceMembers, .workspaceExit, .workspaceTransferOwnership, .workspaceDelete, .userMe, .user, .myChannels, .dms, .chats, .channel, .workspaceMemberInvite, .channels, .channelMembers, .channelChangeAdmin, .channelExit, .channelDelete, .dmChats, .createDM, .dmUnreadCount:
+        case .workspaces, .workspace, .workspaceMembers, .workspaceExit, .workspaceTransferOwnership, .workspaceDelete, .userMe, .user, .userDeviceToken, .myChannels, .dms, .chats, .channel, .workspaceMemberInvite, .channels, .channelMembers, .channelChangeAdmin, .channelExit, .channelDelete, .dmChats, .createDM, .dmUnreadCount:
             return [
                 "Content-Type": "application/json",
                 "Authorization": KeychainManager.shared.getItem(forKey: .accessToken) ?? "",
@@ -229,6 +232,11 @@ extension Router: URLRequestConvertible {
         case .loginWithKakao(let oauthToken, let deviceToken):
             return try? JSONEncoder().encode([
                 BodyKey.oauthToken: oauthToken,
+                BodyKey.deviceToken: deviceToken
+            ])
+            
+        case .userDeviceToken(let deviceToken):
+            return try? JSONEncoder().encode([
                 BodyKey.deviceToken: deviceToken
             ])
             

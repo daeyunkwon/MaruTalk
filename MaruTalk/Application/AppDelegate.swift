@@ -8,6 +8,7 @@
 import UIKit
 
 import FirebaseCore
+import FirebaseMessaging
 import RealmSwift
 import RxKakaoSDKCommon
 
@@ -30,10 +31,26 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         
         FirebaseApp.configure()
         
+        //원격 알림 등록
+        UNUserNotificationCenter.current().delegate = self
+        
+        let authOptions: UNAuthorizationOptions = [.alert, .badge, .sound]
+        UNUserNotificationCenter.current().requestAuthorization(
+            options: authOptions,
+            completionHandler: { _, _ in }
+        )
+        
+        application.registerForRemoteNotifications()
+        
+        //메시지 대리자 설정(등록 토큰 수신을 위해 필요)
+        Messaging.messaging().delegate = self
+        
+        
+        
         return true
     }
     
-    func appearance() {
+    private func appearance() {
         UINavigationBar.appearance().tintColor = Constant.Color.brandBlack
         let appearance = UINavigationBarAppearance()
         //배경색
@@ -66,5 +83,37 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     }
 
 
+}
+
+//MARK: - UNUserNotificationCenterDelegate
+
+extension AppDelegate: UNUserNotificationCenterDelegate {
+    
+    func application(_ application: UIApplication, didRegisterForRemoteNotificationsWithDeviceToken deviceToken: Data) {
+        Messaging.messaging().apnsToken = deviceToken
+    }
+    
+    func userNotificationCenter(_ center: UNUserNotificationCenter, willPresent notification: UNNotification, withCompletionHandler completionHandler: @escaping (UNNotificationPresentationOptions) -> Void) {
+        print(notification.request.content.userInfo)
+        return completionHandler([.badge, .banner, .sound, .list])
+    }
+    
+    func userNotificationCenter(_ center: UNUserNotificationCenter, didReceive response: UNNotificationResponse) async {
+        let userInfo = response.notification.request.content.userInfo as NSDictionary
+        print(userInfo)
+    }
+}
+
+//MARK: - MessagingDelegate(FCM)
+
+extension AppDelegate: MessagingDelegate {
+    
+    //현재 등록 토큰(디바이스마다 고유한 토큰 정보가 있음) 가져오기
+    func messaging(_ messaging: Messaging, didReceiveRegistrationToken fcmToken: String?) {
+        if let fcmToken = fcmToken {
+            print("FCM registration token: \(fcmToken)")
+            FCMManager.shared.saveFCMToken(token: fcmToken)
+        }
+    }
 }
 

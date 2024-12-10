@@ -139,6 +139,7 @@
 		445C4B472D06BBF500EB2473 /* FirebaseAnalyticsWithoutAdIdSupport in Frameworks */ = {isa = PBXBuildFile; productRef = 445C4B462D06BBF500EB2473 /* FirebaseAnalyticsWithoutAdIdSupport */; };
 		445C4B492D06BBF500EB2473 /* FirebaseCrashlytics in Frameworks */ = {isa = PBXBuildFile; productRef = 445C4B482D06BBF500EB2473 /* FirebaseCrashlytics */; };
 		445C4B4B2D06BBF500EB2473 /* FirebaseMessaging in Frameworks */ = {isa = PBXBuildFile; productRef = 445C4B4A2D06BBF500EB2473 /* FirebaseMessaging */; };
+		445C4B4E2D06D67D00EB2473 /* FCMManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 445C4B4D2D06D67D00EB2473 /* FCMManager.swift */; };
 		44B476672CF8AB5A00617126 /* ChannelEditReactor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 44B476662CF8AB5A00617126 /* ChannelEditReactor.swift */; };
 		44B476692CF8AC0900617126 /* ChannelEditView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 44B476682CF8AC0900617126 /* ChannelEditView.swift */; };
 		44B4766B2CF8AC1800617126 /* ChannelEditViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 44B4766A2CF8AC1800617126 /* ChannelEditViewController.swift */; };
@@ -300,6 +301,7 @@
 		445C4B3F2D01C6F700EB2473 /* WorkspaceChangeAdminReactor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WorkspaceChangeAdminReactor.swift; sourceTree = "<group>"; };
 		445C4B412D01C77B00EB2473 /* WorkspaceChangeAdminViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WorkspaceChangeAdminViewController.swift; sourceTree = "<group>"; };
 		445C4B432D06B93E00EB2473 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
+		445C4B4D2D06D67D00EB2473 /* FCMManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FCMManager.swift; sourceTree = "<group>"; };
 		44B476662CF8AB5A00617126 /* ChannelEditReactor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChannelEditReactor.swift; sourceTree = "<group>"; };
 		44B476682CF8AC0900617126 /* ChannelEditView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChannelEditView.swift; sourceTree = "<group>"; };
 		44B4766A2CF8AC1800617126 /* ChannelEditViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChannelEditViewController.swift; sourceTree = "<group>"; };
@@ -603,6 +605,7 @@
 			children = (
 				444DE6D62CD102DD00821269 /* Constant.swift */,
 				441115372CEF9636000D1B2B /* ImageCacheManager.swift */,
+				445C4B4D2D06D67D00EB2473 /* FCMManager.swift */,
 				444DE6E32CD1219A00821269 /* Base */,
 				444DE6DB2CD112D300821269 /* Extensions */,
 				444DE6D32CD1021500821269 /* Protocols */,
@@ -1032,6 +1035,7 @@
 				441114EE2CE60C21000D1B2B /* SettingCoordinator.swift in Sources */,
 				441114F82CE60CB5000D1B2B /* SearchViewController.swift in Sources */,
 				441115482CF3246C000D1B2B /* ChannelChattingView.swift in Sources */,
+				445C4B4E2D06D67D00EB2473 /* FCMManager.swift in Sources */,
 				4411154A2CF32477000D1B2B /* ChannelChattingViewController.swift in Sources */,
 				441115342CEF8123000D1B2B /* Date+Extension.swift in Sources */,
 				444DE7062CD609FC00821269 /* OnboardingCoordinator.swift in Sources */,
