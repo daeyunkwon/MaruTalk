@@ -117,7 +117,7 @@ final class WorkspaceListTableViewCell: BaseTableViewCell {
         
         if data.id == workspaceID {
             //선택한 워크스페이스인 경우
-            containerView.backgroundColor = Constant.Color.brandGray
+            containerView.backgroundColor = Constant.Color.brandLightColor
             menuButton.isHidden = false
         } else {
             //미선택 워크스페이스인 경우

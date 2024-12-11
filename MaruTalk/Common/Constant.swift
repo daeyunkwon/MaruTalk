@@ -10,6 +10,7 @@ import UIKit
 enum Constant {
     enum Color {
         static let brandColor: UIColor = UIColor(red: 170/255, green: 199/255, blue: 254/255, alpha: 1.0)
+        static let brandLightColor: UIColor = UIColor(red: 0.83, green: 0.87, blue: 0.97, alpha: 1.00)
         static let brandBlue: UIColor = UIColor(red: 0.03, green: 0.24, blue: 0.50, alpha: 1.00)
         static let brandRed: UIColor = UIColor(red: 233/255, green: 102/255, blue: 107/255, alpha: 1.0)
         static let brandInactive: UIColor = UIColor(red: 170/255, green: 170/255, blue: 170/255, alpha: 1.0)
