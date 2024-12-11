@@ -30,6 +30,7 @@ final class HomeViewController: BaseViewController<HomeView>, View {
     
     deinit {
         NotificationCenter.default.removeObserver(self)
+        print("DEBUG: \(String(describing: self)) deinit")
     }
     
     //MARK: - Life Cycle

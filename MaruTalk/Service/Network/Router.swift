@@ -19,6 +19,7 @@ enum Router {
     case loginWithApple(idToken: String, nickname: String, deviceToken: String)
     case loginWithKakao(oauthToken: String, deviceToken: String)
     case userDeviceToken(deviceToken: String)
+    case logout //서버에 저장된 FCM deviceToken 정보 삭제
     //Workspace
     case workspaces //사용자가 속한 워크스페이스 리스트
     case createWorkspace(name: String, description: String, imageData: Data)
@@ -63,6 +64,7 @@ enum Router {
         case loginWithApple
         case loginWithKakao
         case userDeviceToken
+        case logout
         //Workspace
         case workspaces
         case createWorkspace
@@ -118,6 +120,7 @@ extension Router: URLRequestConvertible {
         case .user(let userID): return APIURL.user(userID: userID)
         case .userMeImage: return APIURL.userMeImage
         case .userDeviceToken: return APIURL.userDeviceToken
+        case .logout: return APIURL.logout
             
         case .workspaces, .createWorkspace, .workspace: return APIURL.workspaces
         case .workspaceMemberInvite(let workspaceID, _): return APIURL.workspaceMemberInvite(workspaceID: workspaceID)
@@ -150,7 +153,7 @@ extension Router: URLRequestConvertible {
     
     var method: HTTPMethod {
         switch self {
-        case .refresh, .fetchImage, .workspaces, .workspace, .workspaceMembers, .workspaceExit, .userMe, .user, .myChannels, .dms, .chats, .channel, .channels, .channelMembers, .channelExit, .channelUnreadCount, .dmChats, .dmUnreadCount:
+        case .refresh, .fetchImage, .logout, .workspaces, .workspace, .workspaceMembers, .workspaceExit, .userMe, .user, .myChannels, .dms, .chats, .channel, .channels, .channelMembers, .channelExit, .channelUnreadCount, .dmChats, .dmUnreadCount:
             return .get
             
         case .emailValidation(_), .join, .login, .loginWithApple, .loginWithKakao, .userDeviceToken, .createWorkspace, .createChannel, .sendChannelChat, .workspaceMemberInvite, .createDM, .sendDMChat:
@@ -180,7 +183,7 @@ extension Router: URLRequestConvertible {
                 "SesacKey": APIKey.apiKey
             ]
             
-        case .workspaces, .workspace, .workspaceMembers, .workspaceExit, .workspaceTransferOwnership, .workspaceDelete, .userMe, .user, .userDeviceToken, .myChannels, .dms, .chats, .channel, .workspaceMemberInvite, .channels, .channelMembers, .channelChangeAdmin, .channelExit, .channelDelete, .channelUnreadCount, .dmChats, .createDM, .dmUnreadCount:
+        case .logout, .workspaces, .workspace, .workspaceMembers, .workspaceExit, .workspaceTransferOwnership, .workspaceDelete, .userMe, .user, .userDeviceToken, .myChannels, .dms, .chats, .channel, .workspaceMemberInvite, .channels, .channelMembers, .channelChangeAdmin, .channelExit, .channelDelete, .channelUnreadCount, .dmChats, .createDM, .dmUnreadCount:
             return [
                 "Content-Type": "application/json",
                 "Authorization": KeychainManager.shared.getItem(forKey: .accessToken) ?? "",

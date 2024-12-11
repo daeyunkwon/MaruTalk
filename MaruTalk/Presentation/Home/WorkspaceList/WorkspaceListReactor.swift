@@ -198,7 +198,7 @@ extension WorkspaceListReactor {
     }
     
     private func executeWorkspaceDelete(workspaceID: String, channelIDs: [String]) -> Observable<Mutation> {
-        return NetworkManager.shared.performDelete(api: .workspaceDelete(workspaceID: workspaceID))
+        return NetworkManager.shared.performRequset(api: .workspaceDelete(workspaceID: workspaceID))
             .asObservable()
             .flatMap { [weak self] result -> Observable<Mutation> in
                 guard let self else { return .empty() }

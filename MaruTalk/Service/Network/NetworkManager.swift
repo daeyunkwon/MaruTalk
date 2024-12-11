@@ -235,8 +235,8 @@ final class NetworkManager {
         }
     }
     
-    //워크스페이스 & 채널 삭제용
-    func performDelete(api: Router) -> Single<Result<Void, NetworkError>> {
+    //요청 성공 시 서버에서 주는 값이 없는 API에 대해서 사용
+    func performRequset(api: Router) -> Single<Result<Void, NetworkError>> {
         return Single.create { single -> Disposable in
             
             do {

@@ -13,12 +13,14 @@ final class ProfileReactor: Reactor {
     enum Action {
         case fetch
         case profileImageChange(Data)
+        case logout
     }
     
     enum Mutation {
         case setNetworkError((Router.APIType, String?))
         case setSections(User)
         case setProfileImagePath(String?)
+        case setNavigateToOnboarding
     }
     
     struct State {
@@ -36,6 +38,7 @@ final class ProfileReactor: Reactor {
         ]
         @Pulse var networkError: (Router.APIType, String?)?
         @Pulse var profileImagePath: String?
+        @Pulse var navigateToOnboarding: Void?
     }
     
     var initialState: State = State()
@@ -51,6 +54,9 @@ extension ProfileReactor {
         
         case .profileImageChange(let value):
             return executeProfileImageChange(imageData: value)
+        
+        case .logout:
+            return executeLogout()
         }
     }
 }
@@ -80,6 +86,9 @@ extension ProfileReactor {
         
         case .setProfileImagePath(let value):
             newState.profileImagePath = value
+        
+        case .setNavigateToOnboarding:
+            newState.navigateToOnboarding = ()
         }
         return newState
     }
@@ -115,6 +124,24 @@ extension ProfileReactor {
                 
                 case .failure(let error):
                     return .just(.setNetworkError((Router.APIType.userMeImage, error.errorCode)))
+                }
+            }
+    }
+    
+    //로그아웃(서버에 저장된 FCM deviceToken 정보 삭제)
+    private func executeLogout() -> Observable<Mutation> {
+        return NetworkManager.shared.performRequset(api: .logout)
+            .asObservable()
+            .flatMap { result -> Observable<Mutation> in
+                switch result {
+                case .success():
+                    UserDefaultsManager.shared.removeItem(key: .userID)
+                    UserDefaultsManager.shared.removeItem(key: .recentWorkspaceID)
+                    UserDefaultsManager.shared.removeItem(key: .recentWorkspaceOwnerID)
+                    return .just(.setNavigateToOnboarding)
+                
+                case .failure(let error):
+                    return .just(.setNetworkError((Router.APIType.logout, error.errorCode)))
                 }
             }
     }

@@ -88,8 +88,20 @@ extension ProfileViewController {
         rootView.tableView.rx.itemSelected
             .bind(with: self) { owner, indexPath in
                 owner.rootView.tableView.deselectRow(at: indexPath, animated: true)
-                
-                
+            }
+            .disposed(by: disposeBag)
+        
+        let modelSelectedStream = rootView.tableView.rx.modelSelected(ProfileSectionItem.self)
+            .map { $0.title }
+            .share()
+        
+        modelSelectedStream
+            .filter { $0 == "로그아웃" }
+            .bind(with: self) { [weak self] owner, _ in
+                guard let self else { return }
+                owner.showAlert(title: "로그아웃", message: "로그아웃 하시겠습니까?", actions: [
+                    ("확인", { self.reactor?.action.onNext(.logout) })
+                ])
             }
             .disposed(by: disposeBag)
     }
@@ -126,6 +138,15 @@ extension ProfileViewController {
             .compactMap { $0 }
             .bind(with: self) { owner, value in
                 owner.rootView.profileImageView.setImage(imagePath: value)
+            }
+            .disposed(by: disposeBag)
+        
+        reactor.pulse(\.$navigateToOnboarding)
+            .compactMap { $0 }
+            .bind(with: self) { owner, _ in
+                if let homeCoordinator = owner.coordinator as? HomeCoordinator {
+                    homeCoordinator.didFinish()
+                }
             }
             .disposed(by: disposeBag)
     }

@@ -204,7 +204,7 @@ extension ChannelSettingReactor {
         guard let workspaceID = UserDefaultsManager.shared.recentWorkspaceID else { return .empty() }
         let channelID = currentState.channelID
         
-        return NetworkManager.shared.performDelete(api: .channelDelete(workspaceID: workspaceID, channelID: channelID))
+        return NetworkManager.shared.performRequset(api: .channelDelete(workspaceID: workspaceID, channelID: channelID))
             .asObservable()
             .flatMap { [weak self] result -> Observable<Mutation> in
                 guard let self else { return .empty() }
