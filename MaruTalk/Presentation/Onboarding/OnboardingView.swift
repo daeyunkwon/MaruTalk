@@ -25,9 +25,9 @@ final class OnboardingView: BaseView {
     
     private let mainImageView: UIImageView = {
         let iv = UIImageView()
-        iv.contentMode = .scaleAspectFill
+        iv.contentMode = .scaleAspectFit
         iv.clipsToBounds = true
-        iv.image = UIImage(named: "onboarding")
+        iv.image = UIImage(named: "maru_onboarding")
         return iv
     }()
     
@@ -52,7 +52,7 @@ final class OnboardingView: BaseView {
         
         mainImageView.snp.makeConstraints { make in
             make.top.equalTo(titleLabel.snp.bottom).offset(89)
-            make.horizontalEdges.equalTo(safeAreaLayoutGuide).inset(12)
+            make.horizontalEdges.equalTo(safeAreaLayoutGuide).inset(20)
             make.height.equalTo(mainImageView.snp.width)
         }
         
