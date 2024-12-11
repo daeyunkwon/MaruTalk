@@ -84,6 +84,12 @@ extension ProfileViewController {
                 }
             }
             .disposed(by: disposeBag)
+        
+        rootView.tableView.rx.itemSelected
+            .bind(with: self) { owner, indexPath in
+                owner.rootView.tableView.deselectRow(at: indexPath, animated: true)
+            }
+            .disposed(by: disposeBag)
     }
 }
 
