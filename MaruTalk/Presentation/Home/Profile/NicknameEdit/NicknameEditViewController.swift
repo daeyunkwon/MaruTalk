@@ -56,7 +56,11 @@ final class NicknameEditViewController: BaseViewController<EditView>, View {
 
 extension NicknameEditViewController {
     private func bindAction(reactor: NicknameEditReactor) {
-        
+        rootView.inputFieldView.inputTextField.rx.text.orEmpty
+            .skip(1)
+            .map { Reactor.Action.inputNewNickname($0) }
+            .bind(to: reactor.action)
+            .disposed(by: disposeBag)
     }
 }
 
@@ -64,12 +68,20 @@ extension NicknameEditViewController {
 
 extension NicknameEditViewController {
     private func bindState(reactor: NicknameEditReactor) {
-        reactor.pulse(\.$nickname)
+        reactor.pulse(\.$placeholderText)
+            .bind(to: rootView.inputFieldView.inputTextField.rx.placeholder)
+            .disposed(by: disposeBag)
+        
+        reactor.state.map { $0.newNickname }
+            .distinctUntilChanged()
             .bind(to: rootView.inputFieldView.inputTextField.rx.text)
             .disposed(by: disposeBag)
         
-        reactor.pulse(\.$placeholderText)
-            .bind(to: rootView.inputFieldView.inputTextField.rx.placeholder)
+        reactor.state.map { $0.isDoneButtonEnabled }
+            .distinctUntilChanged()
+            .bind(with: self) { owner, value in
+                owner.rootView.doneButton.setButtonEnabled(isEnabled: value)
+            }
             .disposed(by: disposeBag)
     }
 }
