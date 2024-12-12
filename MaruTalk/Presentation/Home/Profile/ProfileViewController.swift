@@ -35,18 +35,14 @@ final class ProfileViewController: BaseViewController<ProfileView>, View {
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
+        navigationItem.title = "내 정보 수정"
         tabBarController?.tabBar.isHidden = true
     }
     
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
         tabBarController?.tabBar.isHidden = false
-    }
-    
-    //MARK: - Configurations
-    
-    override func setupNavi() {
-        navigationItem.title = "내 정보 수정"
+        navigationItem.title = ""
     }
     
     //MARK: - Methods
@@ -92,16 +88,22 @@ extension ProfileViewController {
             .disposed(by: disposeBag)
         
         let modelSelectedStream = rootView.tableView.rx.modelSelected(ProfileSectionItem.self)
-            .map { $0.title }
             .share()
         
         modelSelectedStream
-            .filter { $0 == "로그아웃" }
+            .filter { $0.title == "로그아웃" }
             .bind(with: self) { [weak self] owner, _ in
                 guard let self else { return }
                 owner.showAlert(title: "로그아웃", message: "로그아웃 하시겠습니까?", actions: [
                     ("확인", { self.reactor?.action.onNext(.logout) })
                 ])
+            }
+            .disposed(by: disposeBag)
+        
+        modelSelectedStream
+            .filter { $0.title == "닉네임" }
+            .bind(with: self) { owner, value in
+                owner.coordinator?.showNicknameEdit(nickname: value.subTitle)
             }
             .disposed(by: disposeBag)
     }

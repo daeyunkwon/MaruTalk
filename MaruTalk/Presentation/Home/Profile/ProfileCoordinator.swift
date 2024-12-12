@@ -39,3 +39,16 @@ final class ProfileCoordinator: Coordinator {
         navigationController.popViewController(animated: true)
     }
 }
+
+extension ProfileCoordinator {
+    func showNicknameEdit(nickname: String) {
+        let reactor = NicknameEditReactor(nickname: nickname)
+        let nicknameEditVC = NicknameEditViewController(reactor: reactor)
+        nicknameEditVC.coordinator = self
+        navigationController.pushViewController(nicknameEditVC, animated: true)
+    }
+    
+    func didFinishNicknameEdit() {
+        navigationController.popViewController(animated: true)
+    }
+}

@@ -142,6 +142,9 @@
 		445C4B4B2D06BBF500EB2473 /* FirebaseMessaging in Frameworks */ = {isa = PBXBuildFile; productRef = 445C4B4A2D06BBF500EB2473 /* FirebaseMessaging */; };
 		445C4B4E2D06D67D00EB2473 /* FCMManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 445C4B4D2D06D67D00EB2473 /* FCMManager.swift */; };
 		44B282FA2D0AD0A700A11190 /* ProfileCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 44B282F92D0AD0A700A11190 /* ProfileCoordinator.swift */; };
+		44B282FC2D0AD64E00A11190 /* NicknameEditReactor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 44B282FB2D0AD64E00A11190 /* NicknameEditReactor.swift */; };
+		44B282FE2D0AD6B600A11190 /* EditView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 44B282FD2D0AD6B600A11190 /* EditView.swift */; };
+		44B283002D0AD8EF00A11190 /* NicknameEditViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 44B282FF2D0AD8EF00A11190 /* NicknameEditViewController.swift */; };
 		44B476672CF8AB5A00617126 /* ChannelEditReactor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 44B476662CF8AB5A00617126 /* ChannelEditReactor.swift */; };
 		44B476692CF8AC0900617126 /* ChannelEditView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 44B476682CF8AC0900617126 /* ChannelEditView.swift */; };
 		44B4766B2CF8AC1800617126 /* ChannelEditViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 44B4766A2CF8AC1800617126 /* ChannelEditViewController.swift */; };
@@ -306,6 +309,9 @@
 		445C4B432D06B93E00EB2473 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		445C4B4D2D06D67D00EB2473 /* FCMManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FCMManager.swift; sourceTree = "<group>"; };
 		44B282F92D0AD0A700A11190 /* ProfileCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileCoordinator.swift; sourceTree = "<group>"; };
+		44B282FB2D0AD64E00A11190 /* NicknameEditReactor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NicknameEditReactor.swift; sourceTree = "<group>"; };
+		44B282FD2D0AD6B600A11190 /* EditView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditView.swift; sourceTree = "<group>"; };
+		44B282FF2D0AD8EF00A11190 /* NicknameEditViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NicknameEditViewController.swift; sourceTree = "<group>"; };
 		44B476662CF8AB5A00617126 /* ChannelEditReactor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChannelEditReactor.swift; sourceTree = "<group>"; };
 		44B476682CF8AC0900617126 /* ChannelEditView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChannelEditView.swift; sourceTree = "<group>"; };
 		44B4766A2CF8AC1800617126 /* ChannelEditViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChannelEditViewController.swift; sourceTree = "<group>"; };
@@ -777,6 +783,9 @@
 		44B282F82D0ACD1200A11190 /* NicknameEdit */ = {
 			isa = PBXGroup;
 			children = (
+				44B282FB2D0AD64E00A11190 /* NicknameEditReactor.swift */,
+				44B282FD2D0AD6B600A11190 /* EditView.swift */,
+				44B282FF2D0AD8EF00A11190 /* NicknameEditViewController.swift */,
 			);
 			path = NicknameEdit;
 			sourceTree = "<group>";
@@ -1001,6 +1010,7 @@
 				44B4768C2CFDCFC100617126 /* ProfileReactor.swift in Sources */,
 				44B476722CF98BE800617126 /* ChannelChangeAdminView.swift in Sources */,
 				441114D42CE34EBD000D1B2B /* WorkspaceAddView.swift in Sources */,
+				44B282FE2D0AD6B600A11190 /* EditView.swift in Sources */,
 				445C4B362D0033D200EB2473 /* WorkspaceListTableViewCell.swift in Sources */,
 				441114C72CE08B03000D1B2B /* User.swift in Sources */,
 				44B4767C2CFB0A4000617126 /* ProfileCircleImageTitleCollectionViewCell.swift in Sources */,
@@ -1009,6 +1019,7 @@
 				44B476702CF98B8700617126 /* ChannelChangeAdminReactor.swift in Sources */,
 				441114F02CE60C48000D1B2B /* DMListView.swift in Sources */,
 				441115002CE75290000D1B2B /* DropdownArrowTableViewCell.swift in Sources */,
+				44B283002D0AD8EF00A11190 /* NicknameEditViewController.swift in Sources */,
 				444910E72CD8E734005AB2F7 /* UIViewController+Extension.swift in Sources */,
 				4411151B2CEB3190000D1B2B /* UserDefaultsManager.swift in Sources */,
 				441115322CEF7FB4000D1B2B /* Workspace.swift in Sources */,
@@ -1073,6 +1084,7 @@
 				441115702CF7083A000D1B2B /* MemberInviteView.swift in Sources */,
 				441115622CF48397000D1B2B /* RealmChannelChat.swift in Sources */,
 				441115822CF8372A000D1B2B /* ProfileImageTitleCollectionViewCell.swift in Sources */,
+				44B282FC2D0AD64E00A11190 /* NicknameEditReactor.swift in Sources */,
 				4411154E2CF447FE000D1B2B /* MessageOnePhotoTextTableViewCell.swift in Sources */,
 				4411157E2CF82F2D000D1B2B /* ChannelSettingView.swift in Sources */,
 				441114F22CE60C76000D1B2B /* SearchView.swift in Sources */,
