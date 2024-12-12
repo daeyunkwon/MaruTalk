@@ -10,9 +10,9 @@ import Foundation
 struct User: Decodable {
     let userID: String
     let email: String
-    let nickname: String
+    var nickname: String
     let profileImage: String?
-    let phone: String?
+    var phone: String?
     let provider: String?
     let createdAt: String?
     let token: Token?

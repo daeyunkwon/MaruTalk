@@ -34,6 +34,7 @@ enum Router {
     case userMe //내 프로필 정보 조회
     case user(userID: String) //다른 유저 정보 조회
     case userMeImage(imageData: Data) //프로필 이미지 수정
+    case userMeEdit(nickname: String, phone: String) //닉네임 및 연락처 수정
     //Channel
     case channels(workspaceID: String) //워크 스페이스에 속하는 모든 채널들
     case myChannels(workspaceID: String) //워크 스페이스에 속하는 사용자가 속한 채널들
@@ -79,6 +80,7 @@ enum Router {
         case userMe
         case user
         case userMeImage
+        case userMeEdit
         //Channel
         case channels
         case myChannels
@@ -121,6 +123,7 @@ extension Router: URLRequestConvertible {
         case .userMeImage: return APIURL.userMeImage
         case .userDeviceToken: return APIURL.userDeviceToken
         case .logout: return APIURL.logout
+        case .userMeEdit: return APIURL.userMe
             
         case .workspaces, .createWorkspace, .workspace: return APIURL.workspaces
         case .workspaceMemberInvite(let workspaceID, _): return APIURL.workspaceMemberInvite(workspaceID: workspaceID)
@@ -159,7 +162,7 @@ extension Router: URLRequestConvertible {
         case .emailValidation(_), .join, .login, .loginWithApple, .loginWithKakao, .userDeviceToken, .createWorkspace, .createChannel, .sendChannelChat, .workspaceMemberInvite, .createDM, .sendDMChat:
             return .post
             
-        case .workspaceEdit, .workspaceTransferOwnership, .channelEdit, .channelChangeAdmin, .userMeImage:
+        case .userMeImage, .userMeEdit, .workspaceEdit, .workspaceTransferOwnership, .channelEdit, .channelChangeAdmin:
             return .put
             
         case .workspaceDelete, .channelDelete:
@@ -183,7 +186,7 @@ extension Router: URLRequestConvertible {
                 "SesacKey": APIKey.apiKey
             ]
             
-        case .logout, .workspaces, .workspace, .workspaceMembers, .workspaceExit, .workspaceTransferOwnership, .workspaceDelete, .userMe, .user, .userDeviceToken, .myChannels, .dms, .chats, .channel, .workspaceMemberInvite, .channels, .channelMembers, .channelChangeAdmin, .channelExit, .channelDelete, .channelUnreadCount, .dmChats, .createDM, .dmUnreadCount:
+        case .userMeEdit, .userMe, .user, .userDeviceToken, .logout, .workspaces, .workspace, .workspaceMembers, .workspaceExit, .workspaceTransferOwnership, .workspaceDelete, .myChannels, .dms, .chats, .channel, .workspaceMemberInvite, .channels, .channelMembers, .channelChangeAdmin, .channelExit, .channelDelete, .channelUnreadCount, .dmChats, .createDM, .dmUnreadCount:
             return [
                 "Content-Type": "application/json",
                 "Authorization": KeychainManager.shared.getItem(forKey: .accessToken) ?? "",
@@ -244,6 +247,12 @@ extension Router: URLRequestConvertible {
         case .userDeviceToken(let deviceToken):
             return try? JSONEncoder().encode([
                 BodyKey.deviceToken: deviceToken
+            ])
+            
+        case .userMeEdit(let nickname, let phone):
+            return try? JSONEncoder().encode([
+                BodyKey.nickname: nickname,
+                BodyKey.phone: phone
             ])
             
         case .workspaceMemberInvite(_, let email):

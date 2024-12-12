@@ -41,8 +41,8 @@ final class ProfileCoordinator: Coordinator {
 }
 
 extension ProfileCoordinator {
-    func showNicknameEdit(nickname: String) {
-        let reactor = NicknameEditReactor(nickname: nickname)
+    func showNicknameEdit(user: User) {
+        let reactor = NicknameEditReactor(user: user)
         let nicknameEditVC = NicknameEditViewController(reactor: reactor)
         nicknameEditVC.coordinator = self
         navigationController.pushViewController(nicknameEditVC, animated: true)

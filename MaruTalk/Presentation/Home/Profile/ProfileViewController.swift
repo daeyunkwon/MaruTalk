@@ -23,6 +23,11 @@ final class ProfileViewController: BaseViewController<ProfileView>, View {
         self.reactor = reactor
     }
     
+    deinit {
+        NotificationCenter.default.removeObserver(self)
+        self.coordinator?.didFinish()
+    }
+    
     private var dataSource: RxTableViewSectionedAnimatedDataSource<ProfileSectionModel>?
     
     private let phpickerManager = PHPickerManager()
@@ -31,6 +36,7 @@ final class ProfileViewController: BaseViewController<ProfileView>, View {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        setupNotification()
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -45,7 +51,19 @@ final class ProfileViewController: BaseViewController<ProfileView>, View {
         navigationItem.title = ""
     }
     
+    //MARK: - Configurations
+    
+    private func setupNotification() {
+        NotificationCenter.default.addObserver(self, selector: #selector(handleProfileEditComplete), name: .profileEditComplete, object: nil)
+    }
+    
     //MARK: - Methods
+    
+    @objc private func handleProfileEditComplete(notification: Notification) {
+        if let user = notification.userInfo?[NotificationUserInfoKey.user] as? User {
+            self.reactor?.action.onNext(.update(user))
+        }
+    }
     
     func bind(reactor: ProfileReactor) {
         bindAction(reactor: reactor)
@@ -57,7 +75,7 @@ final class ProfileViewController: BaseViewController<ProfileView>, View {
 
 extension ProfileViewController {
     private func bindAction(reactor: ProfileReactor) {
-        rx.methodInvoked(#selector(viewWillAppear(_:)))
+        rx.methodInvoked(#selector(viewDidLoad))
             .map { _ in Reactor.Action.fetch }
             .bind(to: reactor.action)
             .disposed(by: disposeBag)
@@ -102,9 +120,8 @@ extension ProfileViewController {
         
         modelSelectedStream
             .filter { $0.title == "닉네임" }
-            .bind(with: self) { owner, value in
-                owner.coordinator?.showNicknameEdit(nickname: value.subTitle)
-            }
+            .map { _ in Reactor.Action.selectNickname }
+            .bind(to: reactor.action)
             .disposed(by: disposeBag)
     }
 }
@@ -147,6 +164,13 @@ extension ProfileViewController {
             .compactMap { $0 }
             .bind(with: self) { owner, _ in
                 owner.coordinator?.didFinish(isNavigateToOnboarding: true)
+            }
+            .disposed(by: disposeBag)
+        
+        reactor.pulse(\.$navigateToNicknameEdit)
+            .compactMap { $0 }
+            .bind(with: self) { owner, value in
+                owner.coordinator?.showNicknameEdit(user: value)
             }
             .disposed(by: disposeBag)
     }

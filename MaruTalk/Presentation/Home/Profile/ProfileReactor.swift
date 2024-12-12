@@ -12,14 +12,18 @@ import ReactorKit
 final class ProfileReactor: Reactor {
     enum Action {
         case fetch
+        case update(User)
         case profileImageChange(Data)
+        case selectNickname
         case logout
     }
     
     enum Mutation {
         case setNetworkError((Router.APIType, String?))
         case setSections(User)
+        case setUser(User)
         case setProfileImagePath(String?)
+        case setNavigateToNicknameEdit(User)
         case setNavigateToOnboarding
     }
     
@@ -39,6 +43,9 @@ final class ProfileReactor: Reactor {
         @Pulse var networkError: (Router.APIType, String?)?
         @Pulse var profileImagePath: String?
         @Pulse var navigateToOnboarding: Void?
+        
+        var user: User?
+        @Pulse var navigateToNicknameEdit: User?
     }
     
     var initialState: State = State()
@@ -51,9 +58,26 @@ extension ProfileReactor {
         switch action {
         case .fetch:
             return fetchProfile()
+            
+        case .update(let value):
+            guard var user = currentState.user else { return .empty() }
+            user.nickname = value.nickname
+            user.phone = value.phone
+            
+            return .concat([
+                .just(.setSections(user)),
+                .just(.setUser(user))
+            ])
         
         case .profileImageChange(let value):
             return executeProfileImageChange(imageData: value)
+            
+        case .selectNickname:
+            if let user = currentState.user {
+                return .just(.setNavigateToNicknameEdit(user))
+            } else {
+                return .empty()
+            }
         
         case .logout:
             return executeLogout()
@@ -89,6 +113,12 @@ extension ProfileReactor {
         
         case .setNavigateToOnboarding:
             newState.navigateToOnboarding = ()
+        
+        case .setUser(let value):
+            newState.user = value
+        
+        case .setNavigateToNicknameEdit(let value):
+            newState.navigateToNicknameEdit = value
         }
         return newState
     }
@@ -104,6 +134,7 @@ extension ProfileReactor {
                 switch result {
                 case .success(let value):
                     return .concat([
+                        .just(.setUser(value)),
                         .just(.setProfileImagePath(value.profileImage)),
                         .just(.setSections(value))
                     ])
