@@ -24,7 +24,7 @@ extension UIViewController {
         let x = (view.bounds.width / 2)
         let y: Double = 630
         
-        var message: String = "에러가 발생했어요. 잠시 후 다시 시도해주세요."
+        var message: String = "에러가 발생했어요. 네트워크 연결 상태 확인 후 다시 시도해주세요."
         
         guard let errorCode = errorCode else {
             view.makeToast(message, point: CGPoint(x: x, y: y), title: nil, image: nil, style: style, completion: nil)
@@ -130,7 +130,7 @@ extension UIViewController {
         }
     }
     
-    func navigateToLogin() {
+    private func navigateToLogin() {
         guard !UIViewController.isNavigatingToLogin else {
             print("DEBUG: 로그인 화면 중복 전환 방지됨")
             return

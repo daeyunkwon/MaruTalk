@@ -140,7 +140,7 @@ extension DMListViewController {
         reactor.pulse(\.$navigateToProfile)
             .compactMap { $0 }
             .bind(with: self) { owner, _ in
-                owner.coordinator?.showProfile()
+                owner.coordinator?.startProfileCoordinator()
             }
             .disposed(by: disposeBag)
     }

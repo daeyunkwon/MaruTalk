@@ -16,7 +16,7 @@ final class ProfileViewController: BaseViewController<ProfileView>, View {
     //MARK: - Properties
     
     var disposeBag: DisposeBag = DisposeBag()
-    weak var coordinator: Coordinator?
+    weak var coordinator: ProfileCoordinator?
     
     init(reactor: ProfileReactor) {
         super.init()
@@ -144,9 +144,7 @@ extension ProfileViewController {
         reactor.pulse(\.$navigateToOnboarding)
             .compactMap { $0 }
             .bind(with: self) { owner, _ in
-                if let homeCoordinator = owner.coordinator as? HomeCoordinator {
-                    homeCoordinator.didFinish()
-                }
+                owner.coordinator?.didFinish(isNavigateToOnboarding: true)
             }
             .disposed(by: disposeBag)
     }

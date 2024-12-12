@@ -141,6 +141,7 @@
 		445C4B492D06BBF500EB2473 /* FirebaseCrashlytics in Frameworks */ = {isa = PBXBuildFile; productRef = 445C4B482D06BBF500EB2473 /* FirebaseCrashlytics */; };
 		445C4B4B2D06BBF500EB2473 /* FirebaseMessaging in Frameworks */ = {isa = PBXBuildFile; productRef = 445C4B4A2D06BBF500EB2473 /* FirebaseMessaging */; };
 		445C4B4E2D06D67D00EB2473 /* FCMManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 445C4B4D2D06D67D00EB2473 /* FCMManager.swift */; };
+		44B282FA2D0AD0A700A11190 /* ProfileCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 44B282F92D0AD0A700A11190 /* ProfileCoordinator.swift */; };
 		44B476672CF8AB5A00617126 /* ChannelEditReactor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 44B476662CF8AB5A00617126 /* ChannelEditReactor.swift */; };
 		44B476692CF8AC0900617126 /* ChannelEditView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 44B476682CF8AC0900617126 /* ChannelEditView.swift */; };
 		44B4766B2CF8AC1800617126 /* ChannelEditViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 44B4766A2CF8AC1800617126 /* ChannelEditViewController.swift */; };
@@ -304,6 +305,7 @@
 		445C4B412D01C77B00EB2473 /* WorkspaceChangeAdminViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WorkspaceChangeAdminViewController.swift; sourceTree = "<group>"; };
 		445C4B432D06B93E00EB2473 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		445C4B4D2D06D67D00EB2473 /* FCMManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FCMManager.swift; sourceTree = "<group>"; };
+		44B282F92D0AD0A700A11190 /* ProfileCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileCoordinator.swift; sourceTree = "<group>"; };
 		44B476662CF8AB5A00617126 /* ChannelEditReactor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChannelEditReactor.swift; sourceTree = "<group>"; };
 		44B476682CF8AC0900617126 /* ChannelEditView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChannelEditView.swift; sourceTree = "<group>"; };
 		44B4766A2CF8AC1800617126 /* ChannelEditViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChannelEditViewController.swift; sourceTree = "<group>"; };
@@ -772,6 +774,13 @@
 			path = WorkspaceChangeAdmin;
 			sourceTree = "<group>";
 		};
+		44B282F82D0ACD1200A11190 /* NicknameEdit */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = NicknameEdit;
+			sourceTree = "<group>";
+		};
 		44B476612CF8AB0A00617126 /* ChannelEdit */ = {
 			isa = PBXGroup;
 			children = (
@@ -804,9 +813,11 @@
 		44B4768A2CFDCFA900617126 /* Profile */ = {
 			isa = PBXGroup;
 			children = (
+				44B282F92D0AD0A700A11190 /* ProfileCoordinator.swift */,
 				44B4768B2CFDCFC100617126 /* ProfileReactor.swift */,
 				44B4768D2CFDD03C00617126 /* ProfileView.swift */,
 				44B4768F2CFDD06200617126 /* ProfileViewController.swift */,
+				44B282F82D0ACD1200A11190 /* NicknameEdit */,
 			);
 			path = Profile;
 			sourceTree = "<group>";
@@ -958,6 +969,7 @@
 				441115222CECA501000D1B2B /* LoginViewController.swift in Sources */,
 				441115522CF4552D000D1B2B /* MessageThreePhotoTextTableViewCell.swift in Sources */,
 				441114E82CE5EF51000D1B2B /* HomeCoordinator.swift in Sources */,
+				44B282FA2D0AD0A700A11190 /* ProfileCoordinator.swift in Sources */,
 				444910E52CD8E0B1005AB2F7 /* NetworkError.swift in Sources */,
 				44B476832CFB30D500617126 /* DMChattingReactor.swift in Sources */,
 				444DE6B62CD0FC9D00821269 /* AppDelegate.swift in Sources */,

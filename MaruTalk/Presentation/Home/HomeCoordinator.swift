@@ -206,15 +206,14 @@ extension HomeCoordinator {
 }
 
 extension HomeCoordinator {
-    func showProfile() {
-        let reactor = ProfileReactor()
-        let profileVC = ProfileViewController(reactor: reactor)
-        profileVC.coordinator = self
-        navigationController.pushViewController(profileVC, animated: true)
-    }
-    
-    func didFinishProfile() {
-        navigationController.popViewController(animated: true)
+    func startProfileCoordinator() {
+        let profileCoordinator = ProfileCoordinator(navigationController: navigationController)
+        profileCoordinator.parentCoordinator = self
+        profileCoordinator.onLogout = { [weak self] in
+            self?.didFinish()
+        }
+        childCoordinators.append(profileCoordinator)
+        profileCoordinator.start()
     }
 }
 
