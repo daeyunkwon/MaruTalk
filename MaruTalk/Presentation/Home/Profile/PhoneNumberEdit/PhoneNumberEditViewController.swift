@@ -56,7 +56,11 @@ final class PhoneNumberEditViewController: BaseViewController<EditView>, View {
 
 extension PhoneNumberEditViewController {
     private func bindAction(reactor: PhoneNumberEditReactor) {
-        
+        rootView.inputFieldView.inputTextField.rx.text.orEmpty
+            .skip(1)
+            .map { Reactor.Action.inputPhoneNumber($0) }
+            .bind(to: reactor.action)
+            .disposed(by: disposeBag)
     }
 }
 
@@ -71,6 +75,13 @@ extension PhoneNumberEditViewController {
         reactor.state.map { $0.newPhoneNumber }
             .distinctUntilChanged()
             .bind(to: rootView.inputFieldView.inputTextField.rx.text)
+            .disposed(by: disposeBag)
+        
+        reactor.state.map { $0.isDoneButtonEnabled }
+            .distinctUntilChanged()
+            .bind(with: self) { owner, value in
+                owner.rootView.doneButton.setButtonEnabled(isEnabled: value)
+            }
             .disposed(by: disposeBag)
     }
 }
