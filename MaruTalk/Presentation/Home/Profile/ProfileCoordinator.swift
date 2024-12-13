@@ -52,3 +52,16 @@ extension ProfileCoordinator {
         navigationController.popViewController(animated: true)
     }
 }
+
+extension ProfileCoordinator {
+    func showPhoneNumberEdit(user: User) {
+        let reactor = PhoneNumberEditReactor(user: user)
+        let phoneNumberEditVC = PhoneNumberEditViewController(reactor: reactor)
+        phoneNumberEditVC.coordinator = self
+        navigationController.pushViewController(phoneNumberEditVC, animated: true)
+    }
+    
+    func didFinishPhoneNumberEdit() {
+        navigationController.popViewController(animated: true)
+    }
+}

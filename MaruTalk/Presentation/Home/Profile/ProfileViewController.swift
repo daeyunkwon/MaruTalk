@@ -123,6 +123,12 @@ extension ProfileViewController {
             .map { _ in Reactor.Action.selectNickname }
             .bind(to: reactor.action)
             .disposed(by: disposeBag)
+        
+        modelSelectedStream
+            .filter { $0.title == "연락처" }
+            .map { _ in Reactor.Action.selectPhoneNumber }
+            .bind(to: reactor.action)
+            .disposed(by: disposeBag)
     }
 }
 
@@ -171,6 +177,13 @@ extension ProfileViewController {
             .compactMap { $0 }
             .bind(with: self) { owner, value in
                 owner.coordinator?.showNicknameEdit(user: value)
+            }
+            .disposed(by: disposeBag)
+        
+        reactor.pulse(\.$navigateToPhoneNumberEdit)
+            .compactMap { $0 }
+            .bind(with: self) { owner, value in
+                owner.coordinator?.showPhoneNumberEdit(user: value)
             }
             .disposed(by: disposeBag)
     }

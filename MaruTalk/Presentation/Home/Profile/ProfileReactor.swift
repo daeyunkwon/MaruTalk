@@ -15,6 +15,7 @@ final class ProfileReactor: Reactor {
         case update(User)
         case profileImageChange(Data)
         case selectNickname
+        case selectPhoneNumber
         case logout
     }
     
@@ -24,6 +25,7 @@ final class ProfileReactor: Reactor {
         case setUser(User)
         case setProfileImagePath(String?)
         case setNavigateToNicknameEdit(User)
+        case setNavigateToPhoneNumberEdit(User)
         case setNavigateToOnboarding
     }
     
@@ -46,6 +48,7 @@ final class ProfileReactor: Reactor {
         
         var user: User?
         @Pulse var navigateToNicknameEdit: User?
+        @Pulse var navigateToPhoneNumberEdit: User?
     }
     
     var initialState: State = State()
@@ -75,6 +78,13 @@ extension ProfileReactor {
         case .selectNickname:
             if let user = currentState.user {
                 return .just(.setNavigateToNicknameEdit(user))
+            } else {
+                return .empty()
+            }
+            
+        case .selectPhoneNumber:
+            if let user = currentState.user {
+                return .just(.setNavigateToPhoneNumberEdit(user))
             } else {
                 return .empty()
             }
@@ -119,6 +129,9 @@ extension ProfileReactor {
         
         case .setNavigateToNicknameEdit(let value):
             newState.navigateToNicknameEdit = value
+        
+        case .setNavigateToPhoneNumberEdit(let value):
+            newState.navigateToPhoneNumberEdit = value
         }
         return newState
     }
