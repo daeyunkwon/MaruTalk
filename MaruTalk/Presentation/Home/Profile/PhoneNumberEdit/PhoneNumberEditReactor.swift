@@ -12,11 +12,14 @@ import ReactorKit
 final class PhoneNumberEditReactor: Reactor {
     enum Action {
         case inputPhoneNumber(String)
+        case doneButtonTapped
     }
     
     enum Mutation {
         case setDoneButtonEnabled(Bool)
         case setNewPhoneNumber(String)
+        case setNetworkError((Router.APIType, String?))
+        case setNavigateToProfile
     }
     
     struct State {
@@ -24,6 +27,8 @@ final class PhoneNumberEditReactor: Reactor {
         var newPhoneNumber: String
         @Pulse var placeholderText: String = "연락처를 입력해주세요."
         var isDoneButtonEnabled: Bool = true
+        @Pulse var networkError: (Router.APIType, String?)?
+        @Pulse var navigateToProfile: Void?
     }
     
     let initialState: State
@@ -46,6 +51,14 @@ extension PhoneNumberEditReactor {
                 .just(.setNewPhoneNumber(phoneNumberWithDash)),
                 .just(.setDoneButtonEnabled(isValid))
             ])
+            
+        case .doneButtonTapped:
+            //변경사항이 없는 경우 네트워크 통신 작업없이 이전 프로필 화면으로 돌아가기
+            if currentState.user.phone ?? "" == currentState.newPhoneNumber {
+                return .just(.setNavigateToProfile)
+            } else {
+                return executePhoneNumberEdit()
+            }
         }
     }
 }
@@ -61,6 +74,12 @@ extension PhoneNumberEditReactor {
             
         case .setNewPhoneNumber(let value):
             newState.newPhoneNumber = value
+            
+        case .setNetworkError(let value):
+            newState.networkError = value
+            
+        case .setNavigateToProfile:
+            newState.navigateToProfile = ()
         }
         return newState
     }
@@ -98,5 +117,23 @@ extension PhoneNumberEditReactor {
         }
         
         return true
+    }
+    
+    private func executePhoneNumberEdit() -> Observable<Mutation> {
+        let nickname = currentState.user.nickname
+        let phone = currentState.newPhoneNumber
+        
+        return NetworkManager.shared.performRequest(api: .userMeEdit(nickname: nickname, phone: phone), model: User.self)
+            .asObservable()
+            .flatMap { result -> Observable<Mutation> in
+                switch result {
+                case .success(let value):
+                    NotificationCenter.default.post(name: .profileEditComplete, object: nil, userInfo: [NotificationUserInfoKey.user: value])
+                    return .just(.setNavigateToProfile)
+                
+                case .failure(let error):
+                    return .just(.setNetworkError((Router.APIType.userMeEdit, error.errorCode)))
+                }
+            }
     }
 }

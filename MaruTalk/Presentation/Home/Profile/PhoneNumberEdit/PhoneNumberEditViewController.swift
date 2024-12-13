@@ -61,6 +61,11 @@ extension PhoneNumberEditViewController {
             .map { Reactor.Action.inputPhoneNumber($0) }
             .bind(to: reactor.action)
             .disposed(by: disposeBag)
+        
+        rootView.doneButton.rx.tap
+            .map { Reactor.Action.doneButtonTapped }
+            .bind(to: reactor.action)
+            .disposed(by: disposeBag)
     }
 }
 
@@ -81,6 +86,13 @@ extension PhoneNumberEditViewController {
             .distinctUntilChanged()
             .bind(with: self) { owner, value in
                 owner.rootView.doneButton.setButtonEnabled(isEnabled: value)
+            }
+            .disposed(by: disposeBag)
+        
+        reactor.pulse(\.$navigateToProfile)
+            .compactMap { $0 }
+            .bind(with: self) { owner, _ in
+                owner.coordinator?.didFinishPhoneNumberEdit()
             }
             .disposed(by: disposeBag)
     }
