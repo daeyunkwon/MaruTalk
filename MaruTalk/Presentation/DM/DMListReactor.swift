@@ -135,10 +135,13 @@ extension DMListReactor {
                 guard let self else { return .empty() }
                 switch result {
                 case .success(let value):
+                    
                     let roomIDs = value.map { $0.roomID }
                     
+                    let otherUserfiltered = value.filter { $0.user.userID != UserDefaultsManager.shared.userID ?? "" }
+                    
                     //상대방 유저 정보
-                    let otherUser = Dictionary(uniqueKeysWithValues: value.map { ($0.roomID, $0.user)})
+                    let otherUser = Dictionary(uniqueKeysWithValues: otherUserfiltered.map { ($0.roomID, $0.user)})
                     
                     return self.fetchDMRoomChat(roomIDs: roomIDs, otherUser: otherUser)
                 
@@ -167,7 +170,7 @@ extension DMListReactor {
                         
                         var sorted = chats.sorted { $0.createdAt > $1.createdAt }
                         
-                        if sorted.count > 1 {
+                        if sorted.count >= 1 {
                             if let otherUser = otherUser[roomID] {
                                 sorted[0].user = otherUser //마지막 채팅 유저 정보를 본인이 아닌 상대방 유저 정보로 변경하기(테이블셀에서 상대방 유저 정보로 표현하기 위함)
                             }
