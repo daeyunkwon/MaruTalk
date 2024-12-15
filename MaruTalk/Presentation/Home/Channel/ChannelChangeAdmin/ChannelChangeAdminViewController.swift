@@ -15,7 +15,7 @@ final class ChannelChangeAdminViewController: BaseViewController<ChannelChangeAd
     //MARK: - Properties
     
     var disposeBag: DisposeBag = DisposeBag()
-    weak var coordinator: HomeCoordinator?
+    weak var coordinator: ChannelCoordinator?
     
     init(reactor: ChannelChangeAdminReactor) {
         super.init()

@@ -136,7 +136,7 @@ extension HomeViewController {
         
         profileCircleView.rxTap
             .bind(with: self) { owner, _ in
-                owner.coordinator?.startProfileCoordinator()
+                owner.coordinator?.showProfile()
             }
             .disposed(by: disposeBag)
         

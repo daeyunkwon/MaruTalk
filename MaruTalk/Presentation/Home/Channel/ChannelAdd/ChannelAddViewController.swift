@@ -1,8 +1,8 @@
 //
-//  ChannelEditViewController.swift
+//  ChannelAddViewController.swift
 //  MaruTalk
 //
-//  Created by 권대윤 on 11/28/24.
+//  Created by 권대윤 on 11/23/24.
 //
 
 import UIKit
@@ -10,16 +10,20 @@ import UIKit
 import ReactorKit
 import RxCocoa
 
-final class ChannelEditViewController: BaseViewController<ChannelEditView>, View {
+final class ChannelAddViewController: BaseViewController<ChannelAddView>, View {
     
     //MARK: - Properties
     
     var disposeBag: DisposeBag = DisposeBag()
-    weak var coordinator: HomeCoordinator?
+    weak var coordinator: ChannelCoordinator?
     
-    init(reactor: ChannelEditReactor) {
+    init(reactor: ChannelAddReactor) {
         super.init()
         self.reactor = reactor
+    }
+    
+    deinit {
+        self.coordinator?.didFinish()
     }
     
     private let xMarkButton: UIBarButtonItem = UIBarButtonItem(image: UIImage(systemName: "xmark")?.applyingSymbolConfiguration(.init(pointSize: 14)), style: .plain, target: nil, action: nil)
@@ -33,13 +37,13 @@ final class ChannelEditViewController: BaseViewController<ChannelEditView>, View
     //MARK: - Configurations
     
     override func setupNavi() {
-        navigationItem.title = "채널 편집"
+        navigationItem.title = "채널 만들기"
         navigationItem.leftBarButtonItem = xMarkButton
     }
     
     //MARK: - Methods
     
-    func bind(reactor: ChannelEditReactor) {
+    func bind(reactor: ChannelAddReactor) {
         bindAction(reactor: reactor)
         bindState(reactor: reactor)
     }
@@ -47,27 +51,25 @@ final class ChannelEditViewController: BaseViewController<ChannelEditView>, View
 
 //MARK: - Bind Action
 
-extension ChannelEditViewController {
-    private func bindAction(reactor: ChannelEditReactor) {
+extension ChannelAddViewController {
+    private func bindAction(reactor: ChannelAddReactor) {
         xMarkButton.rx.tap
             .map { Reactor.Action.xMarkButtonTapped }
             .bind(to: reactor.action)
             .disposed(by: disposeBag)
         
         rootView.channelNameFieldView.inputTextField.rx.text.orEmpty
-            .skip(1)
             .map { Reactor.Action.inputName($0) }
             .bind(to: reactor.action)
             .disposed(by: disposeBag)
         
-        rootView.channelDescriptionFieldView.inputTextField.rx.text
-            .skip(1)
+        rootView.channelDescriptionFieldView.inputTextField.rx.text.orEmpty
             .map { Reactor.Action.inputDescription($0) }
             .bind(to: reactor.action)
             .disposed(by: disposeBag)
         
-        rootView.doneButton.rx.tap
-            .map { Reactor.Action.doneButtonTapped }
+        rootView.createButton.rx.tap
+            .map { Reactor.Action.createButtonTapped }
             .bind(to: reactor.action)
             .disposed(by: disposeBag)
     }
@@ -75,29 +77,26 @@ extension ChannelEditViewController {
 
 //MARK: - Bind State
 
-extension ChannelEditViewController {
-    private func bindState(reactor: ChannelEditReactor) {
-        reactor.pulse(\.$navigateToChannelSetting)
+extension ChannelAddViewController {
+    private func bindState(reactor: ChannelAddReactor) {
+        reactor.pulse(\.$dismiss)
             .compactMap { $0 }
             .bind(with: self) { owner, _ in
-                owner.coordinator?.didFinishChannelEdit()
+                owner.coordinator?.didFinishChannelAdd()
             }
             .disposed(by: disposeBag)
         
-        reactor.state.map { $0.channelName }
-            .distinctUntilChanged()
-            .bind(to: rootView.channelNameFieldView.inputTextField.rx.text)
-            .disposed(by: disposeBag)
-        
-        reactor.state.map { $0.channelDescription }
-            .distinctUntilChanged()
-            .bind(to: rootView.channelDescriptionFieldView.inputTextField.rx.text)
-            .disposed(by: disposeBag)
-        
-        reactor.state.map { $0.isDoneButtonEnabled }
+        reactor.state.map { $0.isCreateButtonEnabled }
             .distinctUntilChanged()
             .bind(with: self) { owner, value in
-                owner.rootView.doneButton.setButtonEnabled(isEnabled: value)
+                owner.rootView.createButton.setButtonEnabled(isEnabled: value)
+            }
+            .disposed(by: disposeBag)
+        
+        reactor.pulse(\.$networkError)
+            .compactMap { $0 }
+            .bind(with: self) { owner, value in
+                owner.showToastForNetworkError(api: value.0, errorCode: value.1)
             }
             .disposed(by: disposeBag)
     }

@@ -15,11 +15,15 @@ final class ChannelSearchViewController: BaseViewController<ChannelSearchView>, 
     //MARK: - Properties
     
     var disposeBag: DisposeBag = DisposeBag()
-    weak var coordinator: HomeCoordinator?
+    weak var coordinator: ChannelCoordinator?
     
     init(reactor: ChannelSearchReactor) {
         super.init()
         self.reactor = reactor
+    }
+    
+    deinit {
+        self.coordinator?.didFinish()
     }
     
     private let xMarkButton: UIBarButtonItem = UIBarButtonItem(image: UIImage(systemName: "xmark")?.applyingSymbolConfiguration(.init(pointSize: 14)), style: .plain, target: nil, action: nil)
@@ -109,11 +113,11 @@ extension ChannelSearchViewController {
         
         reactor.pulse(\.$showJoinAlert)
             .compactMap { $0 }
-            .bind(with: self) { owner, value in
+            .bind(with: self) { [weak self] owner, value in
+                guard let self else { return }
                 let message = "[\(value.name)] 채널에 참여하시겠습니까?"
                 //수락할 경우 채팅 화면으로 진입
-                let okAction = { [weak self] in
-                    guard let self else { return }
+                let okAction = {
                     self.coordinator?.showChannelChatting(channelID: value.id) //먼저 화면 이동
                     self.coordinator?.didFinishChannelSearch(isNavigateToChannelChatting: true) //네비게이션 스택 제거 작업
                 }

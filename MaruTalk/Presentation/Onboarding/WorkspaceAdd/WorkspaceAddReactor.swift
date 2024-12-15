@@ -129,7 +129,7 @@ extension WorkspaceAddReactor {
             switch self.previousScreen {
             case .workspaceInitial:
                 return .concat([
-                    removeRecentWorkspaceID(),
+                    removeRecentWorkspaceID(), //홈화면으로 가기전 초기화 작업
                     .just(.setNavigateToHome(true))
                 ])
                 

@@ -141,6 +141,7 @@
 		445C4B492D06BBF500EB2473 /* FirebaseCrashlytics in Frameworks */ = {isa = PBXBuildFile; productRef = 445C4B482D06BBF500EB2473 /* FirebaseCrashlytics */; };
 		445C4B4B2D06BBF500EB2473 /* FirebaseMessaging in Frameworks */ = {isa = PBXBuildFile; productRef = 445C4B4A2D06BBF500EB2473 /* FirebaseMessaging */; };
 		445C4B4E2D06D67D00EB2473 /* FCMManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 445C4B4D2D06D67D00EB2473 /* FCMManager.swift */; };
+		449933E72D0EA8B800FB0B55 /* ChannelCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 449933E62D0EA8B800FB0B55 /* ChannelCoordinator.swift */; };
 		44B282FA2D0AD0A700A11190 /* ProfileCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 44B282F92D0AD0A700A11190 /* ProfileCoordinator.swift */; };
 		44B282FC2D0AD64E00A11190 /* NicknameEditReactor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 44B282FB2D0AD64E00A11190 /* NicknameEditReactor.swift */; };
 		44B282FE2D0AD6B600A11190 /* EditView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 44B282FD2D0AD6B600A11190 /* EditView.swift */; };
@@ -311,6 +312,7 @@
 		445C4B412D01C77B00EB2473 /* WorkspaceChangeAdminViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WorkspaceChangeAdminViewController.swift; sourceTree = "<group>"; };
 		445C4B432D06B93E00EB2473 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		445C4B4D2D06D67D00EB2473 /* FCMManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FCMManager.swift; sourceTree = "<group>"; };
+		449933E62D0EA8B800FB0B55 /* ChannelCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChannelCoordinator.swift; sourceTree = "<group>"; };
 		44B282F92D0AD0A700A11190 /* ProfileCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileCoordinator.swift; sourceTree = "<group>"; };
 		44B282FB2D0AD64E00A11190 /* NicknameEditReactor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NicknameEditReactor.swift; sourceTree = "<group>"; };
 		44B282FD2D0AD6B600A11190 /* EditView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditView.swift; sourceTree = "<group>"; };
@@ -389,13 +391,8 @@
 				441114E32CE5EEF8000D1B2B /* HomeView.swift */,
 				441114FD2CE73CD3000D1B2B /* HomeEmptyView.swift */,
 				441114E52CE5EF03000D1B2B /* HomeViewController.swift */,
-				441115732CF73ABA000D1B2B /* ChannelSearch */,
+				449933E52D0EA89500FB0B55 /* Channel */,
 				4411156C2CF70798000D1B2B /* MemberInvite */,
-				4411153F2CF217C6000D1B2B /* ChannelAdd */,
-				441115442CF3243B000D1B2B /* ChannelChatting */,
-				4411157A2CF82E9F000D1B2B /* ChannelSetting */,
-				44B476612CF8AB0A00617126 /* ChannelEdit */,
-				44B4766E2CF98B5F00617126 /* ChannelChangeAdmin */,
 				44B476952CFF1FFE00617126 /* WorkspaceList */,
 				445C4B372D019A0700EB2473 /* WorkspaceEdit */,
 				445C4B3E2D01C6DA00EB2473 /* WorkspaceChangeAdmin */,
@@ -787,6 +784,20 @@
 			path = WorkspaceChangeAdmin;
 			sourceTree = "<group>";
 		};
+		449933E52D0EA89500FB0B55 /* Channel */ = {
+			isa = PBXGroup;
+			children = (
+				449933E62D0EA8B800FB0B55 /* ChannelCoordinator.swift */,
+				4411153F2CF217C6000D1B2B /* ChannelAdd */,
+				441115732CF73ABA000D1B2B /* ChannelSearch */,
+				441115442CF3243B000D1B2B /* ChannelChatting */,
+				4411157A2CF82E9F000D1B2B /* ChannelSetting */,
+				44B476612CF8AB0A00617126 /* ChannelEdit */,
+				44B4766E2CF98B5F00617126 /* ChannelChangeAdmin */,
+			);
+			path = Channel;
+			sourceTree = "<group>";
+		};
 		44B282F82D0ACD1200A11190 /* NicknameEdit */ = {
 			isa = PBXGroup;
 			children = (
@@ -1088,6 +1099,7 @@
 				441115132CE9E2F4000D1B2B /* PlusTitleHeaderTableViewCell.swift in Sources */,
 				444DE6B82CD0FC9D00821269 /* SceneDelegate.swift in Sources */,
 				441115362CEF8FBE000D1B2B /* UIImageView+Extension.swift in Sources */,
+				449933E72D0EA8B800FB0B55 /* ChannelCoordinator.swift in Sources */,
 				441115462CF32461000D1B2B /* ChannelChattingReactor.swift in Sources */,
 				44B476872CFB50A000617126 /* ChatDataProtocol.swift in Sources */,
 				4411153A2CF07D70000D1B2B /* Channel.swift in Sources */,

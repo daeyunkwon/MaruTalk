@@ -15,7 +15,7 @@ final class ChannelSettingViewController: BaseViewController<ChannelSettingView>
     //MARK: - Properties
     
     var disposeBag: DisposeBag = DisposeBag()
-    weak var coordinator: HomeCoordinator?
+    weak var coordinator: ChannelCoordinator?
     
     init(reactor: ChannelSettingReactor) {
         super.init()

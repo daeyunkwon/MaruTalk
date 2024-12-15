@@ -15,11 +15,15 @@ final class ChannelChattingViewController: BaseViewController<ChannelChattingVie
     //MARK: - Properties
     
     var disposeBag: DisposeBag = DisposeBag()
-    weak var coordinator: HomeCoordinator?
+    weak var coordinator: ChannelCoordinator?
     
     init(reactor: ChannelChattingReactor) {
         super.init()
         self.reactor = reactor
+    }
+    
+    deinit {
+        self.coordinator?.didFinish()
     }
     
     private let settingButton: UIBarButtonItem = UIBarButtonItem(image: UIImage(systemName: "gearshape.fill")?.applyingSymbolConfiguration(.init(pointSize: 14)), style: .plain, target: nil, action: nil)

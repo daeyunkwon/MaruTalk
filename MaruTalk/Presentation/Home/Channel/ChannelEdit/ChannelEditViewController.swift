@@ -1,8 +1,8 @@
 //
-//  ChannelAddViewController.swift
+//  ChannelEditViewController.swift
 //  MaruTalk
 //
-//  Created by 권대윤 on 11/23/24.
+//  Created by 권대윤 on 11/28/24.
 //
 
 import UIKit
@@ -10,14 +10,14 @@ import UIKit
 import ReactorKit
 import RxCocoa
 
-final class ChannelAddViewController: BaseViewController<ChannelAddView>, View {
+final class ChannelEditViewController: BaseViewController<ChannelEditView>, View {
     
     //MARK: - Properties
     
     var disposeBag: DisposeBag = DisposeBag()
-    weak var coordinator: HomeCoordinator?
+    weak var coordinator: ChannelCoordinator?
     
-    init(reactor: ChannelAddReactor) {
+    init(reactor: ChannelEditReactor) {
         super.init()
         self.reactor = reactor
     }
@@ -33,13 +33,13 @@ final class ChannelAddViewController: BaseViewController<ChannelAddView>, View {
     //MARK: - Configurations
     
     override func setupNavi() {
-        navigationItem.title = "채널 만들기"
+        navigationItem.title = "채널 편집"
         navigationItem.leftBarButtonItem = xMarkButton
     }
     
     //MARK: - Methods
     
-    func bind(reactor: ChannelAddReactor) {
+    func bind(reactor: ChannelEditReactor) {
         bindAction(reactor: reactor)
         bindState(reactor: reactor)
     }
@@ -47,25 +47,27 @@ final class ChannelAddViewController: BaseViewController<ChannelAddView>, View {
 
 //MARK: - Bind Action
 
-extension ChannelAddViewController {
-    private func bindAction(reactor: ChannelAddReactor) {
+extension ChannelEditViewController {
+    private func bindAction(reactor: ChannelEditReactor) {
         xMarkButton.rx.tap
             .map { Reactor.Action.xMarkButtonTapped }
             .bind(to: reactor.action)
             .disposed(by: disposeBag)
         
         rootView.channelNameFieldView.inputTextField.rx.text.orEmpty
+            .skip(1)
             .map { Reactor.Action.inputName($0) }
             .bind(to: reactor.action)
             .disposed(by: disposeBag)
         
-        rootView.channelDescriptionFieldView.inputTextField.rx.text.orEmpty
+        rootView.channelDescriptionFieldView.inputTextField.rx.text
+            .skip(1)
             .map { Reactor.Action.inputDescription($0) }
             .bind(to: reactor.action)
             .disposed(by: disposeBag)
         
-        rootView.createButton.rx.tap
-            .map { Reactor.Action.createButtonTapped }
+        rootView.doneButton.rx.tap
+            .map { Reactor.Action.doneButtonTapped }
             .bind(to: reactor.action)
             .disposed(by: disposeBag)
     }
@@ -73,26 +75,29 @@ extension ChannelAddViewController {
 
 //MARK: - Bind State
 
-extension ChannelAddViewController {
-    private func bindState(reactor: ChannelAddReactor) {
-        reactor.pulse(\.$dismiss)
+extension ChannelEditViewController {
+    private func bindState(reactor: ChannelEditReactor) {
+        reactor.pulse(\.$navigateToChannelSetting)
             .compactMap { $0 }
             .bind(with: self) { owner, _ in
-                owner.coordinator?.didFinishChannelAdd()
+                owner.coordinator?.didFinishChannelEdit()
             }
             .disposed(by: disposeBag)
         
-        reactor.state.map { $0.isCreateButtonEnabled }
+        reactor.state.map { $0.channelName }
+            .distinctUntilChanged()
+            .bind(to: rootView.channelNameFieldView.inputTextField.rx.text)
+            .disposed(by: disposeBag)
+        
+        reactor.state.map { $0.channelDescription }
+            .distinctUntilChanged()
+            .bind(to: rootView.channelDescriptionFieldView.inputTextField.rx.text)
+            .disposed(by: disposeBag)
+        
+        reactor.state.map { $0.isDoneButtonEnabled }
             .distinctUntilChanged()
             .bind(with: self) { owner, value in
-                owner.rootView.createButton.setButtonEnabled(isEnabled: value)
-            }
-            .disposed(by: disposeBag)
-        
-        reactor.pulse(\.$networkError)
-            .compactMap { $0 }
-            .bind(with: self) { owner, value in
-                owner.showToastForNetworkError(api: value.0, errorCode: value.1)
+                owner.rootView.doneButton.setButtonEnabled(isEnabled: value)
             }
             .disposed(by: disposeBag)
     }

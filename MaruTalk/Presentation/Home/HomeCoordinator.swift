@@ -69,35 +69,19 @@ extension HomeCoordinator {
 
 extension HomeCoordinator {
     func showChannelAdd() {
-        let reactor = ChannelAddReactor()
-        let channelAddVC = ChannelAddViewController(reactor: reactor)
-        channelAddVC.coordinator = self
-
-        let navController = UINavigationController(rootViewController: channelAddVC)
-        navController.modalPresentationStyle = .pageSheet
-
-        if let sheet = navController.sheetPresentationController {
-            sheet.detents = [.large()]
-            sheet.prefersGrabberVisible = true
-        }
-        navigationController.present(navController, animated: true)
-    }
-    
-    func didFinishChannelAdd() {
-        navigationController.dismiss(animated: true)
+        let coordinator = ChannelCoordinator(navigationController: navigationController, initialScreen: .channelAdd)
+        coordinator.parentCoordinator = self
+        childCoordinators.append(coordinator)
+        coordinator.start()
     }
 }
 
 extension HomeCoordinator {
     func showChannelChatting(channelID: String) {
-        let reactor = ChannelChattingReactor(channelID: channelID)
-        let channelChattingVC = ChannelChattingViewController(reactor: reactor)
-        channelChattingVC.coordinator = self
-        navigationController.pushViewController(channelChattingVC, animated: true)
-    }
-    
-    func didFinishChannelChatting() {
-        navigationController.popViewController(animated: true)
+        let coordinator = ChannelCoordinator(navigationController: navigationController, initialScreen: .channelChatting(channelID: channelID))
+        coordinator.parentCoordinator = self
+        childCoordinators.append(coordinator)
+        coordinator.start()
     }
 }
 
@@ -124,89 +108,15 @@ extension HomeCoordinator {
 
 extension HomeCoordinator {
     func showChannelSearch() {
-        let reactor = ChannelSearchReactor()
-        let channelChattingVC = ChannelSearchViewController(reactor: reactor)
-        channelChattingVC.coordinator = self
-        navigationController.pushViewController(channelChattingVC, animated: true)
-    }
-    
-    func didFinishChannelSearch(isNavigateToChannelChatting: Bool = false) {
-        if isNavigateToChannelChatting {
-            //채널 채팅 화면으로 가는 경우
-            ///네비게이션 스택에서 ChannelSearchVC의 인스턴스 제거
-            var viewControllers = navigationController.viewControllers
-            viewControllers.removeAll(where: { $0 is ChannelSearchViewController })
-            navigationController.setViewControllers(viewControllers, animated: false)
-        } else {
-            //홈 화면으로 가는 경우
-            navigationController.popViewController(animated: true)
-        }
+        let coordinator = ChannelCoordinator(navigationController: navigationController, initialScreen: .channelSearch)
+        coordinator.parentCoordinator = self
+        childCoordinators.append(coordinator)
+        coordinator.start()
     }
 }
 
 extension HomeCoordinator {
-    func showChannelSetting(channelID: String) {
-        let reactor = ChannelSettingReactor(channelID: channelID)
-        let channelSettingVC = ChannelSettingViewController(reactor: reactor)
-        channelSettingVC.coordinator = self
-        navigationController.pushViewController(channelSettingVC, animated: true)
-    }
-    
-    func didFinishChannelSetting(isNaviageToHome: Bool = false) {
-        if isNaviageToHome {
-            if let homeVC = navigationController.viewControllers.first(where: { $0 is HomeViewController }) as? HomeViewController {
-                navigationController.popToViewController(homeVC, animated: true)
-            }
-        } else {
-            navigationController.popViewController(animated: true)
-        }
-    }
-}
-
-extension HomeCoordinator {
-    func showChannelEdit(channel: Channel) {
-        let reactor = ChannelEditReactor(channel: channel)
-        let channelEditVC = ChannelEditViewController(reactor: reactor)
-        channelEditVC.coordinator = self
-
-        let navController = UINavigationController(rootViewController: channelEditVC)
-        navController.modalPresentationStyle = .pageSheet
-
-        if let sheet = navController.sheetPresentationController {
-            sheet.detents = [.large()]
-            sheet.prefersGrabberVisible = true
-        }
-        navigationController.present(navController, animated: true)
-    }
-    
-    func didFinishChannelEdit() {
-        navigationController.dismiss(animated: true)
-    }
-}
-
-extension HomeCoordinator {
-    func showChannelChangeAdmin(channelID: String) {
-        let reactor = ChannelChangeAdminReactor(channelID: channelID)
-        let channelChangeAdminVC = ChannelChangeAdminViewController(reactor: reactor)
-        channelChangeAdminVC.coordinator = self
-
-        let navController = UINavigationController(rootViewController: channelChangeAdminVC)
-        navController.modalPresentationStyle = .pageSheet
-
-        if let sheet = navController.sheetPresentationController {
-            sheet.detents = [.large()]
-            sheet.prefersGrabberVisible = true
-        }
-        navigationController.present(navController, animated: true)
-    }
-    
-    func didFinishChannelChangeAdmin() {
-        navigationController.dismiss(animated: true)
-    }
-}
-
-extension HomeCoordinator {
-    func startProfileCoordinator() {
+    func showProfile() {
         let profileCoordinator = ProfileCoordinator(navigationController: navigationController)
         profileCoordinator.parentCoordinator = self
         profileCoordinator.onLogout = { [weak self] in
