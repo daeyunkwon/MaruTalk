@@ -94,9 +94,8 @@ extension ChannelChangeAdminViewController {
             .filter { $0.isEmpty }
             .bind(with: self) { owner, _ in
                 //본인 제외 멤버가 없는 경우
-                owner.showOnlyCloseActionAlert(title: "채널 관리자 변경 불가", message: "채널 멤버가 없어 관리자를 변경할 수 없습니다.", action: ("확인", { [weak self] in
-                    guard let self else { return }
-                    self.coordinator?.didFinishChannelChangeAdmin()
+                owner.showOnlyCloseActionAlert(title: "채널 관리자 변경 불가", message: "채널 멤버가 없어 관리자를 변경할 수 없습니다.", action: ("확인", { [weak owner] in
+                    owner?.coordinator?.didFinishChannelChangeAdmin()
                 }))
             }
             .disposed(by: disposeBag)
