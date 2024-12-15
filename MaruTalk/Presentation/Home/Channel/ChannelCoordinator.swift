@@ -96,6 +96,7 @@ extension ChannelCoordinator {
         } else {
             //홈 화면으로 가는 경우
             navigationController.popViewController(animated: true)
+            self.didFinish()
         }
     }
 }

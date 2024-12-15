@@ -22,10 +22,6 @@ final class ChannelSearchViewController: BaseViewController<ChannelSearchView>, 
         self.reactor = reactor
     }
     
-    deinit {
-        self.coordinator?.didFinish()
-    }
-    
     private let xMarkButton: UIBarButtonItem = UIBarButtonItem(image: UIImage(systemName: "xmark")?.applyingSymbolConfiguration(.init(pointSize: 14)), style: .plain, target: nil, action: nil)
     
     //MARK: - Life Cycle
