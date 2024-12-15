@@ -194,8 +194,8 @@ extension ChannelChattingViewController {
             .compactMap { $0 }
             .bind(with: self) { [weak self] owner, _ in
                 guard let self else { return }
-                owner.phpickerManager.openPhotoPicker(in: owner, limit: 5) { dataList in
-                    self.reactor?.action.onNext(.selectPhotoImage(dataList))
+                owner.phpickerManager.openPhotoPicker(in: owner, limit: 5) { [weak self] dataList in
+                    self?.reactor?.action.onNext(.selectPhotoImage(dataList))
                 }
             }
             .disposed(by: disposeBag)
