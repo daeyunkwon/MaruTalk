@@ -68,24 +68,6 @@ extension HomeCoordinator {
 }
 
 extension HomeCoordinator {
-    func showChannelAdd() {
-        let coordinator = ChannelCoordinator(navigationController: navigationController, initialScreen: .channelAdd)
-        coordinator.parentCoordinator = self
-        childCoordinators.append(coordinator)
-        coordinator.start()
-    }
-}
-
-extension HomeCoordinator {
-    func showChannelChatting(channelID: String) {
-        let coordinator = ChannelCoordinator(navigationController: navigationController, initialScreen: .channelChatting(channelID: channelID))
-        coordinator.parentCoordinator = self
-        childCoordinators.append(coordinator)
-        coordinator.start()
-    }
-}
-
-extension HomeCoordinator {
     func showMemberInvite() {
         let reactor = MemberInviteReactor()
         let memberInviteVC = MemberInviteViewController(reactor: reactor)
@@ -103,6 +85,24 @@ extension HomeCoordinator {
     
     func didFinishMemberInvite() {
         navigationController.dismiss(animated: true)
+    }
+}
+
+extension HomeCoordinator {
+    func showChannelAdd() {
+        let coordinator = ChannelCoordinator(navigationController: navigationController, initialScreen: .channelAdd)
+        coordinator.parentCoordinator = self
+        childCoordinators.append(coordinator)
+        coordinator.start()
+    }
+}
+
+extension HomeCoordinator {
+    func showChannelChatting(channelID: String) {
+        let coordinator = ChannelCoordinator(navigationController: navigationController, initialScreen: .channelChatting(channelID: channelID))
+        coordinator.parentCoordinator = self
+        childCoordinators.append(coordinator)
+        coordinator.start()
     }
 }
 
