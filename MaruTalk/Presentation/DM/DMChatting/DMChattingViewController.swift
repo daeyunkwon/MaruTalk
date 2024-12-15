@@ -178,7 +178,7 @@ extension DMChattingViewController {
                 
                 cell.xSquareButton.rx.tap
                     .bind(with: self) { owner, _ in
-                        self.reactor?.action.onNext(.deselectPhotoImage(row))
+                        owner.reactor?.action.onNext(.deselectPhotoImage(row))
                     }
                     .disposed(by: cell.disposeBag)
             }
@@ -186,12 +186,10 @@ extension DMChattingViewController {
         
         reactor.pulse(\.$showPhotoAlbum)
             .compactMap { $0 }
-            .bind(with: self) { [weak self] owner, _ in
-                guard let self else { return }
-                self.phpickerManager.openPhotoPicker(in: self, limit: 5) { imageDatas in
-                    self.reactor?.action.onNext(.selectPhotoDatas(imageDatas))
+            .bind(with: self) { owner, _ in
+                owner.phpickerManager.openPhotoPicker(in: owner, limit: 5) { [weak owner] imageDatas in
+                    owner?.reactor?.action.onNext(.selectPhotoDatas(imageDatas))
                 }
-                
             }
             .disposed(by: disposeBag)
     }
