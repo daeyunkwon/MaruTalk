@@ -81,19 +81,18 @@ extension ProfileViewController {
             .disposed(by: disposeBag)
         
         rootView.profileImageSettingButton.rx.tap
-            .bind(with: self) { [weak self] owner, _ in
-                guard let self else { return }
+            .bind(with: self) { owner, _ in
                 owner.phpickerManager.requestPhotoLibraryPermission { isGranted in
                     if isGranted {
                         //권한 허용된 경우
-                        self.phpickerManager.openPhotoPicker(in: self, limit: 1) { datas in
+                        owner.phpickerManager.openPhotoPicker(in: owner, limit: 1) { [weak owner] datas in
                             if let imageData = datas.first {
-                                self.reactor?.action.onNext(.profileImageChange(imageData))
+                                owner?.reactor?.action.onNext(.profileImageChange(imageData))
                             }
                         }
                     } else {
                         //권한 거부된 경우
-                        self.showToastMessage(message: "앨범 접근 권한이 거부되었습니다.", backgroundColor: Constant.Color.brandRed)
+                        owner.showToastMessage(message: "앨범 접근 권한이 거부되었습니다.", backgroundColor: Constant.Color.brandRed)
                     }
                 }
             }
