@@ -16,7 +16,7 @@ final class WorkspaceListViewController: BaseViewController<WorkspaceListView>, 
     //MARK: - Properties
     
     var disposeBag: DisposeBag = DisposeBag()
-    weak var coordinator: HomeCoordinator?
+    weak var coordinator: WorkspaceCoordinator?
     
     init(reactor: WorkspaceListReactor) {
         super.init()
@@ -98,7 +98,9 @@ final class WorkspaceListViewController: BaseViewController<WorkspaceListView>, 
             print(velocity)
             if velocity.x < 0 { // 왼쪽으로 드래그한 경우
                 fadeOut { [weak self] in
-                    self?.coordinator?.didFinishWorkspaceList()
+                    guard let self else { return }
+                    self.coordinator?.didFinishWorkspaceList()
+                    self.coordinator?.didFinish()
                 }
             } else { // 오른쪽으로 드래그하거나 멈춘 경우
                 fadeIn()
@@ -160,7 +162,8 @@ extension WorkspaceListViewController {
             .disposed(by: disposeBag)
         
         workspaceListStream
-            .bind(to: rootView.tableView.rx.items(cellIdentifier: WorkspaceListTableViewCell.reuseIdentifier, cellType: WorkspaceListTableViewCell.self)) { row, element, cell in
+            .bind(to: rootView.tableView.rx.items(cellIdentifier: WorkspaceListTableViewCell.reuseIdentifier, cellType: WorkspaceListTableViewCell.self)) { [weak self] row, element, cell in
+                guard let self else { return }
                 cell.configureCell(data: element)
                 cell.selectionStyle = .none
                 
@@ -171,7 +174,7 @@ extension WorkspaceListViewController {
                             owner.showActionSheet(actions: [
                                 //액션시트 편집
                                 ("워크스페이스 편집", UIAlertAction.Style.default, {
-                                    owner.coordinator?.showWorkspaceEdit(viewController: self, workspace: element)
+                                    owner.coordinator?.showWorkspaceEdit(viewController: owner, workspace: element)
                                 }),
                                 //액션시트 나가기
                                 ("워크스페이스 나가기", UIAlertAction.Style.default, {
@@ -218,6 +221,7 @@ extension WorkspaceListViewController {
             .bind(with: self) { owner, _ in
                 owner.fadeOut {
                     owner.coordinator?.didFinishWorkspaceList()
+                    owner.coordinator?.didFinish()
                 }
             }
             .disposed(by: disposeBag)
@@ -233,7 +237,7 @@ extension WorkspaceListViewController {
         reactor.pulse(\.$navigateToWorkspaceChangeAdmin)
             .compactMap { $0 }
             .bind(with: self) { owner, _ in
-                owner.coordinator?.showWorkspaceChangeAdmin(viewController: self)
+                owner.coordinator?.showWorkspaceChangeAdmin(viewController: owner)
             }
             .disposed(by: disposeBag)
         

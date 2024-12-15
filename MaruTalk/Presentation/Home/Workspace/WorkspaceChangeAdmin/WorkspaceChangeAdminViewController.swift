@@ -15,7 +15,7 @@ final class WorkspaceChangeAdminViewController: BaseViewController<ChannelChange
     //MARK: - Properties
     
     var disposeBag: DisposeBag = DisposeBag()
-    weak var coordinator: HomeCoordinator?
+    weak var coordinator: WorkspaceCoordinator?
     
     init(reactor: WorkspaceChangeAdminReactor) {
         super.init()
@@ -86,9 +86,8 @@ extension WorkspaceChangeAdminViewController {
         memberListStream
             .filter { $0.isEmpty }
             .bind(with: self) { owner, _ in
-                owner.showOnlyCloseActionAlert(title: "워크스페이스 관리자 변경 불가", message: "멤버가 없어 관리자를 변경할 수 없습니다.", action: ("확인", { [weak self] in
-                    guard let self else { return }
-                    self.coordinator?.didFinishWorkspaceChangeAdmin()
+                owner.showOnlyCloseActionAlert(title: "워크스페이스 관리자 변경 불가", message: "멤버가 없어 관리자를 변경할 수 없습니다.", action: ("확인", {
+                    owner.coordinator?.didFinishWorkspaceChangeAdmin()
                 }))
             }
             .disposed(by: disposeBag)

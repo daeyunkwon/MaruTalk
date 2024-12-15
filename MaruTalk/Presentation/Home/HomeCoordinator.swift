@@ -36,38 +36,6 @@ final class HomeCoordinator: Coordinator {
 }
 
 extension HomeCoordinator {
-    enum PreviousScreen {
-        case workspaceInitial
-        case workspaceList
-    }
-    
-    func showWorkspaceAdd(previousScreen: PreviousScreen) {
-        var reactor: WorkspaceAddReactor
-        if previousScreen == .workspaceInitial {
-            reactor = WorkspaceAddReactor(previousScreen: .workspaceInitial)
-        } else {
-            reactor = WorkspaceAddReactor(previousScreen: .workspaceList)
-        }
-        
-        let workspaceAddVC = WorkspaceAddViewController(reactor: reactor)
-        workspaceAddVC.coordinator = self
-
-        let navController = UINavigationController(rootViewController: workspaceAddVC)
-        navController.modalPresentationStyle = .pageSheet
-
-        if let sheet = navController.sheetPresentationController {
-            sheet.detents = [.large()]
-            sheet.prefersGrabberVisible = true
-        }
-        navigationController.present(navController, animated: true)
-    }
-    
-    func didFinishWorkspaceAdd() {
-        navigationController.dismiss(animated: true)
-    }
-}
-
-extension HomeCoordinator {
     func showMemberInvite() {
         let reactor = MemberInviteReactor()
         let memberInviteVC = MemberInviteViewController(reactor: reactor)
@@ -128,61 +96,32 @@ extension HomeCoordinator {
 }
 
 extension HomeCoordinator {
+    enum PreviousScreen {
+        case workspaceInitial
+        case workspaceList
+    }
+        
+    func showWorkspaceAdd(previousScreen: PreviousScreen) {
+        let coordinator: WorkspaceCoordinator
+        if previousScreen == .workspaceInitial {
+            coordinator = WorkspaceCoordinator(navigationController: navigationController, initialScreen: .workspaceAdd(.workspaceInitial))
+        } else {
+            coordinator = WorkspaceCoordinator(navigationController: navigationController, initialScreen: .workspaceAdd(.workspaceList))
+        }
+        
+        coordinator.parentCoordinator = self
+        childCoordinators.append(coordinator)
+        coordinator.start()
+    }
+}
+
+extension HomeCoordinator {
     func showWorkspaceList() {
-        let reactor = WorkspaceListReactor()
-        let workspaceListVC = WorkspaceListViewController(reactor: reactor)
-        workspaceListVC.coordinator = self
-        workspaceListVC.modalPresentationStyle = .overFullScreen
-        navigationController.present(workspaceListVC, animated: false)
-    }
-    
-    func didFinishWorkspaceList() {
-        navigationController.dismiss(animated: false)
+        let coordinator = WorkspaceCoordinator(navigationController: navigationController, initialScreen: .workspaceList)
+        coordinator.parentCoordinator = self
+        childCoordinators.append(coordinator)
+        coordinator.start()
     }
 }
 
-extension HomeCoordinator {
-    func showWorkspaceEdit(viewController: UIViewController, workspace: Workspace) {
-        let reactor = WorkspaceEditReactor(workspace: workspace)
-        let workspaceEditVC = WorkspaceEditViewController(reactor: reactor)
-        workspaceEditVC.coordinator = self
-        
-        let navController = UINavigationController(rootViewController: workspaceEditVC)
-        navController.modalPresentationStyle = .pageSheet
 
-        if let sheet = navController.sheetPresentationController {
-            sheet.detents = [.large()]
-            sheet.prefersGrabberVisible = true
-        }
-        viewController.present(navController, animated: true)
-    }
-    
-    func didFinishWorkspaceEdit() {
-        if let presentedVC = navigationController.presentedViewController {
-            presentedVC.dismiss(animated: true)
-        }
-    }
-}
-
-extension HomeCoordinator {
-    func showWorkspaceChangeAdmin(viewController: UIViewController) {
-        let reactor = WorkspaceChangeAdminReactor()
-        let workspaceEditVC = WorkspaceChangeAdminViewController(reactor: reactor)
-        workspaceEditVC.coordinator = self
-        
-        let navController = UINavigationController(rootViewController: workspaceEditVC)
-        navController.modalPresentationStyle = .pageSheet
-
-        if let sheet = navController.sheetPresentationController {
-            sheet.detents = [.large()]
-            sheet.prefersGrabberVisible = true
-        }
-        viewController.present(navController, animated: true)
-    }
-    
-    func didFinishWorkspaceChangeAdmin() {
-        if let presentedVC = navigationController.presentedViewController {
-            presentedVC.dismiss(animated: true)
-        }
-    }
-}

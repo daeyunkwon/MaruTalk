@@ -16,7 +16,7 @@ final class WorkspaceAddViewController: BaseViewController<WorkspaceAddView>, Vi
     //MARK: - Properties
     
     var disposeBag: DisposeBag = DisposeBag()
-    weak var coordinator: Coordinator?
+    weak var coordinator: WorkspaceCoordinator?
     
     private let imagePickerController = UIImagePickerController()
     
@@ -144,20 +144,19 @@ extension WorkspaceAddViewController {
         
         reactor.state.map { $0.isAlbumVisible }
             .filter { $0 == true }
-            .bind(with: self) { [weak self] owner, _ in
-                guard let self else { return }
-                self.phpickerManager.requestPhotoLibraryPermission { isGranted in
+            .bind(with: self) { owner, _ in
+                owner.phpickerManager.requestPhotoLibraryPermission { isGranted in
                     if isGranted {
                         //권한 허용된 경우
-                        self.phpickerManager.openPhotoPicker(in: self, limit: 1) { datas in
+                        owner.phpickerManager.openPhotoPicker(in: owner, limit: 1) { [weak owner] datas in
                             if let imageData = datas.first {
-                                self.rootView.imageSettingButton.setImage(UIImage(data: imageData), for: .normal)
-                                self.reactor?.action.onNext(.selectPhotoImage(imageData))
+                                owner?.rootView.imageSettingButton.setImage(UIImage(data: imageData), for: .normal)
+                                owner?.reactor?.action.onNext(.selectPhotoImage(imageData))
                             }
                         }
                     } else {
                         //권한 거부된 경우
-                        self.showToastMessage(message: "카메라 접근 권한이 거부되었습니다.", backgroundColor: Constant.Color.brandRed)
+                        owner.showToastMessage(message: "카메라 접근 권한이 거부되었습니다.", backgroundColor: Constant.Color.brandRed)
                     }
                 }
             }
@@ -165,13 +164,12 @@ extension WorkspaceAddViewController {
         
         reactor.state.map { $0.isCameraVisible }
             .filter { $0 == true }
-            .bind(with: self) {[weak self] owner, _ in
-                guard let self else { return }
+            .bind(with: self) { owner, _ in
                 //카메라 권한 체크
-                owner.requestCameraPermission { [weak self] granted in
+                owner.requestCameraPermission { granted in
                     if granted {
-                        self?.imagePickerController.sourceType = .camera
-                        self?.present(owner.imagePickerController, animated: true)
+                        owner.imagePickerController.sourceType = .camera
+                        owner.present(owner.imagePickerController, animated: true)
                         
                     } else {
                         owner.showToastMessage(message: "카메라 접근 권한이 거부되었습니다.", backgroundColor: Constant.Color.brandRed)
@@ -184,13 +182,8 @@ extension WorkspaceAddViewController {
             .filter { $0 == true }
             .distinctUntilChanged()
             .bind(with: self) { owner, _ in
-                if let onboardingCoordinator = owner.coordinator as? OnboardingCoordinator {
-                    onboardingCoordinator.didFinish()
-                }
-                
-                if let homeCoordinator = owner.coordinator as? HomeCoordinator {
-                    homeCoordinator.didFinishWorkspaceAdd()
-                }
+                owner.coordinator?.didFinishWorkspaceAdd()
+                owner.coordinator?.didFinish()
             }
             .disposed(by: disposeBag)
         
@@ -212,14 +205,8 @@ extension WorkspaceAddViewController {
         reactor.state.map { $0.isCreateWorkspaceSuccess }
             .filter { $0 == true }
             .bind(with: self) { owner, _ in
-                if let onboardingCoordinator = owner.coordinator as? OnboardingCoordinator {
-                    onboardingCoordinator.didFinish()
-                }
-                
-                if let homeCoordinator = owner.coordinator as? HomeCoordinator {
-                    NotificationCenter.default.post(name: .workspaceAddComplete, object: nil)
-                    homeCoordinator.didFinishWorkspaceAdd()
-                }
+                owner.coordinator?.didFinishWorkspaceAdd()
+                owner.coordinator?.didFinish()
             }
             .disposed(by: disposeBag)
     }

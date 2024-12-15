@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		440983C72D0F267900C5DC11 /* WorkspaceCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 440983C62D0F267900C5DC11 /* WorkspaceCoordinator.swift */; };
 		441114C72CE08B03000D1B2B /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = 441114C62CE08B03000D1B2B /* User.swift */; };
 		441114C92CE1BDA5000D1B2B /* KeychainManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 441114C82CE1BDA5000D1B2B /* KeychainManager.swift */; };
 		441114CC2CE1DDD8000D1B2B /* WorkspaceInitialView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 441114CB2CE1DDD8000D1B2B /* WorkspaceInitialView.swift */; };
@@ -191,6 +192,7 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		440983C62D0F267900C5DC11 /* WorkspaceCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WorkspaceCoordinator.swift; sourceTree = "<group>"; };
 		441114C62CE08B03000D1B2B /* User.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = User.swift; sourceTree = "<group>"; };
 		441114C82CE1BDA5000D1B2B /* KeychainManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KeychainManager.swift; sourceTree = "<group>"; };
 		441114CB2CE1DDD8000D1B2B /* WorkspaceInitialView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WorkspaceInitialView.swift; sourceTree = "<group>"; };
@@ -373,6 +375,17 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		440983C52D0F266700C5DC11 /* Workspace */ = {
+			isa = PBXGroup;
+			children = (
+				440983C62D0F267900C5DC11 /* WorkspaceCoordinator.swift */,
+				44B476952CFF1FFE00617126 /* WorkspaceList */,
+				445C4B372D019A0700EB2473 /* WorkspaceEdit */,
+				445C4B3E2D01C6DA00EB2473 /* WorkspaceChangeAdmin */,
+			);
+			path = Workspace;
+			sourceTree = "<group>";
+		};
 		441114CA2CE1DDA5000D1B2B /* WorkspaceInitial */ = {
 			isa = PBXGroup;
 			children = (
@@ -393,9 +406,7 @@
 				441114E52CE5EF03000D1B2B /* HomeViewController.swift */,
 				449933E52D0EA89500FB0B55 /* Channel */,
 				4411156C2CF70798000D1B2B /* MemberInvite */,
-				44B476952CFF1FFE00617126 /* WorkspaceList */,
-				445C4B372D019A0700EB2473 /* WorkspaceEdit */,
-				445C4B3E2D01C6DA00EB2473 /* WorkspaceChangeAdmin */,
+				440983C52D0F266700C5DC11 /* Workspace */,
 				44B4768A2CFDCFA900617126 /* Profile */,
 			);
 			path = Home;
@@ -1138,6 +1149,7 @@
 				44B476802CFB20BB00617126 /* RealmDMChatRepository.swift in Sources */,
 				441114DF2CE5EA34000D1B2B /* MainTabBarCoordinator.swift in Sources */,
 				44B476762CFAF35F00617126 /* ProfileNameMessageTableViewCell.swift in Sources */,
+				440983C72D0F267900C5DC11 /* WorkspaceCoordinator.swift in Sources */,
 				441115302CEF2430000D1B2B /* NotificationName+Extension.swift in Sources */,
 				444DE6EF2CD2529D00821269 /* OnboardingView.swift in Sources */,
 				444DE6F92CD366E600821269 /* AuthViewController.swift in Sources */,

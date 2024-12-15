@@ -15,7 +15,7 @@ final class WorkspaceEditViewController: BaseViewController<WorkspaceAddView>, V
     //MARK: - Properties
     
     var disposeBag: DisposeBag = DisposeBag()
-    weak var coordinator: HomeCoordinator?
+    weak var coordinator: WorkspaceCoordinator?
     
     init(reactor: WorkspaceEditReactor) {
         super.init()
@@ -74,12 +74,11 @@ extension WorkspaceEditViewController {
             .disposed(by: disposeBag)
         
         rootView.imageSettingButton.rx.tap
-            .bind(with: self) { [weak self] owner, _ in
-                guard let self else { return }
+            .bind(with: self) { owner, _ in
                 owner.phpickerManager.openPhotoPicker(in: owner, limit: 1) { imageDatas in
                     if let imageData = imageDatas.first {
-                        self.rootView.imageSettingButton.setImage(UIImage(data: imageData), for: .normal)
-                        self.reactor?.action.onNext(.selectPhotoImage(imageData))
+                        owner.rootView.imageSettingButton.setImage(UIImage(data: imageData), for: .normal)
+                        owner.reactor?.action.onNext(.selectPhotoImage(imageData))
                     }
                 }
             }
