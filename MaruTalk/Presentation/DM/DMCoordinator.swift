@@ -49,7 +49,7 @@ extension DMCoordinator {
 }
 
 extension DMCoordinator {
-    func startProfileCoordinator() {
+    func showProfile() {
         let profileCoordinator = ProfileCoordinator(navigationController: navigationController)
         profileCoordinator.parentCoordinator = self
         profileCoordinator.onLogout = { [weak self] in
