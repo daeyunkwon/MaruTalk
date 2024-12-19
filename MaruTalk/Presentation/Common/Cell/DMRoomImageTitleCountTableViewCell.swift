@@ -30,30 +30,11 @@ final class DMRoomImageTitleCountTableViewCell: BaseTableViewCell {
         return label
     }()
     
-    private let countBackView: UIView = {
-        let view = UIView()
-        view.backgroundColor = Constant.Color.brandColor
-        view.clipsToBounds = true
-        view.layer.cornerRadius = 8
-        return view
-    }()
-    
-    private let countLabel: UILabel = {
-        let label = UILabel()
-        label.textColor = Constant.Color.brandWhite
-        label.font = Constant.Font.caption
-        label.textAlignment = .center
-        label.text = "88"
-        return label
-    }()
-    
     //MARK: - Configurations
     
     override func configureHierarchy() {
         contentView.addSubviews(
             profileImageView,
-            countBackView,
-            countLabel,
             titleLabel
         )
     }
@@ -65,22 +46,10 @@ final class DMRoomImageTitleCountTableViewCell: BaseTableViewCell {
             make.centerY.equalToSuperview()
         }
         
-        countLabel.snp.makeConstraints { make in
-            make.centerY.equalToSuperview()
-            make.trailing.equalToSuperview().inset(21)
-        }
-        
-        countBackView.snp.makeConstraints { make in
-            make.top.equalTo(countLabel.snp.top).offset(-2)
-            make.bottom.equalTo(countLabel.snp.bottom).offset(2)
-            make.leading.equalTo(countLabel.snp.leading).offset(-4)
-            make.trailing.equalTo(countLabel.snp.trailing).offset(4)
-        }
-        
         titleLabel.snp.makeConstraints { make in
             make.leading.equalTo(profileImageView.snp.trailing).offset(8)
             make.centerY.equalToSuperview()
-            make.trailing.equalTo(countBackView.snp.leading).offset(-8)
+            make.trailing.equalToSuperview().inset(21)
             make.width.greaterThanOrEqualTo(100)
         }
     }
