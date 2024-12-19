@@ -247,6 +247,7 @@ extension WorkspaceAddReactor {
                     
                     UserDefaultsManager.shared.recentWorkspaceID = value.id
                     UserDefaultsManager.shared.recentWorkspaceOwnerID = value.ownerID
+                    NotificationCenter.default.post(name: .workspaceAddComplete, object: nil)
                     
                     return .concat([
                         .just(.setCreateWorkspaceSuccess(true))
